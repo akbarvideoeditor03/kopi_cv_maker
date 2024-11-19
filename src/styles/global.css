@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+}
+
+.col-f {
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.col-f-0 {
+    flex-direction: column;
+    gap: 0rem;
+}
+
+.row-f {
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.row-f-0 {
+    flex-direction: row;
+    gap: 0rem;
+}
