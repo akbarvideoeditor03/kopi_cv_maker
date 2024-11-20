@@ -14,9 +14,7 @@ function Login() {
                         <label>Password</label>
                         <input type="password" placeholder="Masukkan Password" />
                     </div>
-                    
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    
                 </form>
             </div>
         </main>
