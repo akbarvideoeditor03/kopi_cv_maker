@@ -1,3 +1,13 @@
+/* This is a CSS file specifically for handling CSS class styling. */
+
+.card {
+    padding: 1rem;
+    min-height: 20rem;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0px 5px 10px rgba(44, 44, 44, 0.3);
+}
+
 .container {
     display: flex;
 }
@@ -20,4 +30,87 @@
 .row-f-0 {
     flex-direction: row;
     gap: 0rem;
+}
+
+.f-around {
+    justify-content: space-around;
+}
+
+.f-around {
+    justify-content: space-between;
+}
+
+.f-evenly {
+    justify-content: space-evenly;
+}
+
+.f-center {
+    align-items: center;
+}
+
+.f-center-c {
+    justify-content: center;
+    align-items: center;
+}
+
+.f-center-l {
+    justify-content: center;
+    align-items: start;
+}
+
+.f-center-r {
+    justify-content: center;
+    align-items: end;
+}
+
+.f-content {
+    margin: 0 auto;
+    max-width: 1440px;
+    flex: 1;
+}
+
+.f-1 {
+    flex: 1;
+}
+
+.f-wrap {
+    flex-wrap: wrap;
+}
+
+.f-wrap-r {
+    flex-wrap: wrap-reverse;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-inline: 2rem;
+    height: 50px;
+    background-color: rgb(246, 246, 246);
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav a {
+    color: black;
+}
+
+.fw5 {
+    font-weight: 500;
+}
+
+.fw6 {
+    font-weight: 600;
+}
+
+.fw7 {
+    font-weight: 700;
+}
+
+.fw8 {
+    font-weight: 800;
+}
+
+.fwb  {
+    font-weight: bold;
 }

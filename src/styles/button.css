@@ -1,0 +1,89 @@
+/* This is a CSS file specifically for handling button CSS class styling. */
+
+.btn {
+    padding-inline: 1rem;
+    padding-block: 0.75rem;
+    border-radius: 10px;
+    border-style: none;
+    cursor: pointer;
+    color: white;
+}
+
+.btn-primary {
+    background-color: rgb(32, 76, 137);
+}
+
+.btn-primary:hover {
+    background-color: rgb(57, 104, 170);
+}
+
+.btn-primary:active {
+    background-color: rgb(21, 56, 105);
+}
+
+.btn-info {
+    background-color: rgb(32, 137, 119);
+}
+
+.btn-info:hover {
+    background-color: rgb(62, 178, 159);
+}
+
+.btn-info:active {
+    background-color: rgb(18, 95, 82);
+}
+
+.btn-success {
+    background-color: rgb(41, 129, 64);
+}
+
+.btn-success:hover {
+    background-color: rgb(74, 148, 94);
+}
+
+.btn-success:active {
+    background-color: rgb(25, 77, 39);
+}
+
+.btn-danger {
+    background-color: rgb(140, 45, 45);
+}
+
+.btn-danger:hover {
+    background-color: rgb(173, 81, 81);
+}
+
+.btn-danger:active {
+    background-color: rgb(100, 28, 28);
+}
+
+.btn-warning {
+    background-color: rgb(207, 135, 27);
+}
+
+.btn-warning:hover {
+    background-color: rgb(226, 162, 66);
+}
+
+.btn-warning:active {
+    background-color: rgb(174, 107, 6);
+}
+
+.hamburger-btn {
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0);
+    font-size: larger;
+}
+
+.hamburger-btn:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+.hamburger-btn:active {
+    background-color: rgb(226, 226, 226);
+}
