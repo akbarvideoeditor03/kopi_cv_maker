@@ -1,13 +1,56 @@
 /* This is a CSS file specifically for handling responsive styling. */
 
+@media screen and (min-width : 447.5px) {
+    footer div p {
+        text-align: center;
+    }
+}
+
 @media screen and (max-width : 540.5px) {
     .nav-l {
         display: none;
+    }
+
+    .btn-text-small {
+        font-size: 70%;
     }
 }
 
 @media screen and (min-width : 540.5px) {
     .nav-s {
         display: none;
+    }
+}
+
+@media screen and (max-width : 768.5px) {
+    .text-h1 {
+        font-size: 150%;
+    }
+}
+
+@media screen and (min-width : 768.5px) {
+    .text-h1 {
+        font-size: 200%;
+    }
+}
+
+@media screen and (max-width : 1024.5px) {
+    .text-h1 {
+        font-size: 300%;
+    }
+
+    .form-max-width {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width : 1024.5px) {
+    .text-h1 {
+        font-size: 300%;
+    }
+
+    .form-max-width {
+        max-width: 480px;
+        width: 100%;
     }
 }

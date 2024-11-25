@@ -7,6 +7,7 @@ import './styles/index.css';
 import './styles/global.css';
 import './styles/responsive.css';
 import './styles/button.css';
+import './styles/image-class-collections.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

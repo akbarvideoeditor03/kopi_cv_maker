@@ -1,0 +1,43 @@
+/* This is a CSS file specifically for image class and colors background collections. */
+
+.bg-1 {
+    background-image: url('../../public/assets/images/pexels-olly-842548.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-2 {
+    background-image: url('../../public/assets/images/bg-2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.login-bg {
+    background-image: url('../../public/assets/images/login-image.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-w-1 {
+    background-color: white;
+}
+
+.bg-w-2 {
+    background-color: rgb(227, 227, 227);
+}
+
+.login-img {
+    width: 100%;
+    max-width: 720px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.footer-img, .login-icon {
+    width: 100%;
+    max-width: 200px;
+}

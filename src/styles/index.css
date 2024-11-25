@@ -18,8 +18,12 @@ a {
   cursor: pointer;
 }
 
+button {
+  min-height: 44px;
+}
+
 main {
-  padding: 32px;
+  padding: 1rem;
   min-height: 100vh;
 }
 
@@ -39,6 +43,24 @@ input {
 
 label {
   margin-bottom: 0.5rem;
+}
+
+footer {
+  color: white;
+  background-color: #232323;
+}
+
+footer section {
+  padding: 1rem;
+}
+
+footer div p {
+  margin-bottom: 1rem;
+}
+
+footer ul li {
+  margin-left: 1.5rem;
+  line-height: 2rem;
 }
 
 code {

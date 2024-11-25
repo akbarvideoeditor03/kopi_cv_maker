@@ -1,8 +1,8 @@
 /* This is a CSS file specifically for handling CSS class styling. */
 
 .card {
-    padding: 1rem;
     min-height: 20rem;
+    padding: 1rem;
     border-radius: 10px;
     background-color: white;
     box-shadow: 0px 5px 10px rgba(44, 44, 44, 0.3);
@@ -10,6 +10,10 @@
 
 .container {
     display: flex;
+}
+
+.c-white {
+    color: white;
 }
 
 .col-f {
@@ -53,6 +57,10 @@
     align-items: center;
 }
 
+.fj-center {
+    justify-content: center;
+}
+
 .f-center-l {
     justify-content: center;
     align-items: start;
@@ -81,6 +89,60 @@
     flex-wrap: wrap-reverse;
 }
 
+.full-width {
+    width: 100%;
+}
+
+.footer-section {
+    min-height: 200px;
+    flex-grow: 1;
+    flex-basis: 200px;
+}
+
+.social-media {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    filter: grayscale(1);
+}
+
+.social-media:hover {
+    transition: ease-in 150ms;
+    filter: grayscale(0);
+    color: #ffc400;
+}
+
+.social-media:active {
+    filter: grayscale(0);
+    color: rgb(138, 106, 0);
+}
+
+.section-max {
+    max-width: 1200px;
+    padding: 1rem;
+}
+
+.line {
+    background-color: black;
+    width: 100%;
+    height: 1px;
+}
+
+.lp-section {
+    min-height: 85vh;
+    padding-block: 1rem;
+    margin: -1rem;
+}
+
+.header-img {
+    max-width: 70px;
+}
+
+.icon-img {
+    max-width: 20px;
+}
+
 .nav {
     display: flex;
     flex-direction: row;
@@ -89,6 +151,10 @@
     height: 50px;
     background-color: rgb(246, 246, 246);
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-max {
+    max-width: 1200px;
 }
 
 .nav a {
@@ -113,4 +179,74 @@
 
 .fwb  {
     font-weight: bold;
+}
+
+/* Dropdown */
+
+.dropdown {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex: 1;
+}
+
+.dropdown-menu {
+    display: none;
+    flex-direction: column;
+    list-style: none;
+    position: absolute;
+    top: 2.9rem;
+    right: -2rem;
+    background-color: rgb(235, 235, 235);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100vw;
+}
+
+.dropdown-menu.open {
+    display: flex;
+}
+
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 1.5rem;
+    padding-inline: 2rem;
+    transition: background-color 0.2s;
+}
+
+.dropdown-menu a:hover {
+    background-color: #b9b9b9;
+}
+
+/* Text Classes */
+
+.t-left {
+    text-align: left;
+}
+
+.t-right {
+    text-align: right;
+}
+
+.t-center {
+    text-align: center;
+}
+
+.t-justify {
+    text-align: justify;
+}
+
+.login-left {
+    flex-grow: 1;
+    flex-basis: 200px;
+}
+
+.login-right {
+    flex-grow: 1;
+    flex-basis: 200px;
 }
