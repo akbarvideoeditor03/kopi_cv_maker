@@ -5,7 +5,7 @@ function Login() {
     return (
         <main className="container col-f f-center-c">
             <section className="card container row-f f-wrap-r full-width section-max">
-                <div className="container col-f login-left">
+                <div className="container col-f login-left f-1">
                     <div className="container f-center-c">
                         <img className="login-icon" src="./assets/icon/logo-bw.png" alt="" />
                     </div>
