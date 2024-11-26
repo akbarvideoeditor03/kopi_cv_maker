@@ -9,8 +9,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Figtree', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -20,6 +18,15 @@ a {
 
 button {
   min-height: 44px;
+}
+
+h1 {
+  font-size: 120%;
+}
+
+li {
+  margin-inline-start: 1rem;
+  min-height: 2rem;
 }
 
 main {
@@ -60,7 +67,7 @@ footer div p {
 
 footer ul li {
   margin-left: 1.5rem;
-  line-height: 2rem;
+  line-height: 1.75rem;
 }
 
 code {
