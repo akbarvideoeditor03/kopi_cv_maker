@@ -1,5 +1,33 @@
 import { userTypes } from "../actionTypes";
+import { createClient } from '@supabase/supabase-js';
+const supabaseUrl = 'https://umvqfijgyrkcxaubrerq.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtdnFmaWpneXJrY3hhdWJyZXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI2MzA0MjUsImV4cCI6MjA0ODIwNjQyNX0.yp13eY3-UjoSEa-nUdY7a_cJdpOXD3v7TiihzTGxF4U';
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+export default supabase;
+
 const baseUrl = "http://localhost:4000/user";
+
+export const uploadToSupabase = async (file) => {
+    try {
+        const { data, error } = await supabase.storage
+            .from("final_project")
+            .upload(`uploads/${file.name}`, file, {
+                upsert: false,
+            });
+
+        if (error) {
+            console.error('Error uploading file:', error);
+            throw error;
+        }
+
+        const { publicUrl } = supabase.storage.from("final_project").getPublicUrl(data.path);
+        return publicUrl;
+    } catch (error) {
+        console.error("Error uploading file to Supabase Storage:", error);
+        throw error;
+    }
+}
 
 // Create (POST)
 export const createUser = (user) => async (dispatch) => {
@@ -58,7 +86,7 @@ export const getUserId = (id) => {
     };
 };
 
-// Update (PUT/PATCH)
+// Update (PUT)
 export const updateUser = (id, updatedUser) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {

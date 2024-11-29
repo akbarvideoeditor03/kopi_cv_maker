@@ -151,6 +151,12 @@
     color: black;
 }
 
+.textarea {
+    min-height: 200px;
+    min-width: 100%;
+    max-width: calc(100%);
+}
+
 
 /* Grid Layout */
 

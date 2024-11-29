@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createUser } from "../../redux/action/user.action";
+import { createUser, uploadToSupabase } from "../../redux/action/user.action";
 import Swal from "sweetalert2";
 
 const CreateUser = () => {
@@ -52,7 +52,16 @@ const CreateUser = () => {
         }
 
         try {
-            dispatch(createUser(userData));
+            if (userData.foto_profil) {
+                const file = userData.foto_profil;
+                await uploadToSupabase(file);
+            }
+
+            const newUser = {
+                ...userData,
+                // Belum bisa unggah nama foto ke database karna type file object, bukan string. Foto sudah bisa diunggah ke supabase
+            }
+            dispatch(createUser(newUser));
             Swal.fire({
                 icon: "success",
                 title: "Selamat",
@@ -128,6 +137,7 @@ const CreateUser = () => {
                                 <div className="container col-f-0">
                                     <label>Tentang</label>
                                     <textarea
+                                    className="textarea"
                                         name="tentang"
                                         value={userData.tentang}
                                         onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
@@ -139,9 +149,9 @@ const CreateUser = () => {
                                     <label>Foto Profil</label>
                                     <input
                                         name="foto_profil"
-                                        value={userData.foto_profil}
-                                        onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
-                                        type="text"
+                                        onChange={(e) => setUserData({ ...userData, foto_profil: e.target.files[0]})}
+                                        type="file"
+                                        accept="image/*"
                                         placeholder="Unggah Foto Profil Anda"
                                     />
                                 </div>
