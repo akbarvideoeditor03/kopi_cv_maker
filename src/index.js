@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './pages/general/App';
 import reportWebVitals from './help/reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './redux';
 import './styles/index.css';
 import './styles/global.css';
 import './styles/responsive.css';
@@ -12,9 +14,11 @@ import './styles/image-class-collections.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <Provider store={store()}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
   </React.StrictMode>
 );
 

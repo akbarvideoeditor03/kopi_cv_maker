@@ -5,6 +5,9 @@ import Home from "./home";
 import Login from "./login";
 import Register from "./register";
 import HomeUser from "../client/home";
+import UserList from "../admin/userList";
+import UserListDetail from "../admin/userListDetail";
+import CreateUser from "../admin/createUser";
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/home" element={<HomeUser />}></Route>
+        <Route path="/user" element={<UserList />}></Route>
+        <Route path="/user/:id" element={<UserListDetail />}></Route>
+        <Route path="/user/create" element={<CreateUser />}></Route>
       </Route>
     </Routes>
   );
