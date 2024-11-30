@@ -3,31 +3,37 @@ import { createClient } from '@supabase/supabase-js';
 const baseUrl = "http://localhost:4000/user";
 
 const supabaseUrl = 'https://umvqfijgyrkcxaubrerq.supabase.co';
+const supabaseBucket = 'https://umvqfijgyrkcxaubrerq.supabase.co/storage/v1/object/public/final_project/';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtdnFmaWpneXJrY3hhdWJyZXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI2MzA0MjUsImV4cCI6MjA0ODIwNjQyNX0.yp13eY3-UjoSEa-nUdY7a_cJdpOXD3v7TiihzTGxF4U';
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey, supabaseBucket);
 export default supabase;
 
 
-export const uploadToSupabase = async (file) => {
+export const uploadToSupabase = async (newFileName, file) => {
     try {
         const { data, error } = await supabase.storage
             .from("final_project")
-            .upload(file.name, file, {
+            .upload(newFileName, file, {
+                contentType: file.type,
                 upsert: false,
             });
 
         if (error) {
-            console.error('Error uploading file:', error);
+            console.error("Error uploading file:", error);
             throw error;
         }
 
-        const { publicUrl } = supabase.storage.from("final_project").getPublicUrl(data.path);
-        return publicUrl;
+        const publicUrlResponse = supabase.storage
+            .from("final_project")
+            .getPublicUrl(data.path);
+
+        return publicUrlResponse.data.publicUrl;
     } catch (error) {
         console.error("Error uploading file to Supabase Storage:", error);
         throw error;
     }
-}
+};
+
 
 // Create (POST)
 export const createUser = (user) => async (dispatch) => {

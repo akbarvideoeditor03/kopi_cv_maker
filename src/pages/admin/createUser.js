@@ -44,7 +44,7 @@ const CreateUser = () => {
                 text: "Format foto profil tidak valid",
             });
             return;
-        }        
+        }
 
         if (!/\S+@\S+\.\S+/.test(userData.email)) {
             Swal.fire({
@@ -67,14 +67,21 @@ const CreateUser = () => {
         try {
             if (userData.foto_profil) {
                 const file = userData.foto_profil;
-                await uploadToSupabase(file);
+                const fileParts = file.name.split('.').filter(Boolean);
+                const fileName = fileParts.slice(0, -1).join('.');
+                const fileType = fileParts.slice(-1);
+                const timestamp = new Date().toISOString();
+                const newFileName = fileName+" "+timestamp+"."+fileType;
+                
+                let foto = null;
+                foto = await uploadToSupabase(newFileName, file);
 
                 const newUser = {
                     nama: userData.nama,
                     no_telp: userData.no_telp,
                     alamat: userData.alamat,
                     tentang: userData.tentang,
-                    foto_profil: file.name,
+                    foto_profil: foto,
                     email: userData.email,
                     password: userData.password
                 }
@@ -157,7 +164,7 @@ const CreateUser = () => {
                                 <div className="container col-f-0">
                                     <label>Tentang</label>
                                     <textarea
-                                    className="textarea"
+                                        className="textarea"
                                         name="tentang"
                                         value={userData.tentang}
                                         onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
@@ -169,7 +176,7 @@ const CreateUser = () => {
                                     <label>Foto Profil</label>
                                     <input
                                         name="foto_profil"
-                                        onChange={(e) => setUserData({ ...userData, foto_profil: e.target.files[0]})}
+                                        onChange={(e) => setUserData({ ...userData, foto_profil: e.target.files[0] })}
                                         type="file"
                                         accept="image/jpeg, image/png"
                                         placeholder="Unggah Foto Profil Anda"
