@@ -1,18 +1,18 @@
 import { userTypes } from "../actionTypes";
 import { createClient } from '@supabase/supabase-js';
+const baseUrl = "http://localhost:4000/user";
+
 const supabaseUrl = 'https://umvqfijgyrkcxaubrerq.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtdnFmaWpneXJrY3hhdWJyZXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI2MzA0MjUsImV4cCI6MjA0ODIwNjQyNX0.yp13eY3-UjoSEa-nUdY7a_cJdpOXD3v7TiihzTGxF4U';
-
 const supabase = createClient(supabaseUrl, supabaseKey);
 export default supabase;
 
-const baseUrl = "http://localhost:4000/user";
 
 export const uploadToSupabase = async (file) => {
     try {
         const { data, error } = await supabase.storage
             .from("final_project")
-            .upload(`uploads/${file.name}`, file, {
+            .upload(file.name, file, {
                 upsert: false,
             });
 
@@ -41,7 +41,6 @@ export const createUser = (user) => async (dispatch) => {
             body: JSON.stringify(user),
         });
         const data = await response.json();
-        console.log(data);
         dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
     } catch (error) {
         dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
@@ -55,8 +54,7 @@ export const getUser = () => {
         try {
             const response = await fetch(baseUrl);
             const data = await response.json();
-            // console.log(data);
-            // console.log(data.data.map((item => item.nama)));
+
             dispatch({
                 type: userTypes.GET_USER_LIST_SUCCESS,
                 payload: data.data,
@@ -73,9 +71,7 @@ export const getUserId = (id) => {
         try {
             const response = await fetch(`${baseUrl}/${id}`);
             const data = await response.json();
-            console.log(data.data);
-            // console.log(data);
-            // console.log(data.data.map((item => item.nama)));
+
             dispatch({
                 type: userTypes.GET_USER_ID_LIST_SUCCESS,
                 payload: data.data,

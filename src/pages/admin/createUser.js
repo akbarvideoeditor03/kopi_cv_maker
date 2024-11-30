@@ -20,7 +20,11 @@ const CreateUser = () => {
         e.preventDefault();
 
         if (!userData.nama || !userData.email || !userData.password) {
-            alert("Nama, email, dan password wajib diisi!");
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Nama, email, dan password wajib diisi",
+            });
             return;
         }
 
@@ -32,6 +36,15 @@ const CreateUser = () => {
             });
             return;
         }
+
+        if (!["image/jpg", "image/jpeg", "image/png"].includes(userData.foto_profil.type)) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Format foto profil tidak valid",
+            });
+            return;
+        }        
 
         if (!/\S+@\S+\.\S+/.test(userData.email)) {
             Swal.fire({
@@ -55,27 +68,34 @@ const CreateUser = () => {
             if (userData.foto_profil) {
                 const file = userData.foto_profil;
                 await uploadToSupabase(file);
-            }
 
-            const newUser = {
-                ...userData,
-                // Belum bisa unggah nama foto ke database karna type file object, bukan string. Foto sudah bisa diunggah ke supabase
+                const newUser = {
+                    nama: userData.nama,
+                    no_telp: userData.no_telp,
+                    alamat: userData.alamat,
+                    tentang: userData.tentang,
+                    foto_profil: file.name,
+                    email: userData.email,
+                    password: userData.password
+                }
+
+                dispatch(createUser(newUser));
+                Swal.fire({
+                    icon: "success",
+                    title: "Selamat",
+                    text: "Akun berhasil dibuat",
+                });
+
+                setUserData({
+                    nama: "",
+                    no_telp: "",
+                    alamat: "",
+                    tentang: "",
+                    foto_profil: "",
+                    email: "",
+                    password: ""
+                });
             }
-            dispatch(createUser(newUser));
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Akun berhasil dibuat",
-            });
-            setUserData({
-                nama: "",
-                no_telp: "",
-                alamat: "",
-                tentang: "",
-                foto_profil: "",
-                email: "",
-                password: ""
-            });
         } catch (error) {
             Swal.fire({
                 icon: "error",
@@ -151,7 +171,7 @@ const CreateUser = () => {
                                         name="foto_profil"
                                         onChange={(e) => setUserData({ ...userData, foto_profil: e.target.files[0]})}
                                         type="file"
-                                        accept="image/*"
+                                        accept="image/jpeg, image/png"
                                         placeholder="Unggah Foto Profil Anda"
                                     />
                                 </div>
