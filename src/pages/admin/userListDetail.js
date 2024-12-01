@@ -8,7 +8,7 @@ function UserListDetail() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { userList, isLoading, error } = useSelector((state) => state.userReducer);
-
+    console.log("Halo", userList);
     useEffect(() => {
         dispatch(getUserId(id));
     }, [dispatch, id]);

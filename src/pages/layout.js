@@ -7,7 +7,7 @@ function Layout() {
     return(
         <section>
             <WebHeader />
-            <Outlet />
+                <Outlet />
             <WebFooter />
         </section>
     )

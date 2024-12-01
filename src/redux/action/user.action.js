@@ -77,11 +77,12 @@ export const getUserId = (id) => {
         try {
             const response = await fetch(`${baseUrl}/${id}`);
             const data = await response.json();
-
+            
             dispatch({
                 type: userTypes.GET_USER_ID_LIST_SUCCESS,
                 payload: data.data,
             });
+            return data;
         } catch (error) {
             dispatch({ type: userTypes.GET_USER_ID_LIST_FAILURE, payload: error });
         }
@@ -100,7 +101,8 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
             body: JSON.stringify(updatedUser),
         });
         const data = await response.json();
-        dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data });
+        console.log("Halo", data);
+        dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data.data });
     } catch (error) {
         dispatch({ type: userTypes.UPDATE_USER_FAILURE, payload: error });
     }

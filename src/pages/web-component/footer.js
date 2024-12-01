@@ -9,26 +9,26 @@ function WebFooter() {
                 <div className="footer-section f-1">
                     <p style={{color : '#ffc400'}} className="fw6">Dibuat oleh :</p>
                     <div className="container col-f f-1 f-center">
-                        <img className="footer-img" src="./assets/icon/logo.png" alt="logo.png" />
+                        <img className="footer-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/Logo.png" alt="logo.png" />
                     </div>
                 </div>
                 <div className="footer-section f-1">
                     <p style={{color : '#ffc400'}} className="fw6">Features</p>
                     <ul>
                         <li>
-                            <ScrollLink to="" offset={''} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
+                            <ScrollLink to="" offset={0} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
                         </li>
                         <li>
-                            <ScrollLink to="" offset={''} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
+                            <ScrollLink to="" offset={0} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
                         </li>
                         <li>
-                            <ScrollLink to="" offset={''} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
+                            <ScrollLink to="" offset={0} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
                         </li>
                         <li>
-                            <ScrollLink to="" offset={''} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
+                            <ScrollLink to="" offset={0} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
                         </li>
                         <li>
-                            <ScrollLink to="" offset={''} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
+                            <ScrollLink to="" offset={0} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
                         </li>
                     </ul>
                 </div>
@@ -36,16 +36,16 @@ function WebFooter() {
                     <p style={{color : '#ffc400'}} className="fw6">Social Media</p>
                     <div className="container col-f">
                         <RouterLink className="social-media" target="blank" to='https://github.com/akbarvideoeditor03' title="GitHub : akbarvideoeditor03">
-                            <img className="icon-img" src="./assets/social-media/github.svg" alt="" /> akbarvideoeditor03
+                            <img className="icon-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/eaba35dcd8c2efeebc51e504ebbec9a9952f2c7f/public/assets/social-media/github.svg" alt="" /> akbarvideoeditor03
                         </RouterLink>
                         <RouterLink className="social-media" target="blank" to='https://www.instagram.com/ahmadakbar03/' title="Instagram : ahmadakbar03">
-                            <img className="icon-img" src="./assets/social-media/instagram.svg" alt="" /> ahmadakbar03
+                            <img className="icon-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/eaba35dcd8c2efeebc51e504ebbec9a9952f2c7f/public/assets/social-media/instagram.svg" alt="" /> ahmadakbar03
                         </RouterLink>
                         <RouterLink className="social-media" target="blank" to='https://www.youtube.com/@ahmadakbar03' title="YouTube : Media Cara">
-                            <img className="icon-img" src="./assets/social-media/youtube.svg" alt="" /> Media Cara
+                            <img className="icon-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/eaba35dcd8c2efeebc51e504ebbec9a9952f2c7f/public/assets/social-media/youtube.svg" alt="" /> Media Cara
                         </RouterLink>
                         <RouterLink className="social-media" target="blank" to='https://www.linkedin.com/in/ahmad-akbar-0a533b275/' title="YouTube : Media Cara">
-                            <img className="icon-img" src="./assets/social-media/linkedin.svg" alt="" /> Ahmad Akbar
+                            <img className="icon-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/eaba35dcd8c2efeebc51e504ebbec9a9952f2c7f/public/assets/social-media/linkedin.svg" alt="" /> Ahmad Akbar
                         </RouterLink>
                     </div>
                 </div>

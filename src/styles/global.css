@@ -294,6 +294,73 @@
     margin-block: 5rem;
 }
 
+/* Margin inline */
+.m-i1 {
+    margin-inline: 1rem;
+}
+
+.m-i2 {
+    margin-inline: 2rem;
+}
+
+.m-i3{
+    margin-inline: 3rem;
+}
+
+.m-i4 {
+    margin-inline: 4rem;
+}
+
+.m-i5 {
+    margin-inline: 5rem;
+}
+
+
+/* Margin top */
+
+.m-t1 {
+    margin-top: 1rem;
+}
+
+.m-t2 {
+    margin-top: 2rem;
+}
+
+.m-t3{
+    margin-top: 3rem;
+}
+
+.m-t4 {
+    margin-top: 4rem;
+}
+
+.m-t5 {
+    margin-top: 5rem;
+}
+
+
+/* Margin bottom*/
+
+.m-bt1 {
+    margin-bottom: 1rem;
+}
+
+.m-bt2 {
+    margin-bottom: 2rem;
+}
+
+.m-bt3{
+    margin-bottom: 3rem;
+}
+
+.m-bt4 {
+    margin-bottom: 4rem;
+}
+
+.m-bt5 {
+    margin-bottom: 5rem;
+}
+
 
 .footer-section {
     min-height: 200px;

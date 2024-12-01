@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
 
 function Dropdown() {
 
@@ -25,10 +23,8 @@ function Dropdown() {
         <div className="dropdown">
             <button className="hamburger-btn" onClick={toggleDropdown}>≡</button>
             <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
-                <RouterLink to='/login'>Login</RouterLink>
-                <ScrollLink>Erere</ScrollLink>
-                <ScrollLink>Erere</ScrollLink>
-                <ScrollLink>Erere</ScrollLink>
+                <a href="/register" >Daftar</a>
+                <a href="/login" >Login</a>
             </ul>
         </div>
     )

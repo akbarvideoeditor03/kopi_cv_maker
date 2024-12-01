@@ -1,120 +1,108 @@
-import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { createUser, uploadToSupabase } from "../../redux/action/user.action";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { getUserId, updateUser } from "../../redux/action/user.action";
+import { uploadToSupabase } from "../../redux/action/user.action";
+import { useDispatch, useSelector } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const CreateUser = () => {
+const UpdateUser = ({ userId }) => {
+    const { id } = useParams();
     const dispatch = useDispatch();
+    const { userList } = useSelector((state) => state.userReducer);
+    useEffect(() => {
+        dispatch(getUserId(id));
+    }, [dispatch, id]);
     const [userData, setUserData] = useState({
         nama: "",
         no_telp: "",
         alamat: "",
         tentang: "",
-        foto_profil: "",
+        foto_profil: null,
         email: "",
-        password: ""
     });
+
+    useEffect(() => {
+        if (userId) {
+            dispatch(getUserId(userId));
+        }
+    }, [dispatch, userId]);
+
+    useEffect(() => {
+        if (userList) {
+            setUserData({
+                nama: userList.nama || "",
+                no_telp: userList.no_telp || "",
+                alamat: userList.alamat || "",
+                tentang: userList.tentang || "",
+                foto_profil: userList.foto_profil || null,
+                email: userList.email || ""
+            });
+        }
+    }, [userList]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!userData.nama || !userData.email || !userData.password) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Nama, email, dan password wajib diisi",
-            });
-            return;
-        }
-
-        if (userData.no_telp && !/^\d{11,13}$/.test(userData.no_telp)) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Nomor telepon tidak valid!. Harus berupa angka 11 - 13 digit",
-            });
-            return;
-        }
-
-        if (!["image/jpg", "image/jpeg", "image/png"].includes(userData.foto_profil.type)) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Format foto profil tidak valid",
-            });
-            return;
-        }
-
-        if (!/\S+@\S+\.\S+/.test(userData.email)) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Format email tidak valid",
-            });
-            return;
-        }
-
-        if (userData.password.length < 8) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Password kurang lengkap. Minimal 8 karakter",
-            });
-            return;
-        }
-
         try {
-            if (userData.foto_profil) {
+            if (!userData.foto_profil) {
+                const updatedUser = {
+                    nama: userData.nama,
+                    no_telp: userData.no_telp,
+                    alamat: userData.alamat,
+                    tentang: userData.tentang,
+                    email: userData.email
+                }
+
+                dispatch(updateUser(id, updatedUser));
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Berhasil",
+                    text: "Data berhasil diperbarui",
+                    timer: 3000,
+                    allowEscapeKey: false,
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                });
+            } else {
                 const file = userData.foto_profil;
                 const fileParts = file.name.split('.').filter(Boolean);
                 const fileName = fileParts.slice(0, -1).join('.');
                 const fileType = fileParts.slice(-1);
                 const timestamp = new Date().toISOString();
-                const newFileName = fileName+" "+timestamp+"."+fileType;
-                
+                const newFileName = fileName + " " + timestamp + "." + fileType;
+
                 let foto = null;
                 foto = await uploadToSupabase(newFileName, file);
 
-                const newUser = {
+                const updatedUser = {
                     nama: userData.nama,
                     no_telp: userData.no_telp,
                     alamat: userData.alamat,
                     tentang: userData.tentang,
                     foto_profil: foto,
-                    email: userData.email,
-                    password: userData.password
+                    email: userData.email
                 }
 
-                dispatch(createUser(newUser));
+                dispatch(updateUser(id, updatedUser));
+
                 Swal.fire({
                     icon: "success",
-                    title: "Selamat",
-                    text: "Akun berhasil dibuat",
-                    showConfirmButton: false,
-                    timer:3000,
+                    title: "Berhasil",
+                    text: "Data berhasil diperbarui",
+                    timer: 3000,
                     allowEscapeKey: false,
+                    showConfirmButton: false,
                     allowOutsideClick: false,
                     timerProgressBar: true,
                 });
-
-                setUserData({
-                    nama: "",
-                    no_telp: "",
-                    alamat: "",
-                    tentang: "",
-                    foto_profil: null,
-                    email: "",
-                    password: ""
-                });
             }
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-            });
+            Swal.fire({ icon: "error", title: "Oops...", text: error.message || "Gagal memperbarui data pengguna" });
         }
+
     };
 
 
@@ -123,7 +111,7 @@ const CreateUser = () => {
             <section className="card container row-f f-wrap-r full-width section-max">
                 <div className="container col-f login-left f-1 f-between">
                     <div className="container col-f">
-                        <h1>Daftar</h1>
+                        <h1>Edit Data</h1>
                         <div className="container f-center-c">
                             <img
                                 className="login-icon"
@@ -197,22 +185,12 @@ const CreateUser = () => {
                                         type="email"
                                         placeholder="Masukkan Email Anda" />
                                 </div>
-                                <div className="container col-f-0">
-                                    <label>Password</label>
-                                    <input
-                                        name="password"
-                                        value={userData.password}
-                                        onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
-                                        type="password"
-                                        placeholder="Masukkan Password (min 8 karakter)"
-                                    />
-                                </div>
                                 <button
                                     style={{ fontSize: "1rem" }}
                                     type="submit"
                                     className="btn btn-primary"
                                 >
-                                    Daftar
+                                    Perbarui
                                 </button>
                             </form>
                         </div>
@@ -234,4 +212,4 @@ const CreateUser = () => {
     );
 };
 
-export default CreateUser;
+export default UpdateUser;

@@ -8,6 +8,7 @@ import HomeUser from "../client/home";
 import UserList from "../admin/userList";
 import UserListDetail from "../admin/userListDetail";
 import CreateUser from "../admin/createUser";
+import UpdateUser from "../admin/updateUser";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/user" element={<UserList />}></Route>
         <Route path="/user/:id" element={<UserListDetail />}></Route>
         <Route path="/user/create" element={<CreateUser />}></Route>
+        <Route path="/user/edit/:id" element={<UpdateUser />}></Route>
       </Route>
     </Routes>
   );
