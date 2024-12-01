@@ -35,7 +35,7 @@ const UpdateUser = ({ userId }) => {
                 no_telp: userList.no_telp || "",
                 alamat: userList.alamat || "",
                 tentang: userList.tentang || "",
-                foto_profil: userList.foto_profil || null,
+                foto_profil: null,
                 email: userList.email || ""
             });
         }
@@ -45,7 +45,7 @@ const UpdateUser = ({ userId }) => {
         e.preventDefault();
 
         try {
-            if (!userData.foto_profil) {
+            if (userData.foto_profil === null || userData.foto_profil === "" ) {
                 const updatedUser = {
                     nama: userData.nama,
                     no_telp: userData.no_telp,
