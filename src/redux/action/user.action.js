@@ -101,7 +101,6 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
             body: JSON.stringify(updatedUser),
         });
         const data = await response.json();
-        console.log("Halo", data);
         dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data.data });
     } catch (error) {
         dispatch({ type: userTypes.UPDATE_USER_FAILURE, payload: error });
