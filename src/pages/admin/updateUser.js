@@ -54,17 +54,29 @@ const UpdateUser = ({ userId }) => {
                     email: userData.email
                 }
 
-                dispatch(updateUser(id, updatedUser));
-
                 Swal.fire({
-                    icon: "success",
-                    title: "Berhasil",
-                    text: "Data berhasil diperbarui",
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
+                    title: 'Update data?',
+                    text: "Yakin datanya sudah benar?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, update!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch(updateUser(id, updatedUser));
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Data berhasil diupdate.',
+                            timer: 3000,
+                            allowEscapeKey: false,
+                            showConfirmButton:false,
+                            allowOutsideClick: false,
+                            timerProgressBar: true,
+                        }).then(() => {
+                            window.location = `/user/${id}`;
+                        });
+                    }
                 });
             } else {
                 const file = userData.foto_profil;
@@ -86,18 +98,30 @@ const UpdateUser = ({ userId }) => {
                     email: userData.email
                 }
 
-                dispatch(updateUser(id, updatedUser));
-
                 Swal.fire({
-                    icon: "success",
-                    title: "Berhasil",
-                    text: "Data berhasil diperbarui",
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                });
+                    title: 'Update data?',
+                    text: "Yakin datanya sudah benar?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, update!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch(updateUser(id, updatedUser));
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Data berhasil diupdate.',
+                            timer: 3000,
+                            showConfirmButton:false,
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                            timerProgressBar: true,
+                        }).then(() => {
+                            window.location = `user/${id}`;
+                        });
+                    }
+                });                
             }
         } catch (error) {
             Swal.fire({ icon: "error", title: "Oops...", text: error.message || "Gagal memperbarui data pengguna" });
@@ -206,6 +230,9 @@ const UpdateUser = ({ userId }) => {
                             <i className="bi-whatsapp"></i> Admin
                         </RouterLink>
                     </div>
+                </div>
+                <div className="container col-f f-center-c login-right">
+                    <img className="login-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg" alt="login-img" />
                 </div>
             </section>
         </main>

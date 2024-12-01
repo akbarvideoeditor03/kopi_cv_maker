@@ -31,7 +31,7 @@ function UserListDetail() {
                 <div className="container col-f">
                     <p>{userList.id}</p>
                     <p>{userList.nama}</p>
-                    <p>{userList.email}</p>
+                    <p className="cut-text">{userList.email}</p>
                     <p>{userList.tentang === null ? <p>Data Kosong</p> : userList.tentang}</p>
                     <img style={{maxWidth : '200px', height : '100%'}} className="full-width" src={`${userList.foto_profil}`} alt="" />
                 </div>

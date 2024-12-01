@@ -15,7 +15,6 @@
     box-shadow: 0px 5px 10px rgba(44, 44, 44, 0.2);
 }
 
-
 /* Flex Layout */
 
 .container {
@@ -100,9 +99,6 @@
     flex-wrap: wrap-reverse;
 }
 
-
-
-
 .full-width {
     width: 100%;
 }
@@ -132,6 +128,32 @@
     max-width: 20px;
 }
 
+.user-list {
+    color: rgb(30, 30, 30);
+}
+
+.menu-card {
+    transition: transform 200ms ease-out;
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: #e9e9e9;
+    box-shadow: 0px 5px 10px hsla(0, 0%, 0%, 0.2);
+}
+
+.menu-card:hover {
+    position: relative;
+    background-color: #ffffff;
+    transform: translateY(-2%);
+    box-shadow: 0px 5px 10px rgba(255, 172, 56, 0.5);
+}
+
+.menu-card:active {
+    position: relative;
+    background-color: #f7f7f7;
+    transform: translateY(-2%) scale(99.25%);
+    box-shadow: 0px 5px 10px rgba(169, 113, 33, 0.5);
+}
+
 .nav {
     display: flex;
     flex-direction: row;
@@ -157,14 +179,12 @@
     max-width: calc(100%);
 }
 
-
 /* Grid Layout */
 
 .grid {
     display: grid;
     gap: 0.75rem;
 }
-
 
 /* Font Weight Classes */
 
@@ -184,10 +204,9 @@
     font-weight: 800;
 }
 
-.fwb  {
+.fwb {
     font-weight: bold;
 }
-
 
 /* Font Colors Classes */
 
@@ -198,7 +217,6 @@
 .c-black {
     color: rgb(0, 0, 0);
 }
-
 
 /* Dropdown */
 
@@ -260,7 +278,16 @@
     text-align: justify;
 }
 
-.login-left {
+.cut-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 65vw;
+    height: 1.2em;
+    white-space: wrap;
+}
+
+.login-left,
+.left-card-menu {
     flex-grow: 1;
     flex-basis: 250px;
 }
@@ -270,6 +297,9 @@
     flex-basis: 250px;
 }
 
+.right-card-menu {
+    flex-basis: 100px;
+}
 
 /* Margin Classes */
 
@@ -282,7 +312,7 @@
     margin-block: 2rem;
 }
 
-.m-b3{
+.m-b3 {
     margin-block: 3rem;
 }
 
@@ -303,7 +333,7 @@
     margin-inline: 2rem;
 }
 
-.m-i3{
+.m-i3 {
     margin-inline: 3rem;
 }
 
@@ -315,7 +345,6 @@
     margin-inline: 5rem;
 }
 
-
 /* Margin top */
 
 .m-t1 {
@@ -326,7 +355,7 @@
     margin-top: 2rem;
 }
 
-.m-t3{
+.m-t3 {
     margin-top: 3rem;
 }
 
@@ -338,7 +367,6 @@
     margin-top: 5rem;
 }
 
-
 /* Margin bottom*/
 
 .m-bt1 {
@@ -349,7 +377,7 @@
     margin-bottom: 2rem;
 }
 
-.m-bt3{
+.m-bt3 {
     margin-bottom: 3rem;
 }
 
@@ -360,7 +388,6 @@
 .m-bt5 {
     margin-bottom: 5rem;
 }
-
 
 .footer-section {
     min-height: 200px;

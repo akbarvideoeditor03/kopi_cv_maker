@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../redux/action/user.action";
+import { getUser, deleteUser } from "../../redux/action/user.action";
 import Swal from "sweetalert2";
 
 function UserList() {
@@ -10,6 +10,33 @@ function UserList() {
     useEffect(() => {
         dispatch(getUser());
     }, [dispatch]);
+
+    const deleteData = (id) => {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteUser(id));
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Dihapus!',
+                    text: 'Data berhasil dihapus.',
+                    timer: 2000,
+                    showConfirmButton:false,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                }).then(() => {
+                    window.location.reload();
+                });
+            }
+        });
+    }
 
     useEffect(() => {
         if (error) {
@@ -37,19 +64,20 @@ function UserList() {
                         <div className="container col-f">
                             {userList.map((item) => {
                                 return (
-                                    <div key={item.id} className="card-mini container col-f full-width">
+                                    <div key={item.id} className="menu-card container col-f full-width">
                                         <div className="container row-f f-wrap">
-                                            <div className="container col-f f-1 fj-center">
-                                                <a href={`/user/${item.id}`}>
-                                                    <div className="container row-f f-wrap f-between">
+                                            <div className="container left-card-menu col-f f-1 fj-center">
+                                                <a className="user-list" href={`/user/${item.id}`}>
+                                                    <div className="container col-f f-wrap">
                                                         <h3>{item.nama}</h3>
-                                                        <p>{item.email}</p>
+                                                        <p className="cut-text">{item.email}</p>
+                                                        <p>{item.no_telp}</p>
                                                     </div>
                                                 </a>
                                             </div>
-                                            <div className="container col-f">
-                                                <a href={`user/edit/${item.id}`} className="btn btn-info">Ubah</a>
-                                                <a href={`user/delete/${item.id}`} className="btn btn-danger">Hapus</a>
+                                            <div style={{ zIndex: '10' }} className="container col-f full-width right-card-menu">
+                                                <a href={`user/edit/${item.id}`} className="t-center btn btn-info">Ubah</a>
+                                                <button onClick={() => deleteData(item.id)} className="t-center btn btn-danger">Hapus</button>
                                             </div>
                                         </div>
                                     </div>

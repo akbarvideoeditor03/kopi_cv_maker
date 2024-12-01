@@ -96,6 +96,8 @@ const CreateUser = () => {
                     allowEscapeKey: false,
                     allowOutsideClick: false,
                     timerProgressBar: true,
+                }).then(() => {
+                    window.location = '/user';
                 });
 
                 setUserData({
@@ -228,6 +230,9 @@ const CreateUser = () => {
                             <i className="bi-whatsapp"></i> Admin
                         </RouterLink>
                     </div>
+                </div>
+                <div className="container col-f f-center-c login-right">
+                    <img className="login-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg" alt="login-img" />
                 </div>
             </section>
         </main>
