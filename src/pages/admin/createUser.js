@@ -46,6 +46,17 @@ const CreateUser = () => {
             return;
         }
 
+        const wordCount = userData.tentang.trim().split(/\s+/).length;
+        if (wordCount > 100) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
+            });
+            return;
+        }
+
+
         if (!/\S+@\S+\.\S+/.test(userData.email)) {
             Swal.fire({
                 icon: "error",
@@ -71,8 +82,8 @@ const CreateUser = () => {
                 const fileName = fileParts.slice(0, -1).join('.');
                 const fileType = fileParts.slice(-1);
                 const timestamp = new Date().toISOString();
-                const newFileName = fileName+" "+timestamp+"."+fileType;
-                
+                const newFileName = fileName + " " + timestamp + "." + fileType;
+
                 let foto = null;
                 foto = await uploadToSupabase(newFileName, file);
 
@@ -92,7 +103,7 @@ const CreateUser = () => {
                     title: "Selamat",
                     text: "Akun berhasil dibuat",
                     showConfirmButton: false,
-                    timer:3000,
+                    timer: 3000,
                     allowEscapeKey: false,
                     allowOutsideClick: false,
                     timerProgressBar: true,

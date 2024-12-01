@@ -41,8 +41,17 @@ const UpdateUser = ({ userId }) => {
         }
     }, [userList]);
 
+    const wordCount = userData.tentang.trim().split(/\s+/).filter(Boolean).length;
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (wordCount > 100) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
+            });
+            return;
+        }
 
         try {
             if (userData.foto_profil === null || userData.foto_profil === "" ) {
@@ -181,6 +190,7 @@ const UpdateUser = ({ userId }) => {
                                 <div className="container col-f-0">
                                     <label>Tentang</label>
                                     <textarea
+                                        style={{marginBottom : '0.5rem'}}
                                         className="textarea"
                                         name="tentang"
                                         value={userData.tentang}
@@ -188,6 +198,7 @@ const UpdateUser = ({ userId }) => {
                                         type="text"
                                         placeholder="Deskripsikan Tentang Anda. Maks. 100 kata"
                                     />
+                                    <p style={{fontSize : 'small'}}>Jumlah kata : <b>{`${wordCount}`}</b></p>
                                 </div>
                                 <div className="container col-f-0">
                                     <label>Foto Profil</label>
