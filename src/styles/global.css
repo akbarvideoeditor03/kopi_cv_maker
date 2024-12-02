@@ -132,6 +132,10 @@
     color: rgb(30, 30, 30);
 }
 
+.list-container {
+    min-height: 50vh;
+}
+
 .menu-card {
     transition: transform 200ms ease-out;
     padding: 1rem;

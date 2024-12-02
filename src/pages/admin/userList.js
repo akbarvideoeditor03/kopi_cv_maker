@@ -27,7 +27,7 @@ function UserList() {
                     title: 'Dihapus!',
                     text: 'Data berhasil dihapus.',
                     timer: 2000,
-                    showConfirmButton:false,
+                    showConfirmButton: false,
                     allowEscapeKey: false,
                     allowOutsideClick: false,
                     timerProgressBar: true,
@@ -43,7 +43,7 @@ function UserList() {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: `Hm... Ada yang salah nih!, ${error.message}`,
+                text: `Gagal mengambil data!`,
                 confirmButtonText: 'OK'
             });
         }
@@ -58,33 +58,35 @@ function UserList() {
                 </div>
                 <div className="container col-f">
                     <h1>Daftar Pengguna</h1>
-                    {isLoading ? (
-                        <div className="container col-f f-center-c"><p>Silahkan tunggu...</p></div>
-                    ) : (
-                        <div className="container col-f">
-                            {userList.map((item) => {
-                                return (
-                                    <div key={item.id} className="menu-card container col-f full-width">
-                                        <div className="container row-f f-wrap">
-                                            <div className="container left-card-menu col-f f-1 fj-center">
-                                                <a className="user-list" href={`/user/${item.id}`}>
-                                                    <div className="container col-f f-wrap">
-                                                        <h3>{item.nama}</h3>
-                                                        <p className="cut-text">{item.email}</p>
-                                                        <p>{item.no_telp}</p>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div style={{ zIndex: '10' }} className="container col-f full-width right-card-menu">
-                                                <a href={`user/edit/${item.id}`} className="t-center btn btn-info">Ubah</a>
-                                                <button onClick={() => deleteData(item.id)} className="t-center btn btn-danger">Hapus</button>
+                    <div className="container col-f full-width list-container fj-center">
+                        {isLoading ? (
+                            <div className="container col-f f-center-c"><div className="custom-loader"></div></div>
+                        ) : (
+                            <div className="container col-f">
+                                {userList.map((item) => {
+                                    return (
+                                        <div key={item.id} className="menu-card container col-f full-width">
+                                            <div className="container row-f f-wrap">
+                                                <div className="container left-card-menu col-f f-1 fj-center">
+                                                    <a className="user-list" href={`/user/${item.id}`}>
+                                                        <div className="container col-f f-wrap">
+                                                            <h3>{item.nama}</h3>
+                                                            <p className="cut-text">{item.email}</p>
+                                                            <p>{item.no_telp}</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div style={{ zIndex: '10' }} className="container col-f full-width right-card-menu">
+                                                    <a href={`user/edit/${item.id}`} className="t-center btn btn-info">Ubah</a>
+                                                    <button onClick={() => deleteData(item.id)} className="t-center btn btn-danger">Hapus</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    )}
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </section>
         </main>
