@@ -71,6 +71,15 @@ const UpdateUser = ({ userId }) => {
                     confirmButtonText: 'Ya, update!',
                     cancelButtonText: 'Batal',
                 }).then((result) => {
+                    Swal.fire({
+                        title: "Sebentar...",
+                        html: '<div className="custom-loader"></div>',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        },
+                    });
                     if (result.isConfirmed) {
                         dispatch(updateUser(id, updatedUser));
                         Swal.fire({
@@ -88,25 +97,6 @@ const UpdateUser = ({ userId }) => {
                     }
                 });
             } else {
-                const file = userData.foto_profil;
-                const fileParts = file.name.split('.').filter(Boolean);
-                const fileName = fileParts.slice(0, -1).join('.');
-                const fileType = fileParts.slice(-1);
-                const timestamp = new Date().toISOString();
-                const newFileName = fileName + " " + timestamp + "." + fileType;
-
-                let foto = null;
-                foto = await uploadToSupabase(newFileName, file);
-
-                const updatedUser = {
-                    nama: userData.nama,
-                    no_telp: userData.no_telp,
-                    alamat: userData.alamat,
-                    tentang: userData.tentang,
-                    foto_profil: foto,
-                    email: userData.email
-                }
-
                 Swal.fire({
                     title: 'Update data?',
                     text: "Yakin datanya sudah benar?",
@@ -114,23 +104,61 @@ const UpdateUser = ({ userId }) => {
                     showCancelButton: true,
                     confirmButtonText: 'Ya, update!',
                     cancelButtonText: 'Batal',
-                }).then((result) => {
+                }).then(async (result) => {
                     if (result.isConfirmed) {
-                        dispatch(updateUser(id, updatedUser));
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: 'Data berhasil diupdate.',
-                            timer: 3000,
-                            showConfirmButton:false,
-                            allowEscapeKey: false,
+                            title: "Sebentar...",
+                            html: '<div className="custom-loader"></div>',
                             allowOutsideClick: false,
-                            timerProgressBar: true,
-                        }).then(() => {
-                            window.location = `user/${id}`;
+                            allowEscapeKey: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
                         });
+                
+                        try {
+                            const file = userData.foto_profil;
+                            const fileParts = file.name.split('.').filter(Boolean);
+                            const fileName = fileParts.slice(0, -1).join('.');
+                            const fileType = fileParts.slice(-1);
+                            const timestamp = new Date().toISOString();
+                            const newFileName = `${fileName} ${timestamp}.${fileType}`;
+                
+                            let foto = null;
+                            foto = await uploadToSupabase(newFileName, file);
+                
+                            const updatedUser = {
+                                nama: userData.nama,
+                                no_telp: userData.no_telp,
+                                alamat: userData.alamat,
+                                tentang: userData.tentang,
+                                foto_profil: foto,
+                                email: userData.email,
+                            };
+                
+                            dispatch(updateUser(id, updatedUser));
+                
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                text: 'Data berhasil diupdate.',
+                                timer: 3000,
+                                showConfirmButton: false,
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                timerProgressBar: true,
+                            }).then(() => {
+                                window.location = `/user/${id}`;
+                            });
+                        } catch (error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Terjadi kesalahan saat memperbarui data.',
+                            });
+                        }
                     }
-                });                
+                });                                
             }
         } catch (error) {
             Swal.fire({ icon: "error", title: "Oops...", text: error.message || "Gagal memperbarui data pengguna" });

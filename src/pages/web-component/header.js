@@ -1,6 +1,5 @@
 import React from "react";
 import Dropdown from "./dropdown";
-import { Link as RouterLink } from "react-router-dom";
 
 function WebHeader() {
     return (
@@ -29,6 +28,9 @@ function WebHeader() {
                 </div>
                 <div className="container col-f">
                     <a href='/register'>Daftar</a>
+                </div>
+                <div className="container col-f">
+                    <a href='/login'>Login</a>
                 </div>
             </section>
         </nav>

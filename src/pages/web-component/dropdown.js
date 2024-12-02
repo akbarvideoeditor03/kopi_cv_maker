@@ -25,6 +25,8 @@ function Dropdown() {
             <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
                 <a href="/register" >Daftar</a>
                 <a href="/login" >Login</a>
+                <a href="/user" >User</a>
+                <a href="/home" >Home</a>
             </ul>
         </div>
     )

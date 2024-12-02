@@ -181,6 +181,7 @@
     min-height: 200px;
     min-width: 100%;
     max-width: calc(100%);
+    resize: none;
 }
 
 /* Grid Layout */
@@ -285,20 +286,23 @@
 .cut-text {
     text-overflow: ellipsis;
     overflow: hidden;
-    width: 65vw;
+    max-width: 50vw;
     height: 1.2em;
     white-space: wrap;
 }
 
-.login-left,
-.left-card-menu {
+.login-left {
     flex-grow: 1;
     flex-basis: 250px;
 }
 
 .login-right {
     flex-grow: 1;
-    flex-basis: 250px;
+    flex-basis: 280px;
+}
+
+.left-card-menu {
+    flex-basis: 240px;
 }
 
 .right-card-menu {

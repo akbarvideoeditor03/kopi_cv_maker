@@ -16,10 +16,20 @@ const CreateUser = () => {
         password: ""
     });
 
+    const wordCount = userData.tentang.trim().split(/\s+/).filter(Boolean).length;
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!userData.nama || !userData.email || !userData.password) {
+        if (wordCount > 100) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
+            });
+            return;
+        }
+
+        if (!userData.nama) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -45,13 +55,21 @@ const CreateUser = () => {
             });
             return;
         }
-
-        const wordCount = userData.tentang.trim().split(/\s+/).length;
+        
         if (wordCount > 100) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
+            });
+            return;
+        }
+
+        if (!userData.email) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Email wajib diisi",
             });
             return;
         }
@@ -76,6 +94,16 @@ const CreateUser = () => {
         }
 
         try {
+            Swal.fire({
+                title: "Sebentar...",
+                html: '<div className="custom-loader"></div>',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
             if (userData.foto_profil) {
                 const file = userData.foto_profil;
                 const fileParts = file.name.split('.').filter(Boolean);
@@ -98,18 +126,6 @@ const CreateUser = () => {
                 }
 
                 dispatch(createUser(newUser));
-                Swal.fire({
-                    icon: "success",
-                    title: "Selamat",
-                    text: "Akun berhasil dibuat",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                }).then(() => {
-                    window.location = '/user';
-                });
 
                 setUserData({
                     nama: "",
@@ -126,6 +142,20 @@ const CreateUser = () => {
                 icon: "error",
                 title: "Oops...",
                 text: "Something went wrong!",
+            });
+        } finally {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Akun berhasil dibuat",
+                showConfirmButton: false,
+                timer: 3000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                Swal.close();
+                window.location = '/user';
             });
         }
     };
@@ -182,6 +212,7 @@ const CreateUser = () => {
                                 <div className="container col-f-0">
                                     <label>Tentang</label>
                                     <textarea
+                                        style={{ marginBottom: '0.5rem' }}
                                         className="textarea"
                                         name="tentang"
                                         value={userData.tentang}
@@ -189,6 +220,7 @@ const CreateUser = () => {
                                         type="text"
                                         placeholder="Deskripsikan Tentang Anda. Maks. 100 kata"
                                     />
+                                    <p style={{ fontSize: 'small' }}>Jumlah kata : <b>{`${wordCount}`}</b></p>
                                 </div>
                                 <div className="container col-f-0">
                                     <label>Foto Profil</label>
