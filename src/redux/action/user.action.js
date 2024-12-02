@@ -1,10 +1,13 @@
 import { userTypes } from "../actionTypes";
 import { createClient } from '@supabase/supabase-js';
-const baseUrl = "http://localhost:4000/user";
+import dotenv from 'dotenv';
+dotenv.config();
 
-const supabaseUrl = 'https://umvqfijgyrkcxaubrerq.supabase.co';
-const supabaseBucket = 'https://umvqfijgyrkcxaubrerq.supabase.co/storage/v1/object/public/final_project/';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtdnFmaWpneXJrY3hhdWJyZXJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI2MzA0MjUsImV4cCI6MjA0ODIwNjQyNX0.yp13eY3-UjoSEa-nUdY7a_cJdpOXD3v7TiihzTGxF4U';
+const baseUrl = process.env.BASE_URL;
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseBucket = process.env.SUPABASE_BUCKET;
+const supabaseKey = process.env.SUPABASE_KEY;
+
 const supabase = createClient(supabaseUrl, supabaseKey, supabaseBucket);
 export default supabase;
 
