@@ -21,16 +21,16 @@ function WebHeader() {
                     </a>
                 </div>
                 <div className="container col-f">
-                    <a href='/user'>User</a>
+                    <a href='/user'>Pengguna</a>
                 </div>
                 <div className="container col-f">
-                    <a href='/home'>Home</a>
+                    <a href='/home'>Beranda</a>
                 </div>
                 <div className="container col-f">
-                    <a href='/register'>Daftar</a>
+                    <a href='/user/register'>Daftar</a>
                 </div>
                 <div className="container col-f">
-                    <a href='/login'>Login</a>
+                    <a href='/user/login'>Masuk</a>
                 </div>
             </section>
         </nav>

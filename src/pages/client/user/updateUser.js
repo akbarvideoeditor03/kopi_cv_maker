@@ -1,172 +1,178 @@
-import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { createUserSelf, uploadToSupabase } from "../../redux/action/user.action";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { getUserId, updateUser } from "../../../redux/action/user.action";
+import { uploadToSupabase } from "../../../redux/action/user.action";
+import { useDispatch, useSelector } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const Register = () => {
+const UpdateUserSelf = ({ userId }) => {
+    const { id } = useParams();
     const dispatch = useDispatch();
+    const { userList } = useSelector((state) => state.userReducer);
+    useEffect(() => {
+        dispatch(getUserId(id));
+    }, [dispatch, id]);
     const [userData, setUserData] = useState({
         nama: "",
         no_telp: "",
         alamat: "",
         tentang: "",
-        foto_profil: "",
+        foto_profil: null,
         email: "",
-        password: ""
     });
+
+    useEffect(() => {
+        if (userId) {
+            dispatch(getUserId(userId));
+        }
+    }, [dispatch, userId]);
+
+    useEffect(() => {
+        if (userList) {
+            setUserData({
+                nama: userList.nama || "",
+                no_telp: userList.no_telp || "",
+                alamat: userList.alamat || "",
+                tentang: userList.tentang || "",
+                foto_profil: null,
+                email: userList.email || ""
+            });
+        }
+    }, [userList]);
 
     const wordCount = userData.tentang.trim().split(/\s+/).filter(Boolean).length;
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (wordCount > 100) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
-            });
-            return;
-        }
-
-        if (!userData.nama) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Nama, email, dan password wajib diisi",
-            });
-            return;
-        }
-
-        if (userData.no_telp && !/^\d{11,13}$/.test(userData.no_telp)) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Nomor telepon tidak valid!. Harus berupa angka 11 - 13 digit",
-            });
-            return;
-        }
-
-        if (!["image/jpg", "image/jpeg", "image/png"].includes(userData.foto_profil.type)) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Format foto profil tidak valid",
-            });
-            return;
-        }
-        
-        if (wordCount > 100) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
-            });
-            return;
-        }
-
-        if (!userData.email) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Email wajib diisi",
-            });
-            return;
-        }
-
-
-        if (!/\S+@\S+\.\S+/.test(userData.email)) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Format email tidak valid",
-            });
-            return;
-        }
-
-        if (userData.password.length < 8) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Password kurang lengkap. Minimal 8 karakter",
             });
             return;
         }
 
         try {
-            Swal.fire({
-                title: "Sebentar...",
-                html: '<div className="custom-loader"></div>',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-            });
-
-            if (userData.foto_profil) {
-                const file = userData.foto_profil;
-                const fileParts = file.name.split('.').filter(Boolean);
-                const fileName = fileParts.slice(0, -1).join('.');
-                const fileType = fileParts.slice(-1);
-                const timestamp = new Date().toISOString();
-                const newFileName = fileName + " " + timestamp + "." + fileType;
-
-                let foto = null;
-                foto = await uploadToSupabase(newFileName, file);
-
-                const newUser = {
+            if (userData.foto_profil === null || userData.foto_profil === "" ) {
+                const updatedUser = {
                     nama: userData.nama,
                     no_telp: userData.no_telp,
                     alamat: userData.alamat,
                     tentang: userData.tentang,
-                    foto_profil: foto,
-                    email: userData.email,
-                    password: userData.password
+                    email: userData.email
                 }
 
-                dispatch(createUserSelf(newUser));
-
-                setUserData({
-                    nama: "",
-                    no_telp: "",
-                    alamat: "",
-                    tentang: "",
-                    foto_profil: null,
-                    email: "",
-                    password: ""
+                Swal.fire({
+                    title: 'Update data?',
+                    text: "Yakin datanya sudah benar?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, update!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    Swal.fire({
+                        title: "Sebentar...",
+                        html: '<div className="custom-loader"></div>',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        },
+                    });
+                    if (result.isConfirmed) {
+                        dispatch(updateUser(id, updatedUser));
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Data berhasil diupdate.',
+                            timer: 3000,
+                            allowEscapeKey: false,
+                            showConfirmButton:false,
+                            allowOutsideClick: false,
+                            timerProgressBar: true,
+                        }).then(() => {
+                            window.location = `/user/${id}`;
+                        });
+                    }
                 });
+            } else {
+                Swal.fire({
+                    title: 'Update data?',
+                    text: "Yakin datanya sudah benar?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, update!',
+                    cancelButtonText: 'Batal',
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Sebentar...",
+                            html: '<div className="custom-loader"></div>',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                        });
                 
+                        try {
+                            const file = userData.foto_profil;
+                            const fileParts = file.name.split('.').filter(Boolean);
+                            const fileName = fileParts.slice(0, -1).join('.');
+                            const fileType = fileParts.slice(-1);
+                            const timestamp = new Date().toISOString();
+                            const newFileName = `${fileName} ${timestamp}.${fileType}`;
+                
+                            let foto = null;
+                            foto = await uploadToSupabase(newFileName, file);
+                
+                            const updatedUser = {
+                                nama: userData.nama,
+                                no_telp: userData.no_telp,
+                                alamat: userData.alamat,
+                                tentang: userData.tentang,
+                                foto_profil: foto,
+                                email: userData.email,
+                            };
+                
+                            dispatch(updateUser(id, updatedUser));
+                
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                text: 'Data berhasil diupdate.',
+                                timer: 3000,
+                                showConfirmButton: false,
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                timerProgressBar: true,
+                            }).then(() => {
+                                window.location = `/user/${id}`;
+                            });
+                        } catch (error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Terjadi kesalahan saat memperbarui data.',
+                            });
+                        }
+                    }
+                });                                
             }
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-            });
-        } finally {
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Akun berhasil dibuat",
-                showConfirmButton: false,
-                timer: 3000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                Swal.close();
-                window.location = '/home';
-            });
+            Swal.fire({ icon: "error", title: "Oops...", text: error.message || "Gagal memperbarui data pengguna" });
         }
+
     };
+
 
     return (
         <main className="container col-f f-center-c">
             <section className="card container row-f f-wrap-r full-width section-max">
                 <div className="container col-f login-left f-1 f-between">
                     <div className="container col-f">
-                        <h1>Daftar</h1>
+                        <h1>Edit Data</h1>
                         <div className="container f-center-c">
                             <img
                                 className="login-icon"
@@ -212,7 +218,7 @@ const Register = () => {
                                 <div className="container col-f-0">
                                     <label>Tentang</label>
                                     <textarea
-                                        style={{ marginBottom: '0.5rem' }}
+                                        style={{marginBottom : '0.5rem'}}
                                         className="textarea"
                                         name="tentang"
                                         value={userData.tentang}
@@ -220,7 +226,7 @@ const Register = () => {
                                         type="text"
                                         placeholder="Deskripsikan Tentang Anda. Maks. 100 kata"
                                     />
-                                    <p style={{ fontSize: 'small' }}>Jumlah kata : <b>{`${wordCount}`}</b></p>
+                                    <p style={{fontSize : 'small'}}>Jumlah kata : <b>{`${wordCount}`}</b></p>
                                 </div>
                                 <div className="container col-f-0">
                                     <label>Foto Profil</label>
@@ -242,38 +248,14 @@ const Register = () => {
                                         type="email"
                                         placeholder="Masukkan Email Anda" />
                                 </div>
-                                <div className="container col-f-0">
-                                    <label>Password</label>
-                                    <input
-                                        name="password"
-                                        value={userData.password}
-                                        onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
-                                        type="password"
-                                        placeholder="Masukkan Password (min 8 karakter)"
-                                    />
-                                </div>
                                 <button
                                     style={{ fontSize: "1rem" }}
                                     type="submit"
                                     className="btn btn-primary"
                                 >
-                                    Daftar
+                                    Perbarui
                                 </button>
                             </form>
-                            <div className="container col-f form-max-width">
-                                <div className="container row-f">
-                                    <div className="container col-f f-center-c f-1">
-                                        <div className="line"></div>
-                                    </div>
-                                    <div className="container col-f">
-                                        <p>Sudah punya Akun?</p>
-                                    </div>
-                                    <div className="container col-f f-center-c f-1">
-                                        <div className="line"></div>
-                                    </div>
-                                </div>
-                                <RouterLink to="/user/login" className="t-center btn btn-primary">Masuk</RouterLink>
-                            </div>
                         </div>
                     </div>
                     <div className="container col-f f-center-c t-center">
@@ -296,4 +278,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default UpdateUserSelf;

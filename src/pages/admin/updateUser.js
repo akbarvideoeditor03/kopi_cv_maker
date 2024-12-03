@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-const UpdateUser = ({ userId }) => {
+const UpdateUserAdmin = ({ userId }) => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { userList } = useSelector((state) => state.userReducer);
@@ -278,4 +278,4 @@ const UpdateUser = ({ userId }) => {
     );
 };
 
-export default UpdateUser;
+export default UpdateUserAdmin;

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { createUser, uploadToSupabase } from "../../redux/action/user.action";
 import Swal from "sweetalert2";
 
-const CreateUser = () => {
+const CreateUserAdmin = () => {
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         nama: "",
@@ -282,4 +282,4 @@ const CreateUser = () => {
     );
 };
 
-export default CreateUser;
+export default CreateUserAdmin;

@@ -1,12 +1,12 @@
 import { userTypes } from "../actionTypes";
 import { createClient } from '@supabase/supabase-js';
 const baseUrl = process.env.REACT_APP_BASE_URL;
+const baseUrlSignUp = process.env.REACT_APP_BASE_URL_SIGNUP;
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseBucket = process.env.REACT_APP_SUPABASE_BUCKET;
 const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey, supabaseBucket);
 export default supabase;
-
 
 export const uploadToSupabase = async (newFileName, file) => {
     try {
@@ -34,11 +34,29 @@ export const uploadToSupabase = async (newFileName, file) => {
 };
 
 
-// Create (POST)
+// Create User (POST) Admin
 export const createUser = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
-        const response = await fetch(baseUrl, {
+        const response = await fetch(baseUrlSignUp, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+        });
+        const data = await response.json();
+        dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+    } catch (error) {
+        dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
+    }
+};
+
+// Create User - Register (POST)
+export const createUserSelf = (user) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_USER_REQUEST });
+    try {
+        const response = await fetch(baseUrlSignUp, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -59,10 +77,14 @@ export const getUser = () => {
         try {
             const response = await fetch(baseUrl);
             const data = await response.json();
+            const dataNumber = data.meta;
 
             dispatch({
                 type: userTypes.GET_USER_LIST_SUCCESS,
-                payload: data.data,
+                payload: ({
+                    data: data.data,
+                    meta: dataNumber,
+                }),
             });
         } catch (error) {
             dispatch({ type: userTypes.GET_USER_LIST_FAILURE, payload: error });

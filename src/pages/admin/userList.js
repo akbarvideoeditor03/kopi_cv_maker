@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, deleteUser } from "../../redux/action/user.action";
 import Swal from "sweetalert2";
@@ -6,6 +7,7 @@ import Swal from "sweetalert2";
 function UserList() {
     const dispatch = useDispatch();
     const { userList, isLoading, error } = useSelector((state) => state.userReducer);
+    const data = userList.data; /* Menampung seluruh data. Namun hanya dari 1 - 10, karena dari API sudah di atur 1 halaman menampilkan 10 data.*/
 
     useEffect(() => {
         dispatch(getUser());
@@ -63,7 +65,7 @@ function UserList() {
                             <div className="container col-f f-center-c list-container"><div className="custom-loader"></div></div>
                         ) : (
                             <div className="container col-f">
-                                {userList.map((item) => {
+                                {data?.map((item) => {
                                     return (
                                         <div key={item.id} className="menu-card container col-f full-width">
                                             <div className="container swap">

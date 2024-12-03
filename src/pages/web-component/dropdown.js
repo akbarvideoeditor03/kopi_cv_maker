@@ -23,10 +23,10 @@ function Dropdown() {
         <div className="dropdown">
             <button className="hamburger-btn" onClick={toggleDropdown}>≡</button>
             <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
-                <a href="/register" >Daftar</a>
-                <a href="/login" >Login</a>
-                <a href="/user" >User</a>
-                <a href="/home" >Home</a>
+                <a href="/user/register" >Daftar</a>
+                <a href="/user/login" >Masuk</a>
+                <a href="/user" >Pengguna</a>
+                <a href="/home" >Beranda</a>
             </ul>
         </div>
     )

@@ -7,7 +7,7 @@ function Login() {
             <section id="login" className="card container row-f f-wrap-r full-width section-max">
                 <div className="container col-f login-left f-1 f-between">
                     <div className="container col-f">
-                        <h1>Login</h1>
+                        <h1>Masuk</h1>
                         <div className="container f-center-c">
                             <img className="login-icon" src="./assets/icon/logo-bw.png" alt="" />
                         </div>
@@ -21,7 +21,7 @@ function Login() {
                                     <label>Password</label>
                                     <input type="password" placeholder="Masukkan Password" />
                                 </div>
-                                <button style={{ fontSize: '1rem' }} type="submit" className="btn btn-primary">Login</button>
+                                <button style={{ fontSize: '1rem' }} type="submit" className="btn btn-primary">Masuk</button>
                             </form>
                             <div className="container col-f form-max-width">
                                 <div className="container row-f">
@@ -35,7 +35,7 @@ function Login() {
                                         <div className="line"></div>
                                     </div>
                                 </div>
-                                <RouterLink to="/register" className="t-center btn btn-primary">Daftar</RouterLink>
+                                <RouterLink to="/user/register" className="t-center btn btn-primary">Daftar</RouterLink>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@ function Login() {
                     </div>
                 </div>
                 <div className="container col-f f-center-c login-right">
-                    <img className="login-img" src="./assets/images/login-image.svg" alt="login-img" />
+                    <img className="login-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/68410c9b34629247e847d525bc85e3aa2c20dc4f/public/assets/images/login-image.svg" alt="login-img" />
                 </div>
             </section>
         </main>

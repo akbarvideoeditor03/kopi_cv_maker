@@ -11,7 +11,7 @@ function Home() {
                         <h1 className="text-h1">🚀 Bangun CV Anda Sekarang!</h1>
                         <p>Mulai perjalanan karier Anda dengan CV menarik, dan dibuat dengan mudah menggunakan <b style={{ color: '#ffc400' }}>KOPI</b>. Tingkatkan peluang Anda untuk diterima di perusahaan impian!</p>
                         <div className="container row-f fwb">
-                            <RouterLink to="/register" className="btn-text-small btn btn-primary">Buat CV Sekarang</RouterLink>
+                            <RouterLink to="/user/login" className="btn-text-small btn btn-primary">Buat CV Sekarang</RouterLink>
                             <RouterLink className="btn-text-small btn btn-info">Pelajari Lebih Lanjut</RouterLink>
                         </div>
                     </div>
@@ -25,7 +25,7 @@ function Home() {
                         <p><i className="fa-solid fa-circle-check"></i> Menambahkan Pengalaman Kerja, Keahlian, dan Prestasi</p>
                         <p><i className="fa-solid fa-circle-check"></i> Mengunduh CV dalam format PDF hanya dengan sekali klik</p>
                         <div className="container row-f fwb">
-                            <RouterLink to="/register" className="btn-text-small btn btn-primary">Mulai Sekarang</RouterLink>
+                            <RouterLink to="/user/login" className="btn-text-small btn btn-primary">Mulai Sekarang</RouterLink>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@ function Home() {
                         <h1 className="text-h1">Siap Untuk Melangkah Lebih Dekat ke Karier Impian Anda?</h1>
                         <p>Jangan biarkan CV biasa menghalangi Anda untuk mendapatkan pekerjaan terbaik. Buat CV yang berbicara lebih dari sekadar kata-kata—buat di <b style={{ color: '#ffc400' }}>KOPI</b> hari ini!</p>
                         <div className="container row-f fwb">
-                            <RouterLink to="/register" className="btn-text-small btn btn-primary">Mulai Sekarang</RouterLink>
+                            <RouterLink to="/user/login" className="btn-text-small btn btn-primary">Mulai Sekarang</RouterLink>
                         </div>
                     </div>
                 </div>
