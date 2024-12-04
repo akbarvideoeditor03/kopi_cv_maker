@@ -43,7 +43,7 @@ function Login() {
                 timerProgressBar: true,
             }).then(() => {
                 Swal.close();
-                window.location = '/user';
+                window.location = '/';
             });
         }
     };
