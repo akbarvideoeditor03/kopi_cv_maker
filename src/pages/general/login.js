@@ -1,7 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { postUserLogin } from "../../redux/action/user.action";
+import Swal from "sweetalert2";
 
 function Login() {
+    const dispatch = useDispatch();
+    const [userData, setUserData] = useState({
+        email: "",
+        password: ""
+    });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+            const userLogin = {
+                email: userData.email,
+                password: userData.password
+            }
+
+            dispatch(postUserLogin(userLogin));
+
+            setUserData({
+                email: "",
+                password: ""
+            });
+        }   catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        } finally {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Akun berhasil masuk",
+                showConfirmButton: false,
+                timer: 3000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                Swal.close();
+                window.location = '/user';
+            });
+        }
+    };
+
     return (
         <main className="container col-f f-center-c">
             <section id="login" className="card container row-f f-wrap-r full-width section-max">
@@ -12,14 +58,14 @@ function Login() {
                             <img className="login-icon" src="./assets/icon/logo-bw.png" alt="" />
                         </div>
                         <div className="container col-f f-center-c">
-                            <form className="container col-f form-max-width">
+                            <form onSubmit={handleSubmit} className="container col-f form-max-width">
                                 <div className="container col-f-0">
                                     <label>Email</label>
-                                    <input type="email" placeholder="Masukkan Email" />
+                                    <input name="email" value={userData.email} onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} type="email" placeholder="Masukkan Email" />
                                 </div>
                                 <div className="container col-f-0">
                                     <label>Password</label>
-                                    <input type="password" placeholder="Masukkan Password" />
+                                    <input name="password" value={userData.password} onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} type="password" placeholder="Masukkan Password" />
                                 </div>
                                 <button style={{ fontSize: '1rem' }} type="submit" className="btn btn-primary">Masuk</button>
                             </form>

@@ -2,6 +2,7 @@ import { userTypes } from "../actionTypes";
 import { createClient } from '@supabase/supabase-js';
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const baseUrlSignUp = process.env.REACT_APP_BASE_URL_SIGNUP;
+const baseUrlSignIn = process.env.REACT_APP_BASE_URL_SIGNIN;
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseBucket = process.env.REACT_APP_SUPABASE_BUCKET;
 const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
@@ -32,7 +33,6 @@ export const uploadToSupabase = async (newFileName, file) => {
         throw error;
     }
 };
-
 
 // Create User (POST) Admin
 export const createUser = (user) => async (dispatch) => {
@@ -70,12 +70,51 @@ export const createUserSelf = (user) => async (dispatch) => {
     }
 };
 
+// User - Login (POST)
+export const postUserLogin = (user) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_USER_REQUEST });
+    try {
+        const response = await fetch(baseUrlSignIn, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+        });
+
+        const data = await response.json();
+        const token = data.token;
+        const roleUser = data.role;
+        localStorage.setItem("token", token);
+        localStorage.setItem("role", roleUser);
+        const sentToken = localStorage.getItem("token");
+        const secondResponse = await fetch(baseUrlSignIn, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sentToken}`,
+            },
+            body: JSON.stringify(user),
+        });
+        const secondData = await secondResponse.json();
+        dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: secondData.data });
+    } catch (error) {
+        console.error("Error during login:", error);
+        dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
+    }
+};
+
 // Read (GET)
 export const getUser = () => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_LIST_REQUEST });
         try {
-            const response = await fetch(baseUrl);
+            const token = localStorage.getItem("token");
+            const response = await fetch(baseUrl, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             const data = await response.json();
             const dataNumber = data.meta;
 
@@ -92,13 +131,19 @@ export const getUser = () => {
     };
 };
 
+// Read (GET ID)
 export const getUserId = (id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
         try {
-            const response = await fetch(`${baseUrl}/${id}`);
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${baseUrl}/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             const data = await response.json();
-            
+
             dispatch({
                 type: userTypes.GET_USER_ID_LIST_SUCCESS,
                 payload: data.data,
@@ -114,13 +159,16 @@ export const getUserId = (id) => {
 export const updateUser = (id, updatedUser) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {
+        const token = localStorage.getItem("token");
         const response = await fetch(`${baseUrl}/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(updatedUser),
         });
+
         const data = await response.json();
         dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data.data });
     } catch (error) {
@@ -132,9 +180,14 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
 export const deleteUser = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_USER_REQUEST });
     try {
+        const token = localStorage.getItem("token");
         await fetch(`${baseUrl}/${id}`, {
             method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
         });
+
         dispatch({ type: userTypes.DELETE_USER_SUCCESS, payload: id });
     } catch (error) {
         dispatch({ type: userTypes.DELETE_USER_FAILURE, payload: error });
