@@ -20,20 +20,20 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (wordCount > 100) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
-            });
-            return;
-        }
-
         if (!userData.nama) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Nama, email, dan password wajib diisi",
+                text: "Nama wajib diisi",
+            });
+            return;
+        }
+
+        if (!userData.no_telp) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Nomor telepon wajib diisi",
             });
             return;
         }
@@ -47,20 +47,38 @@ const Register = () => {
             return;
         }
 
-        if (!["image/jpg", "image/jpeg", "image/png"].includes(userData.foto_profil.type)) {
+        if (!userData.alamat) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Format foto profil tidak valid",
+                text: "Alamat wajib diisi",
             });
             return;
         }
-        
+
+        if (!userData.tentang) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Tentang wajib diisi",
+            });
+            return;
+        }
+
         if (wordCount > 100) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
+            });
+            return;
+        }
+
+        if (!["image/jpg", "image/jpeg", "image/png"].includes(userData.foto_profil.type)) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Format foto profil tidak valid",
             });
             return;
         }

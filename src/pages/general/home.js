@@ -3,6 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 
 function Home() {
+    const token = localStorage.getItem('token');
     return (
         <main>
             <section className="container bg-1 f-center-c lp-section c-white">
@@ -11,7 +12,7 @@ function Home() {
                         <h1 className="text-h1">🚀 Bangun CV Anda Sekarang!</h1>
                         <p>Mulai perjalanan karier Anda dengan CV menarik, dan dibuat dengan mudah menggunakan <b style={{ color: '#ffc400' }}>KOPI</b>. Tingkatkan peluang Anda untuk diterima di perusahaan impian!</p>
                         <div className="container row-f fwb">
-                            <RouterLink to="/user/login" className="btn-text-small btn btn-primary">Buat CV Sekarang</RouterLink>
+                            {token ? <RouterLink to="/home" className="btn-text-small btn btn-primary">Buat CV Sekarang</RouterLink> : <RouterLink to="/user/login" className="btn-text-small btn btn-primary">Buat CV Sekarang</RouterLink>}
                             <RouterLink className="btn-text-small btn btn-info">Pelajari Lebih Lanjut</RouterLink>
                         </div>
                     </div>

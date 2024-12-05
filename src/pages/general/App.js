@@ -11,6 +11,13 @@ import CreateUserAdmin from "../admin/createUser";
 import UpdateUserAdmin from "../admin/updateUser";
 import UpdateUserSelf from "../client/user/updateUser";
 
+// Halaman Pembangun CV
+import CreatePengalamanKerja from "../client/pengalamanKerja.js/createPengalamanKerja";
+import UpdatePengalamanKerja from "../client/pengalamanKerja.js/updatePengalamanKerja";
+import CreatePendidikanTerakhir from "../client/pendidikan_terakhir/createPendidikanTerakhir";
+import UpdatePendidikanTerakhir from "../client/pendidikan_terakhir/updatePendidikanTerakhir";
+
+
 
 function App() {
   return (
@@ -25,6 +32,11 @@ function App() {
         <Route path="/user/create" element={<CreateUserAdmin />}></Route>
         <Route path="/user/edit/:id" element={<UpdateUserAdmin />}></Route>
         <Route path="/user/edit/:id" element={<UpdateUserSelf />}></Route>
+
+        <Route path="/createpengalamankerja" element={<CreatePengalamanKerja />}></Route>
+        <Route path="/editpengalamankerja" element={<UpdatePengalamanKerja />}></Route>
+        <Route path="/creatependidikanterakhir" element={<CreatePendidikanTerakhir />}></Route>
+        <Route path="/editpendidikanterakhir" element={<UpdatePendidikanTerakhir />}></Route>
       </Route>
     </Routes>
   );

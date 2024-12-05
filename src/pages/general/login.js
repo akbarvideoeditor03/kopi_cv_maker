@@ -26,25 +26,7 @@ function Login() {
                 password: ""
             });
         }   catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-            });
-        } finally {
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Akun berhasil masuk",
-                showConfirmButton: false,
-                timer: 3000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                Swal.close();
-                window.location = '/';
-            });
+            console.log(error);
         }
     };
 

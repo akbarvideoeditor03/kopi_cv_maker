@@ -1,12 +1,12 @@
+import Swal from "sweetalert2";
 import { userTypes } from "../actionTypes";
 import { createClient } from '@supabase/supabase-js';
 const baseUrl = process.env.REACT_APP_BASE_URL;
-const baseUrlSignUp = process.env.REACT_APP_BASE_URL_SIGNUP;
-const baseUrlSignIn = process.env.REACT_APP_BASE_URL_SIGNIN;
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseBucket = process.env.REACT_APP_SUPABASE_BUCKET;
 const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey, supabaseBucket);
+
 export default supabase;
 
 export const uploadToSupabase = async (newFileName, file) => {
@@ -38,7 +38,7 @@ export const uploadToSupabase = async (newFileName, file) => {
 export const createUser = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
-        const response = await fetch(baseUrlSignUp, {
+        const response = await fetch(`${baseUrl}/user/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export const createUser = (user) => async (dispatch) => {
 export const createUserSelf = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
-        const response = await fetch(baseUrlSignUp, {
+        const response = await fetch(`${baseUrl}/user/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -70,11 +70,11 @@ export const createUserSelf = (user) => async (dispatch) => {
     }
 };
 
-// User - Login (POST)
+//Login (POST)
 export const postUserLogin = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
-        const response = await fetch(baseUrlSignIn, {
+        const response = await fetch(`${baseUrl}/user/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -83,12 +83,44 @@ export const postUserLogin = (user) => async (dispatch) => {
         });
 
         const data = await response.json();
+        const idUser = data.id;
         const token = data.token;
         const roleUser = data.role;
-        localStorage.setItem("token", token);
-        localStorage.setItem("role", roleUser);
+        if (!idUser && !token && !roleUser) {
+            Swal.fire({
+                icon: "error",
+                title: "Oopss...",
+                text: "Akun tidak ditemukan. Atau password salah",
+                showConfirmButton: false,
+                timer: 3000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                Swal.close();
+                window.location.reload();
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Akun berhasil masuk",
+                showConfirmButton: false,
+                timer: 3000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                localStorage.setItem("id", idUser);
+                localStorage.setItem("role", roleUser);
+                localStorage.setItem("token", token);
+                Swal.close();
+                window.location = '/';
+            });
+        }
+
         const sentToken = localStorage.getItem("token");
-        const secondResponse = await fetch(baseUrlSignIn, {
+        const secondResponse = await fetch(`${baseUrl}/user/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -110,7 +142,7 @@ export const getUser = () => {
         dispatch({ type: userTypes.GET_USER_LIST_REQUEST });
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(baseUrl, {
+            const response = await fetch(`${baseUrl}/user`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -137,7 +169,7 @@ export const getUserId = (id) => {
         dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`${baseUrl}/${id}`, {
+            const response = await fetch(`${baseUrl}/user/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -160,7 +192,7 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`${baseUrl}/${id}`, {
+        const response = await fetch(`${baseUrl}/user/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -181,7 +213,7 @@ export const deleteUser = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_USER_REQUEST });
     try {
         const token = localStorage.getItem("token");
-        await fetch(`${baseUrl}/${id}`, {
+        await fetch(`${baseUrl}/user/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -191,5 +223,133 @@ export const deleteUser = (id) => async (dispatch) => {
         dispatch({ type: userTypes.DELETE_USER_SUCCESS, payload: id });
     } catch (error) {
         dispatch({ type: userTypes.DELETE_USER_FAILURE, payload: error });
+    }
+};
+
+
+
+//Penalaman Kerja
+export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_USER_REQUEST });
+    try {
+        const response = await fetch(`${baseUrl}/pengalamankerja`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(pengalaman_kerja),
+        });
+        const data = await response.json();
+        dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+    } catch (error) {
+        dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
+    }
+};
+
+
+export const readPengalamanKerja = (id) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${baseUrl}/pengalamankerja/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+
+            dispatch({
+                type: userTypes.GET_USER_ID_LIST_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+        } catch (error) {
+            dispatch({ type: userTypes.GET_USER_ID_LIST_FAILURE, payload: error });
+        }
+    };
+};
+
+export const updatePengalamanKerja = (id, updatedPengalamanKerja) => async (dispatch) => {
+    dispatch({ type: userTypes.UPDATE_USER_REQUEST });
+    try {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${baseUrl}/pengalamankerja/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedPengalamanKerja),
+        });
+
+        const data = await response.json();
+        dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data.data });
+    } catch (error) {
+        dispatch({ type: userTypes.UPDATE_USER_FAILURE, payload: error });
+    }
+};
+
+
+
+//Pendidikan Terakhir
+export const createPendidikanTerakhir = (pendidikan_terakhir) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_USER_REQUEST });
+    try {
+        const response = await fetch(`${baseUrl}/pendidikanterakhir`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(pendidikan_terakhir),
+        });
+        const data = await response.json();
+        dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+    } catch (error) {
+        dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
+    }
+};
+
+
+export const readPendidikanTerakhir = (id) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${baseUrl}/pendidikanterakhir/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+
+            dispatch({
+                type: userTypes.GET_USER_ID_LIST_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+        } catch (error) {
+            dispatch({ type: userTypes.GET_USER_ID_LIST_FAILURE, payload: error });
+        }
+    };
+};
+
+export const updatePendidikanTerakhir = (id, updatedPendidikanTerakhir) => async (dispatch) => {
+    dispatch({ type: userTypes.UPDATE_USER_REQUEST });
+    try {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${baseUrl}/pendidikanterakhir/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedPendidikanTerakhir),
+        });
+
+        const data = await response.json();
+        dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data.data });
+    } catch (error) {
+        dispatch({ type: userTypes.UPDATE_USER_FAILURE, payload: error });
     }
 };

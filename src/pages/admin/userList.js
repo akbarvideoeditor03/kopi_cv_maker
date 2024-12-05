@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, deleteUser } from "../../redux/action/user.action";
 import Swal from "sweetalert2";
@@ -7,6 +6,7 @@ import Swal from "sweetalert2";
 function UserList() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
+    const roleUser = 'A@k3!o8%Np';
     const dispatch = useDispatch();
     const { userList, isLoading, error } = useSelector((state) => state.userReducer);
     const data = userList.data;
@@ -53,7 +53,7 @@ function UserList() {
         }
     }, [error]);
 
-    if(token && role === 'admin') {
+    if(token && role === roleUser) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
@@ -101,8 +101,8 @@ function UserList() {
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max f-center">
                     <img style={{width : "70px"}} src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/5da58e252c99da7a29144d6434f5af8013c5bb7a/public/assets/icon/angry-face.svg" alt="" />
-                    <p>Anda tidak dizinkan mengakses halaman ini</p>
-                    <p><b>ADMIN KOPI</b></p>
+                    <p className="t-center">Anda tidak dizinkan mengakses halaman ini</p>
+                    <strong>ADMIN KOPI</strong>
                 </section>
             </main>
         )

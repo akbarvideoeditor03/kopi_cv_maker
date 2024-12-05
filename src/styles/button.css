@@ -151,6 +151,18 @@
     color: white;
 }
 
+.btn-dropdown {
+    border-style: none;
+    color: black;
+    font-weight: 600;
+    background-color: transparent;
+    padding: 1.5rem;
+    font-size: 17px;
+}
+
+.btn-dropdown:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
 
 .hamburger-btn {
     padding-inline: 1rem;
