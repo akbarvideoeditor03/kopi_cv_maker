@@ -36,45 +36,91 @@ function CreatePengalamanKerja() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const pengalamanKerjaUser = {
-                id_user: `${id}`,
-                pengalaman_kerja: pengalamanKerja.pengalaman_kerja,
-                jabatan: pengalamanKerja.jabatan,
-                deskripsi: pengalamanKerja.deskripsi,
-                tahun_mulai: pengalamanKerja.tahun_mulai,
-                tahun_selesai: pengalamanKerja.tahun_selesai || 'Hingga saat ini',
-            }
-
-            dispatch(createPengalamanKerja(pengalamanKerjaUser));
-
-            setPengalamanKerja({
-                id_user: "",
-                pengalaman_kerja: "",
-                jabatan: "",
-                deskripsi: "",
-                tahun_mulai: "",
-                tahun_selesai: ""
-            });
-        } catch (error) {
+        if(!pengalamanKerja.pengalaman_kerja) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Something went wrong!",
+                text: "Lokasi kerja tidak boleh kosong",
             });
-        } finally {
+            return
+        }
+
+        if(!pengalamanKerja.jabatan) {
             Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Pengalaman kerja berhasil ditambahkan",
-                showConfirmButton: false,
-                timer: 3000,
-                allowEscapeKey: false,
+                icon: "error",
+                title: "Oops...",
+                text: "Jabatan kerja tidak boleh kosong",
+            });
+            return
+        }
+
+        if(!pengalamanKerja.deskripsi) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Detail kerja tidak boleh kosong",
+            });
+            return
+        }
+
+        if(!pengalamanKerja.tahun_mulai) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Tahun mulai kerja tidak boleh kosong",
+            });
+            return
+        }
+
+        try {
+            const result = await Swal.fire({
+                icon: "question",
+                title: "Tunggu",
+                text: "Apa informasinya udah benar semua?",
+                confirmButtonText: "Iya, udah",
+                cancelButtonText: "Lanjutin",
                 allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                Swal.close();
-                window.location = '/home';
+                showCancelButton: true
+            });
+        
+            if (result.isConfirmed) {
+                const pengalamanKerjaUser = {
+                    id_user: `${id}`,
+                    pengalaman_kerja: pengalamanKerja.pengalaman_kerja,
+                    jabatan: pengalamanKerja.jabatan,
+                    deskripsi: pengalamanKerja.deskripsi,
+                    tahun_mulai: pengalamanKerja.tahun_mulai,
+                    tahun_selesai: pengalamanKerja.tahun_selesai || "Hingga saat ini",
+                };
+        
+                dispatch(createPengalamanKerja(pengalamanKerjaUser));
+        
+                setPengalamanKerja({
+                    id_user: "",
+                    pengalaman_kerja: "",
+                    jabatan: "",
+                    deskripsi: "",
+                    tahun_mulai: "",
+                    tahun_selesai: "",
+                });
+                await Swal.fire({
+                    icon: "success",
+                    title: "Selamat",
+                    text: "Pengalaman kerja berhasil ditambahkan",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                });
+                window.location = "/home";
+            }
+        } catch (error) {
+            console.error("Error saat menambahkan pengalaman kerja:", error);
+            await Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
             });
         }
     };
@@ -87,12 +133,12 @@ function CreatePengalamanKerja() {
                     <div className="container col-f f-center-c">
                         <form onSubmit={handleSubmit} className="container col-f full-width">
                             <div className="container col-f-0">
-                                <label>Di mana</label>
-                                <input name="pengalaman_kerja" value={pengalamanKerja.pengalaman_kerja} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan pengalaman kerja" />
+                                <label>Lokasi Kerja</label>
+                                <input name="pengalaman_kerja" value={pengalamanKerja.pengalaman_kerja} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan lokasi kerja" />
                                 <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : PT. Aneka Hidangan Lezat</p>
                             </div>
                             <div className="container col-f-0">
-                                <label>Jabatan</label>
+                                <label>Jabatan Kerja</label>
                                     <input name="jabatan" value={pengalamanKerja.jabatan} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan jabatan kerja" />
                                 <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : Customer Service</p>
                             </div>
@@ -105,11 +151,14 @@ function CreatePengalamanKerja() {
                                     className="textarea"
                                     type="text"
                                     placeholder="Masukkan detail kerja" />
-                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : Melayani pertanyaan pelanggan | <span>Jumlah kata : {`${wordCount}`}</span></p>
+                                <div className="container row-f f-between">
+                                    <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : Melayani pertanyaan pelanggan | <span>Jumlah kata : {`${wordCount}`}</span></p>
+                                    <p style={{fontSize :'0.75rem', paddingTop : '0.5rem', fontStyle : 'italic'}}>*Detail kerja akan ditampilkan dalam bentuk paragraf</p>
+                                </div>
                             </div>
                             <div className="container col-f-0">
-                                <label>Tahun Mulai</label>
-                                <input name="tahun_mulai" value={pengalamanKerja.tahun_mulai} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="month" />
+                                <label>Tahun Mulai Kerja</label>
+                                <input name="tahun_mulai" value={pengalamanKerja.tahun_mulai} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="date" />
                                 <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Form ini hanya akan menampilkan tahun saja</p>
                             </div>
                             <div className="container col-f-0">

@@ -11,6 +11,7 @@ import './styles/global.css';
 import './styles/responsive.css';
 import './styles/button.css';
 import './styles/image-class-collections.css';
+import './styles/main-cv-styles.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -31,16 +32,7 @@ if (token && role) {
     clearTimeout(logoutTimer);
     logoutTimer = setTimeout(() => {
       localStorage.clear();
-      Swal.fire({
-        icon: "error",
-        title: "Oo Ow...",
-        text: "Sesi Anda telah habis",
-        showConfirmButton: true,
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-      }).then(() => {
-        window.location.href = '/';
-      });
+      window.location.href = '/';
     }, 3600000);
   };
 

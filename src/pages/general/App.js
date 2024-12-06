@@ -34,7 +34,7 @@ function App() {
         <Route path="/user/edit/:id" element={<UpdateUserSelf />}></Route>
 
         <Route path="/createpengalamankerja" element={<CreatePengalamanKerja />}></Route>
-        <Route path="/editpengalamankerja" element={<UpdatePengalamanKerja />}></Route>
+        <Route path="/pengalamankerja/:id_user/:id" element={<UpdatePengalamanKerja />}></Route>
         <Route path="/creatependidikanterakhir" element={<CreatePendidikanTerakhir />}></Route>
         <Route path="/editpendidikanterakhir" element={<UpdatePendidikanTerakhir />}></Route>
       </Route>

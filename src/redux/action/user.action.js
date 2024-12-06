@@ -175,7 +175,6 @@ export const getUserId = (id) => {
                 },
             });
             const data = await response.json();
-
             dispatch({
                 type: userTypes.GET_USER_ID_LIST_SUCCESS,
                 payload: data.data,
@@ -228,7 +227,7 @@ export const deleteUser = (id) => async (dispatch) => {
 
 
 
-//Penalaman Kerja
+//Pengalaman Kerja
 export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
@@ -249,32 +248,32 @@ export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
 
 export const readPengalamanKerja = (id) => {
     return async (dispatch) => {
-        dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
+        dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem('token');
             const response = await fetch(`${baseUrl}/pengalamankerja/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
             const data = await response.json();
-
             dispatch({
-                type: userTypes.GET_USER_ID_LIST_SUCCESS,
+                type: userTypes.GET_PENGALAMAN_ID_SUCCESS,
                 payload: data.data,
             });
             return data;
         } catch (error) {
-            dispatch({ type: userTypes.GET_USER_ID_LIST_FAILURE, payload: error });
+            dispatch({ type: userTypes.GET_PENGALAMAN_ID_FAILURE, payload: error });
         }
     };
 };
 
 export const updatePengalamanKerja = (id, updatedPengalamanKerja) => async (dispatch) => {
-    dispatch({ type: userTypes.UPDATE_USER_REQUEST });
+    dispatch({ type: userTypes.UPDATE_PENGALAMAN_REQUEST });
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`${baseUrl}/pengalamankerja/${id}`, {
+        const id_user = localStorage.getItem("id");
+        const response = await fetch(`${baseUrl}/pengalamankerja/${id_user}/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -282,14 +281,29 @@ export const updatePengalamanKerja = (id, updatedPengalamanKerja) => async (disp
             },
             body: JSON.stringify(updatedPengalamanKerja),
         });
-
         const data = await response.json();
-        dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data.data });
+        dispatch({ type: userTypes.UPDATE_PENGALAMAN_SUCCESS, payload: data.data });
     } catch (error) {
-        dispatch({ type: userTypes.UPDATE_USER_FAILURE, payload: error });
+        dispatch({ type: userTypes.UPDATE_PENGALAMAN_FAILURE, payload: error });
     }
 };
 
+export const deletePengalamanKerja = (id) => async (dispatch) => {
+    dispatch({ type: userTypes.DELETE_USER_REQUEST });
+    try {
+        const token = localStorage.getItem("token");
+        const id_user = localStorage.getItem("id");
+        await fetch(`${baseUrl}/pengalamankerja/${id_user}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        dispatch({ type: userTypes.DELETE_USER_SUCCESS, payload: id });
+    } catch (error) {
+        dispatch({ type: userTypes.DELETE_USER_FAILURE, payload: error });
+    }
+};
 
 
 //Pendidikan Terakhir
