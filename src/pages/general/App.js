@@ -31,12 +31,12 @@ function App() {
         <Route path="/user/:id" element={<UserListDetail />}></Route>
         <Route path="/user/create" element={<CreateUserAdmin />}></Route>
         <Route path="/user/edit/:id" element={<UpdateUserAdmin />}></Route>
-        <Route path="/user/edit/:id" element={<UpdateUserSelf />}></Route>
+        <Route path="/edit/:id" element={<UpdateUserSelf />}></Route>
 
         <Route path="/createpengalamankerja" element={<CreatePengalamanKerja />}></Route>
         <Route path="/pengalamankerja/:id_user/:id" element={<UpdatePengalamanKerja />}></Route>
-        <Route path="/creatependidikanterakhir" element={<CreatePendidikanTerakhir />}></Route>
-        <Route path="/editpendidikanterakhir" element={<UpdatePendidikanTerakhir />}></Route>
+        <Route path="/pendidikanterakhir" element={<CreatePendidikanTerakhir />}></Route>
+        <Route path="/pendidikanterakhir/:id_user/:id" element={<UpdatePendidikanTerakhir />}></Route>
       </Route>
     </Routes>
   );

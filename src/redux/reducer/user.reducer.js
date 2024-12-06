@@ -133,13 +133,13 @@ const users = (state = initState, action) => {
             };
 
         //Pendidikan Terakhir (Update ID)
-        case userTypes.UPDATE_PENDIDIKAN_REQUEST:
+        case userTypes.UPDATE_PENDIDIKAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
                 error: null
             };
-        case userTypes.UPDATE_PENDIDIKAN_SUCCESS:
+        case userTypes.UPDATE_PENDIDIKAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
@@ -147,7 +147,7 @@ const users = (state = initState, action) => {
                     pendidikan.id === action.payload.id ? action.payload : pendidikan
                 ),
             };
-        case userTypes.UPDATE_PENDIDIKAN_FAILURE:
+        case userTypes.UPDATE_PENDIDIKAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
@@ -155,19 +155,19 @@ const users = (state = initState, action) => {
             };
 
         //Pendidikan Terakhir (Delete ID)
-        case userTypes.DELETE_PENDIDIKAN_REQUEST:
+        case userTypes.DELETE_PENDIDIKAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
                 error: null
             };
-        case userTypes.DELETE_PENDIDIKAN_SUCCESS:
+        case userTypes.DELETE_PENDIDIKAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 pendidikanTerakhir: state.pendidikanTerakhir.filter((pendidikan) => pendidikan.id !== action.payload),
             };
-        case userTypes.DELETE_PENDIDIKAN_FAILURE:
+        case userTypes.DELETE_PENDIDIKAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
@@ -441,19 +441,19 @@ const users = (state = initState, action) => {
             };
 
         // Pelatihan (Read ID)
-        case userTypes.GET_PELATIHAN_ID_REQUEST:
+        case userTypes.GET_PENDIDIKAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
                 error: null
             };
-        case userTypes.GET_PELATIHAN_ID_SUCCESS:
+        case userTypes.GET_PENDIDIKAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 pelatihan: action.payload,
             };
-        case userTypes.GET_PELATIHAN_ID_FAILURE:
+        case userTypes.GET_PENDIDIKAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
@@ -461,13 +461,13 @@ const users = (state = initState, action) => {
             };
 
         // Pelatihan (Update)
-        case userTypes.UPDATE_PELATIHAN_REQUEST:
+        case userTypes.UPDATE_PENDIDIKAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
                 error: null
             };
-        case userTypes.UPDATE_PELATIHAN_SUCCESS:
+        case userTypes.UPDATE_PENDIDIKAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
@@ -475,7 +475,7 @@ const users = (state = initState, action) => {
                     pelatihan.id === action.payload.id ? action.payload : pelatihan
                 ),
             };
-        case userTypes.UPDATE_PELATIHAN_FAILURE:
+        case userTypes.UPDATE_PENDIDIKAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
@@ -483,19 +483,19 @@ const users = (state = initState, action) => {
             };
 
         // Pelatihan (Delete ID)
-        case userTypes.DELETE_PELATIHAN_REQUEST:
+        case userTypes.DELETE_PENDIDIKAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
                 error: null
             };
-        case userTypes.DELETE_PELATIHAN_SUCCESS:
+        case userTypes.DELETE_PENDIDIKAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 pelatihan: state.pelatihan.filter((pelatihan) => pelatihan.id !== action.payload),
             };
-        case userTypes.DELETE_PELATIHAN_FAILURE:
+        case userTypes.DELETE_PENDIDIKAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,

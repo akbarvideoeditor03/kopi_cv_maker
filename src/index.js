@@ -24,55 +24,51 @@ root.render(
   </React.StrictMode>
 );
 
-const token = localStorage.getItem('token');
-const role = localStorage.getItem('role');
-if (token && role) {
-  let logoutTimer;
-  const startLogoutTimer = () => {
-    clearTimeout(logoutTimer);
-    logoutTimer = setTimeout(() => {
+let logoutTimer;
+const startLogoutTimer = () => {
+  clearTimeout(logoutTimer);
+  logoutTimer = setTimeout(() => {
+    localStorage.clear();
+    window.location.href = '/';
+  }, 3600000);
+};
+
+const resetTimer = () => {
+  startLogoutTimer();
+  localStorage.setItem('lastActivity', Date.now());
+};
+
+const checkSession = () => {
+  const lastActivity = localStorage.getItem('lastActivity');
+  if (lastActivity) {
+    const currentTime = Date.now();
+    const elapsed = currentTime - lastActivity;
+    if (elapsed > 3600000) {
       localStorage.clear();
-      window.location.href = '/';
-    }, 3600000);
-  };
-
-  const resetTimer = () => {
-    startLogoutTimer();
-    localStorage.setItem('lastActivity', Date.now());
-  };
-
-  const checkSession = () => {
-    const lastActivity = localStorage.getItem('lastActivity');
-    if (lastActivity) {
-      const currentTime = Date.now();
-      const elapsed = currentTime - lastActivity;
-      if (elapsed > 3600000) {
-        localStorage.clear();
-        Swal.fire({
-          icon: "error",
-          title: "Oo Ow...",
-          text: "Sesi Anda telah habis",
-          showConfirmButton: true,
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-        }).then(() => {
-          window.location.href = '/';
-        });
-      } else {
-        startLogoutTimer();
-      }
+      Swal.fire({
+        icon: "error",
+        title: "Oo Ow...",
+        text: "Sesi Anda telah habis",
+        showConfirmButton: true,
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+      }).then(() => {
+        window.location.href = '/';
+      });
     } else {
       startLogoutTimer();
     }
-  };
+  } else {
+    startLogoutTimer();
+  }
+};
 
-  document.addEventListener('mousemove', resetTimer);
-  document.addEventListener('keypress', resetTimer);
-  document.addEventListener('scroll', resetTimer);
-  document.addEventListener('click', resetTimer);
+document.addEventListener('mousemove', resetTimer);
+document.addEventListener('keypress', resetTimer);
+document.addEventListener('scroll', resetTimer);
+document.addEventListener('click', resetTimer);
 
-  checkSession();
-}
+checkSession();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

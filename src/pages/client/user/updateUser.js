@@ -42,6 +42,21 @@ const UpdateUserSelf = ({ userId }) => {
     }, [userList]);
 
     const wordCount = userData.tentang.trim().split(/\s+/).filter(Boolean).length;
+    const cancelSubmit = async (e) => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Yakin mau batal?',
+            text: 'Perubahan kamu bakal hilang loh...',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Iya',
+            cancelButtonText: 'Lanjutin',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/home';
+            }
+        })
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (wordCount > 100) {
@@ -92,7 +107,7 @@ const UpdateUserSelf = ({ userId }) => {
                             allowOutsideClick: false,
                             timerProgressBar: true,
                         }).then(() => {
-                            window.location = `/user/${id}`;
+                            window.location = `/home`;
                         });
                     }
                 });
@@ -148,7 +163,7 @@ const UpdateUserSelf = ({ userId }) => {
                                 allowOutsideClick: false,
                                 timerProgressBar: true,
                             }).then(() => {
-                                window.location = `/user/${id}`;
+                                window.location = `/home`;
                             });
                         } catch (error) {
                             Swal.fire({
@@ -248,17 +263,26 @@ const UpdateUserSelf = ({ userId }) => {
                                         type="email"
                                         placeholder="Masukkan Email Anda" />
                                 </div>
+                                <div className="container row-f f-wrap">
+                                <button
+                                    onClick={cancelSubmit}
+                                    style={{ fontSize: "1rem" }}
+                                    className="btn btn-danger f-1"
+                                >
+                                    Batal
+                                </button>
                                 <button
                                     style={{ fontSize: "1rem" }}
                                     type="submit"
-                                    className="btn btn-primary"
+                                    className="btn btn-primary f-1"
                                 >
                                     Perbarui
                                 </button>
+                                </div>
                             </form>
                         </div>
                     </div>
-                    <div className="container col-f f-center-c t-center">
+                    <div className="container col-f f-center-c t-center m-t2">
                         <p>Ada kendala? Yuk beri tahu kami</p>
                         <RouterLink
                             style={{ maxWidth: "15rem" }}

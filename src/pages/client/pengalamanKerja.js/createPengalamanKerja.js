@@ -135,7 +135,7 @@ function CreatePengalamanKerja() {
                             <div className="container col-f-0">
                                 <label>Lokasi Kerja</label>
                                 <input name="pengalaman_kerja" value={pengalamanKerja.pengalaman_kerja} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan lokasi kerja" />
-                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : PT. Aneka Hidangan Lezat</p>
+                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : PT Aneka Hidangan Lezat</p>
                             </div>
                             <div className="container col-f-0">
                                 <label>Jabatan Kerja</label>

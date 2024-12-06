@@ -6,7 +6,6 @@ const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseBucket = process.env.REACT_APP_SUPABASE_BUCKET;
 const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey, supabaseBucket);
-
 export default supabase;
 
 export const uploadToSupabase = async (newFileName, file) => {
@@ -34,7 +33,7 @@ export const uploadToSupabase = async (newFileName, file) => {
     }
 };
 
-// Create User (POST) Admin
+// User (Include Admin)
 export const createUser = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
@@ -52,7 +51,6 @@ export const createUser = (user) => async (dispatch) => {
     }
 };
 
-// Create User - Register (POST)
 export const createUserSelf = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
@@ -70,7 +68,6 @@ export const createUserSelf = (user) => async (dispatch) => {
     }
 };
 
-//Login (POST)
 export const postUserLogin = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
@@ -136,7 +133,6 @@ export const postUserLogin = (user) => async (dispatch) => {
     }
 };
 
-// Read (GET)
 export const getUser = () => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_LIST_REQUEST });
@@ -163,7 +159,6 @@ export const getUser = () => {
     };
 };
 
-// Read (GET ID)
 export const getUserId = (id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
@@ -186,7 +181,6 @@ export const getUserId = (id) => {
     };
 };
 
-// Update (PUT)
 export const updateUser = (id, updatedUser) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {
@@ -207,7 +201,6 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
     }
 };
 
-// Delete (DELETE)
 export const deleteUser = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_USER_REQUEST });
     try {
@@ -224,7 +217,6 @@ export const deleteUser = (id) => async (dispatch) => {
         dispatch({ type: userTypes.DELETE_USER_FAILURE, payload: error });
     }
 };
-
 
 
 //Pengalaman Kerja
@@ -244,7 +236,6 @@ export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
         dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
     }
 };
-
 
 export const readPengalamanKerja = (id) => {
     return async (dispatch) => {
@@ -324,10 +315,9 @@ export const createPendidikanTerakhir = (pendidikan_terakhir) => async (dispatch
     }
 };
 
-
 export const readPendidikanTerakhir = (id) => {
     return async (dispatch) => {
-        dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
+        dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem("token");
             const response = await fetch(`${baseUrl}/pendidikanterakhir/${id}`, {
@@ -338,21 +328,22 @@ export const readPendidikanTerakhir = (id) => {
             const data = await response.json();
 
             dispatch({
-                type: userTypes.GET_USER_ID_LIST_SUCCESS,
+                type: userTypes.GET_PENDIDIKAN_ID_SUCCESS,
                 payload: data.data,
             });
             return data;
         } catch (error) {
-            dispatch({ type: userTypes.GET_USER_ID_LIST_FAILURE, payload: error });
+            dispatch({ type: userTypes.GET_PENDIDIKAN_ID_FAILURE, payload: error });
         }
     };
 };
 
 export const updatePendidikanTerakhir = (id, updatedPendidikanTerakhir) => async (dispatch) => {
-    dispatch({ type: userTypes.UPDATE_USER_REQUEST });
+    dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_REQUEST });
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`${baseUrl}/pendidikanterakhir/${id}`, {
+        const id_user = localStorage.getItem("id");
+        const response = await fetch(`${baseUrl}/pendidikanterakhir/${id_user}/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -362,8 +353,25 @@ export const updatePendidikanTerakhir = (id, updatedPendidikanTerakhir) => async
         });
 
         const data = await response.json();
-        dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data.data });
+        dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_SUCCESS, payload: data.data });
     } catch (error) {
-        dispatch({ type: userTypes.UPDATE_USER_FAILURE, payload: error });
+        dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_FAILURE, payload: error });
+    }
+};
+
+export const deletePendidikanTerakhir = (id) => async (dispatch) => {
+    dispatch({ type: userTypes.DELETE_PENDIDIKAN_ID_REQUEST });
+    try {
+        const token = localStorage.getItem("token");
+        const id_user = localStorage.getItem("id");
+        await fetch(`${baseUrl}/pendidikanterakhir/${id_user}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        dispatch({ type: userTypes.DELETE_PENDIDIKAN_ID_SUCCESS, payload: id });
+    } catch (error) {
+        dispatch({ type: userTypes.DELETE_PENDIDIKAN_ID_FAILURE, payload: error });
     }
 };
