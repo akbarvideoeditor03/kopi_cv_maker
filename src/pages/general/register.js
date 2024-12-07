@@ -65,15 +65,6 @@ const Register = () => {
             return;
         }
 
-        if (wordCount > 100) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
-            });
-            return;
-        }
-
         if (!["image/jpg", "image/jpeg", "image/png"].includes(userData.foto_profil.type)) {
             Swal.fire({
                 icon: "error",
@@ -165,8 +156,8 @@ const Register = () => {
         } finally {
             Swal.fire({
                 icon: "success",
-                title: "Selamat",
-                text: "Akun berhasil dibuat",
+                title: "Registrasi berhasil!",
+                text: "Silakan masuk dengan akun Anda",
                 showConfirmButton: false,
                 timer: 3000,
                 allowEscapeKey: false,
@@ -174,7 +165,7 @@ const Register = () => {
                 timerProgressBar: true,
             }).then(() => {
                 Swal.close();
-                window.location = '/home';
+                window.location = '/user/login';
             });
         }
     };

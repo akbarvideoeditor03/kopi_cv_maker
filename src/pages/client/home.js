@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserId, readPengalamanKerja, deletePengalamanKerja, readPendidikanTerakhir, deletePendidikanTerakhir } from "../../redux/action/user.action";
+import { getUserId, readPengalamanKerja, deletePengalamanKerja, readPendidikanTerakhir, deletePendidikanTerakhir, readKeahlian, deleteKeahlian } from "../../redux/action/user.action";
 import Swal from "sweetalert2";
 
 function HomeUser() {
@@ -8,12 +8,13 @@ function HomeUser() {
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
-    const { userList, pengalamanKerja, pendidikanTerakhir } = useSelector((state) => state.userReducer);
+    const { userList, pengalamanKerja, pendidikanTerakhir, keahlian } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
         dispatch(getUserId(id));
         dispatch(readPengalamanKerja(id));
         dispatch(readPendidikanTerakhir(id));
+        dispatch(readKeahlian(id));
     }, [dispatch, id]);
 
     const deleteData = (id, type) => {
@@ -30,6 +31,8 @@ function HomeUser() {
                     dispatch(deletePendidikanTerakhir(id));
                 } else if (type === 'pengalamanKerja') {
                     dispatch(deletePengalamanKerja(id));
+                } else if (type === 'keahlian') {
+                    dispatch(deleteKeahlian(id));
                 }
                 Swal.fire({
                     icon: 'success',
@@ -53,14 +56,14 @@ function HomeUser() {
                     <div className="grid gc-1 gc-2 gc-3 gc-4 m-bt2">
                         <a href="/createpengalamankerja" className="btn btn-primary">Tambah Pengalaman Kerja</a>
                         <a href="/pendidikanterakhir" className="btn btn-primary">Tambah Pendidikan Terakhir</a>
-                        <a href="#" className="btn btn-primary">Tambah Prestasi Kerja</a>
-                        <a href="#" className="btn btn-primary">Tambah Keahlian / Skill</a>
-                        <a href="#" className="btn btn-primary">Tambah Pelatihan</a>
+                        <a href="/#" className="btn btn-primary">Tambah Prestasi Kerja</a>
+                        <a href="/keahlian" className="btn btn-primary">Tambah Keahlian / Skill</a>
+                        <a href="/#" className="btn btn-primary">Tambah Pelatihan</a>
                     </div>
                     <div className="container row-f f-between f-wrap f-center">
                         <h1>Yeay!, ini adalah preview dari CV kamu</h1>
                         <div className="container row-f">
-                            <a className="btn btn-info" href="">Download CV</a>
+                            <a className="btn btn-info" href="/#">Download CV</a>
                         </div>
                     </div>
                     <div className="card container col-f f-1">
@@ -142,30 +145,22 @@ function HomeUser() {
                             <div className="container col-f f-1">
                                 <h1>Keahlian / Skill</h1>
                                 <div className="grid gc-1 gc-2 gc-3 gc-4">
-                                    <div className="card-mini container col-f">
-                                        <h4><i>data kemampuan</i></h4>
-                                        <p><i>data tingkat</i></p>
-                                    </div>
-                                    <div className="card-mini container col-f">
-                                        <h4><i>data kemampuan</i></h4>
-                                        <p><i>data tingkat</i></p>
-                                    </div>
-                                    <div className="card-mini container col-f">
-                                        <h4><i>data kemampuan</i></h4>
-                                        <p><i>data tingkat</i></p>
-                                    </div>
-                                    <div className="card-mini container col-f">
-                                        <h4><i>data kemampuan</i></h4>
-                                        <p><i>data tingkat</i></p>
-                                    </div>
-                                    <div className="card-mini container col-f">
-                                        <h4><i>data kemampuan</i></h4>
-                                        <p><i>data tingkat</i></p>
-                                    </div>
-                                    <div className="card-mini container col-f">
-                                        <h4><i>data kemampuan</i></h4>
-                                        <p><i>data tingkat</i></p>
-                                    </div>
+                                    {keahlian.map((item) => {
+                                        return(
+                                            <div key={item.id} className="card-mini container col-f">
+                                                <div style={{minHeight : "3.5rem"}} className="container row-f">
+                                                    <div className="container col-f-0 f-1">
+                                                        <h3>{item.keahlian}</h3>
+                                                        <p>{item.tingkat}</p>
+                                                    </div>
+                                                    <div className="container col-f">
+                                                        <a className="btn btn-primary" href={`/keahlian/${userList.id}/${item.id}`}><i className="bi-pencil-square"></i></a>
+                                                        <button className="btn btn-danger" onClick={() => deleteData(item.id, 'keahlian')}><i className="bi-trash"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             </div>
                         </div>

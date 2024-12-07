@@ -16,7 +16,8 @@ import CreatePengalamanKerja from "../client/pengalamanKerja.js/createPengalaman
 import UpdatePengalamanKerja from "../client/pengalamanKerja.js/updatePengalamanKerja";
 import CreatePendidikanTerakhir from "../client/pendidikan_terakhir/createPendidikanTerakhir";
 import UpdatePendidikanTerakhir from "../client/pendidikan_terakhir/updatePendidikanTerakhir";
-
+import CreateKeahlian from "../client/keahlian/createKeahlian";
+import UpdateKeahlian from "../client/keahlian/updateKehalian";
 
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
         <Route path="/pengalamankerja/:id_user/:id" element={<UpdatePengalamanKerja />}></Route>
         <Route path="/pendidikanterakhir" element={<CreatePendidikanTerakhir />}></Route>
         <Route path="/pendidikanterakhir/:id_user/:id" element={<UpdatePendidikanTerakhir />}></Route>
+        <Route path="/keahlian" element={<CreateKeahlian />}></Route>
+        <Route path="/keahlian/:id_user/:id" element={<UpdateKeahlian />}></Route>
       </Route>
     </Routes>
   );

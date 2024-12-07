@@ -5,7 +5,6 @@ import reportWebVitals from './help/reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux';
-import Swal from 'sweetalert2';
 import './styles/index.css';
 import './styles/global.css';
 import './styles/responsive.css';
@@ -45,16 +44,7 @@ const checkSession = () => {
     const elapsed = currentTime - lastActivity;
     if (elapsed > 3600000) {
       localStorage.clear();
-      Swal.fire({
-        icon: "error",
-        title: "Oo Ow...",
-        text: "Sesi Anda telah habis",
-        showConfirmButton: true,
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-      }).then(() => {
-        window.location.href = '/';
-      });
+      window.location.href = '/';
     } else {
       startLogoutTimer();
     }
