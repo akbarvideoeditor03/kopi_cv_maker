@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, deleteUser } from "../../redux/action/user.action";
 import Swal from "sweetalert2";
@@ -9,7 +9,10 @@ function UserList() {
     const roleUser = 'A@k3!o8%Np';
     const dispatch = useDispatch();
     const { userList, isLoading, error } = useSelector((state) => state.userReducer);
-    const data = userList.data;
+    const data = userList.data || [];
+    
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
     useEffect(() => {
         dispatch(getUser());
@@ -40,7 +43,7 @@ function UserList() {
                 });
             }
         });
-    }
+    };
 
     useEffect(() => {
         if (error) {
@@ -53,7 +56,14 @@ function UserList() {
         }
     }, [error]);
 
-    if(token && role === roleUser) {
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+    const currentData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    if (token && role === roleUser) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
@@ -68,7 +78,7 @@ function UserList() {
                                 <div className="container col-f f-center-c list-container"><div className="custom-loader"></div></div>
                             ) : (
                                 <div className="container col-f">
-                                    {data?.map((item) => {
+                                    {currentData.map((item) => {
                                         return (
                                             <div key={item.id} className="menu-card container col-f full-width">
                                                 <div className="container swap">
@@ -82,13 +92,24 @@ function UserList() {
                                                         </a>
                                                     </div>
                                                     <div className="container col-f right-card-menu">
-                                                            <a href={`user/edit/${item.id}`} className="t-center btn btn-info">Ubah</a>
-                                                            <button onClick={() => deleteData(item.id)} className="t-center btn btn-danger">Hapus</button>
+                                                        <a href={`user/edit/${item.id}`} className="t-center btn btn-info">Ubah</a>
+                                                        <button onClick={() => deleteData(item.id)} className="t-center btn btn-danger">Hapus</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         );
                                     })}
+                                    <div className="pagination">
+                                        {[...Array(totalPages)].map((_, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => handlePageChange(index + 1)}
+                                                className={`btn ${currentPage === index + 1 ? "btn-active" : ""}`}
+                                            >
+                                                {index + 1}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -105,7 +126,7 @@ function UserList() {
                     <strong>ADMIN KOPI</strong>
                 </section>
             </main>
-        )
+        );
     }
 }
 

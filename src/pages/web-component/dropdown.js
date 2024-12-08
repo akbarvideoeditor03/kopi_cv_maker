@@ -83,7 +83,7 @@ function Dropdown() {
                     <a href="/user/register" >Daftar</a>
                     <a href="#" >Pelajari Lebih Lanjut</a>
                     <a href="#" >Bantuan</a>
-                    <a href="#" >Tentang Kami</a>
+                    <a href="#" >Tentang</a>
                 </ul>
             </div>
         )

@@ -13,7 +13,7 @@ function Home() {
                         <p>Mulai perjalanan karier Anda dengan CV menarik, dan dibuat dengan mudah menggunakan <b style={{ color: '#ffc400' }}>KOPI</b>. Tingkatkan peluang Anda untuk diterima di perusahaan impian!</p>
                         <div className="container row-f fwb">
                             {token ? <RouterLink to="/home" className="btn-text-small btn btn-primary">Buat CV Sekarang</RouterLink> : <RouterLink to="/user/login" className="btn-text-small btn btn-primary">Buat CV Sekarang</RouterLink>}
-                            <RouterLink className="btn-text-small btn btn-info">Pelajari Lebih Lanjut</RouterLink>
+                            <RouterLink to='/pelajari' className="btn-text-small btn btn-info">Pelajari Lebih Lanjut</RouterLink>
                         </div>
                     </div>
                 </div>

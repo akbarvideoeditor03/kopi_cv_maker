@@ -115,18 +115,7 @@ export const postUserLogin = (user) => async (dispatch) => {
                 window.location = '/';
             });
         }
-
-        const sentToken = localStorage.getItem("token");
-        const secondResponse = await fetch(`${baseUrl}/user/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${sentToken}`,
-            },
-            body: JSON.stringify(user),
-        });
-        const secondData = await secondResponse.json();
-        dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: secondData.data });
+        dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
     } catch (error) {
         console.error("Error during login:", error);
         dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
@@ -221,7 +210,7 @@ export const deleteUser = (id) => async (dispatch) => {
 
 //Pengalaman Kerja
 export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
-    dispatch({ type: userTypes.CREATE_USER_REQUEST });
+    dispatch({ type: userTypes.CREATE_PENGALAMAN_REQUEST });
     try {
         const response = await fetch(`${baseUrl}/pengalamankerja`, {
             method: "POST",
@@ -231,9 +220,9 @@ export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
             body: JSON.stringify(pengalaman_kerja),
         });
         const data = await response.json();
-        dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+        dispatch({ type: userTypes.CREATE_PENGALAMAN_SUCCESS, payload: data.data });
     } catch (error) {
-        dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
+        dispatch({ type: userTypes.CREATE_PENGALAMAN_FAILURE, payload: error });
     }
 };
 
@@ -280,7 +269,7 @@ export const updatePengalamanKerja = (id, updatedPengalamanKerja) => async (disp
 };
 
 export const deletePengalamanKerja = (id) => async (dispatch) => {
-    dispatch({ type: userTypes.DELETE_USER_REQUEST });
+    dispatch({ type: userTypes.DELETE_PENGALAMAN_REQUEST });
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
@@ -290,9 +279,9 @@ export const deletePengalamanKerja = (id) => async (dispatch) => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        dispatch({ type: userTypes.DELETE_USER_SUCCESS, payload: id });
+        dispatch({ type: userTypes.DELETE_PENGALAMAN_SUCCESS, payload: id });
     } catch (error) {
-        dispatch({ type: userTypes.DELETE_USER_FAILURE, payload: error });
+        dispatch({ type: userTypes.DELETE_PENGALAMAN_FAILURE, payload: error });
     }
 };
 
@@ -453,5 +442,159 @@ export const deleteKeahlian = (id) => async (dispatch) => {
         dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_SUCCESS, payload: id });
     } catch (error) {
         dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_FAILURE, payload: error });
+    }
+};
+
+//Prestasi Kerja
+export const createPrestasi = (prestasi) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_PRESTASI_ID_REQUEST });
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${baseUrl}/prestasikerja`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(prestasi),
+        });
+        const data = await response.json();
+        dispatch({ type: userTypes.CREATE_PRESTASI_ID_SUCCESS, payload: data.data });
+    } catch (error) {
+        dispatch({ type: userTypes.CREATE_PRESTASI_ID_FAILURE, payload: error });
+    }
+};
+
+export const readPrestasi = () => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_PRESTASI_REQUEST });
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${baseUrl}/prestasikerja`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.GET_PRESTASI_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+        } catch (error) {
+            dispatch({ type: userTypes.GET_PRESTASI_FAILURE, payload: error });
+        }
+    };
+};
+
+export const updatePrestasi = (id, id_pengalaman_kerja, updatedPrestasi) => async (dispatch) => {
+    dispatch({ type: userTypes.UPDATE_PRESTASI_ID_REQUEST });
+    try {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${baseUrl}/prestasikerja/${id_pengalaman_kerja}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedPrestasi),
+        });
+        const data = await response.json();
+        dispatch({ type: userTypes.UPDATE_PRESTASI_ID_SUCCESS, payload: data.data });
+    } catch (error) {
+        dispatch({ type: userTypes.UPDATE_PRESTASI_ID_FAILURE, payload: error });
+    }
+};
+
+export const deletePrestasi = (id, id_pengalaman_kerja) => async (dispatch) => {
+    dispatch({ type: userTypes.DELETE_PRESTASI_ID_REQUEST });
+    try {
+        const token = localStorage.getItem("token");
+        await fetch(`${baseUrl}/prestasikerja/${id_pengalaman_kerja}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        dispatch({ type: userTypes.DELETE_PRESTASI_ID_SUCCESS, payload: id });
+    } catch (error) {
+        dispatch({ type: userTypes.DELETE_PRESTASI_ID_FAILURE, payload: error });
+    }
+};
+
+//Pelatihan
+export const createPelatihan = (pelatihan) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_PELATIHAN_ID_REQUEST });
+    try {
+        const response = await fetch(`${baseUrl}/pelatihan`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(pelatihan),
+        });
+        const data = await response.json();
+        dispatch({ type: userTypes.CREATE_PELATIHAN_ID_SUCCESS, payload: data.data });
+    } catch (error) {
+        dispatch({ type: userTypes.CREATE_PELATIHAN_ID_FAILURE, payload: error });
+    }
+};
+
+export const readPelatihan = (id) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_PELATIHAN_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${baseUrl}/pelatihan/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.GET_PELATIHAN_ID_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+        } catch (error) {
+            dispatch({ type: userTypes.GET_PELATIHAN_ID_FAILURE, payload: error });
+        }
+    };
+};
+
+export const updatePelatihan = (id, updatedPelatihan) => async (dispatch) => {
+    dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_REQUEST });
+    try {
+        const token = localStorage.getItem("token");
+        const id_user = localStorage.getItem("id");
+        const response = await fetch(`${baseUrl}/pelatihan/${id_user}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedPelatihan),
+        });
+        const data = await response.json();
+        dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_SUCCESS, payload: data.data });
+    } catch (error) {
+        dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_FAILURE, payload: error });
+    }
+};
+
+export const deletePelatihan = (id) => async (dispatch) => {
+    dispatch({ type: userTypes.DELETE_PELATIHAN_ID_REQUEST });
+    try {
+        const token = localStorage.getItem("token");
+        const id_user = localStorage.getItem("id");
+        await fetch(`${baseUrl}/pelatihan/${id_user}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        dispatch({ type: userTypes.DELETE_PELATIHAN_ID_SUCCESS, payload: id });
+    } catch (error) {
+        dispatch({ type: userTypes.DELETE_PELATIHAN_ID_FAILURE, payload: error });
     }
 };

@@ -23,42 +23,46 @@ root.render(
   </React.StrictMode>
 );
 
-let logoutTimer;
-const startLogoutTimer = () => {
-  clearTimeout(logoutTimer);
-  logoutTimer = setTimeout(() => {
-    localStorage.clear();
-    window.location.href = '/';
-  }, 3600000);
-};
-
-const resetTimer = () => {
-  startLogoutTimer();
-  localStorage.setItem('lastActivity', Date.now());
-};
-
-const checkSession = () => {
-  const lastActivity = localStorage.getItem('lastActivity');
-  if (lastActivity) {
-    const currentTime = Date.now();
-    const elapsed = currentTime - lastActivity;
-    if (elapsed > 3600000) {
+const token = localStorage.getItem('token');
+if (!token) {
+} else {
+  let logoutTimer;
+  const startLogoutTimer = () => {
+    clearTimeout(logoutTimer);
+    logoutTimer = setTimeout(() => {
       localStorage.clear();
       window.location.href = '/';
+    }, 3600000);
+  };
+
+  const resetTimer = () => {
+    startLogoutTimer();
+    localStorage.setItem('lastActivity', Date.now());
+  };
+
+  const checkSession = () => {
+    const lastActivity = localStorage.getItem('lastActivity');
+    if (lastActivity) {
+      const currentTime = Date.now();
+      const elapsed = currentTime - lastActivity;
+      if (elapsed > 3600000) {
+        localStorage.clear();
+        window.location.href = '/';
+      } else {
+        startLogoutTimer();
+      }
     } else {
       startLogoutTimer();
     }
-  } else {
-    startLogoutTimer();
-  }
-};
+  };
 
-document.addEventListener('mousemove', resetTimer);
-document.addEventListener('keypress', resetTimer);
-document.addEventListener('scroll', resetTimer);
-document.addEventListener('click', resetTimer);
+  document.addEventListener('mousemove', resetTimer);
+  document.addEventListener('keypress', resetTimer);
+  document.addEventListener('scroll', resetTimer);
+  document.addEventListener('click', resetTimer);
 
-checkSession();
+  checkSession();
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

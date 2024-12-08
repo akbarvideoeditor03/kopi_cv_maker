@@ -265,19 +265,19 @@ const users = (state = initState, action) => {
                 error: action.payload
             };
 
-        case userTypes.GET_PRESTASI_ID_REQUEST:
+        case userTypes.GET_PRESTASI_REQUEST:
             return {
                 ...state,
                 isLoading: true,
                 error: null
             };
-        case userTypes.GET_PRESTASI_ID_SUCCESS:
+        case userTypes.GET_PRESTASI_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 prestasiKerja: action.payload,
             };
-        case userTypes.GET_PRESTASI_ID_FAILURE:
+        case userTypes.GET_PRESTASI_FAILURE:
             return {
                 ...state,
                 isLoading: false,

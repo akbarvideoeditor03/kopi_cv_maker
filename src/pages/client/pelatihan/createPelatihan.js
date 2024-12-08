@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createPrestasi } from "../../../redux/action/user.action";
-import { useParams } from "react-router-dom";
+import { createPelatihan } from "../../../redux/action/user.action";
 import Swal from "sweetalert2";
 
-function CreatePrestasi({ }) {
-    const {id} = useParams();
+function CreatePelatihan() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const dispatch = useDispatch();
-
-    const [prestasi, setPrestasi] = useState({
-        prestasi: "",
-        tahun: ""
+    const id = localStorage.getItem('id');
+    const [pelatihan, setPelatihan] = useState({
+        pelatihan: "",
+        tahun_mulai: "",
+        tahun_selesai: ""
     });
-
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -33,20 +31,20 @@ function CreatePrestasi({ }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!prestasi.prestasi) {
+        if(!pelatihan.pelatihan) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Nama prestasi tidak boleh kosong",
+                text: "Nama pelatihan tidak boleh kosong",
             });
             return
         }
 
-        if (!prestasi.tahun) {
+        if(!pelatihan.tahun_mulai) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Tahun mendapat prestasi tidak boleh kosong",
+                text: "Tahun mulai kerja tidak boleh kosong",
             });
             return
         }
@@ -61,20 +59,24 @@ function CreatePrestasi({ }) {
                 allowOutsideClick: false,
                 showCancelButton: true
             });
-
+        
             if (result.isConfirmed) {
-                const prestasiUser = {
-                    id_pengalaman_kerja: id,
-                    prestasi: prestasi.prestasi,
-                    tahun: prestasi.tahun,
+                const pelatihanUser = {
+                    id_user: `${id}`,
+                    pelatihan: pelatihan.pelatihan,
+                    tahun_mulai: pelatihan.tahun_mulai,
+                    tahun_selesai: pelatihan.tahun_selesai || "Hingga saat ini",
                 };
-                
-                dispatch(createPrestasi(prestasiUser));
-
+                dispatch(createPelatihan(pelatihanUser));
+                setPelatihan({
+                    pelatihan: "",
+                    tahun_mulai: "",
+                    tahun_selesai: "",
+                });
                 await Swal.fire({
                     icon: "success",
                     title: "Selamat",
-                    text: "Prestasi berhasil ditambahkan",
+                    text: "Pelatihan berhasil ditambahkan",
                     showConfirmButton: false,
                     timer: 3000,
                     allowEscapeKey: false,
@@ -84,7 +86,7 @@ function CreatePrestasi({ }) {
                 window.location = "/home";
             }
         } catch (error) {
-            console.error("Error saat menambahkan prestasi:", error);
+            console.error("Error saat menambahkan pelatihan:", error);
             await Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -97,18 +99,23 @@ function CreatePrestasi({ }) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
-                    <h1>Tambah Prestasi Kerja</h1>
+                    <h1>Pelatihan</h1>
                     <div className="container col-f f-center-c">
                         <form onSubmit={handleSubmit} className="container col-f full-width">
                             <div className="container col-f-0">
-                                <label>Nama Prestasi</label>
-                                <input name="prestasi" value={prestasi.prestasi} onChange={(e) => setPrestasi({ ...prestasi, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan nama prestasi" />
-                                <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>Contohnya : Juara 1 Lomba Videografi</p>
+                                <label>Nama Pelatihan</label>
+                                    <input name="pelatihan" value={pelatihan.pelatihan} onChange={(e) => setPelatihan({ ...pelatihan, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan nama pelatihan" />
+                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : Pelatihan Video Editing of Content Creation Academy</p>
                             </div>
                             <div className="container col-f-0">
-                                <label>Tahun</label>
-                                <input name="tahun" value={prestasi.tahun} onChange={(e) => setPrestasi({ ...prestasi, [e.target.name]: e.target.value })} type="date" />
-                                <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>*Form ini hanya akan menampilkan tahun saja</p>
+                                <label>Tahun Mulai</label>
+                                <input name="tahun_mulai" value={pelatihan.tahun_mulai} onChange={(e) => setPelatihan({ ...pelatihan, [e.target.name]: e.target.value })} type="date" />
+                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Form ini hanya akan menampilkan tahun saja</p>
+                            </div>
+                            <div className="container col-f-0">
+                                <label>*Tahun Selesai (Opsional)</label>
+                                <input name="tahun_selesai" value={pelatihan.tahun_selesai} onChange={(e) => setPelatihan({ ...pelatihan, [e.target.name]: e.target.value })} type="text" placeholder="Contohnya : 2023" />
+                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Jika pengalaman kerja masih berlangsung, maka kosongkan saja</p>
                             </div>
                             <div className="container row-f f-wrap f-1 m-t1">
                                 <button onClick={cancelSubmit} style={{ fontSize: '1rem' }} className="btn btn-danger f-1">
@@ -125,7 +132,7 @@ function CreatePrestasi({ }) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max f-center">
-                    <img style={{ width: "100px" }} src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/9f842f2ac51bb2ae58be404178393037e6fae347/public/assets/icon/register.svg" alt="" />
+                <img style={{ width: "100px" }} src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/9f842f2ac51bb2ae58be404178393037e6fae347/public/assets/icon/register.svg" alt="" />
                     <p className="t-center">Silakan daftar dahulu</p>
                     <strong>ADMIN KOPI</strong>
                 </section>
@@ -134,4 +141,4 @@ function CreatePrestasi({ }) {
     }
 }
 
-export default CreatePrestasi;
+export default CreatePelatihan;

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Help() {
+function Learn() {
     return(
         <main className="container col-f f-center-c">
             <section className="container row-f f-wrap-r full-width section-max">
@@ -10,4 +10,4 @@ function Help() {
     )
 }
 
-export default Help;
+export default Learn;

@@ -18,7 +18,15 @@ import CreatePendidikanTerakhir from "../client/pendidikan_terakhir/createPendid
 import UpdatePendidikanTerakhir from "../client/pendidikan_terakhir/updatePendidikanTerakhir";
 import CreateKeahlian from "../client/keahlian/createKeahlian";
 import UpdateKeahlian from "../client/keahlian/updateKehalian";
+import CreatePelatihan from "../client/pelatihan/createPelatihan";
+import UpdatePelatihan from "../client/pelatihan/updatePelatihan";
+import CreatePrestasi from "../client/prestasi/createPrestasi";
+import UpdatePrestasi from "../client/prestasi/updatePrestasi";
 
+//General Pages
+import About from "./about";
+import Help from "./help";
+import Learn from "./learn";
 
 function App() {
   return (
@@ -40,6 +48,14 @@ function App() {
         <Route path="/pendidikanterakhir/:id_user/:id" element={<UpdatePendidikanTerakhir />}></Route>
         <Route path="/keahlian" element={<CreateKeahlian />}></Route>
         <Route path="/keahlian/:id_user/:id" element={<UpdateKeahlian />}></Route>
+        <Route path="/pelatihan" element={<CreatePelatihan />}></Route>
+        <Route path="/pelatihan/:id_user/:id" element={<UpdatePelatihan />}></Route>
+        <Route path="/prestasi/:id" element={<CreatePrestasi />}></Route>
+        <Route path="/prestasi/:id_pengalaman_kerja/:id" element={<UpdatePrestasi />}></Route>
+
+        <Route path="/bantuan" element={<Help />}></Route>
+        <Route path="/pelajari" element={<Learn />}></Route>
+        <Route path="/tentang" element={<About />}></Route>
       </Route>
     </Routes>
   );

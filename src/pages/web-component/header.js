@@ -93,6 +93,12 @@ function WebHeader() {
                             <div className="container col-f">
                                 <a href="/user/login">Masuk</a>
                             </div>
+                            <div className="container col-f">
+                                <a href="/bantuan">Bantuan</a>
+                            </div>
+                            <div className="container col-f">
+                                <a href="/tentang">Tentang</a>
+                            </div>
                         </div>
                     )}
                 </div>
