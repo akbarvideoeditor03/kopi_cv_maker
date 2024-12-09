@@ -2,8 +2,8 @@ import React from "react";
 
 function Learn() {
     return(
-        <main className="container col-f f-center-c">
-            <section className="container row-f f-wrap-r full-width section-max">
+        <main className="container col-f f-center-c generalPg-bg">
+            <section className="container col-f f-1 fj-center section-max">
                 <h1>Maaf Halaman Belum Tersedia :(</h1>
             </section>
         </main>

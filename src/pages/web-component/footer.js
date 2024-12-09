@@ -1,6 +1,5 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
 
 function WebFooter() {
     return(
@@ -16,19 +15,19 @@ function WebFooter() {
                     <p style={{color : '#ffc400'}} className="fw6">Features</p>
                     <ul>
                         <li>
-                            <ScrollLink to="" offset={0} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
+                            <a className="social-media" href="/">Buat CV Sekarang</a>
                         </li>
                         <li>
-                            <ScrollLink to="" offset={0} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
+                            <a className="social-media" href="/user/register">Daftar</a>
                         </li>
                         <li>
-                            <ScrollLink to="" offset={0} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
+                            <a className="social-media" href="/pelajari">Pelajari Lebih Lanjut</a>
                         </li>
                         <li>
-                            <ScrollLink to="" offset={0} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
+                            <a className="social-media" href="/bantuan">Bantuan</a>
                         </li>
                         <li>
-                            <ScrollLink to="" offset={0} spy={true} smooth={true} duration={500}>Beranda</ScrollLink>
+                            <a className="social-media" href="/tentang">Tentang Kami</a>
                         </li>
                     </ul>
                 </div>

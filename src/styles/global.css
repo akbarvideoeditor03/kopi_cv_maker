@@ -184,6 +184,28 @@
     resize: none;
 }
 
+.content-collapsible {
+    padding: 2rem;
+    border-radius: 10px;
+    display: none;
+    overflow: hidden;
+    background-image: url('../../public/assets/images/help-text-bg.svg');
+    background-position: center;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.8);
+    max-height: 720px;
+    overflow: auto;
+}
+
+.content-collapsible li {
+    line-height: 1.5rem;
+}
+
+.content-collapsible li ol li {
+    margin-left: 1.5rem;
+}
+
 /* Grid Layout */
 
 .grid {
@@ -248,15 +270,16 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     width: 100vw;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+    overflow: hidden;
 }
 
 .dropdown-menu.open {
+    overflow: hidden;
     visibility: visible;
     opacity: 1;
     transform: translateX(0);
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 .dropdown-menu a {
@@ -273,6 +296,7 @@
 .dropdown-menu a:hover {
     background-color: #b9b9b9;
 }
+
 
 /* Text Classes */
 

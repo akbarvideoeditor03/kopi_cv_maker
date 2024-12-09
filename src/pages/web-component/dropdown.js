@@ -18,7 +18,7 @@ function Dropdown() {
     useEffect(() => {
         document.addEventListener('click', closeDropdown);
         return () => {
-            document.addEventListener('click', closeDropdown);
+            document.removeEventListener('click', closeDropdown);
         };
     }, []);
 
@@ -34,7 +34,7 @@ function Dropdown() {
                 localStorage.clear();
                 Swal.fire({
                     icon: 'success',
-                    title:'Berhasil',
+                    title: 'Berhasil',
                     text: 'Akun berhasil keluar',
                     timer: 2000,
                     showConfirmButton: false,
@@ -67,8 +67,10 @@ function Dropdown() {
                 <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
                     <a href="/" >Beranda</a>
                     <a href="/home" >CV Saya</a>
-                    <a href="/user/createpengalamankerja" >Tambah Pengalaman Kerja</a>
-                    <button className="btn-dropdown" onClick={handleLogout}>
+                    <a href="/pelajari" >Pelajari Lebih Lanjut</a>
+                    <a href="/bantuan" >Bantuan</a>
+                    <a href="/tentang" >Tentang</a>
+                    <button className="btn-dropdown full-width" onClick={handleLogout}>
                         Keluar
                     </button>
                 </ul>
@@ -79,11 +81,11 @@ function Dropdown() {
             <div className="dropdown">
                 <button className="hamburger-btn" onClick={toggleDropdown}>≡</button>
                 <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
-                <a href="/user/login" >Masuk</a>
+                    <a href="/user/login" >Masuk</a>
                     <a href="/user/register" >Daftar</a>
-                    <a href="#" >Pelajari Lebih Lanjut</a>
-                    <a href="#" >Bantuan</a>
-                    <a href="#" >Tentang</a>
+                    <a href="/pelajari" >Pelajari Lebih Lanjut</a>
+                    <a href="/bantuan" >Bantuan</a>
+                    <a href="/tentang" >Tentang</a>
                 </ul>
             </div>
         )

@@ -98,11 +98,13 @@ function CreateKeahlian() {
                             <div className="container col-f-0">
                                 <label>Pilih Tingkatan</label>
                                 <select id="tingkat" name="tingkat" value={keahlian.tingkat} onChange={(e) => setKeahlian({ ...keahlian, [e.target.name]: e.target.value })}>
-                                    <option value="Dasar" key="dasar">Dasar</option>
-                                    <option value="Menengah" key="menengah">Menengah</option>
-                                    <option value="Profesional" key="profesional">Profesional</option>
+                                    <option value="Dasar" key="dasar">Pemula</option>
+                                    <option value="Menengah" key="menengah">Pemula Tingkat Lanjut</option>
+                                    <option value="Profesional" key="profesional">Kompeten</option>
+                                    <option value="Menengah" key="menengah">Mahir</option>
+                                    <option value="Profesional" key="profesional">Ahli / Master</option>
                                 </select>
-                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : Menengah</p>
+                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : Kompeten</p>
                             </div>
                             <div className="container row-f f-wrap f-1 m-t1">
                                 <button onClick={cancelSubmit} style={{ fontSize: '1rem' }} className="btn btn-danger f-1">
