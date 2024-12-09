@@ -87,7 +87,7 @@ function Help() {
                 </button>
                 <div className="content-collapsible" style={{ display: openCollapse[4] ? "flex" : "none" }}>
                     <ul type="1">
-                        <p style={{marginBottom : "1rem"}}><i className="bi-question-circle"></i> Untuk menambah daftar prestasi kerja, kamu harus menambahkan daftar pengalaman kerja terlebih dahulu. Namun, jika sudah, kamu bisa mengikuti langkah-langkah di bawah.</p>
+                        <p style={{ marginBottom: "1rem" }}><i className="bi-question-circle"></i> Untuk menambah daftar prestasi kerja, kamu harus menambahkan daftar pengalaman kerja terlebih dahulu. Namun, jika sudah, kamu bisa mengikuti langkah-langkah di bawah.</p>
                         <li>Buka website KOPI di link <i>(link)</i></li>
                         <li>Klik menu Masuk</li>
                         <li>Masukkan email dan password</li>
@@ -118,36 +118,35 @@ function Help() {
                                 <li>Jenis keahlian</li>
                                 <li>Tingkatan</li>
                             </ul>
-                            <p style={{marginBlock : "1rem"}}><i className="bi-question-circle"></i> Tingkatan yang disediakan hanya ada
+                            <p style={{ marginBlock: "1rem" }}><i className="bi-question-circle"></i> Tingkatan yang disediakan hanya ada : </p>
                             <ul type="disc">
                                 <li>Pemula</li>
                                 <li>Pemula Tingkat Lanjut</li>
                                 <li>Kompeten</li>
                                 <li>Mahir</li>
                                 <li>Ahli / Master</li>
-                            </ul>Karena tidak ada ukuran pasti untuk menentukan tingkat kemampuan, jadi mohon sesuaikan dengan kemampuan yang kamu punya.</p>
+                            </ul>
+                            <p style={{marginBottom : "1rem"}}>Karena tidak ada ukuran pasti untuk menentukan tingkat kemampuan, jadi mohon sesuaikan dengan kemampuan yang kamu punya.</p>
                         </li>
                         <li>Setelah data terisi lengkap, klik tombol Selesai</li>
                         <li>Yeay!, data keahlian / skills kamu berhasil masuk ke lembar CV!</li>
                     </ul>
                 </div>
-                <button style={{ color: 'white', fontSize: "1rem" }} type="button" className="collapsible full-width btn btn-info" onClick={() => handleToggle(5)}>
+                <button style={{ color: 'white', fontSize: "1rem" }} type="button" className="collapsible full-width btn btn-info" onClick={() => handleToggle(6)}>
                     Cara menambahkan data pelatihan / kursus
                 </button>
-                <div className="content-collapsible" style={{ display: openCollapse[5] ? "flex" : "none" }}>
+                <div className="content-collapsible" style={{ display: openCollapse[6] ? "flex" : "none" }}>
                     <ul type="1">
                         <li>Buka website KOPI di link <i>(link)</i></li>
                         <li>Klik menu Masuk</li>
                         <li>Masukkan email dan password</li>
                         <li>Setelah masuk, klik menu CV Saya, dan klik tombol tambah Kahlian / Kursus</li>
-                        <li>
-                            Isi data seperti
+                        <li>Isi data seperti
                             <ul type="disc" className="container col-f-0">
                                 <li>Nama pelatihan</li>
                                 <li>Tahun mulai</li>
                                 <li>Tahun selesai</li>
                             </ul>
-                            <p style={{marginBlock : "1rem"}}><i className="bi-question-circle"></i> Tingkatan yang disediakan hanya dasar, menengah, dan profesional. Oleh karena itu, mohon lebih bijak dalam memilih tingkatan sesuai dengan kemampuan kamu punya.</p>
                         </li>
                         <li>Setelah data terisi lengkap, klik tombol Selesai</li>
                         <li>Yeay!, data pelatihan / kursus berhasil masuk ke lembar CV-mu!</li>
