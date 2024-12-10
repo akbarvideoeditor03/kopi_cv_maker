@@ -65,6 +65,15 @@ const Register = () => {
             return;
         }
 
+        if(!userData.foto_profil) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Wajib unggah foto profil",
+            });
+            return;
+        }
+
         if (!["image/jpg", "image/jpeg", "image/png"].includes(userData.foto_profil.type)) {
             Swal.fire({
                 icon: "error",
@@ -89,6 +98,15 @@ const Register = () => {
                 icon: "error",
                 title: "Oops...",
                 text: "Format email tidak valid",
+            });
+            return;
+        }
+
+        if (!userData.password) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Password wajib diisi",
             });
             return;
         }

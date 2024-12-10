@@ -61,6 +61,7 @@ export const createUserSelf = (user) => async (dispatch) => {
             },
             body: JSON.stringify(user),
         });
+        console.log(response);
         const data = await response.json();
         dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
     } catch (error) {
