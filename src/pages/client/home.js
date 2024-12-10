@@ -100,15 +100,16 @@ function HomeUser() {
                                         <img className="cv-image" src={`${userList.foto_profil}`} alt="" />
                                     </div>
                                     <div className="box-3 container col-f f-1">
-                                        <p>{userList.email}</p>
+                                        <p><i class="fa-solid fa-envelope"></i> {userList.email}</p>
                                     </div>
                                     <div className="box-4 container col-f f-1">
-                                        <p>{userList.no_telp}</p>
+                                        <p><i className="bi-telephone-fill"></i> {userList.no_telp}</p>
                                     </div>
                                     <div className="box-5 container col-f f-1">
-                                        <p>{userList.alamat}</p>
+                                        <p><i class="fa-solid fa-location-dot"></i> {userList.alamat}</p>
                                     </div>
                                 </div>
+                                <h3>Tentang Saya</h3>
                                 <p>{userList.tentang}</p>
                             </div>
                             <div className="container col-f">
@@ -117,7 +118,7 @@ function HomeUser() {
                         </div>
                         <div className="container row-f f-wrap m-b1">
                             <div className="container col-f f-1">
-                                <h1>Pendidikan Terakhir</h1>
+                                <h1>Pendidikan</h1>
                                 {pendidikanTerakhir.map((item) => {
                                     return (
                                         <div style={{ paddingBlock: '1rem' }} key={item.id} className="container row-f f-wrap">
@@ -214,7 +215,7 @@ function HomeUser() {
                         </div>
                         <div className="container row-f f-wrap m-b1">
                             <div className="container col-f f-1">
-                                <h1>Pelatihan / Kursus (Opsional)</h1>
+                                <h1>Pelatihan / Kursus</h1>
                                 <div className="container col-f f-1">
                                     {pelatihan.map((item) => {
                                         return (
