@@ -82,7 +82,7 @@ function UpdatePendidikanTerakhir() {
                 await Swal.fire({
                     icon: "success",
                     title: "Selamat",
-                    text: "Pengalaman kerja berhasil diubah",
+                    text: "Pendidikan terakhir berhasil diubah",
                     showConfirmButton: false,
                     timer: 3000,
                     allowEscapeKey: false,

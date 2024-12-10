@@ -101,8 +101,8 @@ function CreateKeahlian() {
                                     <option value="Dasar" key="dasar">Pemula</option>
                                     <option value="Menengah" key="menengah">Pemula Tingkat Lanjut</option>
                                     <option value="Profesional" key="profesional">Kompeten</option>
-                                    <option value="Menengah" key="menengah">Mahir</option>
-                                    <option value="Profesional" key="profesional">Ahli / Master</option>
+                                    <option value="Mahir" key="mahir">Mahir</option>
+                                    <option value="Ahli" key="ahli">Ahli</option>
                                 </select>
                                 <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : Kompeten</p>
                             </div>

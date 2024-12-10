@@ -71,7 +71,7 @@ function CreatePelatihan() {
                 setPelatihan({
                     pelatihan: "",
                     tahun_mulai: "",
-                    tahun_selesai: "",
+                    tahun_selesai: ""
                 });
                 await Swal.fire({
                     icon: "success",

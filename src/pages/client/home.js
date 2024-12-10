@@ -149,13 +149,13 @@ function HomeUser() {
                                             <div style={{ paddingBlock: '1rem' }} className="container row-f f-wrap">
                                                 <div style={{ maxWidth: '17.5rem', flexBasis: '360px' }} className="container col-f full-width">
                                                     <div className="container col-f">
-                                                        <p style={{ fontSize: "1.15rem" }} className="fw7">{item.pengalaman_kerja}</p>
+                                                        <p style={{ fontSize: "1.15rem" }} className="fw7">{item.lokasi}</p>
                                                         <p className="fw6">{item.tahun_mulai.slice(0, 4)} - <span>{item.tahun_selesai}</span></p>
                                                     </div>
                                                 </div>
                                                 <div style={{ flexBasis: '360px' }} className="container col-f f-1">
                                                     <p className="fw6">{item.jabatan}</p>
-                                                    <p>{item.deskripsi}</p>
+                                                    <p>{item.detail}</p>
                                                 </div>
                                             </div>
                                             {prestasiKerja.some((item) => item.id_pengalaman_kerja === prestasiId) && <h1>Prestasi Kerja</h1>}

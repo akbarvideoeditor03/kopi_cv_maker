@@ -14,9 +14,9 @@ const UpdatePengalamanKerja = ({}) => {
 
     const [data, setData] = useState({
         id_user: idUser || "",
-        pengalaman_kerja: "",
+        lokasi: "",
         jabatan: "",
-        deskripsi: "",
+        detail: "",
         tahun_mulai: "",
         tahun_selesai: ""
     });
@@ -32,9 +32,9 @@ const UpdatePengalamanKerja = ({}) => {
         if (currentData) {
             setData({
                 id_user: "",
-                pengalaman_kerja: currentData.pengalaman_kerja || "",
+                lokasi: currentData.lokasi || "",
                 jabatan: currentData.jabatan || "",
-                deskripsi: currentData.deskripsi || "",
+                detail: currentData.detail || "",
                 tahun_mulai: currentData.tahun_mulai || "",
                 tahun_selesai: currentData.tahun_selesai || ""
             })
@@ -42,7 +42,7 @@ const UpdatePengalamanKerja = ({}) => {
     }, [pengalamanKerja, idUser])
 
 
-    const wordCount = data.deskripsi.trim().split(/\s+/).filter(Boolean).length;
+    const wordCount = data.detail.trim().split(/\s+/).filter(Boolean).length;
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -73,9 +73,9 @@ const UpdatePengalamanKerja = ({}) => {
 
             if (result.isConfirmed) {
                 const updatedPengalamanKerja = {
-                    pengalaman_kerja: data.pengalaman_kerja,
+                    lokasi: data.lokasi,
                     jabatan: data.jabatan,
-                    deskripsi: data.deskripsi,
+                    detail: data.detail,
                     tahun_mulai: data.tahun_mulai,
                     tahun_selesai: data.tahun_selesai || "Hingga saat ini",
                 };
@@ -84,9 +84,9 @@ const UpdatePengalamanKerja = ({}) => {
 
                 setData({
                     id_user: "",
-                    pengalaman_kerja: "",
+                    lokasi: "",
                     jabatan: "",
-                    deskripsi: "",
+                    detail: "",
                     tahun_mulai: "",
                     tahun_selesai: "",
                 });
@@ -122,7 +122,7 @@ const UpdatePengalamanKerja = ({}) => {
                         <form onSubmit={handleSubmit} className="container col-f full-width">
                             <div className="container col-f-0">
                                 <label>Lokasi Kerja</label>
-                                <input name="pengalaman_kerja" value={data.pengalaman_kerja} onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan lokasi kerja" />
+                                <input name="lokasi" value={data.lokasi} onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan lokasi kerja" />
                                 <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>Contohnya : PT Aneka Hidangan Lezat</p>
                             </div>
                             <div className="container col-f-0">
@@ -133,8 +133,8 @@ const UpdatePengalamanKerja = ({}) => {
                             <div className="container col-f-0">
                                 <label>Detail Kerja</label>
                                 <textarea
-                                    name="deskripsi"
-                                    value={data.deskripsi}
+                                    name="detail"
+                                    value={data.detail}
                                     onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}
                                     className="textarea"
                                     type="text"

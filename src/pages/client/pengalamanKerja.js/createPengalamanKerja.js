@@ -10,13 +10,13 @@ function CreatePengalamanKerja() {
     const id = localStorage.getItem('id');
     const [pengalamanKerja, setPengalamanKerja] = useState({
         id_user: "",
-        pengalaman_kerja: "",
+        lokasi: "",
         jabatan: "",
-        deskripsi: "",
+        detail: "",
         tahun_mulai: "",
         tahun_selesai: ""
     });
-    const wordCount = pengalamanKerja.deskripsi.trim().split(/\s+/).filter(Boolean).length;
+    const wordCount = pengalamanKerja.detail.trim().split(/\s+/).filter(Boolean).length;
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -36,7 +36,7 @@ function CreatePengalamanKerja() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(!pengalamanKerja.pengalaman_kerja) {
+        if(!pengalamanKerja.lokasi) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -54,7 +54,7 @@ function CreatePengalamanKerja() {
             return
         }
 
-        if(!pengalamanKerja.deskripsi) {
+        if(!pengalamanKerja.detail) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -86,9 +86,9 @@ function CreatePengalamanKerja() {
             if (result.isConfirmed) {
                 const pengalamanKerjaUser = {
                     id_user: `${id}`,
-                    pengalaman_kerja: pengalamanKerja.pengalaman_kerja,
+                    lokasi: pengalamanKerja.lokasi,
                     jabatan: pengalamanKerja.jabatan,
-                    deskripsi: pengalamanKerja.deskripsi,
+                    detail: pengalamanKerja.detail,
                     tahun_mulai: pengalamanKerja.tahun_mulai,
                     tahun_selesai: pengalamanKerja.tahun_selesai || "Hingga saat ini",
                 };
@@ -97,9 +97,9 @@ function CreatePengalamanKerja() {
         
                 setPengalamanKerja({
                     id_user: "",
-                    pengalaman_kerja: "",
+                    lokasi: "",
                     jabatan: "",
-                    deskripsi: "",
+                    detail: "",
                     tahun_mulai: "",
                     tahun_selesai: "",
                 });
@@ -134,7 +134,7 @@ function CreatePengalamanKerja() {
                         <form onSubmit={handleSubmit} className="container col-f full-width">
                             <div className="container col-f-0">
                                 <label>Lokasi Kerja</label>
-                                <input name="pengalaman_kerja" value={pengalamanKerja.pengalaman_kerja} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan lokasi kerja" />
+                                <input name="lokasi" value={pengalamanKerja.lokasi} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan lokasi kerja" />
                                 <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : PT Aneka Hidangan Lezat</p>
                             </div>
                             <div className="container col-f-0">
@@ -145,8 +145,8 @@ function CreatePengalamanKerja() {
                             <div className="container col-f-0">
                                 <label>Detail Kerja</label>
                                 <textarea
-                                    name="deskripsi"
-                                    value={pengalamanKerja.deskripsi}
+                                    name="detail"
+                                    value={pengalamanKerja.detail}
                                     onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })}
                                     className="textarea"
                                     type="text"

@@ -33,11 +33,11 @@ export const uploadToSupabase = async (newFileName, file) => {
     }
 };
 
-// User (Include Admin)
+// Create User Form Admin
 export const createUser = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/user/register`, {
+        const response = await fetch(`${baseUrl}/kopi/user/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export const createUser = (user) => async (dispatch) => {
 export const createUserSelf = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/user/register`, {
+        const response = await fetch(`${baseUrl}/kopi/user/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export const createUserSelf = (user) => async (dispatch) => {
 export const postUserLogin = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/user/login`, {
+        const response = await fetch(`${baseUrl}/kopi/user/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -127,7 +127,7 @@ export const getUser = () => {
         dispatch({ type: userTypes.GET_USER_LIST_REQUEST });
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`${baseUrl}/user`, {
+            const response = await fetch(`${baseUrl}/kopi/user`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -153,7 +153,7 @@ export const getUserId = (id) => {
         dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`${baseUrl}/user/${id}`, {
+            const response = await fetch(`${baseUrl}/kopi/user/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -174,7 +174,7 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`${baseUrl}/user/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/user/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -194,7 +194,7 @@ export const deleteUser = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_USER_REQUEST });
     try {
         const token = localStorage.getItem("token");
-        await fetch(`${baseUrl}/user/${id}`, {
+        await fetch(`${baseUrl}/kopi/user/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -212,10 +212,12 @@ export const deleteUser = (id) => async (dispatch) => {
 export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PENGALAMAN_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/pengalamankerja`, {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${baseUrl}/kopi/pengalamankerja/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(pengalaman_kerja),
         });
@@ -231,7 +233,7 @@ export const readPengalamanKerja = (id) => {
         dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/pengalamankerja/${id}`, {
+            const response = await fetch(`${baseUrl}/kopi/pengalamankerja/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -253,7 +255,7 @@ export const updatePengalamanKerja = (id, updatedPengalamanKerja) => async (disp
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
-        const response = await fetch(`${baseUrl}/pengalamankerja/${id_user}/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -261,6 +263,7 @@ export const updatePengalamanKerja = (id, updatedPengalamanKerja) => async (disp
             },
             body: JSON.stringify(updatedPengalamanKerja),
         });
+        console.log(response);
         const data = await response.json();
         dispatch({ type: userTypes.UPDATE_PENGALAMAN_SUCCESS, payload: data.data });
     } catch (error) {
@@ -273,7 +276,7 @@ export const deletePengalamanKerja = (id) => async (dispatch) => {
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
-        await fetch(`${baseUrl}/pengalamankerja/${id_user}/${id}`, {
+        await fetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -290,10 +293,12 @@ export const deletePengalamanKerja = (id) => async (dispatch) => {
 export const createPendidikanTerakhir = (pendidikan_terakhir) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/pendidikanterakhir`, {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${baseUrl}/kopi/pendidikanterakhir`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(pendidikan_terakhir),
         });
@@ -309,7 +314,7 @@ export const readPendidikanTerakhir = (id) => {
         dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`${baseUrl}/pendidikanterakhir/${id}`, {
+            const response = await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -332,7 +337,7 @@ export const updatePendidikanTerakhir = (id, updatedPendidikanTerakhir) => async
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
-        const response = await fetch(`${baseUrl}/pendidikanterakhir/${id_user}/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -353,7 +358,7 @@ export const deletePendidikanTerakhir = (id) => async (dispatch) => {
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
-        await fetch(`${baseUrl}/pendidikanterakhir/${id_user}/${id}`, {
+        await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -370,10 +375,12 @@ export const deletePendidikanTerakhir = (id) => async (dispatch) => {
 export const createKeahlian = (keahlian) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_KEAHLIAN_ID_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/keahlian`, {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${baseUrl}/kopi/keahlian`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(keahlian),
         });
@@ -389,7 +396,7 @@ export const readKeahlian = (id) => {
         dispatch({ type: userTypes.GET_KEAHLIAN_ID_REQUEST });
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`${baseUrl}/keahlian/${id}`, {
+            const response = await fetch(`${baseUrl}/kopi/keahlian/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -412,7 +419,7 @@ export const updateKeahlian = (id, updatedKeahlian) => async (dispatch) => {
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
-        const response = await fetch(`${baseUrl}/keahlian/${id_user}/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/keahlian/${id_user}/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -433,7 +440,7 @@ export const deleteKeahlian = (id) => async (dispatch) => {
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
-        await fetch(`${baseUrl}/keahlian/${id_user}/${id}`, {
+        await fetch(`${baseUrl}/kopi/keahlian/${id_user}/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -450,7 +457,7 @@ export const createPrestasi = (prestasi) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PRESTASI_ID_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/prestasikerja`, {
+        const response = await fetch(`${baseUrl}/kopi/prestasikerja`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -458,6 +465,7 @@ export const createPrestasi = (prestasi) => async (dispatch) => {
             },
             body: JSON.stringify(prestasi),
         });
+        console.log(response);
         const data = await response.json();
         dispatch({ type: userTypes.CREATE_PRESTASI_ID_SUCCESS, payload: data.data });
     } catch (error) {
@@ -470,7 +478,7 @@ export const readPrestasi = () => {
         dispatch({ type: userTypes.GET_PRESTASI_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/prestasikerja`, {
+            const response = await fetch(`${baseUrl}/kopi/prestasikerja`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -491,7 +499,7 @@ export const updatePrestasi = (id, id_pengalaman_kerja, updatedPrestasi) => asyn
     dispatch({ type: userTypes.UPDATE_PRESTASI_ID_REQUEST });
     try {
         const token = localStorage.getItem("token");
-        const response = await fetch(`${baseUrl}/prestasikerja/${id_pengalaman_kerja}/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -510,7 +518,7 @@ export const deletePrestasi = (id, id_pengalaman_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PRESTASI_ID_REQUEST });
     try {
         const token = localStorage.getItem("token");
-        await fetch(`${baseUrl}/prestasikerja/${id_pengalaman_kerja}/${id}`, {
+        await fetch(`${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -526,10 +534,12 @@ export const deletePrestasi = (id, id_pengalaman_kerja) => async (dispatch) => {
 export const createPelatihan = (pelatihan) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PELATIHAN_ID_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/pelatihan`, {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${baseUrl}/kopi/pelatihan`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(pelatihan),
         });
@@ -545,7 +555,7 @@ export const readPelatihan = (id) => {
         dispatch({ type: userTypes.GET_PELATIHAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/pelatihan/${id}`, {
+            const response = await fetch(`${baseUrl}/kopi/pelatihan/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -567,7 +577,7 @@ export const updatePelatihan = (id, updatedPelatihan) => async (dispatch) => {
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
-        const response = await fetch(`${baseUrl}/pelatihan/${id_user}/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/pelatihan/${id_user}/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -587,7 +597,7 @@ export const deletePelatihan = (id) => async (dispatch) => {
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
-        await fetch(`${baseUrl}/pelatihan/${id_user}/${id}`, {
+        await fetch(`${baseUrl}/kopi/pelatihan/${id_user}/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
