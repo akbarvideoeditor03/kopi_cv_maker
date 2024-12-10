@@ -56,29 +56,11 @@ function CreateKeahlian() {
                 tingkat: keahlian.tingkat,
             }
             dispatch(createKeahlian(keahlianUser));
-            setKeahlian({
-                keahlian: "",
-                tingkat: "",
-            });
         } catch (error) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Something went wrong!",
-            });
-        } finally {
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Keahlian berhasil ditambahkan",
-                showConfirmButton: false,
-                timer: 3000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                Swal.close();
-                window.location = '/home';
             });
         }
     };
@@ -98,6 +80,7 @@ function CreateKeahlian() {
                             <div className="container col-f-0">
                                 <label>Pilih Tingkatan</label>
                                 <select id="tingkat" name="tingkat" value={keahlian.tingkat} onChange={(e) => setKeahlian({ ...keahlian, [e.target.name]: e.target.value })}>
+                                    <option value="" key="">Pilih tingkatan</option>
                                     <option value="Dasar" key="dasar">Pemula</option>
                                     <option value="Menengah" key="menengah">Pemula Tingkat Lanjut</option>
                                     <option value="Profesional" key="profesional">Kompeten</option>
@@ -105,6 +88,10 @@ function CreateKeahlian() {
                                     <option value="Ahli" key="ahli">Ahli</option>
                                 </select>
                                 <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : Kompeten</p>
+                            </div>
+                            <div className="card-mini">
+                                <h4>Harap Perhatikan <i className="bi-exclamation-triangle-fill"></i></h4>
+                                <p style={{marginTop : '5px'}}>Saat memilih tingkat keahlian, pastikan untuk menyesuaikan dengan kemampuan yang kamu miliki saat ini. Perlu diingat, keahlian adalah sesuatu yang bersifat dinamis dan tidak selalu dapat diukur secara absolut. Fokuslah pada pengembangan diri dan peningkatan kemampuan dari waktu ke waktu. <i className="bi-emoji-smile"></i></p>
                             </div>
                             <div className="container row-f f-wrap f-1 m-t1">
                                 <button onClick={cancelSubmit} style={{ fontSize: '1rem' }} className="btn btn-danger f-1">

@@ -69,17 +69,6 @@ function UpdatePrestasi() {
                     tahun: data.tahun,
                 };
                 dispatch(updatePrestasi(id, id_pengalaman_kerja, updatedPrestasi));
-                await Swal.fire({
-                    icon: "success",
-                    title: "Selamat",
-                    text: "Prestasi berhasil ditambahkan",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                });
-                window.location = "/home";
             }
         } catch (error) {
             console.error("Error saat menambahkan prestasi:", error);

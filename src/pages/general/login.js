@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { postUserLogin } from "../../redux/action/user.action";
-import Swal from "sweetalert2";
 
 function Login() {
     const dispatch = useDispatch();
@@ -18,13 +17,7 @@ function Login() {
                 email: userData.email,
                 password: userData.password
             }
-
             dispatch(postUserLogin(userLogin));
-
-            setUserData({
-                email: "",
-                password: ""
-            });
         }   catch (error) {
             console.log(error);
         }

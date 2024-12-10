@@ -15,6 +15,9 @@ import {
 }
     from "../../redux/action/user.action";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
+dayjs.locale('id')
 
 function HomeUser() {
     const id = localStorage.getItem('id');
@@ -106,6 +109,7 @@ function HomeUser() {
                                         <p>{userList.alamat}</p>
                                     </div>
                                 </div>
+                                <p>{userList.tentang}</p>
                             </div>
                             <div className="container col-f">
                                 <a className="btn btn-primary" href={`/edit/${id}`}><i className="bi-pencil-square"></i></a>
@@ -150,7 +154,7 @@ function HomeUser() {
                                                 <div style={{ maxWidth: '17.5rem', flexBasis: '360px' }} className="container col-f full-width">
                                                     <div className="container col-f">
                                                         <p style={{ fontSize: "1.15rem" }} className="fw7">{item.lokasi}</p>
-                                                        <p className="fw6">{item.tahun_mulai.slice(0, 4)} - <span>{item.tahun_selesai}</span></p>
+                                                        <p className="fw6">{dayjs(item.tahun_mulai).locale("id").format("MMMM YYYY")} - <span>{item.tahun_selesai}</span></p>
                                                     </div>
                                                 </div>
                                                 <div style={{ flexBasis: '360px' }} className="container col-f f-1">
@@ -166,7 +170,7 @@ function HomeUser() {
                                                             <h4>{item.prestasi}</h4>
                                                             <p>Tahun {item.tahun.slice(0, 4)}</p>
                                                         </div>
-                                                        <div className="container row-f">
+                                                        <div className="container row-f f-center-c">
                                                             <a className="btn btn-primary" href={`/prestasi/${prestasiId}/${item.id}`}><i className="bi-pencil-square"></i></a>
                                                             <button className="btn btn-danger" onClick={() => deleteData(item.id, 'prestasi')}><i className="bi-trash"></i></button>
                                                         </div>
@@ -217,7 +221,7 @@ function HomeUser() {
                                             <div key={item.id} className="container row-f f-wrap card-mini">
                                                 <div style={{ flexBasis: '360px' }} className="container col-f f-1 f-wrap">
                                                     <h3>{item.pelatihan}</h3>
-                                                    <p className="fw6">{item.tahun_mulai.slice(0, 4)} - <span>{item.tahun_selesai}</span></p>
+                                                    <p className="fw6">{dayjs(item.tahun_mulai).locale("id").format("MMMM YYYY")} - <span>{item.tahun_selesai}</span></p>
                                                 </div>
                                                 <div className="container col-f">
                                                     <div className="container row-f">

@@ -79,6 +79,12 @@ function WebHeader() {
                                 <a href="/home">CV Saya</a>
                             </div>
                             <div className="container col-f">
+                                <a href="/bantuan">Bantuan</a>
+                            </div>
+                            <div className="container col-f">
+                                <a href="/tentang">Tentang</a>
+                            </div>
+                            <div className="container col-f">
                                 <button className="btn btn-danger" onClick={handleLogout}>
                                     Keluar
                                 </button>

@@ -68,22 +68,6 @@ function CreatePelatihan() {
                     tahun_selesai: pelatihan.tahun_selesai || "Hingga saat ini",
                 };
                 dispatch(createPelatihan(pelatihanUser));
-                setPelatihan({
-                    pelatihan: "",
-                    tahun_mulai: "",
-                    tahun_selesai: ""
-                });
-                await Swal.fire({
-                    icon: "success",
-                    title: "Selamat",
-                    text: "Pelatihan berhasil ditambahkan",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                });
-                window.location = "/home";
             }
         } catch (error) {
             console.error("Error saat menambahkan pelatihan:", error);
@@ -110,11 +94,11 @@ function CreatePelatihan() {
                             <div className="container col-f-0">
                                 <label>Tahun Mulai</label>
                                 <input name="tahun_mulai" value={pelatihan.tahun_mulai} onChange={(e) => setPelatihan({ ...pelatihan, [e.target.name]: e.target.value })} type="date" />
-                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Form ini hanya akan menampilkan tahun saja</p>
+                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Form ini hanya akan menampilkan bulan dan tahun saja</p>
                             </div>
                             <div className="container col-f-0">
                                 <label>*Tahun Selesai (Opsional)</label>
-                                <input name="tahun_selesai" value={pelatihan.tahun_selesai} onChange={(e) => setPelatihan({ ...pelatihan, [e.target.name]: e.target.value })} type="text" placeholder="Contohnya : 2023" />
+                                <input name="tahun_selesai" value={pelatihan.tahun_selesai} onChange={(e) => setPelatihan({ ...pelatihan, [e.target.name]: e.target.value })} type="text" placeholder="Contohnya : September 2023" />
                                 <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Jika pengalaman kerja masih berlangsung, maka kosongkan saja</p>
                             </div>
                             <div className="container row-f f-wrap f-1 m-t1">

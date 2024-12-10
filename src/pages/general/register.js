@@ -153,37 +153,12 @@ const Register = () => {
                 }
 
                 dispatch(createUserSelf(newUser));
-
-                setUserData({
-                    nama: "",
-                    no_telp: "",
-                    alamat: "",
-                    tentang: "",
-                    foto_profil: null,
-                    email: "",
-                    password: ""
-                });
-                
             }
         } catch (error) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Something went wrong!",
-            });
-        } finally {
-            Swal.fire({
-                icon: "success",
-                title: "Registrasi berhasil!",
-                text: "Silakan masuk dengan akun Anda",
-                showConfirmButton: false,
-                timer: 3000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                Swal.close();
-                window.location = '/user/login';
             });
         }
     };

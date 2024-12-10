@@ -152,19 +152,6 @@ const UpdateUserSelf = ({ userId }) => {
                             };
                 
                             dispatch(updateUser(id, updatedUser));
-                
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil!',
-                                text: 'Data berhasil diupdate.',
-                                timer: 3000,
-                                showConfirmButton: false,
-                                allowEscapeKey: false,
-                                allowOutsideClick: false,
-                                timerProgressBar: true,
-                            }).then(() => {
-                                window.location = `/home`;
-                            });
                         } catch (error) {
                             Swal.fire({
                                 icon: 'error',

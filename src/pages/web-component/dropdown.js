@@ -53,8 +53,9 @@ function Dropdown() {
             <div className="dropdown">
                 <button className="hamburger-btn" onClick={toggleDropdown}>≡</button>
                 <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
+                    <a href="/#" >Dashboard</a>
                     <a href="/user" >Pengguna</a>
-                    <button className="btn-dropdown" onClick={handleLogout}>
+                    <button className="btn-dropdown full-width" onClick={handleLogout}>
                         Keluar
                     </button>
                 </ul>

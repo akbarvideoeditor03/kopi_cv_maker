@@ -23,20 +23,20 @@ const CreateUserAdmin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (wordCount > 100) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
-            });
-            return;
-        }
-
         if (!userData.nama) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Nama, email, dan password wajib diisi",
+                text: "Nama wajib diisi",
+            });
+            return;
+        }
+
+        if (!userData.no_telp) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Nomor telepon wajib diisi",
             });
             return;
         }
@@ -50,20 +50,38 @@ const CreateUserAdmin = () => {
             return;
         }
 
+        if (!userData.alamat) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Alamat wajib diisi",
+            });
+            return;
+        }
+
+        if (!userData.tentang) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Tentang wajib diisi",
+            });
+            return;
+        }
+
+        if(!userData.foto_profil) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Wajib unggah foto profil",
+            });
+            return;
+        }
+
         if (!["image/jpg", "image/jpeg", "image/png"].includes(userData.foto_profil.type)) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Format foto profil tidak valid",
-            });
-            return;
-        }
-        
-        if (wordCount > 100) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
             });
             return;
         }
@@ -83,6 +101,15 @@ const CreateUserAdmin = () => {
                 icon: "error",
                 title: "Oops...",
                 text: "Format email tidak valid",
+            });
+            return;
+        }
+
+        if (!userData.password) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Password wajib diisi",
             });
             return;
         }
@@ -129,36 +156,12 @@ const CreateUserAdmin = () => {
                 }
 
                 dispatch(createUser(newUser));
-
-                setUserData({
-                    nama: "",
-                    no_telp: "",
-                    alamat: "",
-                    tentang: "",
-                    foto_profil: null,
-                    email: "",
-                    password: ""
-                });
             }
         } catch (error) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Something went wrong!",
-            });
-        } finally {
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Akun berhasil dibuat",
-                showConfirmButton: false,
-                timer: 3000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                Swal.close();
-                window.location = '/user';
             });
         }
     };

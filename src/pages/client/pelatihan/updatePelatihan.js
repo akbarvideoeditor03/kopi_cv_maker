@@ -4,7 +4,7 @@ import { readPelatihan, updatePelatihan } from "../../../redux/action/user.actio
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-const UpdatePelatihan = ({ }) => {
+const UpdatePelatihan = () => {
     const { id } = useParams();
     const idUser = localStorage.getItem('id')
     const token = localStorage.getItem('token');
@@ -72,25 +72,6 @@ const UpdatePelatihan = ({ }) => {
                 };
 
                 dispatch(updatePelatihan(id, updatedPelatihan));
-
-                setData({
-                    pelatihan: "",
-                    tahun_mulai: "",
-                    tahun_selesai: "",
-                });
-
-                await Swal.fire({
-                    icon: "success",
-                    title: "Selamat",
-                    text: "Pengalaman kerja berhasil diubah",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                }).then(() => {
-                    window.location = "/home";
-                });
             }
         } catch (error) {
             console.error("Error saat menambahkan pengalaman kerja:", error);
@@ -116,11 +97,11 @@ const UpdatePelatihan = ({ }) => {
                             <div className="container col-f-0">
                                 <label>Tahun Mulai</label>
                                 <input name="tahun_mulai" value={data.tahun_mulai} onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })} type="date" />
-                                <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>*Form ini hanya akan menampilkan tahun saja</p>
+                                <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>*Form ini hanya akan menampilkan bulan dan tahun saja</p>
                             </div>
                             <div className="container col-f-0">
                                 <label>*Tahun Selesai (Opsional)</label>
-                                <input name="tahun_selesai" value={data.tahun_selesai} onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })} type="text" placeholder="Contohnya : 2023" />
+                                <input name="tahun_selesai" value={data.tahun_selesai} onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })} type="text" placeholder="Contohnya : September 2023" />
                                 <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>*Jika pengalaman kerja masih berlangsung, maka kosongkan saja</p>
                             </div>
                             <div className="container row-f f-wrap f-1 m-t1">

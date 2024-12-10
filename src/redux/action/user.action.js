@@ -16,12 +16,10 @@ export const uploadToSupabase = async (newFileName, file) => {
                 contentType: file.type,
                 upsert: false,
             });
-
         if (error) {
             console.error("Error uploading file:", error);
             throw error;
         }
-
         const publicUrlResponse = supabase.storage
             .from("final_project")
             .getPublicUrl(data.path);
@@ -44,13 +42,37 @@ export const createUser = (user) => async (dispatch) => {
             },
             body: JSON.stringify(user),
         });
-        const data = await response.json();
-        dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "User berhasil ditambah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
     }
 };
 
+//Register
 export const createUserSelf = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
@@ -61,14 +83,40 @@ export const createUserSelf = (user) => async (dispatch) => {
             },
             body: JSON.stringify(user),
         });
-        console.log(response);
-        const data = await response.json();
-        dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Registrasi berhasil!",
+                text: "Silakan masuk dengan akun Anda",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                Swal.close();
+                window.location = '/user/login';
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
     }
 };
 
+//Login
 export const postUserLogin = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
@@ -80,43 +128,56 @@ export const postUserLogin = (user) => async (dispatch) => {
             body: JSON.stringify(user),
         });
 
-        const data = await response.json();
-        const idUser = data.id;
-        const token = data.token;
-        const roleUser = data.role;
-        if (!idUser && !token && !roleUser) {
+        if(response.status === 500) {
             Swal.fire({
                 icon: "error",
-                title: "Oopss...",
-                text: "Akun tidak ditemukan. Atau password salah",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 2000,
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 timerProgressBar: true,
-            }).then(() => {
-                Swal.close();
-                window.location.reload();
             });
         } else {
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Akun berhasil masuk",
-                showConfirmButton: false,
-                timer: 3000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                localStorage.setItem("id", idUser);
-                localStorage.setItem("role", roleUser);
-                localStorage.setItem("token", token);
-                Swal.close();
-                window.location = '/';
-            });
+            const data = await response.json();
+            const idUser = data.id;
+            const token = data.token;
+            const roleUser = data.role;
+            if (!idUser && !token && !roleUser) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oopss...",
+                    text: "Akun tidak ditemukan. Atau password salah",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                }).then(() => {
+                    Swal.close();
+                    window.location.reload();
+                });
+            } else {
+                Swal.fire({
+                    icon: "success",
+                    title: "Selamat",
+                    text: "Akun berhasil masuk",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                }).then(() => {
+                    localStorage.setItem("id", idUser);
+                    localStorage.setItem("role", roleUser);
+                    localStorage.setItem("token", token);
+                    Swal.close();
+                    window.location = '/';
+                });
+                dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+            }
         }
-        dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
     } catch (error) {
         console.error("Error during login:", error);
         dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
@@ -175,6 +236,7 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {
         const token = localStorage.getItem("token");
+        const role = localStorage.getItem('role');
         const response = await fetch(`${baseUrl}/kopi/user/${id}`, {
             method: "PUT",
             headers: {
@@ -183,26 +245,68 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
             },
             body: JSON.stringify(updatedUser),
         });
-
-        const data = await response.json();
-        dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Data berhasil diubah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                Swal.close();
+                if(role === 'user') {
+                    window.location = '/home';
+                } else {
+                    window.location = '/user';
+                }
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.UPDATE_USER_FAILURE, payload: error });
     }
 };
 
+//Only Admin
 export const deleteUser = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_USER_REQUEST });
     try {
         const token = localStorage.getItem("token");
-        await fetch(`${baseUrl}/kopi/user/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/user/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-
-        dispatch({ type: userTypes.DELETE_USER_SUCCESS, payload: id });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            dispatch({ type: userTypes.DELETE_USER_SUCCESS, payload: id });
+        }
     } catch (error) {
         dispatch({ type: userTypes.DELETE_USER_FAILURE, payload: error });
     }
@@ -222,8 +326,34 @@ export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
             },
             body: JSON.stringify(pengalaman_kerja),
         });
-        const data = await response.json();
-        dispatch({ type: userTypes.CREATE_PENGALAMAN_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Pengalaman kerja berhasil ditambah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                Swal.close();
+                window.location.href = '/home';
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.CREATE_PENGALAMAN_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.CREATE_PENGALAMAN_FAILURE, payload: error });
     }
@@ -264,9 +394,33 @@ export const updatePengalamanKerja = (id, updatedPengalamanKerja) => async (disp
             },
             body: JSON.stringify(updatedPengalamanKerja),
         });
-        console.log(response);
-        const data = await response.json();
-        dispatch({ type: userTypes.UPDATE_PENGALAMAN_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Pengalaman kerja berhasil diubah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location = "/home";
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.UPDATE_PENGALAMAN_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.UPDATE_PENGALAMAN_FAILURE, payload: error });
     }
@@ -303,8 +457,33 @@ export const createPendidikanTerakhir = (pendidikan_terakhir) => async (dispatch
             },
             body: JSON.stringify(pendidikan_terakhir),
         });
-        const data = await response.json();
-        dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Pendidikan terakhir berhasil ditambah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location = "/home";
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_FAILURE, payload: error });
     }
@@ -346,9 +525,33 @@ export const updatePendidikanTerakhir = (id, updatedPendidikanTerakhir) => async
             },
             body: JSON.stringify(updatedPendidikanTerakhir),
         });
-
-        const data = await response.json();
-        dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Pendidikan terakhir berhasil diubah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location = "/home";
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_FAILURE, payload: error });
     }
@@ -385,8 +588,33 @@ export const createKeahlian = (keahlian) => async (dispatch) => {
             },
             body: JSON.stringify(keahlian),
         });
-        const data = await response.json();
-        dispatch({ type: userTypes.CREATE_KEAHLIAN_ID_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Keahlian berhasil ditambah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location = "/home";
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.CREATE_KEAHLIAN_ID_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.CREATE_KEAHLIAN_ID_FAILURE, payload: error });
     }
@@ -428,9 +656,33 @@ export const updateKeahlian = (id, updatedKeahlian) => async (dispatch) => {
             },
             body: JSON.stringify(updatedKeahlian),
         });
-
-        const data = await response.json();
-        dispatch({ type: userTypes.UPDATE_KEAHLIAN_ID_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Keahlian berhasil diperbarui",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location = "/home";
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.UPDATE_KEAHLIAN_ID_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.UPDATE_KEAHLIAN_ID_FAILURE, payload: error });
     }
@@ -441,13 +693,26 @@ export const deleteKeahlian = (id) => async (dispatch) => {
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
-        await fetch(`${baseUrl}/kopi/keahlian/${id_user}/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/keahlian/${id_user}/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_SUCCESS, payload: id });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_SUCCESS, payload: id });
+        }
     } catch (error) {
         dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_FAILURE, payload: error });
     }
@@ -466,9 +731,33 @@ export const createPrestasi = (prestasi) => async (dispatch) => {
             },
             body: JSON.stringify(prestasi),
         });
-        console.log(response);
-        const data = await response.json();
-        dispatch({ type: userTypes.CREATE_PRESTASI_ID_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Prestasi kerja berhasil ditambah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location = "/home";
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.CREATE_PRESTASI_ID_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.CREATE_PRESTASI_ID_FAILURE, payload: error });
     }
@@ -508,8 +797,33 @@ export const updatePrestasi = (id, id_pengalaman_kerja, updatedPrestasi) => asyn
             },
             body: JSON.stringify(updatedPrestasi),
         });
-        const data = await response.json();
-        dispatch({ type: userTypes.UPDATE_PRESTASI_ID_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Prestasi kerja berhasil diubah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location = "/home";
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.UPDATE_PRESTASI_ID_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.UPDATE_PRESTASI_ID_FAILURE, payload: error });
     }
@@ -519,13 +833,26 @@ export const deletePrestasi = (id, id_pengalaman_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PRESTASI_ID_REQUEST });
     try {
         const token = localStorage.getItem("token");
-        await fetch(`${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        dispatch({ type: userTypes.DELETE_PRESTASI_ID_SUCCESS, payload: id });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            dispatch({ type: userTypes.DELETE_PRESTASI_ID_SUCCESS, payload: id });
+        }
     } catch (error) {
         dispatch({ type: userTypes.DELETE_PRESTASI_ID_FAILURE, payload: error });
     }
@@ -544,8 +871,33 @@ export const createPelatihan = (pelatihan) => async (dispatch) => {
             },
             body: JSON.stringify(pelatihan),
         });
-        const data = await response.json();
-        dispatch({ type: userTypes.CREATE_PELATIHAN_ID_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Pelatihan / kursus berhasil ditambah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location = "/home";
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.CREATE_PELATIHAN_ID_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.CREATE_PELATIHAN_ID_FAILURE, payload: error });
     }
@@ -586,8 +938,33 @@ export const updatePelatihan = (id, updatedPelatihan) => async (dispatch) => {
             },
             body: JSON.stringify(updatedPelatihan),
         });
-        const data = await response.json();
-        dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_SUCCESS, payload: data.data });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: "success",
+                title: "Selamat",
+                text: "Pelatihan / kursus berhasil diubah",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location = "/home";
+            });
+            const data = await response.json();
+            dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_SUCCESS, payload: data.data });
+        }
     } catch (error) {
         dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_FAILURE, payload: error });
     }
@@ -598,13 +975,26 @@ export const deletePelatihan = (id) => async (dispatch) => {
     try {
         const token = localStorage.getItem("token");
         const id_user = localStorage.getItem("id");
-        await fetch(`${baseUrl}/kopi/pelatihan/${id_user}/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/pelatihan/${id_user}/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        dispatch({ type: userTypes.DELETE_PELATIHAN_ID_SUCCESS, payload: id });
+        if(response.status === 500) {
+            Swal.fire({
+                icon: "error",
+                title: "Ups, Maaf...",
+                text: "Server kami lagi error nih",
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            dispatch({ type: userTypes.DELETE_PELATIHAN_ID_SUCCESS, payload: id });
+        }
     } catch (error) {
         dispatch({ type: userTypes.DELETE_PELATIHAN_ID_FAILURE, payload: error });
     }

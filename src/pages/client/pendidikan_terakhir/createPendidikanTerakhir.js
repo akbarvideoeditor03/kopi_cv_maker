@@ -71,33 +71,11 @@ function CreatePendidikanTerakhir() {
             }
 
             dispatch(createPendidikanTerakhir(pendidikanTerakhirUser));
-
-            setPendidikanTerakhir({
-                id_user: "",
-                institusi: "",
-                jurusan: "",
-                tahun_mulai: "",
-                tahun_selesai: ""
-            });
         } catch (error) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Something went wrong!",
-            });
-        } finally {
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Pendidikan Terakhir berhasil ditambahkan",
-                showConfirmButton: false,
-                timer: 3000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                Swal.close();
-                window.location = '/home';
             });
         }
     };

@@ -73,24 +73,6 @@ function UpdatePendidikanTerakhir() {
                     tahun_selesai: data.tahun_selesai || 'Hingga saat ini',
                 }
                 dispatch(updatePendidikanTerakhir(id, updatedPendidikanTerakhir));
-                setData({
-                    institusi: "",
-                    jurusan: "",
-                    tahun_mulai: "",
-                    tahun_selesai: ""
-                });
-                await Swal.fire({
-                    icon: "success",
-                    title: "Selamat",
-                    text: "Pendidikan terakhir berhasil diubah",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                }).then(() => {
-                    window.location = "/home";
-                });
             }
         } catch (error) {
             Swal.fire({
@@ -121,7 +103,7 @@ function UpdatePendidikanTerakhir() {
                             <div className="container col-f-0">
                                 <label>Tahun Mulai</label>
                                 <input name="tahun_mulai" value={data.tahun_mulai} onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })} type="date" />
-                                <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>*Form ini hanya akan menampilkan tahun saja</p>
+                                <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>*Form ini hanya akan menampilkan bulan dan tahun saja</p>
                             </div>
                             <div className="container col-f-0">
                                 <label>*Tahun Selesai (Opsional)</label>

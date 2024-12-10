@@ -94,26 +94,6 @@ function CreatePengalamanKerja() {
                 };
         
                 dispatch(createPengalamanKerja(pengalamanKerjaUser));
-        
-                setPengalamanKerja({
-                    id_user: "",
-                    lokasi: "",
-                    jabatan: "",
-                    detail: "",
-                    tahun_mulai: "",
-                    tahun_selesai: "",
-                });
-                await Swal.fire({
-                    icon: "success",
-                    title: "Selamat",
-                    text: "Pengalaman kerja berhasil ditambahkan",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                });
-                window.location = "/home";
             }
         } catch (error) {
             console.error("Error saat menambahkan pengalaman kerja:", error);
@@ -159,11 +139,11 @@ function CreatePengalamanKerja() {
                             <div className="container col-f-0">
                                 <label>Tahun Mulai Kerja</label>
                                 <input name="tahun_mulai" value={pengalamanKerja.tahun_mulai} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="date" />
-                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Form ini hanya akan menampilkan tahun saja</p>
+                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Form ini hanya akan menampilkan bulan dan tahun saja</p>
                             </div>
                             <div className="container col-f-0">
                                 <label>*Tahun Selesai (Opsional)</label>
-                                <input name="tahun_selesai" value={pengalamanKerja.tahun_selesai} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="text" placeholder="Contohnya : 2023" />
+                                <input name="tahun_selesai" value={pengalamanKerja.tahun_selesai} onChange={(e) => setPengalamanKerja({ ...pengalamanKerja, [e.target.name]: e.target.value })} type="text" placeholder="Contohnya : September 2023" />
                                 <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Jika pengalaman kerja masih berlangsung, maka kosongkan saja</p>
                             </div>
                             <div className="container row-f f-wrap f-1 m-t1">

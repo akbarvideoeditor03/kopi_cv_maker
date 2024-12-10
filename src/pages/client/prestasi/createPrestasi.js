@@ -4,7 +4,7 @@ import { createPrestasi } from "../../../redux/action/user.action";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
-function CreatePrestasi({ }) {
+function CreatePrestasi() {
     const {id} = useParams();
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
@@ -70,18 +70,6 @@ function CreatePrestasi({ }) {
                 };
                 
                 dispatch(createPrestasi(prestasiUser));
-
-                await Swal.fire({
-                    icon: "success",
-                    title: "Selamat",
-                    text: "Prestasi berhasil ditambahkan",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                });
-                window.location = "/home";
             }
         } catch (error) {
             console.error("Error saat menambahkan prestasi:", error);
