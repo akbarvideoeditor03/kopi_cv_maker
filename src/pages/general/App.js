@@ -12,8 +12,8 @@ import UpdateUserAdmin from "../admin/updateUser";
 import UpdateUserSelf from "../client/user/updateUser";
 
 // Halaman Pembangun CV
-import CreatePengalamanKerja from "../client/pengalamanKerja.js/createPengalamanKerja";
-import UpdatePengalamanKerja from "../client/pengalamanKerja.js/updatePengalamanKerja";
+import CreatePengalamanKerja from "../client/pengalamanKerja/createPengalamanKerja";
+import UpdatePengalamanKerja from "../client/pengalamanKerja/updatePengalamanKerja";
 import CreatePendidikanTerakhir from "../client/pendidikan_terakhir/createPendidikanTerakhir";
 import UpdatePendidikanTerakhir from "../client/pendidikan_terakhir/updatePendidikanTerakhir";
 import CreateKeahlian from "../client/keahlian/createKeahlian";
