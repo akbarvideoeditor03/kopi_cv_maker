@@ -72,6 +72,7 @@ function HomeUser() {
 
     if (token && role === 'user') {
         return (
+            
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
                     <h1>Menu</h1>
@@ -84,8 +85,7 @@ function HomeUser() {
                     <div className="container row-f f-between f-wrap f-center">
                         <h1>Yuk lengkapi CV kamu</h1>
                         <div className="container row-f">
-                            <a className="btn btn-info-b" href="/#"><i className="bi-file-earmark-pdf-fill"></i> Preview PDF</a>
-                            <a className="btn btn-info" href="/#"><i className="bi-download"></i> Download CV</a>
+                            <a className="btn btn-info-b" href="/doc/preview"><i className="bi-file-earmark-pdf-fill"></i> Preview PDF</a>
                         </div>
                     </div>
                     <div className="card container col-f f-1">
@@ -100,13 +100,13 @@ function HomeUser() {
                                         <img className="cv-image" src={`${userList.foto_profil}`} alt="" />
                                     </div>
                                     <div className="box-3 container col-f f-1">
-                                        <p><i class="fa-solid fa-envelope"></i> {userList.email}</p>
+                                        <p><i className="fa-solid fa-envelope"></i> {userList.email}</p>
                                     </div>
                                     <div className="box-4 container col-f f-1">
                                         <p><i className="bi-telephone-fill"></i> {userList.no_telp}</p>
                                     </div>
                                     <div className="box-5 container col-f f-1">
-                                        <p><i class="fa-solid fa-location-dot"></i> {userList.alamat}</p>
+                                        <p><i className="fa-solid fa-location-dot"></i> {userList.alamat}</p>
                                     </div>
                                 </div>
                                 <h3>Tentang Saya</h3>

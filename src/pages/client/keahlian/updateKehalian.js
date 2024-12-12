@@ -82,9 +82,9 @@ function UpdateKeahlian() {
                                 <label>Pilih Tingkatan</label>
                                 <select id="tingkat" name="tingkat" value={data.tingkat} onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}>
                                     <option value="" key="">Pilih tingkatan</option>
-                                    <option value="Dasar" key="dasar">Pemula</option>
-                                    <option value="Menengah" key="menengah">Pemula Tingkat Lanjut</option>
-                                    <option value="Profesional" key="profesional">Kompeten</option>
+                                    <option value="Pemula" key="pemula">Pemula</option>
+                                    <option value="Pemula Tingkat Lanjut" key="pemula tingkat lanjut">Pemula Tingkat Lanjut</option>
+                                    <option value="Kompeten" key="kompeten">Kompeten</option>
                                     <option value="Mahir" key="mahir">Mahir</option>
                                     <option value="Ahli" key="ahli">Ahli</option>
                                 </select>
@@ -92,7 +92,7 @@ function UpdateKeahlian() {
                             </div>
                             <div className="card-mini">
                                 <h4>Harap Perhatikan <i className="bi-exclamation-triangle-fill"></i></h4>
-                                <p style={{marginTop : '5px'}}>Saat memilih tingkat keahlian, pastikan untuk menyesuaikan dengan kemampuan yang kamu miliki saat ini. Perlu diingat, keahlian adalah sesuatu yang bersifat dinamis dan tidak selalu dapat diukur secara absolut. Fokuslah pada pengembangan diri dan peningkatan kemampuan dari waktu ke waktu. <i className="bi-emoji-smile"></i></p>
+                                <p style={{ marginTop: '5px' }}>Saat memilih tingkat keahlian, pastikan untuk menyesuaikan dengan kemampuan yang kamu miliki saat ini. Perlu diingat, keahlian adalah sesuatu yang bersifat dinamis dan tidak selalu dapat diukur secara absolut. Fokuslah pada pengembangan diri dan peningkatan kemampuan dari waktu ke waktu. <i className="bi-emoji-smile"></i></p>
                             </div>
                             <div className="container row-f f-wrap f-1 m-t1">
                                 <button onClick={cancelSubmit} style={{ fontSize: '1rem' }} className="btn btn-danger f-1">

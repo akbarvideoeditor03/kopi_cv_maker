@@ -100,11 +100,11 @@ function CreatePendidikanTerakhir() {
                             <div className="container col-f-0">
                                 <label>Tahun Mulai</label>
                                 <input name="tahun_mulai" value={pendidikanTerakhir.tahun_mulai} onChange={(e) => setPendidikanTerakhir({ ...pendidikanTerakhir, [e.target.name]: e.target.value })} type="date" />
-                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Form ini hanya akan menampilkan tahun saja</p>
+                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Form ini hanya akan menampilkan bulan dan tahun saja</p>
                             </div>
                             <div className="container col-f-0">
                                 <label>*Tahun Selesai (Opsional)</label>
-                                <input name="tahun_selesai" value={pendidikanTerakhir.tahun_selesai} onChange={(e) => setPendidikanTerakhir({ ...pendidikanTerakhir, [e.target.name]: e.target.value })} type="text" placeholder="Contohnya : 2023" />
+                                <input name="tahun_selesai" value={pendidikanTerakhir.tahun_selesai} onChange={(e) => setPendidikanTerakhir({ ...pendidikanTerakhir, [e.target.name]: e.target.value })} type="text" placeholder="Contohnya : September 2023" />
                                 <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Jika pendidikan terakhir masih berlangsung, maka kosongkan saja</p>
                             </div>
                             <div className="container row-f f-wrap f-1 m-t1">

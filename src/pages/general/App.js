@@ -28,6 +28,9 @@ import About from "./about";
 import Help from "./help";
 import Learn from "./learn";
 
+//PDF Page
+import CVDocument from "../client/pdfPreview";
+
 function App() {
   return (
     <Routes>
@@ -56,6 +59,8 @@ function App() {
         <Route path="/bantuan" element={<Help />}></Route>
         <Route path="/pelajari" element={<Learn />}></Route>
         <Route path="/tentang" element={<About />}></Route>
+        
+        <Route path="/doc/preview" element={<CVDocument />}></Route>
       </Route>
     </Routes>
   );

@@ -81,9 +81,9 @@ function CreateKeahlian() {
                                 <label>Pilih Tingkatan</label>
                                 <select id="tingkat" name="tingkat" value={keahlian.tingkat} onChange={(e) => setKeahlian({ ...keahlian, [e.target.name]: e.target.value })}>
                                     <option value="" key="">Pilih tingkatan</option>
-                                    <option value="Dasar" key="dasar">Pemula</option>
-                                    <option value="Menengah" key="menengah">Pemula Tingkat Lanjut</option>
-                                    <option value="Profesional" key="profesional">Kompeten</option>
+                                    <option value="Pemula" key="pemula">Pemula</option>
+                                    <option value="Pemula Tingkat Lanjut" key="pemula tingkat lanjut">Pemula Tingkat Lanjut</option>
+                                    <option value="Kompeten" key="kompeten">Kompeten</option>
                                     <option value="Mahir" key="mahir">Mahir</option>
                                     <option value="Ahli" key="ahli">Ahli</option>
                                 </select>

@@ -1,8 +1,54 @@
+.a4-page {
+    padding: 2rem;
+    width: 210mm;
+    height: 297mm;
+    overflow-y: auto;
+    object-fit: fill;
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.cv-container {
+    display: flex;
+}
+
+.cv-col {
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cv-col-0 {
+    flex-direction: column;
+}
+
+.cv-row {
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.cv-row-0 {
+    flex-direction: row;
+}
+
+.cv-f1 {
+    flex: 1;
+}
+
+.cv-namaUser {
+    font-size: 180%;
+    font-weight: bold;
+}
+
+.cv-subNama {
+    font-size: 120%;
+}
+
 .cv-image {
-    min-width: 120px;
-    max-width: 200px;
+    min-width: 100px;
+    max-width: 120px;
     min-height: 150px;
-    max-height: 200px;
+    max-height: 150px;
     height: 100%;
     object-fit: cover;
     border-radius:10px;
