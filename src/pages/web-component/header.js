@@ -1,9 +1,11 @@
 import React from "react";
 import Dropdown from "./dropdown";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 function WebHeader() {
-    const roleUser = 'A@k3!o8%Np';
+    const { isWebsite } = useSelector((state) => state.userReducer);
+    const roleUser = isWebsite;
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
@@ -64,7 +66,7 @@ function WebHeader() {
                     {token && role === roleUser && (
                         <>
                             <div className="container col-f">
-                                <a href="/user">Pengguna</a>
+                                <a href="/dashboard">Dashboard</a>
                             </div>
                             <div className="container col-f">
                                 <button className="btn btn-danger" onClick={handleLogout}>

@@ -7,6 +7,7 @@ const initState = {
     prestasiKerja: [],
     keahlian: [],
     pelatihan: [],
+    isWebsite:'A@k3!o8%Np',
     isLoading: false,
     error: null,
 };

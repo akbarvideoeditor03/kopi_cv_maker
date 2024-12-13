@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createUser, uploadToSupabase } from "../../redux/action/user.action";
 import Swal from "sweetalert2";
 
 const CreateUserAdmin = () => {
+    const { isWebsite } = useSelector((state) => state.userReducer);
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
-    const roleUser = 'A@k3!o8%Np';
+    const roleUser = isWebsite;
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         nama: "",

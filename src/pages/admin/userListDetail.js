@@ -8,8 +8,8 @@ function UserListDetail() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const role = localStorage.getItem('role');
-    const roleUser = 'A@k3!o8%Np';
-    const { userList, isLoading, error } = useSelector((state) => state.userReducer);
+    const { isWebsite, userList, isLoading, error } = useSelector((state) => state.userReducer);
+    const roleUser = isWebsite;
     useEffect(() => {
         dispatch(getUserId(id));
     }, [dispatch, id]);
@@ -32,7 +32,6 @@ function UserListDetail() {
                     <p>Silakan tunggu...</p>
                 ) : (
                     <div className="container col-f">
-                        <p>{userList.id}</p>
                         <p>{userList.nama}</p>
                         <p className="cut-text">{userList.email}</p>
                         <p>{userList.tentang === null ? <p>Data Kosong</p> : userList.tentang}</p>

@@ -8,10 +8,10 @@ import { useParams } from "react-router-dom";
 
 const UpdateUserAdmin = ({ userId }) => {
     const { id } = useParams();
+    const { userList, isWebsite } = useSelector((state) => state.userReducer);
     const role = localStorage.getItem('role');
-    const roleUser = 'A@k3!o8%Np';
+    const roleUser = isWebsite;
     const dispatch = useDispatch();
-    const { userList } = useSelector((state) => state.userReducer);
     
     useEffect(() => {
         dispatch(getUserId(id));

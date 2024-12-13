@@ -63,6 +63,8 @@ export const createUser = (user) => async (dispatch) => {
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 timerProgressBar: true,
+            }).then(() => {
+                window.location.href = '/dashboard'
             });
             const data = await response.json();
             dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
