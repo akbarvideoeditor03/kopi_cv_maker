@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Swal from "sweetalert2";
-import { getUserId, updateUser } from "../../redux/action/user.action";
-import { uploadToSupabase } from "../../redux/action/user.action";
-import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
+import { getUserId, updateUser } from '../../redux/action/user.action';
+import { uploadToSupabase } from '../../redux/action/user.action';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const UpdateUserAdmin = ({ userId }) => {
     const { id } = useParams();
@@ -12,18 +12,18 @@ const UpdateUserAdmin = ({ userId }) => {
     const role = localStorage.getItem('role');
     const roleUser = isWebsite;
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         dispatch(getUserId(id));
     }, [dispatch, id]);
 
     const [userData, setUserData] = useState({
-        nama: "",
-        no_telp: "",
-        alamat: "",
-        tentang: "",
+        nama: '',
+        no_telp: '',
+        alamat: '',
+        tentang: '',
         foto_profil: null,
-        email: "",
+        email: '',
     });
 
     useEffect(() => {
@@ -35,48 +35,51 @@ const UpdateUserAdmin = ({ userId }) => {
     useEffect(() => {
         if (userList) {
             setUserData({
-                nama: userList.nama || "",
-                no_telp: userList.no_telp || "",
-                alamat: userList.alamat || "",
-                tentang: userList.tentang || "",
+                nama: userList.nama || '',
+                no_telp: userList.no_telp || '',
+                alamat: userList.alamat || '',
+                tentang: userList.tentang || '',
                 foto_profil: null,
-                email: userList.email || ""
+                email: userList.email || '',
             });
         }
     }, [userList]);
 
-    const wordCount = userData.tentang.trim().split(/\s+/).filter(Boolean).length;
+    const wordCount = userData.tentang
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean).length;
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (wordCount > 100) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
+                icon: 'error',
+                title: 'Oops...',
                 text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
             });
             return;
         }
 
         try {
-            if (userData.foto_profil === null || userData.foto_profil === "" ) {
+            if (userData.foto_profil === null || userData.foto_profil === '') {
                 const updatedUser = {
                     nama: userData.nama,
                     no_telp: userData.no_telp,
                     alamat: userData.alamat,
                     tentang: userData.tentang,
-                    email: userData.email
-                }
+                    email: userData.email,
+                };
 
                 Swal.fire({
                     title: 'Update data?',
-                    text: "Yakin datanya sudah benar?",
+                    text: 'Yakin datanya sudah benar?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Ya, update!',
                     cancelButtonText: 'Batal',
                 }).then((result) => {
                     Swal.fire({
-                        title: "Sebentar...",
+                        title: 'Sebentar...',
                         html: '<div className="custom-loader"></div>',
                         allowOutsideClick: false,
                         allowEscapeKey: false,
@@ -92,7 +95,7 @@ const UpdateUserAdmin = ({ userId }) => {
                             text: 'Data berhasil diupdate.',
                             timer: 3000,
                             allowEscapeKey: false,
-                            showConfirmButton:false,
+                            showConfirmButton: false,
                             allowOutsideClick: false,
                             timerProgressBar: true,
                         }).then(() => {
@@ -103,7 +106,7 @@ const UpdateUserAdmin = ({ userId }) => {
             } else {
                 Swal.fire({
                     title: 'Update data?',
-                    text: "Yakin datanya sudah benar?",
+                    text: 'Yakin datanya sudah benar?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Ya, update!',
@@ -111,7 +114,7 @@ const UpdateUserAdmin = ({ userId }) => {
                 }).then(async (result) => {
                     if (result.isConfirmed) {
                         Swal.fire({
-                            title: "Sebentar...",
+                            title: 'Sebentar...',
                             html: '<div className="custom-loader"></div>',
                             allowOutsideClick: false,
                             allowEscapeKey: false,
@@ -119,18 +122,20 @@ const UpdateUserAdmin = ({ userId }) => {
                                 Swal.showLoading();
                             },
                         });
-                
+
                         try {
                             const file = userData.foto_profil;
-                            const fileParts = file.name.split('.').filter(Boolean);
+                            const fileParts = file.name
+                                .split('.')
+                                .filter(Boolean);
                             const fileName = fileParts.slice(0, -1).join('.');
                             const fileType = fileParts.slice(-1);
                             const timestamp = new Date().toISOString();
                             const newFileName = `${fileName} ${timestamp}.${fileType}`;
-                
+
                             let foto = null;
                             foto = await uploadToSupabase(newFileName, file);
-                
+
                             const updatedUser = {
                                 nama: userData.nama,
                                 no_telp: userData.no_telp,
@@ -139,7 +144,7 @@ const UpdateUserAdmin = ({ userId }) => {
                                 foto_profil: foto,
                                 email: userData.email,
                             };
-                
+
                             dispatch(updateUser(id, updatedUser));
                         } catch (error) {
                             Swal.fire({
@@ -149,15 +154,18 @@ const UpdateUserAdmin = ({ userId }) => {
                             });
                         }
                     }
-                });                                
+                });
             }
         } catch (error) {
-            Swal.fire({ icon: "error", title: "Oops...", text: error.message || "Gagal memperbarui data pengguna" });
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error.message || 'Gagal memperbarui data pengguna',
+            });
         }
-
     };
 
-    if(role === roleUser) {
+    if (role === roleUser) {
         return (
             <main className="container col-f f-center-c">
                 <section className="card container row-f f-wrap-r full-width section-max">
@@ -181,7 +189,13 @@ const UpdateUserAdmin = ({ userId }) => {
                                         <input
                                             name="nama"
                                             value={userData.nama}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="text"
                                             placeholder="Masukkan Nama Anda"
                                         />
@@ -191,7 +205,13 @@ const UpdateUserAdmin = ({ userId }) => {
                                         <input
                                             name="no_telp"
                                             value={userData.no_telp}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="text"
                                             placeholder="Masukkan Nomor Telepon Anda"
                                         />
@@ -201,7 +221,13 @@ const UpdateUserAdmin = ({ userId }) => {
                                         <input
                                             name="alamat"
                                             value={userData.alamat}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="text"
                                             placeholder="Masukkan Alamat Anda"
                                         />
@@ -209,22 +235,43 @@ const UpdateUserAdmin = ({ userId }) => {
                                     <div className="container col-f-0">
                                         <label>Tentang</label>
                                         <textarea
-                                            style={{marginBottom : '0.5rem'}}
+                                            style={{
+                                                marginBottom: '0.5rem',
+                                            }}
                                             className="textarea"
                                             name="tentang"
                                             value={userData.tentang}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="text"
                                             placeholder="Deskripsikan Tentang Anda. Maks. 100 kata"
                                         />
-                                        <p style={{fontSize : 'small'}}>Jumlah kata : <b>{`${wordCount}`}</b></p>
+                                        <p
+                                            style={{
+                                                fontSize: 'small',
+                                            }}
+                                        >
+                                            Jumlah kata :{' '}
+                                            <b>{`${wordCount}`}</b>
+                                        </p>
                                     </div>
                                     <div className="container col-f-0">
                                         <label>Foto Profil</label>
                                         <input
                                             className="full-width"
                                             name="foto_profil"
-                                            onChange={(e) => setUserData({ ...userData, foto_profil: e.target.files[0] })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    foto_profil:
+                                                        e.target.files[0],
+                                                })
+                                            }
                                             type="file"
                                             accept="image/jpeg, image/png"
                                             placeholder="Unggah Foto Profil Anda"
@@ -235,12 +282,21 @@ const UpdateUserAdmin = ({ userId }) => {
                                         <input
                                             name="email"
                                             value={userData.email}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="email"
-                                            placeholder="Masukkan Email Anda" />
+                                            placeholder="Masukkan Email Anda"
+                                        />
                                     </div>
                                     <button
-                                        style={{ fontSize: "1rem" }}
+                                        style={{
+                                            fontSize: '1rem',
+                                        }}
                                         type="submit"
                                         className="btn btn-primary"
                                     >
@@ -252,7 +308,9 @@ const UpdateUserAdmin = ({ userId }) => {
                         <div className="container col-f f-center-c t-center">
                             <p>Ada kendala? Yuk beri tahu kami</p>
                             <RouterLink
-                                style={{ maxWidth: "15rem" }}
+                                style={{
+                                    maxWidth: '15rem',
+                                }}
                                 to="https://wa.link/s4zfm0"
                                 target="_blank"
                                 className="fwb btn btn-info full-width"
@@ -262,7 +320,11 @@ const UpdateUserAdmin = ({ userId }) => {
                         </div>
                     </div>
                     <div className="container col-f f-center-c login-right">
-                        <img className="login-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg" alt="login-img" />
+                        <img
+                            className="login-img"
+                            src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg"
+                            alt="login-img"
+                        />
                     </div>
                 </section>
             </main>
@@ -271,12 +333,18 @@ const UpdateUserAdmin = ({ userId }) => {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max f-center">
-                    <img style={{width : "70px"}} src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/5da58e252c99da7a29144d6434f5af8013c5bb7a/public/assets/icon/angry-face.svg" alt="" />
-                    <p className="t-center">Anda tidak dizinkan mengakses halaman ini</p>
+                    <img
+                        style={{ width: '70px' }}
+                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/5da58e252c99da7a29144d6434f5af8013c5bb7a/public/assets/icon/angry-face.svg"
+                        alt=""
+                    />
+                    <p className="t-center">
+                        Anda tidak dizinkan mengakses halaman ini
+                    </p>
                     <strong>ADMIN KOPI</strong>
                 </section>
             </main>
-        )
+        );
     }
 };
 

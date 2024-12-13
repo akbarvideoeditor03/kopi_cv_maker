@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
 function Learn() {
-    return(
+    return (
         <main className="container col-f f-center-c generalPg-bg">
             <section className="container col-f f-1 fj-center section-max">
-                <h1>Maaf Halaman Belum Tersedia :(</h1>
+                <h1>Segera 😊</h1>
             </section>
         </main>
-    )
+    );
 }
 
 export default Learn;

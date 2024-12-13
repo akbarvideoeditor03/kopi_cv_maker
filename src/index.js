@@ -13,54 +13,54 @@ import './styles/image-class-collections.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store()}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <Provider store={store()}>
+            <Router>
+                <App />
+            </Router>
+        </Provider>
+    </React.StrictMode>
 );
 
 const token = localStorage.getItem('token');
 if (!token) {
 } else {
-  let logoutTimer;
-  const startLogoutTimer = () => {
-    clearTimeout(logoutTimer);
-    logoutTimer = setTimeout(() => {
-      localStorage.clear();
-      window.location.href = '/';
-    }, 3600000);
-  };
+    let logoutTimer;
+    const startLogoutTimer = () => {
+        clearTimeout(logoutTimer);
+        logoutTimer = setTimeout(() => {
+            localStorage.clear();
+            window.location.href = '/';
+        }, 3600000);
+    };
 
-  const resetTimer = () => {
-    startLogoutTimer();
-    localStorage.setItem('lastActivity', Date.now());
-  };
-
-  const checkSession = () => {
-    const lastActivity = localStorage.getItem('lastActivity');
-    if (lastActivity) {
-      const currentTime = Date.now();
-      const elapsed = currentTime - lastActivity;
-      if (elapsed > 3600000) {
-        localStorage.clear();
-        window.location.href = '/';
-      } else {
+    const resetTimer = () => {
         startLogoutTimer();
-      }
-    } else {
-      startLogoutTimer();
-    }
-  };
+        localStorage.setItem('lastActivity', Date.now());
+    };
 
-  document.addEventListener('mousemove', resetTimer);
-  document.addEventListener('keypress', resetTimer);
-  document.addEventListener('scroll', resetTimer);
-  document.addEventListener('click', resetTimer);
+    const checkSession = () => {
+        const lastActivity = localStorage.getItem('lastActivity');
+        if (lastActivity) {
+            const currentTime = Date.now();
+            const elapsed = currentTime - lastActivity;
+            if (elapsed > 3600000) {
+                localStorage.clear();
+                window.location.href = '/';
+            } else {
+                startLogoutTimer();
+            }
+        } else {
+            startLogoutTimer();
+        }
+    };
 
-  checkSession();
+    document.addEventListener('mousemove', resetTimer);
+    document.addEventListener('keypress', resetTimer);
+    document.addEventListener('scroll', resetTimer);
+    document.addEventListener('click', resetTimer);
+
+    checkSession();
 }
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,4 +1,4 @@
-import { userTypes } from "../actionTypes";
+import { userTypes } from '../actionTypes';
 
 const initState = {
     userList: [],
@@ -7,7 +7,7 @@ const initState = {
     prestasiKerja: [],
     keahlian: [],
     pelatihan: [],
-    isWebsite:'A@k3!o8%Np',
+    isWebsite: 'A@k3!o8%Np',
     isLoading: false,
     error: null,
 };
@@ -24,7 +24,11 @@ const users = (state = initState, action) => {
                 userList: [...state.userList, action.payload],
             };
         case userTypes.CREATE_USER_FAILURE:
-            return { ...state, isLoading: false, error: action.payload };
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
 
         case userTypes.GET_USER_LIST_REQUEST:
             return {
@@ -75,7 +79,11 @@ const users = (state = initState, action) => {
                 ),
             };
         case userTypes.UPDATE_USER_FAILURE:
-            return { ...state, isLoading: false, error: action.payload };
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
 
         case userTypes.DELETE_USER_REQUEST:
             return { ...state, isLoading: true, error: null };
@@ -83,36 +91,45 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                userList: state.userList.filter((user) => user.id !== action.payload),
+                userList: state.userList.filter(
+                    (user) => user.id !== action.payload
+                ),
             };
         case userTypes.DELETE_USER_FAILURE:
-            return { ...state, isLoading: false, error: action.payload };
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
 
         //Pendidikan Terakhir (CRUD)
         case userTypes.CREATE_PENDIDIKAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.CREATE_PENDIDIKAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                pendidikanTerakhir: [...state.pendidikanTerakhir, action.payload],
+                pendidikanTerakhir: [
+                    ...state.pendidikanTerakhir,
+                    action.payload,
+                ],
             };
         case userTypes.CREATE_PENDIDIKAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.GET_PENDIDIKAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.GET_PENDIDIKAN_ID_SUCCESS:
             return {
@@ -124,47 +141,52 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.UPDATE_PENDIDIKAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.UPDATE_PENDIDIKAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                pendidikanTerakhir: state.pendidikanTerakhir.map((pendidikan) =>
-                    pendidikan.id === action.payload.id ? action.payload : pendidikan
+                pendidikanTerakhir: state.pendidikanTerakhir.map(
+                    (pendidikan) =>
+                        pendidikan.id === action.payload.id
+                            ? action.payload
+                            : pendidikan
                 ),
             };
         case userTypes.UPDATE_PENDIDIKAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.DELETE_PENDIDIKAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.DELETE_PENDIDIKAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                pendidikanTerakhir: state.pendidikanTerakhir.filter((pendidikan) => pendidikan.id !== action.payload),
+                pendidikanTerakhir: state.pendidikanTerakhir.filter(
+                    (pendidikan) => pendidikan.id !== action.payload
+                ),
             };
         case userTypes.DELETE_PENDIDIKAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         //Pengalaman Kerja (CRUD)
@@ -172,7 +194,7 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.CREATE_PENGALAMAN_SUCCESS:
             return {
@@ -184,14 +206,14 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
-        
+
         case userTypes.GET_PENGALAMAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.GET_PENGALAMAN_ID_SUCCESS:
             return {
@@ -203,47 +225,51 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
-        
+
         case userTypes.UPDATE_PENGALAMAN_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.UPDATE_PENGALAMAN_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 pengalamanKerja: state.pengalamanKerja.map((pengalaman) =>
-                    pengalaman.id === action.payload.id ? action.payload : pengalaman
+                    pengalaman.id === action.payload.id
+                        ? action.payload
+                        : pengalaman
                 ),
             };
         case userTypes.UPDATE_PENGALAMAN_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
-        
+
         case userTypes.DELETE_PENGALAMAN_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.DELETE_PENGALAMAN_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                pengalamanKerja: state.pengalamanKerja.filter((pengalaman) => pengalaman.id !== action.payload),
+                pengalamanKerja: state.pengalamanKerja.filter(
+                    (pengalaman) => pengalaman.id !== action.payload
+                ),
             };
         case userTypes.DELETE_PENGALAMAN_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         //Prestasi Kerja (CRUD)
@@ -251,7 +277,7 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.CREATE_PRESTASI_ID_SUCCESS:
             return {
@@ -263,14 +289,14 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.GET_PRESTASI_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.GET_PRESTASI_SUCCESS:
             return {
@@ -282,47 +308,51 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.UPDATE_PRESTASI_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.UPDATE_PRESTASI_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 prestasiKerja: state.prestasiKerja.map((prestasi) =>
-                    prestasi.id === action.payload.id ? action.payload : prestasi
+                    prestasi.id === action.payload.id
+                        ? action.payload
+                        : prestasi
                 ),
             };
         case userTypes.UPDATE_PRESTASI_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.DELETE_PRESTASI_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.DELETE_PRESTASI_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                prestasiKerja: state.prestasiKerja.filter((prestasi) => prestasi.id !== action.payload),
+                prestasiKerja: state.prestasiKerja.filter(
+                    (prestasi) => prestasi.id !== action.payload
+                ),
             };
         case userTypes.DELETE_PRESTASI_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         //Keahlian (CRUD)
@@ -330,7 +360,7 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.CREATE_KEAHLIAN_ID_SUCCESS:
             return {
@@ -342,14 +372,14 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.GET_KEAHLIAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.GET_KEAHLIAN_ID_SUCCESS:
             return {
@@ -361,47 +391,51 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.UPDATE_KEAHLIAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.UPDATE_KEAHLIAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 keahlian: state.keahlian.map((keahlian) =>
-                    keahlian.id === action.payload.id ? action.payload : keahlian
+                    keahlian.id === action.payload.id
+                        ? action.payload
+                        : keahlian
                 ),
             };
         case userTypes.UPDATE_KEAHLIAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.DELETE_KEAHLIAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.DELETE_KEAHLIAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                keahlian: state.keahlian.filter((keahlian) => keahlian.id !== action.payload),
+                keahlian: state.keahlian.filter(
+                    (keahlian) => keahlian.id !== action.payload
+                ),
             };
         case userTypes.DELETE_KEAHLIAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         // Pelatihan (CRUD)
@@ -409,7 +443,7 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.CREATE_PELATIHAN_ID_SUCCESS:
             return {
@@ -421,14 +455,14 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.GET_PELATIHAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.GET_PELATIHAN_ID_SUCCESS:
             return {
@@ -440,47 +474,51 @@ const users = (state = initState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.UPDATE_PELATIHAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.UPDATE_PELATIHAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 pelatihan: state.pelatihan.map((pelatihan) =>
-                    pelatihan.id === action.payload.id ? action.payload : pelatihan
+                    pelatihan.id === action.payload.id
+                        ? action.payload
+                        : pelatihan
                 ),
             };
         case userTypes.UPDATE_PELATIHAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         case userTypes.DELETE_PELATIHAN_ID_REQUEST:
             return {
                 ...state,
                 isLoading: true,
-                error: null
+                error: null,
             };
         case userTypes.DELETE_PELATIHAN_ID_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                pelatihan: state.pelatihan.filter((pelatihan) => pelatihan.id !== action.payload),
+                pelatihan: state.pelatihan.filter(
+                    (pelatihan) => pelatihan.id !== action.payload
+                ),
             };
         case userTypes.DELETE_PELATIHAN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload
+                error: action.payload,
             };
 
         // Default

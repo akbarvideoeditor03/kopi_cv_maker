@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Swal from "sweetalert2";
-import { getUserId, updateUser } from "../../../redux/action/user.action";
-import { uploadToSupabase } from "../../../redux/action/user.action";
-import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
+import { getUserId, updateUser } from '../../../redux/action/user.action';
+import { uploadToSupabase } from '../../../redux/action/user.action';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const UpdateUserSelf = ({ userId }) => {
     const { id } = useParams();
@@ -14,12 +14,12 @@ const UpdateUserSelf = ({ userId }) => {
         dispatch(getUserId(id));
     }, [dispatch, id]);
     const [userData, setUserData] = useState({
-        nama: "",
-        no_telp: "",
-        alamat: "",
-        tentang: "",
+        nama: '',
+        no_telp: '',
+        alamat: '',
+        tentang: '',
         foto_profil: null,
-        email: "",
+        email: '',
     });
 
     useEffect(() => {
@@ -31,17 +31,20 @@ const UpdateUserSelf = ({ userId }) => {
     useEffect(() => {
         if (userList) {
             setUserData({
-                nama: userList.nama || "",
-                no_telp: userList.no_telp || "",
-                alamat: userList.alamat || "",
-                tentang: userList.tentang || "",
+                nama: userList.nama || '',
+                no_telp: userList.no_telp || '',
+                alamat: userList.alamat || '',
+                tentang: userList.tentang || '',
                 foto_profil: null,
-                email: userList.email || ""
+                email: userList.email || '',
             });
         }
     }, [userList]);
 
-    const wordCount = userData.tentang.trim().split(/\s+/).filter(Boolean).length;
+    const wordCount = userData.tentang
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean).length;
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -55,39 +58,39 @@ const UpdateUserSelf = ({ userId }) => {
             if (result.isConfirmed) {
                 window.location.href = '/home';
             }
-        })
+        });
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (wordCount > 100) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
+                icon: 'error',
+                title: 'Oops...',
                 text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
             });
             return;
         }
 
         try {
-            if (userData.foto_profil === null || userData.foto_profil === "" ) {
+            if (userData.foto_profil === null || userData.foto_profil === '') {
                 const updatedUser = {
                     nama: userData.nama,
                     no_telp: userData.no_telp,
                     alamat: userData.alamat,
                     tentang: userData.tentang,
-                    email: userData.email
-                }
+                    email: userData.email,
+                };
 
                 Swal.fire({
                     title: 'Update data?',
-                    text: "Yakin datanya sudah benar?",
+                    text: 'Yakin datanya sudah benar?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Ya, update!',
                     cancelButtonText: 'Batal',
                 }).then((result) => {
                     Swal.fire({
-                        title: "Sebentar...",
+                        title: 'Sebentar...',
                         html: '<div className="custom-loader"></div>',
                         allowOutsideClick: false,
                         allowEscapeKey: false,
@@ -103,7 +106,7 @@ const UpdateUserSelf = ({ userId }) => {
                             text: 'Data berhasil diupdate.',
                             timer: 3000,
                             allowEscapeKey: false,
-                            showConfirmButton:false,
+                            showConfirmButton: false,
                             allowOutsideClick: false,
                             timerProgressBar: true,
                         }).then(() => {
@@ -114,7 +117,7 @@ const UpdateUserSelf = ({ userId }) => {
             } else {
                 Swal.fire({
                     title: 'Update data?',
-                    text: "Yakin datanya sudah benar?",
+                    text: 'Yakin datanya sudah benar?',
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Ya, update!',
@@ -122,7 +125,7 @@ const UpdateUserSelf = ({ userId }) => {
                 }).then(async (result) => {
                     if (result.isConfirmed) {
                         Swal.fire({
-                            title: "Sebentar...",
+                            title: 'Sebentar...',
                             html: '<div className="custom-loader"></div>',
                             allowOutsideClick: false,
                             allowEscapeKey: false,
@@ -130,18 +133,20 @@ const UpdateUserSelf = ({ userId }) => {
                                 Swal.showLoading();
                             },
                         });
-                
+
                         try {
                             const file = userData.foto_profil;
-                            const fileParts = file.name.split('.').filter(Boolean);
+                            const fileParts = file.name
+                                .split('.')
+                                .filter(Boolean);
                             const fileName = fileParts.slice(0, -1).join('.');
                             const fileType = fileParts.slice(-1);
                             const timestamp = new Date().toISOString();
                             const newFileName = `${fileName} ${timestamp}.${fileType}`;
-                
+
                             let foto = null;
                             foto = await uploadToSupabase(newFileName, file);
-                
+
                             const updatedUser = {
                                 nama: userData.nama,
                                 no_telp: userData.no_telp,
@@ -150,7 +155,7 @@ const UpdateUserSelf = ({ userId }) => {
                                 foto_profil: foto,
                                 email: userData.email,
                             };
-                
+
                             dispatch(updateUser(id, updatedUser));
                         } catch (error) {
                             Swal.fire({
@@ -160,14 +165,16 @@ const UpdateUserSelf = ({ userId }) => {
                             });
                         }
                     }
-                });                                
+                });
             }
         } catch (error) {
-            Swal.fire({ icon: "error", title: "Oops...", text: error.message || "Gagal memperbarui data pengguna" });
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error.message || 'Gagal memperbarui data pengguna',
+            });
         }
-
     };
-
 
     return (
         <main className="container col-f f-center-c">
@@ -192,7 +199,12 @@ const UpdateUserSelf = ({ userId }) => {
                                     <input
                                         name="nama"
                                         value={userData.nama}
-                                        onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                        onChange={(e) =>
+                                            setUserData({
+                                                ...userData,
+                                                [e.target.name]: e.target.value,
+                                            })
+                                        }
                                         type="text"
                                         placeholder="Masukkan Nama Anda"
                                     />
@@ -202,7 +214,12 @@ const UpdateUserSelf = ({ userId }) => {
                                     <input
                                         name="no_telp"
                                         value={userData.no_telp}
-                                        onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                        onChange={(e) =>
+                                            setUserData({
+                                                ...userData,
+                                                [e.target.name]: e.target.value,
+                                            })
+                                        }
                                         type="text"
                                         placeholder="Masukkan Nomor Telepon Anda"
                                     />
@@ -212,7 +229,12 @@ const UpdateUserSelf = ({ userId }) => {
                                     <input
                                         name="alamat"
                                         value={userData.alamat}
-                                        onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                        onChange={(e) =>
+                                            setUserData({
+                                                ...userData,
+                                                [e.target.name]: e.target.value,
+                                            })
+                                        }
                                         type="text"
                                         placeholder="Masukkan Alamat Anda"
                                     />
@@ -220,22 +242,40 @@ const UpdateUserSelf = ({ userId }) => {
                                 <div className="container col-f-0">
                                     <label>Tentang</label>
                                     <textarea
-                                        style={{marginBottom : '0.5rem'}}
+                                        style={{
+                                            marginBottom: '0.5rem',
+                                        }}
                                         className="textarea"
                                         name="tentang"
                                         value={userData.tentang}
-                                        onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                        onChange={(e) =>
+                                            setUserData({
+                                                ...userData,
+                                                [e.target.name]: e.target.value,
+                                            })
+                                        }
                                         type="text"
                                         placeholder="Deskripsikan Tentang Anda. Maks. 100 kata"
                                     />
-                                    <p style={{fontSize : 'small'}}>Jumlah kata : <b>{`${wordCount}`}</b></p>
+                                    <p
+                                        style={{
+                                            fontSize: 'small',
+                                        }}
+                                    >
+                                        Jumlah kata : <b>{`${wordCount}`}</b>
+                                    </p>
                                 </div>
                                 <div className="container col-f-0">
                                     <label>Foto Profil</label>
                                     <input
                                         className="full-width"
                                         name="foto_profil"
-                                        onChange={(e) => setUserData({ ...userData, foto_profil: e.target.files[0] })}
+                                        onChange={(e) =>
+                                            setUserData({
+                                                ...userData,
+                                                foto_profil: e.target.files[0],
+                                            })
+                                        }
                                         type="file"
                                         accept="image/jpeg, image/png"
                                         placeholder="Unggah Foto Profil Anda"
@@ -246,25 +286,35 @@ const UpdateUserSelf = ({ userId }) => {
                                     <input
                                         name="email"
                                         value={userData.email}
-                                        onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                        onChange={(e) =>
+                                            setUserData({
+                                                ...userData,
+                                                [e.target.name]: e.target.value,
+                                            })
+                                        }
                                         type="email"
-                                        placeholder="Masukkan Email Anda" />
+                                        placeholder="Masukkan Email Anda"
+                                    />
                                 </div>
                                 <div className="container row-f f-wrap">
-                                <button
-                                    onClick={cancelSubmit}
-                                    style={{ fontSize: "1rem" }}
-                                    className="btn btn-danger f-1"
-                                >
-                                    Batal
-                                </button>
-                                <button
-                                    style={{ fontSize: "1rem" }}
-                                    type="submit"
-                                    className="btn btn-primary f-1"
-                                >
-                                    Perbarui
-                                </button>
+                                    <button
+                                        onClick={cancelSubmit}
+                                        style={{
+                                            fontSize: '1rem',
+                                        }}
+                                        className="btn btn-danger f-1"
+                                    >
+                                        Batal
+                                    </button>
+                                    <button
+                                        style={{
+                                            fontSize: '1rem',
+                                        }}
+                                        type="submit"
+                                        className="btn btn-primary f-1"
+                                    >
+                                        Perbarui
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -272,7 +322,9 @@ const UpdateUserSelf = ({ userId }) => {
                     <div className="container col-f f-center-c t-center m-t2">
                         <p>Ada kendala? Yuk beri tahu kami</p>
                         <RouterLink
-                            style={{ maxWidth: "15rem" }}
+                            style={{
+                                maxWidth: '15rem',
+                            }}
                             to="https://wa.link/s4zfm0"
                             target="_blank"
                             className="fwb btn btn-info full-width"
@@ -282,7 +334,11 @@ const UpdateUserSelf = ({ userId }) => {
                     </div>
                 </div>
                 <div className="container col-f f-center-c login-right">
-                    <img className="login-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg" alt="login-img" />
+                    <img
+                        className="login-img"
+                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg"
+                        alt="login-img"
+                    />
                 </div>
             </section>
         </main>

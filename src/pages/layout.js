@@ -1,16 +1,16 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import WebHeader from "./web-component/header";
-import WebFooter from "./web-component/footer";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import WebHeader from './web-component/header';
+import WebFooter from './web-component/footer';
 
 function Layout() {
-    return(
+    return (
         <section>
             <WebHeader />
-                <Outlet />
+            <Outlet />
             <WebFooter />
         </section>
-    )
+    );
 }
 
-export default Layout
+export default Layout;

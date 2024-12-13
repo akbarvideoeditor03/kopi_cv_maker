@@ -1,9 +1,13 @@
 /* This is a CSS file specifically for handling button CSS class styling. */
 
 .btn {
-    padding-inline: 1rem;
-    padding-block: 0.75rem;
-    border-radius: 10px;
+    padding-inline: 0.75rem;
+    padding-block: 0.65rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    border-radius: 7px;
     border-style: none;
     cursor: pointer;
     color: white;

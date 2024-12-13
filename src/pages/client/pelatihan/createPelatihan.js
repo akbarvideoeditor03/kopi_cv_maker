@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createPelatihan } from "../../../redux/action/user.action";
-import Swal from "sweetalert2";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createPelatihan } from '../../../redux/action/user.action';
+import Swal from 'sweetalert2';
 
 function CreatePelatihan() {
     const token = localStorage.getItem('token');
@@ -9,9 +9,9 @@ function CreatePelatihan() {
     const dispatch = useDispatch();
     const id = localStorage.getItem('id');
     const [pelatihan, setPelatihan] = useState({
-        pelatihan: "",
-        tahun_mulai: "",
-        tahun_selesai: ""
+        pelatihan: '',
+        tahun_mulai: '',
+        tahun_selesai: '',
     });
     const cancelSubmit = async (e) => {
         e.preventDefault();
@@ -26,55 +26,55 @@ function CreatePelatihan() {
             if (result.isConfirmed) {
                 window.location.href = '/home';
             }
-        })
+        });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!pelatihan.pelatihan) {
+        if (!pelatihan.pelatihan) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Nama pelatihan tidak boleh kosong",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Nama pelatihan tidak boleh kosong',
             });
-            return
+            return;
         }
 
-        if(!pelatihan.tahun_mulai) {
+        if (!pelatihan.tahun_mulai) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Tahun mulai kerja tidak boleh kosong",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Tahun mulai kerja tidak boleh kosong',
             });
-            return
+            return;
         }
 
         try {
             const result = await Swal.fire({
-                icon: "question",
-                title: "Tunggu",
-                text: "Apa informasinya udah benar semua?",
-                confirmButtonText: "Iya, udah",
-                cancelButtonText: "Lanjutin",
+                icon: 'question',
+                title: 'Tunggu',
+                text: 'Apa informasinya udah benar semua?',
+                confirmButtonText: 'Iya, udah',
+                cancelButtonText: 'Lanjutin',
                 allowOutsideClick: false,
-                showCancelButton: true
+                showCancelButton: true,
             });
-        
+
             if (result.isConfirmed) {
                 const pelatihanUser = {
                     id_user: `${id}`,
                     pelatihan: pelatihan.pelatihan,
                     tahun_mulai: pelatihan.tahun_mulai,
-                    tahun_selesai: pelatihan.tahun_selesai || "Hingga saat ini",
+                    tahun_selesai: pelatihan.tahun_selesai || 'Hingga saat ini',
                 };
                 dispatch(createPelatihan(pelatihanUser));
             }
         } catch (error) {
-            console.error("Error saat menambahkan pelatihan:", error);
+            console.error('Error saat menambahkan pelatihan:', error);
             await Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
             });
         }
     };
@@ -85,43 +85,120 @@ function CreatePelatihan() {
                 <section className="container col-f full-width section-max">
                     <h1>Pelatihan</h1>
                     <div className="container col-f f-center-c">
-                        <form onSubmit={handleSubmit} className="container col-f full-width">
+                        <form
+                            onSubmit={handleSubmit}
+                            className="container col-f full-width"
+                        >
                             <div className="container col-f-0">
                                 <label>Nama Pelatihan</label>
-                                    <input name="pelatihan" value={pelatihan.pelatihan} onChange={(e) => setPelatihan({ ...pelatihan, [e.target.name]: e.target.value })} type="text" placeholder="Masukkan nama pelatihan" />
-                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>Contohnya : Pelatihan Video Editing of Content Creation Academy</p>
+                                <input
+                                    name="pelatihan"
+                                    value={pelatihan.pelatihan}
+                                    onChange={(e) =>
+                                        setPelatihan({
+                                            ...pelatihan,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                    type="text"
+                                    placeholder="Masukkan nama pelatihan"
+                                />
+                                <p
+                                    style={{
+                                        fontSize: '0.75rem',
+                                        paddingTop: '0.5rem',
+                                    }}
+                                >
+                                    Contohnya : Pelatihan Video Editing of
+                                    Content Creation Academy
+                                </p>
                             </div>
                             <div className="container col-f-0">
                                 <label>Tahun Mulai</label>
-                                <input name="tahun_mulai" value={pelatihan.tahun_mulai} onChange={(e) => setPelatihan({ ...pelatihan, [e.target.name]: e.target.value })} type="date" />
-                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Form ini hanya akan menampilkan bulan dan tahun saja</p>
+                                <input
+                                    name="tahun_mulai"
+                                    value={pelatihan.tahun_mulai}
+                                    onChange={(e) =>
+                                        setPelatihan({
+                                            ...pelatihan,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                    type="date"
+                                />
+                                <p
+                                    style={{
+                                        fontSize: '0.75rem',
+                                        paddingTop: '0.5rem',
+                                    }}
+                                >
+                                    *Form ini hanya akan menampilkan bulan dan
+                                    tahun saja
+                                </p>
                             </div>
                             <div className="container col-f-0">
                                 <label>*Tahun Selesai (Opsional)</label>
-                                <input name="tahun_selesai" value={pelatihan.tahun_selesai} onChange={(e) => setPelatihan({ ...pelatihan, [e.target.name]: e.target.value })} type="text" placeholder="Contohnya : September 2023" />
-                                <p style={{fontSize :'0.75rem', paddingTop : '0.5rem'}}>*Jika pengalaman kerja masih berlangsung, maka kosongkan saja</p>
+                                <input
+                                    name="tahun_selesai"
+                                    value={pelatihan.tahun_selesai}
+                                    onChange={(e) =>
+                                        setPelatihan({
+                                            ...pelatihan,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                    type="text"
+                                    placeholder="Contohnya : September 2023"
+                                />
+                                <p
+                                    style={{
+                                        fontSize: '0.75rem',
+                                        paddingTop: '0.5rem',
+                                    }}
+                                >
+                                    *Jika pengalaman kerja masih berlangsung,
+                                    maka kosongkan saja
+                                </p>
                             </div>
                             <div className="container row-f f-wrap f-1 m-t1">
-                                <button onClick={cancelSubmit} style={{ fontSize: '1rem' }} className="btn btn-danger f-1">
+                                <button
+                                    onClick={cancelSubmit}
+                                    style={{
+                                        fontSize: '1rem',
+                                    }}
+                                    className="btn btn-danger f-1"
+                                >
                                     Batal
                                 </button>
-                                <button style={{ fontSize: '1rem' }} type="submit" className="btn btn-primary f-1">Selesai</button>
+                                <button
+                                    style={{
+                                        fontSize: '1rem',
+                                    }}
+                                    type="submit"
+                                    className="btn btn-primary f-1"
+                                >
+                                    Selesai
+                                </button>
                             </div>
                         </form>
                     </div>
                 </section>
             </main>
-        )
+        );
     } else {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max f-center">
-                <img style={{ width: "100px" }} src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/9f842f2ac51bb2ae58be404178393037e6fae347/public/assets/icon/register.svg" alt="" />
+                    <img
+                        style={{ width: '100px' }}
+                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/9f842f2ac51bb2ae58be404178393037e6fae347/public/assets/icon/register.svg"
+                        alt=""
+                    />
                     <p className="t-center">Silakan daftar dahulu</p>
                     <strong>ADMIN KOPI</strong>
                 </section>
             </main>
-        )
+        );
     }
 }
 

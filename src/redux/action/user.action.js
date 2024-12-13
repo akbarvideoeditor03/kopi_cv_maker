@@ -1,5 +1,5 @@
-import Swal from "sweetalert2";
-import { userTypes } from "../actionTypes";
+import Swal from 'sweetalert2';
+import { userTypes } from '../actionTypes';
 import { createClient } from '@supabase/supabase-js';
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
@@ -11,22 +11,22 @@ export default supabase;
 export const uploadToSupabase = async (newFileName, file) => {
     try {
         const { data, error } = await supabase.storage
-            .from("final_project")
+            .from('final_project')
             .upload(newFileName, file, {
                 contentType: file.type,
                 upsert: false,
             });
         if (error) {
-            console.error("Error uploading file:", error);
+            console.error('Error uploading file:', error);
             throw error;
         }
         const publicUrlResponse = supabase.storage
-            .from("final_project")
+            .from('final_project')
             .getPublicUrl(data.path);
 
         return publicUrlResponse.data.publicUrl;
     } catch (error) {
-        console.error("Error uploading file to Supabase Storage:", error);
+        console.error('Error uploading file to Supabase Storage:', error);
         throw error;
     }
 };
@@ -36,17 +36,17 @@ export const createUser = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
         const response = await fetch(`${baseUrl}/kopi/user/register`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(user),
         });
-        if(response.status === 500) {
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -55,22 +55,28 @@ export const createUser = (user) => async (dispatch) => {
             });
         } else {
             Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "User berhasil ditambah",
+                icon: 'success',
+                title: 'Selamat',
+                text: 'User berhasil ditambah',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
-                window.location.href = '/dashboard'
+                window.location.href = '/dashboard';
             });
             const data = await response.json();
-            dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+            dispatch({
+                type: userTypes.CREATE_USER_SUCCESS,
+                payload: data.data,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.CREATE_USER_FAILURE,
+            payload: error,
+        });
     }
 };
 
@@ -79,17 +85,17 @@ export const createUserSelf = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
         const response = await fetch(`${baseUrl}/kopi/user/register`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(user),
         });
-        if(response.status === 500) {
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -98,9 +104,9 @@ export const createUserSelf = (user) => async (dispatch) => {
             });
         } else {
             Swal.fire({
-                icon: "success",
-                title: "Registrasi berhasil!",
-                text: "Silakan masuk dengan akun Anda",
+                icon: 'success',
+                title: 'Registrasi berhasil!',
+                text: 'Silakan masuk dengan akun Anda',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -111,10 +117,16 @@ export const createUserSelf = (user) => async (dispatch) => {
                 window.location = '/user/login';
             });
             const data = await response.json();
-            dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+            dispatch({
+                type: userTypes.CREATE_USER_SUCCESS,
+                payload: data.data,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.CREATE_USER_FAILURE,
+            payload: error,
+        });
     }
 };
 
@@ -123,18 +135,18 @@ export const postUserLogin = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
         const response = await fetch(`${baseUrl}/kopi/user/login`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(user),
         });
 
-        if(response.status === 500) {
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -148,9 +160,9 @@ export const postUserLogin = (user) => async (dispatch) => {
             const roleUser = data.role;
             if (!idUser && !token && !roleUser) {
                 Swal.fire({
-                    icon: "error",
-                    title: "Oopss...",
-                    text: "Akun tidak ditemukan. Atau password salah",
+                    icon: 'error',
+                    title: 'Oopss...',
+                    text: 'Akun tidak ditemukan. Atau password salah',
                     showConfirmButton: false,
                     timer: 3000,
                     allowEscapeKey: false,
@@ -162,27 +174,33 @@ export const postUserLogin = (user) => async (dispatch) => {
                 });
             } else {
                 Swal.fire({
-                    icon: "success",
-                    title: "Selamat",
-                    text: "Akun berhasil masuk",
+                    icon: 'success',
+                    title: 'Selamat',
+                    text: 'Akun berhasil masuk',
                     showConfirmButton: false,
                     timer: 3000,
                     allowEscapeKey: false,
                     allowOutsideClick: false,
                     timerProgressBar: true,
                 }).then(() => {
-                    localStorage.setItem("id", idUser);
-                    localStorage.setItem("role", roleUser);
-                    localStorage.setItem("token", token);
+                    localStorage.setItem('id', idUser);
+                    localStorage.setItem('role', roleUser);
+                    localStorage.setItem('token', token);
                     Swal.close();
                     window.location = '/';
                 });
-                dispatch({ type: userTypes.CREATE_USER_SUCCESS, payload: data.data });
+                dispatch({
+                    type: userTypes.CREATE_USER_SUCCESS,
+                    payload: data.data,
+                });
             }
         }
     } catch (error) {
-        console.error("Error during login:", error);
-        dispatch({ type: userTypes.CREATE_USER_FAILURE, payload: error });
+        console.error('Error during login:', error);
+        dispatch({
+            type: userTypes.CREATE_USER_FAILURE,
+            payload: error,
+        });
     }
 };
 
@@ -190,7 +208,7 @@ export const getUser = () => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_LIST_REQUEST });
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem('token');
             const response = await fetch(`${baseUrl}/kopi/user`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -201,13 +219,16 @@ export const getUser = () => {
 
             dispatch({
                 type: userTypes.GET_USER_LIST_SUCCESS,
-                payload: ({
+                payload: {
                     data: data.data,
                     meta: dataNumber,
-                }),
+                },
             });
         } catch (error) {
-            dispatch({ type: userTypes.GET_USER_LIST_FAILURE, payload: error });
+            dispatch({
+                type: userTypes.GET_USER_LIST_FAILURE,
+                payload: error,
+            });
         }
     };
 };
@@ -216,7 +237,7 @@ export const getUserId = (id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem('token');
             const response = await fetch(`${baseUrl}/kopi/user/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -229,7 +250,10 @@ export const getUserId = (id) => {
             });
             return data;
         } catch (error) {
-            dispatch({ type: userTypes.GET_USER_ID_LIST_FAILURE, payload: error });
+            dispatch({
+                type: userTypes.GET_USER_ID_LIST_FAILURE,
+                payload: error,
+            });
         }
     };
 };
@@ -237,21 +261,21 @@ export const getUserId = (id) => {
 export const updateUser = (id, updatedUser) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         const role = localStorage.getItem('role');
         const response = await fetch(`${baseUrl}/kopi/user/${id}`, {
-            method: "PUT",
+            method: 'PUT',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(updatedUser),
         });
-        if(response.status === 500) {
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -260,9 +284,9 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
             });
         } else {
             Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Data berhasil diubah",
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Data berhasil diubah',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -270,17 +294,23 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
                 timerProgressBar: true,
             }).then(() => {
                 Swal.close();
-                if(role === 'user') {
+                if (role === 'user') {
                     window.location = '/home';
                 } else {
                     window.location = '/user';
                 }
             });
             const data = await response.json();
-            dispatch({ type: userTypes.UPDATE_USER_SUCCESS, payload: data.data });
+            dispatch({
+                type: userTypes.UPDATE_USER_SUCCESS,
+                payload: data.data,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.UPDATE_USER_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.UPDATE_USER_FAILURE,
+            payload: error,
+        });
     }
 };
 
@@ -288,18 +318,18 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
 export const deleteUser = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_USER_REQUEST });
     try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         const response = await fetch(`${baseUrl}/kopi/user/${id}`, {
-            method: "DELETE",
+            method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        if(response.status === 500) {
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -307,13 +337,18 @@ export const deleteUser = (id) => async (dispatch) => {
                 timerProgressBar: true,
             });
         } else {
-            dispatch({ type: userTypes.DELETE_USER_SUCCESS, payload: id });
+            dispatch({
+                type: userTypes.DELETE_USER_SUCCESS,
+                payload: id,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.DELETE_USER_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.DELETE_USER_FAILURE,
+            payload: error,
+        });
     }
 };
-
 
 //Pengalaman Kerja
 export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
@@ -321,18 +356,18 @@ export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
     try {
         const token = localStorage.getItem('token');
         const response = await fetch(`${baseUrl}/kopi/pengalamankerja/`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(pengalaman_kerja),
         });
-        if(response.status === 500) {
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -341,9 +376,9 @@ export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
             });
         } else {
             Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Pengalaman kerja berhasil ditambah",
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Pengalaman kerja berhasil ditambah',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -354,10 +389,16 @@ export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
                 window.location.href = '/home';
             });
             const data = await response.json();
-            dispatch({ type: userTypes.CREATE_PENGALAMAN_SUCCESS, payload: data.data });
+            dispatch({
+                type: userTypes.CREATE_PENGALAMAN_SUCCESS,
+                payload: data.data,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.CREATE_PENGALAMAN_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.CREATE_PENGALAMAN_FAILURE,
+            payload: error,
+        });
     }
 };
 
@@ -366,11 +407,14 @@ export const readPengalamanKerja = (id) => {
         dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/pengalamankerja/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const response = await fetch(
+                `${baseUrl}/kopi/pengalamankerja/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
             const data = await response.json();
             dispatch({
                 type: userTypes.GET_PENGALAMAN_ID_SUCCESS,
@@ -378,129 +422,157 @@ export const readPengalamanKerja = (id) => {
             });
             return data;
         } catch (error) {
-            dispatch({ type: userTypes.GET_PENGALAMAN_ID_FAILURE, payload: error });
+            dispatch({
+                type: userTypes.GET_PENGALAMAN_ID_FAILURE,
+                payload: error,
+            });
         }
     };
 };
 
-export const updatePengalamanKerja = (id, updatedPengalamanKerja) => async (dispatch) => {
-    dispatch({ type: userTypes.UPDATE_PENGALAMAN_REQUEST });
-    try {
-        const token = localStorage.getItem("token");
-        const id_user = localStorage.getItem("id");
-        const response = await fetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(updatedPengalamanKerja),
-        });
-        if(response.status === 500) {
-            Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
+export const updatePengalamanKerja =
+    (id, updatedPengalamanKerja) => async (dispatch) => {
+        dispatch({ type: userTypes.UPDATE_PENGALAMAN_REQUEST });
+        try {
+            const token = localStorage.getItem('token');
+            const id_user = localStorage.getItem('id');
+            const response = await fetch(
+                `${baseUrl}/kopi/pengalamankerja/${id_user}/${id}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(updatedPengalamanKerja),
+                }
+            );
+            if (response.status === 500) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ups, Maaf...',
+                    text: 'Server kami lagi error nih',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                });
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Selamat',
+                    text: 'Pengalaman kerja berhasil diubah',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                }).then(() => {
+                    window.location = '/home';
+                });
+                const data = await response.json();
+                dispatch({
+                    type: userTypes.UPDATE_PENGALAMAN_SUCCESS,
+                    payload: data.data,
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: userTypes.UPDATE_PENGALAMAN_FAILURE,
+                payload: error,
             });
-        } else {
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Pengalaman kerja berhasil diubah",
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                window.location = "/home";
-            });
-            const data = await response.json();
-            dispatch({ type: userTypes.UPDATE_PENGALAMAN_SUCCESS, payload: data.data });
         }
-    } catch (error) {
-        dispatch({ type: userTypes.UPDATE_PENGALAMAN_FAILURE, payload: error });
-    }
-};
+    };
 
 export const deletePengalamanKerja = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PENGALAMAN_REQUEST });
     try {
-        const token = localStorage.getItem("token");
-        const id_user = localStorage.getItem("id");
+        const token = localStorage.getItem('token');
+        const id_user = localStorage.getItem('id');
         await fetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${id}`, {
-            method: "DELETE",
+            method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        dispatch({ type: userTypes.DELETE_PENGALAMAN_SUCCESS, payload: id });
+        dispatch({
+            type: userTypes.DELETE_PENGALAMAN_SUCCESS,
+            payload: id,
+        });
     } catch (error) {
-        dispatch({ type: userTypes.DELETE_PENGALAMAN_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.DELETE_PENGALAMAN_FAILURE,
+            payload: error,
+        });
     }
 };
-
 
 //Pendidikan Terakhir
-export const createPendidikanTerakhir = (pendidikan_terakhir) => async (dispatch) => {
-    dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_REQUEST });
-    try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/pendidikanterakhir`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(pendidikan_terakhir),
-        });
-        if(response.status === 500) {
-            Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
+export const createPendidikanTerakhir =
+    (pendidikan_terakhir) => async (dispatch) => {
+        dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${baseUrl}/kopi/pendidikanterakhir`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(pendidikan_terakhir),
             });
-        } else {
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Pendidikan terakhir berhasil ditambah",
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                window.location = "/home";
+            if (response.status === 500) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ups, Maaf...',
+                    text: 'Server kami lagi error nih',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                });
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Selamat',
+                    text: 'Pendidikan terakhir berhasil ditambah',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                }).then(() => {
+                    window.location = '/home';
+                });
+                const data = await response.json();
+                dispatch({
+                    type: userTypes.CREATE_PENDIDIKAN_ID_SUCCESS,
+                    payload: data.data,
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: userTypes.CREATE_PENDIDIKAN_ID_FAILURE,
+                payload: error,
             });
-            const data = await response.json();
-            dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_SUCCESS, payload: data.data });
         }
-    } catch (error) {
-        dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_FAILURE, payload: error });
-    }
-};
+    };
 
 export const readPendidikanTerakhir = (id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem("token");
-            const response = await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const token = localStorage.getItem('token');
+            const response = await fetch(
+                `${baseUrl}/kopi/pendidikanterakhir/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
             const data = await response.json();
 
             dispatch({
@@ -509,73 +581,91 @@ export const readPendidikanTerakhir = (id) => {
             });
             return data;
         } catch (error) {
-            dispatch({ type: userTypes.GET_PENDIDIKAN_ID_FAILURE, payload: error });
+            dispatch({
+                type: userTypes.GET_PENDIDIKAN_ID_FAILURE,
+                payload: error,
+            });
         }
     };
 };
 
-export const updatePendidikanTerakhir = (id, updatedPendidikanTerakhir) => async (dispatch) => {
-    dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_REQUEST });
-    try {
-        const token = localStorage.getItem("token");
-        const id_user = localStorage.getItem("id");
-        const response = await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(updatedPendidikanTerakhir),
-        });
-        if(response.status === 500) {
-            Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
+export const updatePendidikanTerakhir =
+    (id, updatedPendidikanTerakhir) => async (dispatch) => {
+        dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('token');
+            const id_user = localStorage.getItem('id');
+            const response = await fetch(
+                `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${id}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(updatedPendidikanTerakhir),
+                }
+            );
+            if (response.status === 500) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ups, Maaf...',
+                    text: 'Server kami lagi error nih',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                });
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Selamat',
+                    text: 'Pendidikan terakhir berhasil diubah',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                }).then(() => {
+                    window.location = '/home';
+                });
+                const data = await response.json();
+                dispatch({
+                    type: userTypes.UPDATE_PENDIDIKAN_ID_SUCCESS,
+                    payload: data.data,
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: userTypes.UPDATE_PENDIDIKAN_ID_FAILURE,
+                payload: error,
             });
-        } else {
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Pendidikan terakhir berhasil diubah",
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                window.location = "/home";
-            });
-            const data = await response.json();
-            dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_SUCCESS, payload: data.data });
         }
-    } catch (error) {
-        dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_FAILURE, payload: error });
-    }
-};
+    };
 
 export const deletePendidikanTerakhir = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PENDIDIKAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem("token");
-        const id_user = localStorage.getItem("id");
+        const token = localStorage.getItem('token');
+        const id_user = localStorage.getItem('id');
         await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${id}`, {
-            method: "DELETE",
+            method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        dispatch({ type: userTypes.DELETE_PENDIDIKAN_ID_SUCCESS, payload: id });
+        dispatch({
+            type: userTypes.DELETE_PENDIDIKAN_ID_SUCCESS,
+            payload: id,
+        });
     } catch (error) {
-        dispatch({ type: userTypes.DELETE_PENDIDIKAN_ID_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.DELETE_PENDIDIKAN_ID_FAILURE,
+            payload: error,
+        });
     }
 };
-
 
 //Keahlian
 export const createKeahlian = (keahlian) => async (dispatch) => {
@@ -583,18 +673,18 @@ export const createKeahlian = (keahlian) => async (dispatch) => {
     try {
         const token = localStorage.getItem('token');
         const response = await fetch(`${baseUrl}/kopi/keahlian`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(keahlian),
         });
-        if(response.status === 500) {
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -603,22 +693,28 @@ export const createKeahlian = (keahlian) => async (dispatch) => {
             });
         } else {
             Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Keahlian berhasil ditambah",
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Keahlian berhasil ditambah',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
-                window.location = "/home";
+                window.location = '/home';
             });
             const data = await response.json();
-            dispatch({ type: userTypes.CREATE_KEAHLIAN_ID_SUCCESS, payload: data.data });
+            dispatch({
+                type: userTypes.CREATE_KEAHLIAN_ID_SUCCESS,
+                payload: data.data,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.CREATE_KEAHLIAN_ID_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.CREATE_KEAHLIAN_ID_FAILURE,
+            payload: error,
+        });
     }
 };
 
@@ -626,7 +722,7 @@ export const readKeahlian = (id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_KEAHLIAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem('token');
             const response = await fetch(`${baseUrl}/kopi/keahlian/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -640,7 +736,10 @@ export const readKeahlian = (id) => {
             });
             return data;
         } catch (error) {
-            dispatch({ type: userTypes.GET_KEAHLIAN_ID_FAILURE, payload: error });
+            dispatch({
+                type: userTypes.GET_KEAHLIAN_ID_FAILURE,
+                payload: error,
+            });
         }
     };
 };
@@ -648,21 +747,24 @@ export const readKeahlian = (id) => {
 export const updateKeahlian = (id, updatedKeahlian) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_KEAHLIAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem("token");
-        const id_user = localStorage.getItem("id");
-        const response = await fetch(`${baseUrl}/kopi/keahlian/${id_user}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(updatedKeahlian),
-        });
-        if(response.status === 500) {
+        const token = localStorage.getItem('token');
+        const id_user = localStorage.getItem('id');
+        const response = await fetch(
+            `${baseUrl}/kopi/keahlian/${id_user}/${id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(updatedKeahlian),
+            }
+        );
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -671,41 +773,50 @@ export const updateKeahlian = (id, updatedKeahlian) => async (dispatch) => {
             });
         } else {
             Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Keahlian berhasil diperbarui",
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Keahlian berhasil diperbarui',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
-                window.location = "/home";
+                window.location = '/home';
             });
             const data = await response.json();
-            dispatch({ type: userTypes.UPDATE_KEAHLIAN_ID_SUCCESS, payload: data.data });
+            dispatch({
+                type: userTypes.UPDATE_KEAHLIAN_ID_SUCCESS,
+                payload: data.data,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.UPDATE_KEAHLIAN_ID_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.UPDATE_KEAHLIAN_ID_FAILURE,
+            payload: error,
+        });
     }
 };
 
 export const deleteKeahlian = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem("token");
-        const id_user = localStorage.getItem("id");
-        const response = await fetch(`${baseUrl}/kopi/keahlian/${id_user}/${id}`, {
-            method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        if(response.status === 500) {
+        const token = localStorage.getItem('token');
+        const id_user = localStorage.getItem('id');
+        const response = await fetch(
+            `${baseUrl}/kopi/keahlian/${id_user}/${id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -713,10 +824,16 @@ export const deleteKeahlian = (id) => async (dispatch) => {
                 timerProgressBar: true,
             });
         } else {
-            dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_SUCCESS, payload: id });
+            dispatch({
+                type: userTypes.DELETE_KEAHLIAN_ID_SUCCESS,
+                payload: id,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.DELETE_KEAHLIAN_ID_FAILURE,
+            payload: error,
+        });
     }
 };
 
@@ -726,18 +843,18 @@ export const createPrestasi = (prestasi) => async (dispatch) => {
     try {
         const token = localStorage.getItem('token');
         const response = await fetch(`${baseUrl}/kopi/prestasikerja`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(prestasi),
         });
-        if(response.status === 500) {
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -746,22 +863,28 @@ export const createPrestasi = (prestasi) => async (dispatch) => {
             });
         } else {
             Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Prestasi kerja berhasil ditambah",
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Prestasi kerja berhasil ditambah',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
-                window.location = "/home";
+                window.location = '/home';
             });
             const data = await response.json();
-            dispatch({ type: userTypes.CREATE_PRESTASI_ID_SUCCESS, payload: data.data });
+            dispatch({
+                type: userTypes.CREATE_PRESTASI_ID_SUCCESS,
+                payload: data.data,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.CREATE_PRESTASI_ID_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.CREATE_PRESTASI_ID_FAILURE,
+            payload: error,
+        });
     }
 };
 
@@ -782,70 +905,86 @@ export const readPrestasi = () => {
             });
             return data;
         } catch (error) {
-            dispatch({ type: userTypes.GET_PRESTASI_FAILURE, payload: error });
+            dispatch({
+                type: userTypes.GET_PRESTASI_FAILURE,
+                payload: error,
+            });
         }
     };
 };
 
-export const updatePrestasi = (id, id_pengalaman_kerja, updatedPrestasi) => async (dispatch) => {
-    dispatch({ type: userTypes.UPDATE_PRESTASI_ID_REQUEST });
-    try {
-        const token = localStorage.getItem("token");
-        const response = await fetch(`${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(updatedPrestasi),
-        });
-        if(response.status === 500) {
-            Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
+export const updatePrestasi =
+    (id, id_pengalaman_kerja, updatedPrestasi) => async (dispatch) => {
+        dispatch({ type: userTypes.UPDATE_PRESTASI_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(
+                `${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(updatedPrestasi),
+                }
+            );
+            if (response.status === 500) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ups, Maaf...',
+                    text: 'Server kami lagi error nih',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                });
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Selamat',
+                    text: 'Prestasi kerja berhasil diubah',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                }).then(() => {
+                    window.location = '/home';
+                });
+                const data = await response.json();
+                dispatch({
+                    type: userTypes.UPDATE_PRESTASI_ID_SUCCESS,
+                    payload: data.data,
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: userTypes.UPDATE_PRESTASI_ID_FAILURE,
+                payload: error,
             });
-        } else {
-            Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Prestasi kerja berhasil diubah",
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                window.location = "/home";
-            });
-            const data = await response.json();
-            dispatch({ type: userTypes.UPDATE_PRESTASI_ID_SUCCESS, payload: data.data });
         }
-    } catch (error) {
-        dispatch({ type: userTypes.UPDATE_PRESTASI_ID_FAILURE, payload: error });
-    }
-};
+    };
 
 export const deletePrestasi = (id, id_pengalaman_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PRESTASI_ID_REQUEST });
     try {
-        const token = localStorage.getItem("token");
-        const response = await fetch(`${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`, {
-            method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        if(response.status === 500) {
+        const token = localStorage.getItem('token');
+        const response = await fetch(
+            `${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -853,10 +992,16 @@ export const deletePrestasi = (id, id_pengalaman_kerja) => async (dispatch) => {
                 timerProgressBar: true,
             });
         } else {
-            dispatch({ type: userTypes.DELETE_PRESTASI_ID_SUCCESS, payload: id });
+            dispatch({
+                type: userTypes.DELETE_PRESTASI_ID_SUCCESS,
+                payload: id,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.DELETE_PRESTASI_ID_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.DELETE_PRESTASI_ID_FAILURE,
+            payload: error,
+        });
     }
 };
 
@@ -866,18 +1011,18 @@ export const createPelatihan = (pelatihan) => async (dispatch) => {
     try {
         const token = localStorage.getItem('token');
         const response = await fetch(`${baseUrl}/kopi/pelatihan`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(pelatihan),
         });
-        if(response.status === 500) {
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -886,22 +1031,28 @@ export const createPelatihan = (pelatihan) => async (dispatch) => {
             });
         } else {
             Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Pelatihan / kursus berhasil ditambah",
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Pelatihan / kursus berhasil ditambah',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
-                window.location = "/home";
+                window.location = '/home';
             });
             const data = await response.json();
-            dispatch({ type: userTypes.CREATE_PELATIHAN_ID_SUCCESS, payload: data.data });
+            dispatch({
+                type: userTypes.CREATE_PELATIHAN_ID_SUCCESS,
+                payload: data.data,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.CREATE_PELATIHAN_ID_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.CREATE_PELATIHAN_ID_FAILURE,
+            payload: error,
+        });
     }
 };
 
@@ -922,7 +1073,10 @@ export const readPelatihan = (id) => {
             });
             return data;
         } catch (error) {
-            dispatch({ type: userTypes.GET_PELATIHAN_ID_FAILURE, payload: error });
+            dispatch({
+                type: userTypes.GET_PELATIHAN_ID_FAILURE,
+                payload: error,
+            });
         }
     };
 };
@@ -930,21 +1084,24 @@ export const readPelatihan = (id) => {
 export const updatePelatihan = (id, updatedPelatihan) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem("token");
-        const id_user = localStorage.getItem("id");
-        const response = await fetch(`${baseUrl}/kopi/pelatihan/${id_user}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(updatedPelatihan),
-        });
-        if(response.status === 500) {
+        const token = localStorage.getItem('token');
+        const id_user = localStorage.getItem('id');
+        const response = await fetch(
+            `${baseUrl}/kopi/pelatihan/${id_user}/${id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(updatedPelatihan),
+            }
+        );
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -953,41 +1110,50 @@ export const updatePelatihan = (id, updatedPelatihan) => async (dispatch) => {
             });
         } else {
             Swal.fire({
-                icon: "success",
-                title: "Selamat",
-                text: "Pelatihan / kursus berhasil diubah",
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Pelatihan / kursus berhasil diubah',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
-                window.location = "/home";
+                window.location = '/home';
             });
             const data = await response.json();
-            dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_SUCCESS, payload: data.data });
+            dispatch({
+                type: userTypes.UPDATE_PELATIHAN_ID_SUCCESS,
+                payload: data.data,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.UPDATE_PELATIHAN_ID_FAILURE,
+            payload: error,
+        });
     }
 };
 
 export const deletePelatihan = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PELATIHAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem("token");
-        const id_user = localStorage.getItem("id");
-        const response = await fetch(`${baseUrl}/kopi/pelatihan/${id_user}/${id}`, {
-            method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        if(response.status === 500) {
+        const token = localStorage.getItem('token');
+        const id_user = localStorage.getItem('id');
+        const response = await fetch(
+            `${baseUrl}/kopi/pelatihan/${id_user}/${id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        if (response.status === 500) {
             Swal.fire({
-                icon: "error",
-                title: "Ups, Maaf...",
-                text: "Server kami lagi error nih",
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
@@ -995,9 +1161,15 @@ export const deletePelatihan = (id) => async (dispatch) => {
                 timerProgressBar: true,
             });
         } else {
-            dispatch({ type: userTypes.DELETE_PELATIHAN_ID_SUCCESS, payload: id });
+            dispatch({
+                type: userTypes.DELETE_PELATIHAN_ID_SUCCESS,
+                payload: id,
+            });
         }
     } catch (error) {
-        dispatch({ type: userTypes.DELETE_PELATIHAN_ID_FAILURE, payload: error });
+        dispatch({
+            type: userTypes.DELETE_PELATIHAN_ID_FAILURE,
+            payload: error,
+        });
     }
 };

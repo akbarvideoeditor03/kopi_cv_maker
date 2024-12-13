@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { createUser, uploadToSupabase } from "../../redux/action/user.action";
-import Swal from "sweetalert2";
+import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { createUser, uploadToSupabase } from '../../redux/action/user.action';
+import Swal from 'sweetalert2';
 
 const CreateUserAdmin = () => {
     const { isWebsite } = useSelector((state) => state.userReducer);
@@ -11,122 +11,128 @@ const CreateUserAdmin = () => {
     const roleUser = isWebsite;
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({
-        nama: "",
-        no_telp: "",
-        alamat: "",
-        tentang: "",
-        foto_profil: "",
-        email: "",
-        password: ""
+        nama: '',
+        no_telp: '',
+        alamat: '',
+        tentang: '',
+        foto_profil: '',
+        email: '',
+        password: '',
     });
 
-    const wordCount = userData.tentang.trim().split(/\s+/).filter(Boolean).length;
+    const wordCount = userData.tentang
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean).length;
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!userData.nama) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Nama wajib diisi",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Nama wajib diisi',
             });
             return;
         }
 
         if (!userData.no_telp) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Nomor telepon wajib diisi",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Nomor telepon wajib diisi',
             });
             return;
         }
 
         if (userData.no_telp && !/^\d{11,13}$/.test(userData.no_telp)) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Nomor telepon tidak valid!. Harus berupa angka 11 - 13 digit",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Nomor telepon tidak valid!. Harus berupa angka 11 - 13 digit',
             });
             return;
         }
 
         if (!userData.alamat) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Alamat wajib diisi",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Alamat wajib diisi',
             });
             return;
         }
 
         if (!userData.tentang) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Tentang wajib diisi",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Tentang wajib diisi',
             });
             return;
         }
 
-        if(!userData.foto_profil) {
+        if (!userData.foto_profil) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Wajib unggah foto profil",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Wajib unggah foto profil',
             });
             return;
         }
 
-        if (!["image/jpg", "image/jpeg", "image/png"].includes(userData.foto_profil.type)) {
+        if (
+            !['image/jpg', 'image/jpeg', 'image/png'].includes(
+                userData.foto_profil.type
+            )
+        ) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Format foto profil tidak valid",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Format foto profil tidak valid',
             });
             return;
         }
 
         if (!userData.email) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Email wajib diisi",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Email wajib diisi',
             });
             return;
         }
 
-
         if (!/\S+@\S+\.\S+/.test(userData.email)) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Format email tidak valid",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Format email tidak valid',
             });
             return;
         }
 
         if (!userData.password) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Password wajib diisi",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password wajib diisi',
             });
             return;
         }
 
         if (userData.password.length < 8) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Password kurang lengkap. Minimal 8 karakter",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password kurang lengkap. Minimal 8 karakter',
             });
             return;
         }
 
         try {
             Swal.fire({
-                title: "Sebentar...",
+                title: 'Sebentar...',
                 html: '<div className="custom-loader"></div>',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
@@ -141,7 +147,7 @@ const CreateUserAdmin = () => {
                 const fileName = fileParts.slice(0, -1).join('.');
                 const fileType = fileParts.slice(-1);
                 const timestamp = new Date().toISOString();
-                const newFileName = fileName + " " + timestamp + "." + fileType;
+                const newFileName = fileName + ' ' + timestamp + '.' + fileType;
 
                 let foto = null;
                 foto = await uploadToSupabase(newFileName, file);
@@ -153,21 +159,21 @@ const CreateUserAdmin = () => {
                     tentang: userData.tentang,
                     foto_profil: foto,
                     email: userData.email,
-                    password: userData.password
-                }
+                    password: userData.password,
+                };
 
                 dispatch(createUser(newUser));
             }
         } catch (error) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
             });
         }
     };
 
-    if(token && role === roleUser) {
+    if (token && role === roleUser) {
         return (
             <main className="container col-f f-center-c">
                 <section className="card container row-f f-wrap-r full-width section-max">
@@ -191,7 +197,13 @@ const CreateUserAdmin = () => {
                                         <input
                                             name="nama"
                                             value={userData.nama}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="text"
                                             placeholder="Masukkan Nama Anda"
                                         />
@@ -201,7 +213,13 @@ const CreateUserAdmin = () => {
                                         <input
                                             name="no_telp"
                                             value={userData.no_telp}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="text"
                                             placeholder="Masukkan Nomor Telepon Anda"
                                         />
@@ -211,7 +229,13 @@ const CreateUserAdmin = () => {
                                         <input
                                             name="alamat"
                                             value={userData.alamat}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="text"
                                             placeholder="Masukkan Alamat Anda"
                                         />
@@ -219,22 +243,43 @@ const CreateUserAdmin = () => {
                                     <div className="container col-f-0">
                                         <label>Tentang</label>
                                         <textarea
-                                            style={{ marginBottom: '0.5rem' }}
+                                            style={{
+                                                marginBottom: '0.5rem',
+                                            }}
                                             className="textarea"
                                             name="tentang"
                                             value={userData.tentang}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="text"
                                             placeholder="Deskripsikan Tentang Anda. Maks. 100 kata"
                                         />
-                                        <p style={{ fontSize: 'small' }}>Jumlah kata : <b>{`${wordCount}`}</b></p>
+                                        <p
+                                            style={{
+                                                fontSize: 'small',
+                                            }}
+                                        >
+                                            Jumlah kata :{' '}
+                                            <b>{`${wordCount}`}</b>
+                                        </p>
                                     </div>
                                     <div className="container col-f-0">
                                         <label>Foto Profil</label>
                                         <input
                                             className="full-width"
                                             name="foto_profil"
-                                            onChange={(e) => setUserData({ ...userData, foto_profil: e.target.files[0] })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    foto_profil:
+                                                        e.target.files[0],
+                                                })
+                                            }
                                             type="file"
                                             accept="image/jpeg, image/png"
                                             placeholder="Unggah Foto Profil Anda"
@@ -245,22 +290,37 @@ const CreateUserAdmin = () => {
                                         <input
                                             name="email"
                                             value={userData.email}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="email"
-                                            placeholder="Masukkan Email Anda" />
+                                            placeholder="Masukkan Email Anda"
+                                        />
                                     </div>
                                     <div className="container col-f-0">
                                         <label>Password</label>
                                         <input
                                             name="password"
                                             value={userData.password}
-                                            onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]:
+                                                        e.target.value,
+                                                })
+                                            }
                                             type="password"
                                             placeholder="Masukkan Password (min 8 karakter)"
                                         />
                                     </div>
                                     <button
-                                        style={{ fontSize: "1rem" }}
+                                        style={{
+                                            fontSize: '1rem',
+                                        }}
                                         type="submit"
                                         className="btn btn-primary"
                                     >
@@ -272,7 +332,9 @@ const CreateUserAdmin = () => {
                         <div className="container col-f f-center-c t-center">
                             <p>Ada kendala? Yuk beri tahu kami</p>
                             <RouterLink
-                                style={{ maxWidth: "15rem" }}
+                                style={{
+                                    maxWidth: '15rem',
+                                }}
                                 to="https://wa.link/s4zfm0"
                                 target="_blank"
                                 className="fwb btn btn-info full-width"
@@ -282,7 +344,11 @@ const CreateUserAdmin = () => {
                         </div>
                     </div>
                     <div className="container col-f f-center-c login-right">
-                        <img className="login-img" src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg" alt="login-img" />
+                        <img
+                            className="login-img"
+                            src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg"
+                            alt="login-img"
+                        />
                     </div>
                 </section>
             </main>
@@ -291,12 +357,18 @@ const CreateUserAdmin = () => {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max f-center">
-                    <img style={{width : "70px"}} src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/5da58e252c99da7a29144d6434f5af8013c5bb7a/public/assets/icon/angry-face.svg" alt="" />
-                    <p className="t-center">Anda tidak dizinkan mengakses halaman ini</p>
+                    <img
+                        style={{ width: '70px' }}
+                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/5da58e252c99da7a29144d6434f5af8013c5bb7a/public/assets/icon/angry-face.svg"
+                        alt=""
+                    />
+                    <p className="t-center">
+                        Anda tidak dizinkan mengakses halaman ini
+                    </p>
                     <strong>ADMIN KOPI</strong>
                 </section>
             </main>
-        )
+        );
     }
 };
 

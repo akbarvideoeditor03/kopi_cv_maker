@@ -1,13 +1,13 @@
-import React from "react";
-import Dropdown from "./dropdown";
-import Swal from "sweetalert2";
-import { useSelector } from "react-redux";
+import React from 'react';
+import Dropdown from './dropdown';
+import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 
 function WebHeader() {
     const { isWebsite } = useSelector((state) => state.userReducer);
     const roleUser = isWebsite;
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
 
     const handleLogout = () => {
         Swal.fire({
@@ -21,7 +21,7 @@ function WebHeader() {
                 localStorage.clear();
                 Swal.fire({
                     icon: 'success',
-                    title:'Berhasil',
+                    title: 'Berhasil',
                     text: 'Akun berhasil keluar',
                     timer: 2000,
                     showConfirmButton: false,
@@ -69,13 +69,22 @@ function WebHeader() {
                                 <a href="/dashboard">Dashboard</a>
                             </div>
                             <div className="container col-f">
-                                <button className="btn btn-danger" onClick={handleLogout}>
+                                <a href="/bantuan">Bantuan</a>
+                            </div>
+                            <div className="container col-f">
+                                <a href="/tentang">Tentang</a>
+                            </div>
+                            <div className="container col-f">
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={handleLogout}
+                                >
                                     Keluar
                                 </button>
                             </div>
                         </>
                     )}
-                    {token && role === "user" && (
+                    {token && role === 'user' && (
                         <>
                             <div className="container col-f">
                                 <a href="/home">CV Saya</a>
@@ -87,7 +96,10 @@ function WebHeader() {
                                 <a href="/tentang">Tentang</a>
                             </div>
                             <div className="container col-f">
-                                <button className="btn btn-danger" onClick={handleLogout}>
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={handleLogout}
+                                >
                                     Keluar
                                 </button>
                             </div>

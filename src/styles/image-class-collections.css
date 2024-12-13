@@ -14,6 +14,15 @@
     background-position: center;
 }
 
+.bg-3 {
+    background-color: rgb(31, 12, 0);
+    background-image: url('../../public/assets/images/bg-3.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
 .generalPg-bg {
     background-image: url('../../public/assets/images/about-bg.svg');
     background-repeat: no-repeat;
@@ -51,7 +60,8 @@
     border-radius: 10px;
 }
 
-.footer-img, .login-icon {
+.footer-img,
+.login-icon {
     width: 100%;
     max-width: 200px;
 }
