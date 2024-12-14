@@ -12,7 +12,7 @@ function WebFooter() {
                     <div className="container col-f f-1 f-center">
                         <img
                             className="footer-img"
-                            src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/Logo.png"
+                            src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/dbb92373b960b91654cf682fe145b27feabd8622/public/assets/icon/logo-footer.png"
                             alt="logo.png"
                         />
                     </div>

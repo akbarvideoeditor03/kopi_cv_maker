@@ -27,8 +27,7 @@ function Login() {
         <main className="container col-f f-center-c">
             <section
                 id="login"
-                className="card container row-f f-wrap-r full-width section-max"
-            >
+                className="card container row-f f-wrap-r full-width section-max">
                 <div className="container col-f login-left f-1 f-between">
                     <div className="container col-f">
                         <h1>Masuk</h1>
