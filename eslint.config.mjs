@@ -22,7 +22,8 @@ export default [
         rules: {
             "react/prop-types": "off",
             "no-empty": "off",
-            "not defined" : "off"
+            "no-warning-comments": "off",
+            "no-console": "off",
         }
     },
 ];
