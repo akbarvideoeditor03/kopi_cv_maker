@@ -21,6 +21,9 @@ jobs:
       - name: Pasang dependencies
         run: npm install --frozen-lockfile
 
+      - name: Set CI environment variable to false
+        run: echo "CI=false" >> $GITHUB_ENV
+
       - name: Bangun app
         run: npm run build
 

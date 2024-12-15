@@ -11,7 +11,6 @@ export default [
         languageOptions: {
             globals: {
                 process: "readonly",
-                "no-mixed-operators": ["off"]
             },
         },
         settings: {
@@ -24,6 +23,8 @@ export default [
             "no-empty": "off",
             "no-warning-comments": "off",
             "no-console": "off",
-        }
+            "no-mixed-operators": "warn",
+            "react-hooks/exhaustive-deps": "warn",
+        },
     },
 ];
