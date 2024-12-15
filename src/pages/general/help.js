@@ -269,11 +269,11 @@ function Help() {
                                 <ul style={{listStyle : 'inside'}}>
                                     <li>Klik, dan tahan tombol Open</li>
                                     <li style={{ listStyle: 'none'}}>
-                                        <img src="../../../public/assets/images/bitmap_g5.png" alt="" />
+                                        <img style={{ maxWidth: "240px", width: "100%" }} src="https://raw.githubusercontent.com/akbarvideoeditor03/kopi_fe/refs/heads/master/public/assets/images/bitmap_g6.png" alt="" />
                                     </li>
                                     <li>lalu pilih Download link</li>
                                     <li style={{ listStyle: 'none'}}>
-                                        <img src="../../../public/assets/images/bitmap_g5.png" alt="" />
+                                        <img style={{ maxWidth: "240px", width: "100%" }} src="https://raw.githubusercontent.com/akbarvideoeditor03/kopi_fe/refs/heads/master/public/assets/images/bitmap_g5.png" alt="" />
                                     </li>
                                 </ul>
                                 Dan selamat! CV kamu berhasil di download.
