@@ -1,7 +1,7 @@
 name: Deploy to Vercel 
 
 env:
-  KOPI_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  KOPI_TOKEN: ${{ secrets.KOPI_TOKEN }}
 
 on:
   push:
@@ -28,10 +28,10 @@ jobs:
         run: npm run build
 
       - name: Tarik Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.KOPI_TOKEN }}
 
       - name: Bangun Project Artifacts
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --prod --token=${{ secrets.KOPI_TOKEN }}
         
       - name: Unggah Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.KOPI_TOKEN }}
