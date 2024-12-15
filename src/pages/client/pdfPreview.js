@@ -119,10 +119,15 @@ function PDFPreview() {
     } else {
         return (
             <main className="container col-f f-center-c">
-                <section className="container col-f f-1 f-align-t section-max">
-                    <h1 className="t-center">
-                        Yeay! Ini adalah preview dari CV yang kamu buat 😊
-                    </h1>
+                <section className="container col-f f-1 f-align-t full-width section-max">
+                    <div className='container col-f f-center-c'>
+                        <h1 className="t-center">
+                            Yeay! Ini adalah preview dari CV yang kamu buat 😊
+                        </h1>
+                        <div className='card-mini'>
+                            <p><i className="bi-exclamation-triangle-fill"></i> Mohon maaf, sementara ini fitur PDF Preview belum dapat digunakan bagi pengguna mobile. Namun, pengguna tetap dapat mengunduhnya. Dengan cara klik dan tahan tombol open, lalu download</p>
+                        </div>
+                    </div>
                     {isLoading ? (
                         <div className="container col-f f-center-c list-container">
                             <div className="custom-loader"></div>
