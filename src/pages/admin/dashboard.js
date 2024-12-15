@@ -11,14 +11,30 @@ function Dashboard() {
         (state) => state.userReducer
     );
     const roleUser = isWebsite;
-    const data = userList.data || [];
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const [searchItem, setSearchItem] = useState('');
+    const [filteredUsers, setFilteredUsers] = useState([]);
 
     useEffect(() => {
         dispatch(getUser());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (userList?.data) {
+            setFilteredUsers(userList.data);
+        }
+    }, [userList]);
+
+    const handleSearch = (e) => {
+        const searchInput = e.target.value;
+        setSearchItem(searchInput);
+
+        const filteredItem = userList?.data.filter((user) =>
+            user.nama.toLowerCase().includes(searchInput.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchInput.toLowerCase()),
+        );
+
+        setFilteredUsers(filteredItem);
+    };
 
     const deleteData = (id) => {
         Swal.fire({
@@ -58,17 +74,6 @@ function Dashboard() {
         }
     }, [error]);
 
-    const totalPages = Math.ceil(data.length / itemsPerPage);
-    const currentData = data.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    );
-    const dataCount = userList?.meta?.totalData;
-
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
-
     if (token && role === roleUser) {
         return (
             <main className="container col-f f-center">
@@ -92,7 +97,7 @@ function Dashboard() {
                                             fontSize: '350%',
                                             fontWeight: 'bold',
                                         }}
-                                    >{`${dataCount}`}</p>
+                                    >{`${filteredUsers.length}`}</p>
                                 )}
                             </div>
                         </div>
@@ -103,9 +108,11 @@ function Dashboard() {
                             className="container col-f f-1"
                         >
                             <input
-                                type="search"
-                                placeholder="Cari"
-                                className="m-bt2"
+                                type="text"
+                                value={searchItem}
+                                onChange={handleSearch}
+                                placeholder="Cari nama atau email"
+                                className="m-bt2 search-box"
                             />
                             <div className="container row-f f-wrap">
                                 <a
@@ -124,7 +131,14 @@ function Dashboard() {
                                         </div>
                                     ) : (
                                         <div className="container col-f">
-                                            {currentData.map((item) => {
+                                            {
+                                                filteredUsers.length === 0 && (
+                                                    <div className="container col-f f-center-c list-container">
+                                                        <p>Data tidak ditemukan</p>
+                                                    </div>
+                                                )
+                                            }
+                                            {filteredUsers.map((item) => {
                                                 return (
                                                     <div
                                                         key={item.id}
@@ -177,23 +191,6 @@ function Dashboard() {
                                                     </div>
                                                 );
                                             })}
-                                            <div className="pagination">
-                                                {[...Array(totalPages)].map(
-                                                    (_, index) => (
-                                                        <button
-                                                            key={index}
-                                                            onClick={() =>
-                                                                handlePageChange(
-                                                                    index + 1
-                                                                )
-                                                            }
-                                                            className={`btn ${currentPage === index + 1 ? 'btn btn-primary' : ''}`}
-                                                        >
-                                                            {index + 1}
-                                                        </button>
-                                                    )
-                                                )}
-                                            </div>
                                         </div>
                                     )}
                                 </div>
