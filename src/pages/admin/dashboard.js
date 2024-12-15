@@ -11,30 +11,25 @@ function Dashboard() {
         (state) => state.userReducer
     );
     const roleUser = isWebsite;
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
     const [searchItem, setSearchItem] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
 
     useEffect(() => {
-        dispatch(getUser());
-    }, [dispatch]);
+        if (!userList.data) {
+            dispatch(getUser());
+        }
+    }, [dispatch, userList.data]);
 
     useEffect(() => {
-        if (userList?.data) {
-            setFilteredUsers(userList.data);
+        if (userList.data) {
+            const filteredItem = userList.data.filter((user) =>
+                user.nama.toLowerCase().includes(searchItem.toLowerCase()) || user.email.toLowerCase().includes(searchItem.toLowerCase())
+            );
+            setFilteredUsers(filteredItem);
         }
-    }, [userList]);
-
-    const handleSearch = (e) => {
-        const searchInput = e.target.value;
-        setSearchItem(searchInput);
-
-        const filteredItem = userList?.data.filter((user) =>
-            user.nama.toLowerCase().includes(searchInput.toLowerCase()) ||
-            user.email.toLowerCase().includes(searchInput.toLowerCase()),
-        );
-
-        setFilteredUsers(filteredItem);
-    };
+    }, [searchItem, userList.data]);
 
     const deleteData = (id) => {
         Swal.fire({
@@ -74,8 +69,18 @@ function Dashboard() {
         }
     }, [error]);
 
-    if (token && role === roleUser) {
-        return (
+    const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+    const currentData = filteredUsers.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    return (
+        token && role === roleUser ? (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
                     <div className="container row-f f-wrap">
@@ -97,7 +102,7 @@ function Dashboard() {
                                             fontSize: '350%',
                                             fontWeight: 'bold',
                                         }}
-                                    >{`${filteredUsers.length}`}</p>
+                                    >{`${userList?.meta?.totalData}`}</p>
                                 )}
                             </div>
                         </div>
@@ -110,8 +115,8 @@ function Dashboard() {
                             <input
                                 type="text"
                                 value={searchItem}
-                                onChange={handleSearch}
-                                placeholder="Cari nama atau email"
+                                onChange={(e) => setSearchItem(e.target.value)}
+                                placeholder="Cari"
                                 className="m-bt2 search-box"
                             />
                             <div className="container row-f f-wrap">
@@ -132,13 +137,12 @@ function Dashboard() {
                                     ) : (
                                         <div className="container col-f">
                                             {
-                                                filteredUsers.length === 0 && (
+                                                filteredUsers.length === 0 ?
                                                     <div className="container col-f f-center-c list-container">
-                                                        <p>Data tidak ditemukan</p>
+                                                        <p className='t-center'><i className='bi bi-emoji-frown'></i> Data tidak ditemukan</p>
                                                     </div>
-                                                )
-                                            }
-                                            {filteredUsers.map((item) => {
+                                                    : ''}
+                                            {currentData.map((item) => {
                                                 return (
                                                     <div
                                                         key={item.id}
@@ -152,19 +156,13 @@ function Dashboard() {
                                                                 >
                                                                     <div className="container col-f f-wrap">
                                                                         <h3>
-                                                                            {
-                                                                                item.nama
-                                                                            }
+                                                                            {item.nama}
                                                                         </h3>
                                                                         <p className="cut-text">
-                                                                            {
-                                                                                item.email
-                                                                            }
+                                                                            {item.email}
                                                                         </p>
                                                                         <p>
-                                                                            {
-                                                                                item.no_telp
-                                                                            }
+                                                                            {item.no_telp}
                                                                         </p>
                                                                     </div>
                                                                 </a>
@@ -191,6 +189,23 @@ function Dashboard() {
                                                     </div>
                                                 );
                                             })}
+                                            <div className="container row-f f-wrap">
+                                                {[...Array(totalPages)].map(
+                                                    (_, index) => (
+                                                        <button
+                                                            key={index}
+                                                            onClick={() =>
+                                                                handlePageChange(
+                                                                    index + 1
+                                                                )
+                                                            }
+                                                            className={`btn ${currentPage === index + 1 ? 'btn btn-primary' : 'btn btn-primary-b'}`}
+                                                        >
+                                                            {index + 1}
+                                                        </button>
+                                                    )
+                                                )}
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -199,9 +214,7 @@ function Dashboard() {
                     </div>
                 </section>
             </main>
-        );
-    } else {
-        return (
+        ) : (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max f-center">
                     <img
@@ -215,8 +228,8 @@ function Dashboard() {
                     <strong>ADMIN KOPI</strong>
                 </section>
             </main>
-        );
-    }
+        )
+    );
 }
 
 export default Dashboard;
