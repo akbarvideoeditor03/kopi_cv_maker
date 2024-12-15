@@ -77,7 +77,6 @@ function Dropdown() {
                 <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
                     <a href="/">Beranda</a>
                     <a href="/home">CV Saya</a>
-                    <a href="/pelajari">Pelajari Lebih Lanjut</a>
                     <a href="/bantuan">Bantuan</a>
                     <a href="/tentang">Tentang</a>
                     <button
@@ -98,7 +97,6 @@ function Dropdown() {
                 <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
                     <a href="/user/login">Masuk</a>
                     <a href="/user/register">Daftar</a>
-                    <a href="/pelajari">Pelajari Lebih Lanjut</a>
                     <a href="/bantuan">Bantuan</a>
                     <a href="/tentang">Tentang</a>
                 </ul>
