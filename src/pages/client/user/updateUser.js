@@ -102,18 +102,6 @@ const UpdateUserSelf = ({ userId }) => {
                     });
                     if (result.isConfirmed) {
                         dispatch(updateUser(id, updatedUser));
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            text: 'Data berhasil diupdate.',
-                            timer: 3000,
-                            allowEscapeKey: false,
-                            showConfirmButton: false,
-                            allowOutsideClick: false,
-                            timerProgressBar: true,
-                        }).then(() => {
-                            window.location = `/home`;
-                        });
                     }
                 });
             } else {

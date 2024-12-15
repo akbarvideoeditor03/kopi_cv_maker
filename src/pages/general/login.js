@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { postUserLogin } from '../../redux/action/user.action';
+import Swal from 'sweetalert2';
 
 function Login() {
     const dispatch = useDispatch();
@@ -13,6 +14,15 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            Swal.fire({
+                title: 'Sebentar...',
+                html: '<div className="custom-loader"></div>',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             const userLogin = {
                 email: userData.email,
                 password: userData.password,

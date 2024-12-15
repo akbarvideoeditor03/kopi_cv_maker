@@ -102,6 +102,17 @@ export const createUserSelf = (user) => async (dispatch) => {
                 allowOutsideClick: false,
                 timerProgressBar: true,
             });
+        } else if (response.status === 400) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups...',
+                text: 'Email sudah ada yang punya, silakan gunakan email lain.',
+                showConfirmButton: false,
+                timer: 3000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
         } else {
             Swal.fire({
                 icon: 'success',
@@ -153,6 +164,17 @@ export const postUserLogin = (user) => async (dispatch) => {
                 allowOutsideClick: false,
                 timerProgressBar: true,
             });
+        } else if (response.status === 401) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups...',
+                text: 'Pengguna tidak ditemukan. Atau password salah',
+                showConfirmButton: false,
+                timer: 3000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
         } else {
             const data = await response.json();
             const idUser = data.id;
@@ -161,16 +183,13 @@ export const postUserLogin = (user) => async (dispatch) => {
             if (!idUser && !token && !roleUser) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oopss...',
+                    title: 'Oow...',
                     text: 'Akun tidak ditemukan. Atau password salah',
                     showConfirmButton: false,
                     timer: 3000,
                     allowEscapeKey: false,
                     allowOutsideClick: false,
                     timerProgressBar: true,
-                }).then(() => {
-                    Swal.close();
-                    window.location.reload();
                 });
             } else {
                 Swal.fire({
@@ -186,7 +205,6 @@ export const postUserLogin = (user) => async (dispatch) => {
                     localStorage.setItem('id', idUser);
                     localStorage.setItem('role', roleUser);
                     localStorage.setItem('token', token);
-                    Swal.close();
                     window.location = '/';
                 });
                 dispatch({

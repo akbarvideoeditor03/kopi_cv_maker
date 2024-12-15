@@ -57,8 +57,9 @@ function Dropdown() {
                     ≡
                 </button>
                 <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
-                    <a href="/#">Dashboard</a>
-                    <a href="/user">Pengguna</a>
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/bantuan">Bantuan</a>
+                    <a href="/tentang">Tentang</a>
                     <button
                         className="btn-dropdown full-width"
                         onClick={handleLogout}
