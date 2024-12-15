@@ -33,11 +33,6 @@ function WebFooter() {
                             </a>
                         </li>
                         <li>
-                            <a className="social-media" href="/pelajari">
-                                Pelajari Lebih Lanjut
-                            </a>
-                        </li>
-                        <li>
                             <a className="social-media" href="/bantuan">
                                 Bantuan
                             </a>

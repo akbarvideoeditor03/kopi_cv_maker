@@ -12,7 +12,7 @@ function UpdatePrestasi() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const dispatch = useDispatch();
-    const { prestasiKerja } = useSelector((state) => state.userReducer);
+    const { prestasiKerja, isWebsite } = useSelector((state) => state.userReducer);
 
     const [data, setData] = useState({
         prestasi: '',
@@ -86,7 +86,7 @@ function UpdatePrestasi() {
         }
     };
 
-    if (token && role === 'user') {
+    if (token && role === 'user' || isWebsite) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
@@ -167,19 +167,19 @@ function UpdatePrestasi() {
             </main>
         );
     } else {
-        return (
-            <main className="container col-f f-center">
-                <section className="container col-f full-width section-max f-center">
-                    <img
-                        style={{ width: '100px' }}
-                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/9f842f2ac51bb2ae58be404178393037e6fae347/public/assets/icon/register.svg"
-                        alt=""
-                    />
-                    <p className="t-center">Silakan daftar dahulu</p>
-                    <strong>ADMIN KOPI</strong>
-                </section>
-            </main>
-        );
+        Swal.fire({
+            icon: 'error',
+            title: 'Oow...',
+            text: 'Akses Dilarang!',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            showCancelButton: false,
+            confirmButtonText: 'Ok',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/user/login`;
+            }
+        });
     }
 }
 

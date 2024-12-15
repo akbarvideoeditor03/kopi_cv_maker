@@ -330,21 +330,19 @@ const UpdateUserAdmin = ({ userId }) => {
             </main>
         );
     } else {
-        return (
-            <main className="container col-f f-center">
-                <section className="container col-f full-width section-max f-center">
-                    <img
-                        style={{ width: '70px' }}
-                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/5da58e252c99da7a29144d6434f5af8013c5bb7a/public/assets/icon/angry-face.svg"
-                        alt=""
-                    />
-                    <p className="t-center">
-                        Anda tidak dizinkan mengakses halaman ini
-                    </p>
-                    <strong>ADMIN KOPI</strong>
-                </section>
-            </main>
-        );
+        Swal.fire({
+            icon: 'error',
+            title: 'Oow...',
+            text: 'Akses Dilarang!',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            showCancelButton: false,
+            confirmButtonText: 'Ok',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/user/login`;
+            }
+        });
     }
 };
 

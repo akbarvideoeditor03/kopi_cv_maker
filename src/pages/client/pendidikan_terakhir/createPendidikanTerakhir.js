@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPendidikanTerakhir } from '../../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function CreatePendidikanTerakhir() {
+    const dispatch = useDispatch();
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
-    const dispatch = useDispatch();
     const id = localStorage.getItem('id');
+    const { isWebsite } = useSelector((state) => state.userReducer)
     const [pendidikanTerakhir, setPendidikanTerakhir] = useState({
         id_user: '',
         institusi: '',
@@ -81,7 +82,7 @@ function CreatePendidikanTerakhir() {
         }
     };
 
-    if (token && role === 'user') {
+    if (token && role === 'user' || isWebsite) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
@@ -211,19 +212,19 @@ function CreatePendidikanTerakhir() {
             </main>
         );
     } else {
-        return (
-            <main className="container col-f f-center">
-                <section className="container col-f full-width section-max f-center">
-                    <img
-                        style={{ width: '100px' }}
-                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/9f842f2ac51bb2ae58be404178393037e6fae347/public/assets/icon/register.svg"
-                        alt=""
-                    />
-                    <p className="t-center">Silakan daftar dahulu</p>
-                    <strong>ADMIN KOPI</strong>
-                </section>
-            </main>
-        );
+        Swal.fire({
+            icon: 'error',
+            title: 'Oow...',
+            text: 'Akses Dilarang!',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            showCancelButton: false,
+            confirmButtonText: 'Ok',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/user/login`;
+            }
+        });
     }
 }
 

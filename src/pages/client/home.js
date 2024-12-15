@@ -31,6 +31,7 @@ function HomeUser() {
         pelatihan,
         prestasiKerja,
         isLoading,
+        isWebsite,
     } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
@@ -77,7 +78,7 @@ function HomeUser() {
         });
     };
 
-    if (token && role === 'user') {
+    if (token && role === 'user' || isWebsite) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
@@ -328,7 +329,7 @@ function HomeUser() {
                                                 ) && <h1>Prestasi Kerja</h1>}
                                                 {prestasiKerja.map((item) =>
                                                     item.id_pengalaman_kerja ===
-                                                    prestasiId ? (
+                                                        prestasiId ? (
                                                         <div
                                                             key={item.id}
                                                             className="container col-f"
@@ -530,19 +531,19 @@ function HomeUser() {
             </main>
         );
     } else {
-        return (
-            <main className="container col-f f-center">
-                <section className="container col-f full-width section-max f-center">
-                    <img
-                        style={{ width: '100px' }}
-                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/9f842f2ac51bb2ae58be404178393037e6fae347/public/assets/icon/register.svg"
-                        alt=""
-                    />
-                    <p className="t-center">Silakan daftar dahulu</p>
-                    <strong>ADMIN KOPI</strong>
-                </section>
-            </main>
-        );
+        Swal.fire({
+            icon: 'error',
+            title: 'Oow...',
+            text: 'Akses Dilarang!',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            showCancelButton: false,
+            confirmButtonText: 'Ok',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/user/login`;
+            }
+        });
     }
 }
 

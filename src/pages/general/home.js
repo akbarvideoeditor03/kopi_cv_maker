@@ -42,10 +42,10 @@ function Home() {
                                 </RouterLink>
                             )}
                             <RouterLink
-                                to="/pelajari"
+                                to="/bantuan"
                                 className="btn-text-small btn btn-info"
                             >
-                                Pelajari Lebih Lanjut
+                                Bantuan
                             </RouterLink>
                         </div>
                     </div>

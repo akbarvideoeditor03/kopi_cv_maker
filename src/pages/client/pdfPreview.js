@@ -25,6 +25,8 @@ import CustomFontRegular from '../font/Figtree-Regular.ttf';
 import CustomFontBold from '../font/Figtree-Bold.ttf';
 dayjs.locale('id');
 const id = localStorage.getItem('id');
+const token = localStorage.getItem('token');
+const role = localStorage.getItem('role');
 
 Font.register({
     family: 'Figtree',
@@ -112,45 +114,49 @@ function PDFPreview() {
         dispatch(readPrestasi());
     }, [dispatch, id]);
 
-    return (
-        <main className="container col-f f-center-c">
-            <section className="container col-f f-1 f-align-t section-max">
-                <h1 className="t-center">
-                    Yeay! Ini adalah preview dari CV yang kamu buat 😊
-                </h1>
-                {isLoading ? (
-                    <div className="container col-f f-center-c list-container">
-                        <div className="custom-loader"></div>
-                    </div>
-                ) : (
-                    <PDFViewer
-                        className="section-max"
-                        width={200}
-                        height={200}
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderWidth: '0px',
-                            borderRadius: '25px',
-                            height: '100vh',
-                            maxHeight: '1920px',
-                            width: '100vw',
-                        }}
-                    >
-                        <MyPdf
-                            userList={userList}
-                            pengalamanKerja={pengalamanKerja}
-                            pendidikanTerakhir={pendidikanTerakhir}
-                            keahlian={keahlian}
-                            pelatihan={pelatihan}
-                            prestasiKerja={prestasiKerja}
-                        />
-                    </PDFViewer>
-                )}
-            </section>
-        </main>
-    );
+    if (!token && !role) {
+        window.location.href = '/user/login'
+    } else {
+        return (
+            <main className="container col-f f-center-c">
+                <section className="container col-f f-1 f-align-t section-max">
+                    <h1 className="t-center">
+                        Yeay! Ini adalah preview dari CV yang kamu buat 😊
+                    </h1>
+                    {isLoading ? (
+                        <div className="container col-f f-center-c list-container">
+                            <div className="custom-loader"></div>
+                        </div>
+                    ) : (
+                        <PDFViewer
+                            className="section-max"
+                            width={200}
+                            height={200}
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderWidth: '0px',
+                                borderRadius: '25px',
+                                height: '100vh',
+                                maxHeight: '1920px',
+                                width: '100vw',
+                            }}
+                        >
+                            <MyPdf
+                                userList={userList}
+                                pengalamanKerja={pengalamanKerja}
+                                pendidikanTerakhir={pendidikanTerakhir}
+                                keahlian={keahlian}
+                                pelatihan={pelatihan}
+                                prestasiKerja={prestasiKerja}
+                            />
+                        </PDFViewer>
+                    )}
+                </section>
+            </main>
+        );
+    }
 }
 
 const MyPdf = ({
@@ -427,18 +433,18 @@ const MyPdf = ({
                                             item.id_pengalaman_kerja ===
                                             prestasiId
                                     ) && (
-                                        <Text
-                                            style={{
-                                                fontSize: '12px',
-                                                fontWeight: 'bold',
-                                            }}
-                                        >
-                                            Prestasi Kerja
-                                        </Text>
-                                    )}
+                                            <Text
+                                                style={{
+                                                    fontSize: '12px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Prestasi Kerja
+                                            </Text>
+                                        )}
                                     {prestasiKerja.map((item) =>
                                         item.id_pengalaman_kerja ===
-                                        prestasiId ? (
+                                            prestasiId ? (
                                             <View key={item.id}
                                                 style={[
                                                     styles.container,

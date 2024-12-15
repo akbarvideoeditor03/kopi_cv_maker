@@ -119,6 +119,12 @@
     height: 1px;
 }
 
+.line-v {
+    background-color: black;
+    height: 2.25rem;
+    width: 1px;
+}
+
 .lp-section {
     min-height: 85vh;
     padding-block: 1rem;
@@ -255,6 +261,8 @@
 }
 
 /* Font Colors Classes */
+
+/* Text Color Classes */
 
 .c-white {
     color: white;

@@ -26,7 +26,6 @@ import UpdatePrestasi from '../client/prestasi/updatePrestasi';
 //General Pages
 import About from './about';
 import Help from './help';
-import Learn from './learn';
 
 //PDF Page
 import CVDocument from '../client/pdfPreview';
@@ -36,64 +35,30 @@ function App() {
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />}></Route>
+                <Route path="/user/:id" element={<UserListDetail />}></Route>
+                <Route path="/user/create" element={<CreateUserAdmin />}></Route>
+                <Route path="/user/edit/:id" element={<UpdateUserAdmin />}></Route>
+                <Route path="/dashboard" element={<UserList />}></Route>
+                <Route path="/home" element={<HomeUser />}></Route>
+                <Route path="/edit/:id" element={<UpdateUserSelf />}></Route>
+                <Route path="/createpengalamankerja" element={<CreatePengalamanKerja />}></Route>
+                <Route path="/pengalamankerja/:id_user/:id" element={<UpdatePengalamanKerja />}></Route>
+                <Route path="/pendidikanterakhir" element={<CreatePendidikanTerakhir />}></Route>
+                <Route path="/pendidikanterakhir/:id_user/:id" element={<UpdatePendidikanTerakhir />}></Route>
+                <Route path="/keahlian" element={<CreateKeahlian />}></Route>
+                <Route path="/keahlian/:id_user/:id" element={<UpdateKeahlian />}></Route>
+                <Route path="/pelatihan" element={<CreatePelatihan />}></Route>
+                <Route path="/pelatihan/:id_user/:id" element={<UpdatePelatihan />}></Route>
+                <Route path="/prestasi/:id" element={<CreatePrestasi />}></Route>
+                <Route path="/prestasi/:id_pengalaman_kerja/:id" element={<UpdatePrestasi />}></Route>
+                <Route path="/doc/preview" element={<CVDocument />}></Route>
                 <Route path="/user/login" element={<Login />}></Route>
                 <Route path="/user/register" element={<Register />}></Route>
-                <Route path="/home" element={<HomeUser />}></Route>
-                <Route path="/dashboard" element={<UserList />}></Route>
-                <Route path="/user/:id" element={<UserListDetail />}></Route>
-                <Route
-                    path="/user/create"
-                    element={<CreateUserAdmin />}
-                ></Route>
-                <Route
-                    path="/user/edit/:id"
-                    element={<UpdateUserAdmin />}
-                ></Route>
-                <Route path="/edit/:id" element={<UpdateUserSelf />}></Route>
-
-                <Route
-                    path="/createpengalamankerja"
-                    element={<CreatePengalamanKerja />}
-                ></Route>
-                <Route
-                    path="/pengalamankerja/:id_user/:id"
-                    element={<UpdatePengalamanKerja />}
-                ></Route>
-                <Route
-                    path="/pendidikanterakhir"
-                    element={<CreatePendidikanTerakhir />}
-                ></Route>
-                <Route
-                    path="/pendidikanterakhir/:id_user/:id"
-                    element={<UpdatePendidikanTerakhir />}
-                ></Route>
-                <Route path="/keahlian" element={<CreateKeahlian />}></Route>
-                <Route
-                    path="/keahlian/:id_user/:id"
-                    element={<UpdateKeahlian />}
-                ></Route>
-                <Route path="/pelatihan" element={<CreatePelatihan />}></Route>
-                <Route
-                    path="/pelatihan/:id_user/:id"
-                    element={<UpdatePelatihan />}
-                ></Route>
-                <Route
-                    path="/prestasi/:id"
-                    element={<CreatePrestasi />}
-                ></Route>
-                <Route
-                    path="/prestasi/:id_pengalaman_kerja/:id"
-                    element={<UpdatePrestasi />}
-                ></Route>
-
                 <Route path="/bantuan" element={<Help />}></Route>
-                <Route path="/pelajari" element={<Learn />}></Route>
                 <Route path="/tentang" element={<About />}></Route>
-
-                <Route path="/doc/preview" element={<CVDocument />}></Route>
             </Route>
         </Routes>
-    );
+    )
 }
 
 export default App;

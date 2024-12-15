@@ -11,6 +11,7 @@ export default [
         languageOptions: {
             globals: {
                 process: "readonly",
+                "no-mixed-operators": ["off"]
             },
         },
         settings: {

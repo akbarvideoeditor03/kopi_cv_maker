@@ -7,9 +7,11 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 const UpdateUserSelf = ({ userId }) => {
+    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('token');
     const { id } = useParams();
     const dispatch = useDispatch();
-    const { userList } = useSelector((state) => state.userReducer);
+    const { userList, isWebsite } = useSelector((state) => state.userReducer);
     useEffect(() => {
         dispatch(getUserId(id));
     }, [dispatch, id]);
@@ -176,173 +178,189 @@ const UpdateUserSelf = ({ userId }) => {
         }
     };
 
-    return (
-        <main className="container col-f f-center-c">
-            <section className="card container row-f f-wrap-r full-width section-max">
-                <div className="container col-f login-left f-1 f-between">
-                    <div className="container col-f">
-                        <h1>Edit Data</h1>
-                        <div className="container f-center-c">
-                            <img
-                                className="login-icon"
-                                src="./assets/icon/logo-bw.png"
-                                alt=""
-                            />
+    if (token && role === 'user' || isWebsite) {
+        return (
+            <main className="container col-f f-center-c">
+                <section className="card container row-f f-wrap-r full-width section-max">
+                    <div className="container col-f login-left f-1 f-between">
+                        <div className="container col-f">
+                            <h1>Edit Data</h1>
+                            <div className="container f-center-c">
+                                <img
+                                    className="login-icon"
+                                    src="./assets/icon/logo-bw.png"
+                                    alt=""
+                                />
+                            </div>
+                            <div className="container col-f f-center-c">
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="container col-f form-max-width"
+                                >
+                                    <div className="container col-f-0">
+                                        <label>Nama</label>
+                                        <input
+                                            name="nama"
+                                            value={userData.nama}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]: e.target.value,
+                                                })
+                                            }
+                                            type="text"
+                                            placeholder="Masukkan Nama Anda"
+                                        />
+                                    </div>
+                                    <div className="container col-f-0">
+                                        <label>Nomor Telepon</label>
+                                        <input
+                                            name="no_telp"
+                                            value={userData.no_telp}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]: e.target.value,
+                                                })
+                                            }
+                                            type="text"
+                                            placeholder="Masukkan Nomor Telepon Anda"
+                                        />
+                                    </div>
+                                    <div className="container col-f-0">
+                                        <label>Alamat</label>
+                                        <input
+                                            name="alamat"
+                                            value={userData.alamat}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]: e.target.value,
+                                                })
+                                            }
+                                            type="text"
+                                            placeholder="Masukkan Alamat Anda"
+                                        />
+                                    </div>
+                                    <div className="container col-f-0">
+                                        <label>Tentang</label>
+                                        <textarea
+                                            style={{
+                                                marginBottom: '0.5rem',
+                                            }}
+                                            className="textarea"
+                                            name="tentang"
+                                            value={userData.tentang}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]: e.target.value,
+                                                })
+                                            }
+                                            type="text"
+                                            placeholder="Deskripsikan Tentang Anda. Maks. 100 kata"
+                                        />
+                                        <p
+                                            style={{
+                                                fontSize: 'small',
+                                            }}
+                                        >
+                                            Jumlah kata : <b>{`${wordCount}`}</b>
+                                        </p>
+                                    </div>
+                                    <div className="container col-f-0">
+                                        <label>Foto Profil</label>
+                                        <input
+                                            className="full-width"
+                                            name="foto_profil"
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    foto_profil: e.target.files[0],
+                                                })
+                                            }
+                                            type="file"
+                                            accept="image/jpeg, image/png"
+                                            placeholder="Unggah Foto Profil Anda"
+                                        />
+                                    </div>
+                                    <div className="container col-f-0">
+                                        <label>Email</label>
+                                        <input
+                                            name="email"
+                                            value={userData.email}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]: e.target.value,
+                                                })
+                                            }
+                                            type="email"
+                                            placeholder="Masukkan Email Anda"
+                                        />
+                                    </div>
+                                    <div className="container row-f f-wrap">
+                                        <button
+                                            onClick={cancelSubmit}
+                                            style={{
+                                                fontSize: '1rem',
+                                            }}
+                                            className="btn btn-danger f-1"
+                                        >
+                                            Batal
+                                        </button>
+                                        <button
+                                            style={{
+                                                fontSize: '1rem',
+                                            }}
+                                            type="submit"
+                                            className="btn btn-primary f-1"
+                                        >
+                                            Perbarui
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div className="container col-f f-center-c">
-                            <form
-                                onSubmit={handleSubmit}
-                                className="container col-f form-max-width"
+                        <div className="container col-f f-center-c t-center m-t2">
+                            <p>Ada kendala? Yuk beri tahu kami</p>
+                            <RouterLink
+                                style={{
+                                    maxWidth: '15rem',
+                                }}
+                                to="https://wa.link/s4zfm0"
+                                target="_blank"
+                                className="fwb btn btn-info full-width"
                             >
-                                <div className="container col-f-0">
-                                    <label>Nama</label>
-                                    <input
-                                        name="nama"
-                                        value={userData.nama}
-                                        onChange={(e) =>
-                                            setUserData({
-                                                ...userData,
-                                                [e.target.name]: e.target.value,
-                                            })
-                                        }
-                                        type="text"
-                                        placeholder="Masukkan Nama Anda"
-                                    />
-                                </div>
-                                <div className="container col-f-0">
-                                    <label>Nomor Telepon</label>
-                                    <input
-                                        name="no_telp"
-                                        value={userData.no_telp}
-                                        onChange={(e) =>
-                                            setUserData({
-                                                ...userData,
-                                                [e.target.name]: e.target.value,
-                                            })
-                                        }
-                                        type="text"
-                                        placeholder="Masukkan Nomor Telepon Anda"
-                                    />
-                                </div>
-                                <div className="container col-f-0">
-                                    <label>Alamat</label>
-                                    <input
-                                        name="alamat"
-                                        value={userData.alamat}
-                                        onChange={(e) =>
-                                            setUserData({
-                                                ...userData,
-                                                [e.target.name]: e.target.value,
-                                            })
-                                        }
-                                        type="text"
-                                        placeholder="Masukkan Alamat Anda"
-                                    />
-                                </div>
-                                <div className="container col-f-0">
-                                    <label>Tentang</label>
-                                    <textarea
-                                        style={{
-                                            marginBottom: '0.5rem',
-                                        }}
-                                        className="textarea"
-                                        name="tentang"
-                                        value={userData.tentang}
-                                        onChange={(e) =>
-                                            setUserData({
-                                                ...userData,
-                                                [e.target.name]: e.target.value,
-                                            })
-                                        }
-                                        type="text"
-                                        placeholder="Deskripsikan Tentang Anda. Maks. 100 kata"
-                                    />
-                                    <p
-                                        style={{
-                                            fontSize: 'small',
-                                        }}
-                                    >
-                                        Jumlah kata : <b>{`${wordCount}`}</b>
-                                    </p>
-                                </div>
-                                <div className="container col-f-0">
-                                    <label>Foto Profil</label>
-                                    <input
-                                        className="full-width"
-                                        name="foto_profil"
-                                        onChange={(e) =>
-                                            setUserData({
-                                                ...userData,
-                                                foto_profil: e.target.files[0],
-                                            })
-                                        }
-                                        type="file"
-                                        accept="image/jpeg, image/png"
-                                        placeholder="Unggah Foto Profil Anda"
-                                    />
-                                </div>
-                                <div className="container col-f-0">
-                                    <label>Email</label>
-                                    <input
-                                        name="email"
-                                        value={userData.email}
-                                        onChange={(e) =>
-                                            setUserData({
-                                                ...userData,
-                                                [e.target.name]: e.target.value,
-                                            })
-                                        }
-                                        type="email"
-                                        placeholder="Masukkan Email Anda"
-                                    />
-                                </div>
-                                <div className="container row-f f-wrap">
-                                    <button
-                                        onClick={cancelSubmit}
-                                        style={{
-                                            fontSize: '1rem',
-                                        }}
-                                        className="btn btn-danger f-1"
-                                    >
-                                        Batal
-                                    </button>
-                                    <button
-                                        style={{
-                                            fontSize: '1rem',
-                                        }}
-                                        type="submit"
-                                        className="btn btn-primary f-1"
-                                    >
-                                        Perbarui
-                                    </button>
-                                </div>
-                            </form>
+                                <i className="bi-whatsapp"></i> Admin
+                            </RouterLink>
                         </div>
                     </div>
-                    <div className="container col-f f-center-c t-center m-t2">
-                        <p>Ada kendala? Yuk beri tahu kami</p>
-                        <RouterLink
-                            style={{
-                                maxWidth: '15rem',
-                            }}
-                            to="https://wa.link/s4zfm0"
-                            target="_blank"
-                            className="fwb btn btn-info full-width"
-                        >
-                            <i className="bi-whatsapp"></i> Admin
-                        </RouterLink>
+                    <div className="container col-f f-center-c login-right">
+                        <img
+                            className="login-img"
+                            src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg"
+                            alt="login-img"
+                        />
                     </div>
-                </div>
-                <div className="container col-f f-center-c login-right">
-                    <img
-                        className="login-img"
-                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg"
-                        alt="login-img"
-                    />
-                </div>
-            </section>
-        </main>
-    );
+                </section>
+            </main>
+        );
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oow...',
+            text: 'Akses Dilarang!',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            showCancelButton: false,
+            confirmButtonText: 'Ok',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/user/login`;
+            }
+        });
+    }
 };
 
 export default UpdateUserSelf;
