@@ -114,7 +114,7 @@ function WebFooter() {
                         marginBottom: '-10px',
                     }}
                 >
-                    Made with{''}
+                    Made with {''}
                     <i style={{ color: 'red' }} className="bi-heart-fill"></i>{' '}
                     by Ahmad Akbar
                 </p>
