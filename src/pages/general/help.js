@@ -28,7 +28,7 @@ function Help() {
                     <div className="content-collapsible" style={{ display: openCollapse[1] ? 'flex' : 'none', }}>
                         <ul type="1">
                             <li>
-                                Buka website KOPI di link <i>(link)</i>
+                                Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="#" className='btn btn-primary'>☕</a>
                             </li>
                             <li>Klik menu Daftar</li>
                             <li>Masukkan data diri kamu, seperti</li>
@@ -61,7 +61,7 @@ function Help() {
                     <div className="content-collapsible" style={{ display: openCollapse[2] ? 'flex' : 'none', }}>
                         <ul type="1">
                             <li>
-                                Buka website KOPI di link <i>(link)</i>
+                                Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="#" className='btn btn-primary'>☕</a>
                             </li>
                             <li>Klik menu Masuk</li>
                             <li>Masukkan email dan password</li>
@@ -95,7 +95,7 @@ function Help() {
                     <div className="content-collapsible" style={{ display: openCollapse[3] ? 'flex' : 'none', }}>
                         <ul type="1">
                             <li>
-                                Buka website KOPI di link <i>(link)</i>
+                                Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="#" className='btn btn-primary'>☕</a>
                             </li>
                             <li>Klik menu Masuk</li>
                             <li>Masukkan email dan password</li>
@@ -137,7 +137,7 @@ function Help() {
                                 langkah-langkah di bawah.
                             </p>
                             <li>
-                                Buka website KOPI di link <i>(link)</i>
+                                Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="#" className='btn btn-primary'>☕</a>
                             </li>
                             <li>Klik menu Masuk</li>
                             <li>Masukkan email dan password</li>
@@ -169,7 +169,7 @@ function Help() {
                     <div className="content-collapsible" style={{ display: openCollapse[5] ? 'flex' : 'none', }}>
                         <ul type="1">
                             <li>
-                                Buka website KOPI di link <i>(link)</i>
+                                Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="#" className='btn btn-primary'>☕</a>
                             </li>
                             <li>Klik menu Masuk</li>
                             <li>Masukkan email dan password</li>
@@ -217,7 +217,7 @@ function Help() {
                     <div className="content-collapsible" style={{ display: openCollapse[6] ? 'flex' : 'none', }}>
                         <ul type="1">
                             <li>
-                                Buka website KOPI di link <i>(link)</i>
+                                Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="#" className='btn btn-primary'>☕</a>
                             </li>
                             <li>Klik menu Masuk</li>
                             <li>Masukkan email dan password</li>
@@ -250,7 +250,7 @@ function Help() {
                     <div className="content-collapsible" style={{ display: openCollapse[7] ? 'flex' : 'none', }}>
                         <ul type="1">
                             <li>
-                                Buka website KOPI di link <i>(link)</i>
+                                Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="#" className='btn btn-primary'>☕</a>
                             </li>
                             <li>Klik menu Masuk</li>
                             <li>Masukkan email dan password</li>
