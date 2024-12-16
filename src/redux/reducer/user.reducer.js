@@ -7,6 +7,8 @@ const initState = {
     prestasiKerja: [],
     keahlian: [],
     pelatihan: [],
+    otpRequest:[],
+    resetPassword:[],
     isWebsite: 'A@k3!o8%Np',
     isLoading: false,
     error: null,
@@ -101,6 +103,38 @@ const users = (state = initState, action) => {
                 isLoading: false,
                 error: action.payload,
             };
+
+        //OTP
+        case userTypes.CREATE_OTP_REQUEST:
+            return { ...state, isLoading: true, error: null };
+        case userTypes.CREATE_OTP_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                otpRequest: [...state.otpRequest, action.payload],
+            };
+        case userTypes.CREATE_OTP_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        //OTP
+        case userTypes.CREATE_RESET_PASSWORD_REQUEST:
+        return { ...state, isLoading: true, error: null };
+            case userTypes.CREATE_RESET_PASSWORD_SUCCESS:
+        return {
+            ...state,
+            isLoading: false,
+            resetPassword: [...state.resetPassword, action.payload],
+        };
+    case userTypes.CREATE_RESET_PASSWORD_FAILURE:
+        return {
+            ...state,
+            isLoading: false,
+            error: action.payload,
+        };
 
         //Pendidikan Terakhir (CRUD)
         case userTypes.CREATE_PENDIDIKAN_ID_REQUEST:

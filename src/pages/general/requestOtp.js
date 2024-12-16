@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { postUserLogin } from '../../redux/action/user.action';
+import { otpRequestCode } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
-function Login() {
+function RequestOtp() {
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         email: '',
-        password: '',
     });
 
     const handleSubmit = async (e) => {
@@ -23,11 +22,10 @@ function Login() {
                     Swal.showLoading();
                 },
             });
-            const userLogin = {
+            const otpReq = {
                 email: userData.email,
-                password: userData.password,
             };
-            dispatch(postUserLogin(userLogin));
+            dispatch(otpRequestCode(otpReq));
         } catch (error) {
             console.log(error);
         }
@@ -40,20 +38,16 @@ function Login() {
                 className="card container row-f f-wrap-r full-width section-max">
                 <div className="container col-f login-left f-1 f-between">
                     <div className="container col-f">
-                        <h1>Masuk</h1>
-                        <div className="container f-center-c">
-                            <img
-                                className="login-icon"
-                                src="./assets/icon/logo-bw.png"
-                                alt=""
-                            />
-                        </div>
+                        <h1>Minta OTP</h1>
                         <div className="container col-f f-center-c">
                             <form
                                 onSubmit={handleSubmit}
                                 className="container col-f form-max-width"
                             >
                                 <div className="container col-f-0">
+                                    <div className='card-mini m-b1'>
+                                        <p><i className="bi-emoji-smile"></i> Pastikan email kamu aktif ya...</p>
+                                    </div>
                                     <label>Email</label>
                                     <input
                                         name="email"
@@ -68,24 +62,6 @@ function Login() {
                                         placeholder="Masukkan Email"
                                     />
                                 </div>
-                                <div className="container col-f-0">
-                                    <label>Password</label>
-                                    <input
-                                        name="password"
-                                        value={userData.password}
-                                        onChange={(e) =>
-                                            setUserData({
-                                                ...userData,
-                                                [e.target.name]: e.target.value,
-                                            })
-                                        }
-                                        type="password"
-                                        placeholder="Masukkan Password"
-                                    />
-                                </div>
-                                <div className="container col-f-0 f-center-r">
-                                    <a href="/user/otprequest">Reset Password?</a>
-                                </div>
                                 <button
                                     style={{
                                         fontSize: '1rem',
@@ -93,28 +69,9 @@ function Login() {
                                     type="submit"
                                     className="btn btn-primary"
                                 >
-                                    Masuk
+                                    Kirim
                                 </button>
                             </form>
-                            <div className="container col-f form-max-width">
-                                <div className="container row-f">
-                                    <div className="container col-f f-center-c f-1">
-                                        <div className="line"></div>
-                                    </div>
-                                    <div className="container col-f">
-                                        <p>Belum punya Akun?</p>
-                                    </div>
-                                    <div className="container col-f f-center-c f-1">
-                                        <div className="line"></div>
-                                    </div>
-                                </div>
-                                <RouterLink
-                                    to="/user/register"
-                                    className="t-center btn btn-primary"
-                                >
-                                    Daftar
-                                </RouterLink>
-                            </div>
                         </div>
                     </div>
                     <div className="container col-f f-center-c t-center">
@@ -143,4 +100,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default RequestOtp;

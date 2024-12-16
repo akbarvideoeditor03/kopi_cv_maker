@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from '../layout';
 import Home from './home';
 import Login from './login';
+import RequestOtp from './requestOtp';
+import PasswordReset from './resetPassword';
 import Register from './register';
 import HomeUser from '../client/home';
 import UserList from '../admin/dashboard';
@@ -54,6 +56,8 @@ function App() {
                 <Route path="/doc/preview" element={<CVDocument />}></Route>
                 <Route path="/user/login" element={<Login />}></Route>
                 <Route path="/user/register" element={<Register />}></Route>
+                <Route path="/user/otprequest" element={<RequestOtp />}></Route>
+                <Route path="/user/resetpassword" element={<PasswordReset />}></Route>
                 <Route path="/bantuan" element={<Help />}></Route>
                 <Route path="/tentang" element={<About />}></Route>
             </Route>

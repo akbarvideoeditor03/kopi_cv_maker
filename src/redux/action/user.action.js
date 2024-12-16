@@ -368,6 +368,126 @@ export const deleteUser = (id) => async (dispatch) => {
     }
 };
 
+//OTP
+export const otpRequestCode = (otp) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_OTP_REQUEST });
+    try {
+        const response = await fetch(`${baseUrl}/kopi/user/trypasswordreset`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(otp),
+        });
+        if (response.status === 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else if (response.status === 404) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups...',
+                text: 'Email tidak ditemukan',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Kode OTP berhasil dikirim. Cek email sekarang!',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location.href = '/user/resetpassword';
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.CREATE_OTP_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.CREATE_OTP_FAILURE,
+            payload: error,
+        });
+    }
+};
+
+//Reset Password
+export const resetPassword = (data) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_RESET_PASSWORD_REQUEST });
+    try {
+        const response = await fetch(`${baseUrl}/kopi/user/passwordreset`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        if (response.status === 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else if (response.status === 401) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'OTP salah atau udah kadaluarsa. Coba lagi',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Password berhasil direset',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location.href = '/user/login';
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.CREATE_RESET_PASSWORD_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.CREATE_RESET_PASSWORD_FAILURE,
+            payload: error,
+        });
+    }
+};
+
 //Pengalaman Kerja
 export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PENGALAMAN_REQUEST });
