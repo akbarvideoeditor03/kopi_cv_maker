@@ -29,29 +29,41 @@ function UserListDetail() {
 
     if (role === roleUser) {
         return (
-            <main className="container col-f f-center-c">
+            <main className="container col-f">
                 {isLoading ? (
-                    <p>Silakan tunggu...</p>
+                    <div className="container col-f f-center-c list-container">
+                        <div className="custom-loader"></div>
+                    </div>
                 ) : (
-                    <div className="container col-f">
-                        <p>{userList.nama}</p>
-                        <p className="cut-text">{userList.email}</p>
-                        <p>
-                            {userList.tentang === null ? (
-                                <p>Data Kosong</p>
-                            ) : (
-                                userList.tentang
-                            )}
-                        </p>
-                        <img
-                            style={{
-                                maxWidth: '200px',
-                                height: '100%',
-                            }}
-                            className="full-width"
-                            src={`${userList.foto_profil}`}
-                            alt=""
-                        />
+                    <div className="card container col-f fj-center">
+                        <h1>Detail Data {userList.nama}</h1>
+                        <div className='container col-f'>
+                            <div className='container col-f f-1 f-center-c m-b1'>
+                                <img className="detail-img full-width" src={`${userList.foto_profil}`} alt="" />
+                            </div>
+                            <div className='container col-f'>
+                                <h4>Nama</h4>
+                                <div className='text-bg'>
+                                    <p>{userList.nama}</p>
+                                </div>
+                                <h4>Nomor Telepon</h4>
+                                <div className='text-bg'>
+                                    <p>{userList.no_telp}</p>
+                                </div>
+                                <h4>Alamat</h4>
+                                <div className='text-bg'>
+                                    <p>{userList.alamat}</p>
+                                </div>
+                                <h4>Tentang</h4>
+                                <div className='text-bg'>
+                                    <p>{userList.tentang === null ? (<p>Data Kosong</p>) : (userList.tentang)}</p>
+                                </div>
+                                <h4>Email</h4>
+                                <div className='text-bg'>
+                                    <p className='cut-text'>{userList.email}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
             </main>

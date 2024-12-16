@@ -315,7 +315,7 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
                 if (role === 'user') {
                     window.location = '/home';
                 } else {
-                    window.location = '/user';
+                    window.location = '/dashboard';
                 }
             });
             const data = await response.json();

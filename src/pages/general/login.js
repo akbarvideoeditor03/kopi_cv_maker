@@ -83,6 +83,9 @@ function Login() {
                                         placeholder="Masukkan Password"
                                     />
                                 </div>
+                                <div className="container col-f-0 f-center-r">
+                                    <a href="#">Reset Password?</a>
+                                </div>
                                 <button
                                     style={{
                                         fontSize: '1rem',

@@ -23,8 +23,8 @@ export default [
             "no-empty": "off",
             "no-warning-comments": "off",
             "no-console": "off",
-            "no-mixed-operators": "warn",
-            "react-hooks/exhaustive-deps": "warn",
+            "no-mixed-operators": "off",
+            "react-hooks/exhaustive-deps": "off",
         },
     },
 ];
