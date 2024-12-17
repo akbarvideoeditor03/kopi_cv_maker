@@ -1,16 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Home from '../pages/general/home';
+import WebFooter from '../pages/web-component/footer';
 import { BrowserRouter } from 'react-router-dom';
 
-test('Menemukan Tombol Bantuan', () => {
+test('Menemukan tombol Bantuan', () => {
     render(
         <BrowserRouter>
-            <Home />
+            <WebFooter />
         </BrowserRouter>
     );
 
-    const linkElement = screen.getByText(/Bantuan/i);
+    const linkElement = screen.getByText(/tentang/i);
     expect(linkElement).toBeInTheDocument();
-    expect(linkElement.closest('a')).toHaveAttribute('href', '/bantuan');
+    expect(linkElement.closest('a')).toHaveAttribute('href', '/tentang');
 });
