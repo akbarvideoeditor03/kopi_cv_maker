@@ -75,6 +75,13 @@ src/
 └── index.js              # Titik masuk aplikasi.
 ```
 
+## 🛠️ **.env File**  
+
+-   REACT_APP_BASE_URL=Your API URL
+-   REACT_APP_SUPABASE_URL=Your Supabase URL
+-   REACT_APP_SUPABASE_BUCKET=Your Supabase Bucket URL
+-   REACT_APP_SUPABASE_KEY=Your Supabase Secret URL
+
 ---
 
 ## 🛠️ **Teknologi yang Digunakan**  
