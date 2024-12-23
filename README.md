@@ -74,6 +74,7 @@ src/
 ├── test/                 # Folder untuk testing aplikasi.
 └── index.js              # Titik masuk aplikasi.
 ```
+---
 
 ## 🛠️ **.env File**  
 
