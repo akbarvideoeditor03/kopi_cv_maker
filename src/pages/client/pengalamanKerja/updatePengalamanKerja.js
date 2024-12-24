@@ -47,6 +47,14 @@ const UpdatePengalamanKerja = () => {
     }, [pengalamanKerja, idUser]);
 
     const wordCount = data.detail.trim().split(/\s+/).filter(Boolean).length;
+    useEffect(() => {
+        const warnText = document.getElementById('warn')
+        if (wordCount > 100) {
+            warnText.classList.add("c-red", "fwb");
+        } else {
+            warnText.classList.remove("c-red", "fwb")
+        }
+    })
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -174,19 +182,12 @@ const UpdatePengalamanKerja = () => {
                                     >
                                         Contohnya : Melayani pertanyaan
                                         pelanggan |{' '}
-                                        <span>
-                                            Jumlah kata : {`${wordCount}`}
-                                        </span>
                                     </p>
-                                    <p
-                                        style={{
-                                            fontSize: '0.75rem',
-                                            paddingTop: '0.5rem',
-                                            fontStyle: 'italic',
-                                        }}
-                                    >
-                                        *Detail kerja akan ditampilkan dalam
-                                        bentuk paragraf
+                                    <p style={{
+                                        fontSize: '0.75rem',
+                                        paddingTop: '0.5rem',
+                                    }}>
+                                        Jumlah kata : <span id='warn'>{`${wordCount}`}</span>
                                     </p>
                                 </div>
                             </div>

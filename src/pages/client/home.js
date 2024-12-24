@@ -79,22 +79,26 @@ function HomeUser() {
     };
 
     if (token && role === 'user' || isWebsite) {
+        const tentang = userList.tentang
+        const tentangParagraf = tentang?.split('\n').map((tentangs, index) => (
+            <p style={{lineHeight : '1.5rem'}} key={index}>{tentangs} <br/></p>
+        ))
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
                     <h1>Menu</h1>
                     <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap m-bt2">
                         <a
-                            href="/createpengalamankerja"
-                            className="btn btn-primary"
-                        >
-                            Tambah Pengalaman Kerja
-                        </a>
-                        <a
                             href="/pendidikanterakhir"
                             className="btn btn-primary"
                         >
                             Tambah Pendidikan Terakhir
+                        </a>
+                        <a
+                            href="/createpengalamankerja"
+                            className="btn btn-primary"
+                        >
+                            Tambah Pengalaman Kerja
                         </a>
                         <a href="/keahlian" className="btn btn-primary">
                             Tambah Keahlian / Skill
@@ -164,7 +168,9 @@ function HomeUser() {
                                         </div>
                                     </div>
                                     <h3>Tentang Saya</h3>
-                                    <p>{userList.tentang}</p>
+                                    <div className='container col-f-0'>
+                                        {tentangParagraf}
+                                    </div>
                                 </div>
                                 <div className="container col-f">
                                     <a
@@ -263,6 +269,10 @@ function HomeUser() {
                                     <h1>Pengalaman Kerja</h1>
                                     {pengalamanKerja.map((item) => {
                                         const prestasiId = item.id;
+                                        const paragraf = item.detail
+                                        const words = paragraf.split('\n').map((paragrafs, index) => (
+                                            <p key={index}>{paragrafs} <br/></p>
+                                        ))
                                         return (
                                             <div
                                                 key={item.id}
@@ -319,7 +329,7 @@ function HomeUser() {
                                                         <p className="fw6">
                                                             {item.jabatan}
                                                         </p>
-                                                        <p>{item.detail}</p>
+                                                        <div style={{ lineHeight: '1.5rem' }}>{words}</div>
                                                     </div>
                                                 </div>
                                                 {prestasiKerja.some(

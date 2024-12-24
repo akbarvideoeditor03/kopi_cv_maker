@@ -8,9 +8,11 @@ function Dropdown() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const [isOpen, setIsOpen] = useState(false);
+    
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
+    
     const closeDropdown = (event) => {
         if (event.target.closest('.dropdown') === null) {
             setIsOpen(false);

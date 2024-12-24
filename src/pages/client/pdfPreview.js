@@ -120,12 +120,13 @@ function PDFPreview() {
         return (
             <main className="container col-f f-center-c">
                 <section className="container col-f f-1 f-align-t full-width section-max">
-                    <div className='container col-f f-center-c'>
+                    <div className='container col-f full-width'>
                         <h1 className="t-center">
                             Yeay! Ini adalah preview dari CV yang kamu buat 😊
                         </h1>
-                        <div className='card-mini'>
-                            <p><i className="bi-exclamation-triangle-fill"></i> Mohon maaf, sementara ini fitur PDF Preview belum dapat digunakan bagi pengguna mobile. Namun, pengguna tetap dapat mengunduhnya. Dengan cara klik dan tahan tombol open, lalu download</p>
+                        <div className='card-mini container col-f'>
+                            <p><i className="bi-exclamation-triangle-fill"></i> Mohon maaf, untuk sementara fitur PDF Preview belum dapat digunakan bagi seluruh pengguna mobile.</p>
+                            <p>Fitur ini dapat digunakan secara normal di browser <strong>Mozila Firefox <i className="bi-browser-firefox"></i></strong></p>
                         </div>
                     </div>
                     {isLoading ? (
@@ -276,6 +277,7 @@ const MyPdf = ({
                                 style={{
                                     fontSize: '11px',
                                     textAlign: 'justify',
+                                    lineHeight : '16px'
                                 }}
                             >
                                 {userList?.tentang}
@@ -429,6 +431,7 @@ const MyPdf = ({
                                         style={{
                                             fontSize: '11px',
                                             textAlign: 'justify',
+                                            lineHeight : '16px'
                                         }}
                                     >
                                         {item.detail}

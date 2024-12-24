@@ -280,8 +280,18 @@ function Help() {
                             </li>
                         </ul>
                     </div>
+                    <button style={{ fontSize: '1rem', textAlign : "left", paddingInline : "1.5rem" }} type="button"
+                        className="container row-f f-between collapsible btn btn-info c-white" onClick={() => handleToggle(8)}>
+                        <p className='f-1'>Video Tutorial <i className="bi-youtube"></i></p>
+                        {isExpanded[8] ? <i className="bi-chevron-down"></i> : <i className="bi-chevron-up"></i>}
+                    </button>
+                    <div className="content-collapsible f-center-c" style={{ display: openCollapse[8] ? 'flex' : 'none', }}>
+                        <iframe style={{borderRadius : '10px'}} width="960" height="540" src="https://www.youtube.com/embed/sv1SvoI1ORE?si=MOx-48u4dyiTsAs5&amp;start=570" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen='true'></iframe>
+                    </div>
                 </div>
-                <a style={{ maxWidth: '10rem', gap: '5px' }} className='container row-f-0 btn btn-success' href="https://wa.link/kx8g0f" target='blank'><i className="bi-whatsapp"></i>Tanya Admin</a>
+                <div className='container row-f-0 f-center'>
+                    <p style={{marginInlineEnd : '5px'}}>Ada yang nggak bisa dipahami? Yok</p><a style={{ maxWidth: '10rem', gap: '5px' }} className='container row-f-0 btn btn-success' href="https://wa.link/kx8g0f" target='blank'><i className="bi-whatsapp"></i>Tanya Admin</a>
+                </div>
             </section>
         </main>
     );

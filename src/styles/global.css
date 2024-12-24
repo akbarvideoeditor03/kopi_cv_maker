@@ -280,6 +280,10 @@
     color: rgb(0, 0, 0);
 }
 
+.c-red {
+    color: rgb(187, 42, 42);
+}
+
 /* Dropdown */
 
 .dropdown {

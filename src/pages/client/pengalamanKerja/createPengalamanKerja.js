@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPengalamanKerja } from '../../../redux/action/user.action';
 import Swal from 'sweetalert2';
@@ -17,10 +17,21 @@ function CreatePengalamanKerja() {
         tahun_mulai: '',
         tahun_selesai: '',
     });
+
     const wordCount = pengalamanKerja.detail
         .trim()
         .split(/\s+/)
         .filter(Boolean).length;
+
+    useEffect(() => {
+        const warnText = document.getElementById('warn')
+        if (wordCount > 100) {
+            warnText.classList.add("c-red", "fwb");
+        } else {
+            warnText.classList.remove("c-red", "fwb")
+        }
+    })
+
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -189,20 +200,13 @@ function CreatePengalamanKerja() {
                                         }}
                                     >
                                         Contohnya : Melayani pertanyaan
-                                        pelanggan |{' '}
-                                        <span>
-                                            Jumlah kata : {`${wordCount}`}
-                                        </span>
+                                        pelanggan |
                                     </p>
-                                    <p
-                                        style={{
-                                            fontSize: '0.75rem',
-                                            paddingTop: '0.5rem',
-                                            fontStyle: 'italic',
-                                        }}
-                                    >
-                                        *Detail kerja akan ditampilkan dalam
-                                        bentuk paragraf
+                                    <p style={{
+                                        fontSize: '0.75rem',
+                                        paddingTop: '0.5rem',
+                                    }}>
+                                        Jumlah kata : <span id='warn'>{`${wordCount}`}</span>
                                     </p>
                                 </div>
                             </div>
