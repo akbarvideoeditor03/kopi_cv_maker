@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { postUserLogin } from '../../redux/action/user.action';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { postUserLogin, gLogin } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function Login() {
@@ -32,6 +33,33 @@ function Login() {
             console.log(error);
         }
     };
+
+    const handleGLogin = async (response) => {
+        try {
+            Swal.fire({
+                title: 'Sebentar...',
+                html: '<div className="custom-loader"></div>',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+            const googleResponse = {
+                token: response.credential,
+            };
+            dispatch(gLogin(googleResponse));
+        } catch (error) {
+            console.log('Google Login Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Google Login Gagal',
+                text: 'Terjadi kesalahan saat mencoba login dengan Google.',
+                showConfirmButton: true,
+            });
+        }
+    };
+
 
     return (
         <main className="container col-f f-center-c">
@@ -114,6 +142,15 @@ function Login() {
                                 >
                                     Daftar
                                 </RouterLink>
+                                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+                                    <GoogleLogin
+                                        onSuccess={handleGLogin}
+                                        onError={() => {
+                                            dispatch(setUserData("Gagal Login dengan Google"));
+                                        }}
+                                        useOneTap
+                                    />
+                                </GoogleOAuthProvider>
                             </div>
                         </div>
                     </div>

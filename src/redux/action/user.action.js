@@ -332,6 +332,93 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
     }
 };
 
+//Google Login
+export const gLogin = (response) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.CREATE_USER_REQUEST });
+        try {
+            const result = await fetch(`${baseUrl}/kopi/user/glogin`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token: response.token }),
+            })
+            if (result.status === 500) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ups, Maaf...',
+                    text: 'Server kami lagi error nih',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                });
+            } else if (result.status === 400) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Email sudah ada yang punya, silakan gunakan email lain.',
+                    showConfirmButton: true,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                });
+            } else if (result.status === 401 || result.status === 403) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Autentikasi Gagal',
+                    text: 'Token tidak valid atau sesi telah berakhir.',
+                    showConfirmButton: true,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+            } else {
+                const data = await result.json();
+                const idUser = data.id;
+                const token = data.token;
+                const roleUser = data.role;
+                if (!idUser && !token && !roleUser) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oow...',
+                        text: 'Akun tidak ditemukan. Atau password salah',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        timerProgressBar: true,
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Selamat',
+                        text: 'Akun berhasil masuk',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        timerProgressBar: true,
+                    }).then(() => {
+                        localStorage.setItem('id', idUser);
+                        localStorage.setItem('role', roleUser);
+                        localStorage.setItem('token', token);
+                        window.location = '/';
+                    });
+                    dispatch({
+                        type: userTypes.CREATE_USER_SUCCESS,
+                        payload: data.data,
+                    });
+                }
+            }
+        } catch (error) {
+            dispatch({
+                type: userTypes.CREATE_USER_FAILURE,
+                payload: error,
+            });
+        }
+    }
+}
+
 //Only Admin
 export const deleteUser = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_USER_REQUEST });

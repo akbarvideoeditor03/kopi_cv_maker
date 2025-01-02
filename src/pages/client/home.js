@@ -81,7 +81,7 @@ function HomeUser() {
     if (token && role === 'user' || isWebsite) {
         const tentang = userList.tentang
         const tentangParagraf = tentang?.split('\n').map((tentangs, index) => (
-            <p style={{lineHeight : '1.5rem'}} key={index}>{tentangs} <br/></p>
+            <p style={{ lineHeight: '1.5rem' }} key={index}>{tentangs} <br /></p>
         ))
         return (
             <main className="container col-f f-center">
@@ -115,6 +115,9 @@ function HomeUser() {
                                 Preview PDF
                             </a>
                         </div>
+                    </div>
+                    <div className='card-mini'>
+                        <p>Jika Anda baru saja login dengan Google, password Anda adalah <b>12345678</b>. Kami sarankan untuk segera lakukan <a href="/user/otprequest"><b>Reset Password</b></a></p>
                     </div>
                     {isLoading ? (
                         <div className="card container col-f f-center-c list-container">
@@ -271,7 +274,7 @@ function HomeUser() {
                                         const prestasiId = item.id;
                                         const paragraf = item.detail
                                         const words = paragraf.split('\n').map((paragrafs, index) => (
-                                            <p key={index}>{paragrafs} <br/></p>
+                                            <p key={index}>{paragrafs} <br /></p>
                                         ))
                                         return (
                                             <div
