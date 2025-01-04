@@ -331,7 +331,7 @@ const Register = () => {
                                 </div>
                                 <RouterLink
                                     to="/user/login"
-                                    className="t-center btn btn-primary"
+                                    className="t-center btn btn-primary-b"
                                 >
                                     Masuk
                                 </RouterLink>

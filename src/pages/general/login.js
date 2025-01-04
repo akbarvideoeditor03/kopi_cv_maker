@@ -138,18 +138,20 @@ function Login() {
                                 </div>
                                 <RouterLink
                                     to="/user/register"
-                                    className="t-center btn btn-primary"
+                                    className="t-center btn btn-primary-b"
                                 >
                                     Daftar
                                 </RouterLink>
                                 <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-                                    <GoogleLogin
-                                        onSuccess={handleGLogin}
-                                        onError={() => {
-                                            dispatch(setUserData("Gagal Login dengan Google"));
-                                        }}
-                                        useOneTap
-                                    />
+                                    <div className='container col-f full-width'>
+                                        <GoogleLogin
+                                            onSuccess={handleGLogin}
+                                            onError={() => {
+                                                dispatch(setUserData("Gagal Login dengan Google"));
+                                            }}
+                                            useOneTap
+                                        />
+                                    </div>
                                 </GoogleOAuthProvider>
                             </div>
                         </div>
