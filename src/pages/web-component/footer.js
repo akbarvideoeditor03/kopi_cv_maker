@@ -118,7 +118,7 @@ function WebFooter() {
                     <i style={{ color: 'red' }} className="bi-heart-fill"></i>{' '}
                     by Ahmad Akbar
                 </p>
-                <p>All Right Reserved © 2024</p>
+                <p>All Right Reserved © 2025</p>
             </section>
         </footer>
     );
