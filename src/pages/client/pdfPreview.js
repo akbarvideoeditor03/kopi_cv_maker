@@ -183,7 +183,7 @@ const MyPdf = ({
                         {
                             paddingBottom: '16px',
                             marginBottom: '4px',
-                            borderBottom: '0.2px',
+                            borderBottom: '1px',
                         },
                     ]}
                 >
@@ -298,7 +298,7 @@ const MyPdf = ({
                         {
                             paddingBottom: '16px',
                             marginBottom: '4px',
-                            borderBottom: '0.2px',
+                            borderBottom: '1px',
                         },
                     ]}
                 >
@@ -378,7 +378,7 @@ const MyPdf = ({
                         styles.colContainer,
                         {
                             paddingBottom: '16px',
-                            borderBottom: '0.2px',
+                            borderBottom: '1px',
                         },
                     ]}
                 >
@@ -498,7 +498,7 @@ const MyPdf = ({
                         {
                             paddingBottom: '16px',
                             marginBottom: '4px',
-                            borderBottom: '0.2px',
+                            borderBottom: '1px',
                         },
                     ]}
                 >
@@ -554,7 +554,7 @@ const MyPdf = ({
                         {
                             paddingBottom: '16px',
                             marginBottom: '4px',
-                            borderBottom: '0.2px',
+                            borderBottom: '1px',
                         },
                     ]}
                 >
