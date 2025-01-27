@@ -116,9 +116,9 @@ function HomeUser() {
                             </a>
                         </div>
                     </div>
-                    <div className='card-mini'>
+                    {/* <div className='card-mini'>
                         <p>Jika Anda baru saja login dengan Google, password Anda adalah <b>12345678</b>. Kami sarankan untuk segera lakukan <a href="/user/otprequest"><b>Reset Password</b></a></p>
-                    </div>
+                    </div> */}
                     {isLoading ? (
                         <div className="card container col-f f-center-c list-container">
                             <div className="custom-loader"></div>
@@ -139,9 +139,7 @@ function HomeUser() {
                                                 {userList.nama}
                                             </h1>
                                             <p className="prodi-text">
-                                                {pendidikanTerakhir.map(
-                                                    (item) => item.jurusan
-                                                )}
+                                                {pendidikanTerakhir.find((item) => item.jurusan)?.jurusan}
                                             </p>
                                         </div>
                                         <div className="box-2 container col-f f-center-c">

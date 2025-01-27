@@ -197,9 +197,7 @@ const MyPdf = ({
                         <View style={[styles.container, styles.colContainer0]}>
                             <Text style={styles.h1}>{userList?.nama}</Text>
                             <Text style={styles.subheader}>
-                                {pendidikanTerakhir?.map(
-                                    (item) => item.jurusan
-                                )}
+                                {pendidikanTerakhir.find((item) => item.jurusan)?.jurusan}
                             </Text>
                         </View>
                         <View

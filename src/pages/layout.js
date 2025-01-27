@@ -6,9 +6,8 @@ import WebFooter from './web-component/footer';
 function Layout() {
     return (
         <section>
-            {/* <h1>Maaf website sedang dalam perbaikan <i class="bi-gear"></i></h1> */}
             <WebHeader />
-            <Outlet />
+                <Outlet />
             <WebFooter />
         </section>
     );
