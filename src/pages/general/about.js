@@ -4,7 +4,7 @@ function About() {
     return (
         <main className="container col-f f-center-c generalPg-bg">
             <section className="container col-f f-1 fj-center section-max">
-                <h1>Tentang</h1>
+                <h1>Tentang Website</h1>
                 <div className="container row-f f-wrap">
                     <div
                         style={{ flexBasis: '360px' }}

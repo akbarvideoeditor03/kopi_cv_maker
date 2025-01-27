@@ -315,7 +315,7 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
                 if (role === 'user') {
                     window.location = '/home';
                 } else {
-                    window.location = '/dashboard';
+                    window.location =`/user/${id}`;
                 }
             });
             const data = await response.json();
@@ -442,6 +442,18 @@ export const deleteUser = (id) => async (dispatch) => {
                 timerProgressBar: true,
             });
         } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Dihapus!',
+                text: 'Data berhasil dihapus.',
+                timer: 2000,
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location.reload();
+            });
             dispatch({
                 type: userTypes.DELETE_USER_SUCCESS,
                 payload: id,

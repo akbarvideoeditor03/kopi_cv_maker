@@ -29,13 +29,13 @@ function UserListDetail() {
 
     if (role === roleUser) {
         return (
-            <main className="container col-f">
+            <main className="container col-f f-center">
                 {isLoading ? (
                     <div className="container col-f f-center-c list-container">
                         <div className="custom-loader"></div>
                     </div>
                 ) : (
-                    <div className="card container col-f fj-center">
+                    <div className="card container col-f fj-center section-max">
                         <h1>Detail Data {userList.nama}</h1>
                         <div className='container col-f'>
                             <div className='container col-f f-1 f-center-c m-b1'>

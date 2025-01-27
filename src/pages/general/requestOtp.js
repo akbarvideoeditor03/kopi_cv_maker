@@ -12,6 +12,14 @@ function RequestOtp() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!userData.email) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Email wajib diisi',
+            });
+            return;
+        }
         try {
             Swal.fire({
                 title: 'Sebentar...',

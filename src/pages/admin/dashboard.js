@@ -42,18 +42,6 @@ function Dashboard() {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(deleteUser(id));
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Dihapus!',
-                    text: 'Data berhasil dihapus.',
-                    timer: 2000,
-                    showConfirmButton: false,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                }).then(() => {
-                    window.location.reload();
-                });
             }
         });
     };
@@ -119,14 +107,14 @@ function Dashboard() {
                                 placeholder="Cari"
                                 className="m-bt2 search-box"
                             />
-                            <div className="container row-f f-wrap">
+                            {/* <div className="container row-f f-wrap">
                                 <a
                                     href="/user/create"
                                     className="btn btn-primary"
                                 >
                                     Tambah Pengguna
                                 </a>
-                            </div>
+                            </div> */}
                             <div className="container col-f">
                                 <h1>Daftar Pengguna</h1>
                                 <div className="container col-f full-width list-container">

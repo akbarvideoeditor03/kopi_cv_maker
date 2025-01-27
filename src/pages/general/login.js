@@ -14,6 +14,33 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!userData.email) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Email wajib diisi',
+            });
+            return;
+        }
+
+        if (!userData.password) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password wajib diisi',
+            });
+            return;
+        }
+
+        if (userData.password.length < 8) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password kurang lengkap. Minimal 8 karakter',
+            });
+            return;
+        }
+        
         try {
             Swal.fire({
                 title: 'Sebentar...',
@@ -142,7 +169,7 @@ function Login() {
                                 >
                                     Daftar
                                 </RouterLink>
-                                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+                                {/* <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
                                     <div className='container col-f full-width'>
                                         <GoogleLogin
                                             onSuccess={handleGLogin}
@@ -152,7 +179,7 @@ function Login() {
                                             useOneTap
                                         />
                                     </div>
-                                </GoogleOAuthProvider>
+                                </GoogleOAuthProvider> */}
                             </div>
                         </div>
                     </div>
