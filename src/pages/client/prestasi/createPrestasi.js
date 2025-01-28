@@ -52,25 +52,12 @@ function CreatePrestasi() {
         }
 
         try {
-            const result = await Swal.fire({
-                icon: 'question',
-                title: 'Tunggu',
-                text: 'Apa informasinya udah benar semua?',
-                confirmButtonText: 'Iya, udah',
-                cancelButtonText: 'Lanjutin',
-                allowOutsideClick: false,
-                showCancelButton: true,
-            });
-
-            if (result.isConfirmed) {
-                const prestasiUser = {
-                    id_pengalaman_kerja: id,
-                    prestasi: prestasi.prestasi,
-                    tahun: prestasi.tahun,
-                };
-
-                dispatch(createPrestasi(prestasiUser));
-            }
+            const prestasiUser = {
+                id_pengalaman_kerja: id,
+                prestasi: prestasi.prestasi,
+                tahun: prestasi.tahun,
+            };
+            dispatch(createPrestasi(prestasiUser));
         } catch (error) {
             console.error('Error saat menambahkan prestasi:', error);
             await Swal.fire({

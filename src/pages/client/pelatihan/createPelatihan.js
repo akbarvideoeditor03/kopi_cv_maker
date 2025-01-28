@@ -51,25 +51,13 @@ function CreatePelatihan() {
         }
 
         try {
-            const result = await Swal.fire({
-                icon: 'question',
-                title: 'Tunggu',
-                text: 'Apa informasinya udah benar semua?',
-                confirmButtonText: 'Iya, udah',
-                cancelButtonText: 'Lanjutin',
-                allowOutsideClick: false,
-                showCancelButton: true,
-            });
-
-            if (result.isConfirmed) {
-                const pelatihanUser = {
-                    id_user: `${id}`,
-                    pelatihan: pelatihan.pelatihan,
-                    tahun_mulai: pelatihan.tahun_mulai,
-                    tahun_selesai: pelatihan.tahun_selesai || 'Hingga saat ini',
-                };
-                dispatch(createPelatihan(pelatihanUser));
-            }
+            const pelatihanUser = {
+                id_user: `${id}`,
+                pelatihan: pelatihan.pelatihan,
+                tahun_mulai: pelatihan.tahun_mulai,
+                tahun_selesai: pelatihan.tahun_selesai || 'Hingga saat ini',
+            };
+            dispatch(createPelatihan(pelatihanUser));
         } catch (error) {
             console.error('Error saat menambahkan pelatihan:', error);
             await Swal.fire({

@@ -88,29 +88,16 @@ function CreatePengalamanKerja() {
         }
 
         try {
-            const result = await Swal.fire({
-                icon: 'question',
-                title: 'Tunggu',
-                text: 'Apa informasinya udah benar semua?',
-                confirmButtonText: 'Iya, udah',
-                cancelButtonText: 'Lanjutin',
-                allowOutsideClick: false,
-                showCancelButton: true,
-            });
-
-            if (result.isConfirmed) {
-                const pengalamanKerjaUser = {
-                    id_user: `${id}`,
-                    lokasi: pengalamanKerja.lokasi,
-                    jabatan: pengalamanKerja.jabatan,
-                    detail: pengalamanKerja.detail,
-                    tahun_mulai: pengalamanKerja.tahun_mulai,
-                    tahun_selesai:
-                        pengalamanKerja.tahun_selesai || 'Hingga saat ini',
-                };
-
-                dispatch(createPengalamanKerja(pengalamanKerjaUser));
-            }
+            const pengalamanKerjaUser = {
+                id_user: `${id}`,
+                lokasi: pengalamanKerja.lokasi,
+                jabatan: pengalamanKerja.jabatan,
+                detail: pengalamanKerja.detail,
+                tahun_mulai: pengalamanKerja.tahun_mulai,
+                tahun_selesai:
+                    pengalamanKerja.tahun_selesai || 'Hingga saat ini',
+            };
+            dispatch(createPengalamanKerja(pengalamanKerjaUser));
         } catch (error) {
             console.error('Error saat menambahkan pengalaman kerja:', error);
             await Swal.fire({
