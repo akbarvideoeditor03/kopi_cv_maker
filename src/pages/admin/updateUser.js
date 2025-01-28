@@ -49,35 +49,65 @@ const UpdateUserAdmin = ({ userId }) => {
         .trim()
         .split(/\s+/)
         .filter(Boolean).length;
+    const cancelSubmit = async (e) => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Yakin mau batal?',
+            text: 'Perubahan kamu bakal hilang loh...',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Iya',
+            cancelButtonText: 'Lanjutin',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/dashboard';
+            }
+        });
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (wordCount > 100) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
-            });
-            return;
-        }
+        // if (wordCount > 100) {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'Oops...',
+        //         text: `Tentang tidak boleh lebih dari 100 kata. Saat ini ada ${wordCount} kata.`,
+        //     });
+        //     return;
+        // }
 
         try {
             if (userData.foto_profil === null || userData.foto_profil === '') {
-                const updatedUser = {
-                    nama: userData.nama,
-                    no_telp: userData.no_telp,
-                    alamat: userData.alamat,
-                    tentang: userData.tentang,
-                    email: userData.email,
-                };
-
-                Swal.fire({
+                const result = await Swal.fire({
+                    icon: 'question',
                     title: 'Update data?',
                     text: 'Yakin datanya sudah benar?',
-                    icon: 'question',
                     showCancelButton: true,
-                    confirmButtonText: 'Ya, update!',
-                    cancelButtonText: 'Batal',
-                }).then((result) => {
+                    allowOutsideClick: false,
+                    confirmButtonText: 'Iya, udah',
+                    cancelButtonText: 'Lanjutin',
+                });
+
+                if (result.isConfirmed) {
+                    const updatedUser = {
+                        nama: userData.nama,
+                        no_telp: userData.no_telp,
+                        alamat: userData.alamat,
+                        tentang: userData.tentang,
+                        email: userData.email,
+                    };
+                    dispatch(updateUser(id, updatedUser));
+                }
+            } else {
+                const result = await Swal.fire({
+                    icon: 'question',
+                    title: 'Update data?',
+                    text: 'Yakin datanya sudah benar?',
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    confirmButtonText: 'Iya, udah',
+                    cancelButtonText: 'Lanjutin',
+                });
+                if (result.isConfirmed) {
                     Swal.fire({
                         title: 'Sebentar...',
                         html: '<div className="custom-loader"></div>',
@@ -87,62 +117,37 @@ const UpdateUserAdmin = ({ userId }) => {
                             Swal.showLoading();
                         },
                     });
-                    if (result.isConfirmed) {
+                    try {
+                        const file = userData.foto_profil;
+                        const fileParts = file.name
+                            .split('.')
+                            .filter(Boolean);
+                        const fileName = fileParts.slice(0, -1).join('.');
+                        const fileType = fileParts.slice(-1);
+                        const timestamp = new Date().toISOString();
+                        const newFileName = `${fileName} ${timestamp}.${fileType}`;
+
+                        let foto = null;
+                        foto = await uploadToSupabase(newFileName, file);
+
+                        const updatedUser = {
+                            nama: userData.nama,
+                            no_telp: userData.no_telp,
+                            alamat: userData.alamat,
+                            tentang: userData.tentang,
+                            foto_profil: foto,
+                            email: userData.email,
+                        };
+
                         dispatch(updateUser(id, updatedUser));
-                    }
-                });
-            } else {
-                Swal.fire({
-                    title: 'Update data?',
-                    text: 'Yakin datanya sudah benar?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, update!',
-                    cancelButtonText: 'Batal',
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
+                    } catch (error) {
                         Swal.fire({
-                            title: 'Sebentar...',
-                            html: '<div className="custom-loader"></div>',
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            },
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Terjadi kesalahan saat memperbarui data.',
                         });
-
-                        try {
-                            const file = userData.foto_profil;
-                            const fileParts = file.name
-                                .split('.')
-                                .filter(Boolean);
-                            const fileName = fileParts.slice(0, -1).join('.');
-                            const fileType = fileParts.slice(-1);
-                            const timestamp = new Date().toISOString();
-                            const newFileName = `${fileName} ${timestamp}.${fileType}`;
-
-                            let foto = null;
-                            foto = await uploadToSupabase(newFileName, file);
-
-                            const updatedUser = {
-                                nama: userData.nama,
-                                no_telp: userData.no_telp,
-                                alamat: userData.alamat,
-                                tentang: userData.tentang,
-                                foto_profil: foto,
-                                email: userData.email,
-                            };
-
-                            dispatch(updateUser(id, updatedUser));
-                        } catch (error) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Terjadi kesalahan saat memperbarui data.',
-                            });
-                        }
                     }
-                });
+                }
             }
         } catch (error) {
             Swal.fire({
@@ -281,15 +286,26 @@ const UpdateUserAdmin = ({ userId }) => {
                                             placeholder="Masukkan Email Anda"
                                         />
                                     </div>
-                                    <button
-                                        style={{
-                                            fontSize: '1rem',
-                                        }}
-                                        type="submit"
-                                        className="btn btn-primary"
-                                    >
-                                        Perbarui
-                                    </button>
+                                    <div className="container row-f f-wrap">
+                                        <button
+                                            onClick={cancelSubmit}
+                                            style={{
+                                                fontSize: '1rem',
+                                            }}
+                                            className="btn btn-danger f-1"
+                                        >
+                                            Batal
+                                        </button>
+                                        <button
+                                            style={{
+                                                fontSize: '1rem',
+                                            }}
+                                            type="submit"
+                                            className="btn btn-primary f-1"
+                                        >
+                                            Perbarui
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
