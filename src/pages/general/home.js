@@ -41,12 +41,12 @@ function Home() {
                                     Buat CV Sekarang
                                 </RouterLink>
                             )}
-                            <RouterLink
+                            {/* <RouterLink
                                 to="/bantuan"
                                 className="btn-text-small btn btn-info"
                             >
                                 Bantuan
-                            </RouterLink>
+                            </RouterLink> */}
                         </div>
                     </div>
                 </div>
