@@ -58,8 +58,8 @@ function App() {
                 <Route path="/user/register" element={<Register />}></Route>
                 <Route path="/user/otprequest" element={<RequestOtp />}></Route>
                 <Route path="/user/resetpassword" element={<PasswordReset />}></Route>
-                <Route path="/bantuan" element={<Help />}></Route>
-                <Route path="/tentang" element={<About />}></Route>
+                {/* <Route path="/bantuan" element={<Help />}></Route>
+                <Route path="/tentang" element={<About />}></Route> */}
             </Route>
         </Routes>
     )
