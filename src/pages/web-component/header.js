@@ -68,12 +68,12 @@ function WebHeader() {
                             <div className="container col-f">
                                 <a href="/dashboard">Dashboard</a>
                             </div>
-                            {/* <div className="container col-f">
+                            <div className="container col-f">
                                 <a href="/bantuan">Bantuan</a>
                             </div>
                             <div className="container col-f">
                                 <a href="/tentang">Tentang</a>
-                            </div> */}
+                            </div>
                             <div className="container col-f">
                                 <button
                                     className="btn btn-danger"
@@ -89,12 +89,12 @@ function WebHeader() {
                             <div className="container col-f">
                                 <a href="/home">CV Saya</a>
                             </div>
-                            {/* <div className="container col-f">
+                            <div className="container col-f">
                                 <a href="/bantuan">Bantuan</a>
                             </div>
                             <div className="container col-f">
                                 <a href="/tentang">Tentang</a>
-                            </div> */}
+                            </div>
                             <div className="container col-f">
                                 <button
                                     className="btn btn-danger"
@@ -113,12 +113,12 @@ function WebHeader() {
                             <div className="container col-f">
                                 <a href="/user/login">Masuk</a>
                             </div>
-                            {/* <div className="container col-f">
+                            <div className="container col-f">
                                 <a href="/bantuan">Bantuan</a>
                             </div>
                             <div className="container col-f">
                                 <a href="/tentang">Tentang</a>
-                            </div> */}
+                            </div>
                         </div>
                     )}
                 </div>
