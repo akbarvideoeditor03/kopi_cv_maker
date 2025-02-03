@@ -31,6 +31,7 @@ import Help from './help';
 
 //PDF Page
 import CVDocument from '../client/pdfPreview';
+import MyPDFDocument from '../client/pdf2';
 
 function App() {
     return (
@@ -60,6 +61,8 @@ function App() {
                 <Route path="/user/resetpassword" element={<PasswordReset />}></Route>
                 <Route path="/bantuan" element={<Help />}></Route>
                 <Route path="/tentang" element={<About />}></Route>
+
+                <Route path="/pdf2" element={<MyPDFDocument />}></Route>
             </Route>
         </Routes>
     )
