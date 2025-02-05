@@ -80,12 +80,21 @@ function Home() {
                             klik
                         </p>
                         <div className="container row-f fwb">
-                            <RouterLink
-                                to="/user/login"
-                                className="btn-text-small btn btn-primary"
-                            >
-                                Mulai Sekarang
-                            </RouterLink>
+                            {token ? (
+                                <RouterLink
+                                    to="/home"
+                                    className="btn-text-small btn btn-primary"
+                                >
+                                    Buat CV Sekarang
+                                </RouterLink>
+                            ) : (
+                                <RouterLink
+                                    to="/user/login"
+                                    className="btn-text-small btn btn-primary"
+                                >
+                                    Buat CV Sekarang
+                                </RouterLink>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -111,12 +120,21 @@ function Home() {
                             hari ini!
                         </p>
                         <div className="container row-f fwb">
-                            <RouterLink
-                                to="/user/login"
-                                className="btn-text-small btn btn-primary"
-                            >
-                                Mulai Sekarang
-                            </RouterLink>
+                            {token ? (
+                                <RouterLink
+                                    to="/home"
+                                    className="btn-text-small btn btn-primary"
+                                >
+                                    Buat CV Sekarang
+                                </RouterLink>
+                            ) : (
+                                <RouterLink
+                                    to="/user/login"
+                                    className="btn-text-small btn btn-primary"
+                                >
+                                    Buat CV Sekarang
+                                </RouterLink>
+                            )}
                         </div>
                     </div>
                 </div>
