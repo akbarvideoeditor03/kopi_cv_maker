@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { jsPDF } from "jspdf";
+import { jsPDF } from "jspdf"
 
 const HTMLToPDF = () => {
     const contentRef = useRef();
@@ -12,18 +12,17 @@ const HTMLToPDF = () => {
             callback: (pdf) => {
                 pdf.save("document.pdf");
             },
-            x: 10,
-            y: 10,
-            width: 180,
+            width: 170,
             windowWidth: 800,
+            margin:20,
+            // autoPaging:"text"
         });
     };
 
     return (
-        <div className="container col-f card-mini" style={{ height:"210mm" }}>
-            <div ref={contentRef} style={{ padding: "1rem" }}>
-                <div className="container col-f">
-                    <p>
+        <div className="container col-f card-mini">
+            <div ref={contentRef} style={{ padding: "1rem", textAlign:"justify" }}>
+                <p>
                         <strong>Lorem ipsum</strong> dolor <i>sit amet</i> consectetur <u>adipisicing elit</u>. Repellat quae minus totam eum recusandae corporis pariatur expedita aspernatur animi voluptas possimus facere illum quis dolorem quaerat atque adipisci, cupiditate ad.
                         <ul>
                             <li>Lorem Ipsum</li>
@@ -31,16 +30,102 @@ const HTMLToPDF = () => {
                             <li>Lorem Ipsum</li>
                             <li>Lorem Ipsum</li>
                         </ul>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique laboriosam tenetur necessitatibus quod impedit eaque quisquam est? Quo consequatur facilis, laboriosam eius natus quasi quibusdam non excepturi corporis aspernatur consectetur?
-                        <ol type="1">
-                            <li>Lorem</li>
-                            <li>Lorem</li>
-                            <li>Lorem</li>
-                            <li>Lorem</li>
-                            <li>Lorem</li>
-                        </ol>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
+                        <p>
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+                        </p>
+                        <br/>
                     </p>
-                </div>
             </div>
             <button onClick={generatePDF}>Download PDF</button>
         </div>

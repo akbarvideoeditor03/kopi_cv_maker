@@ -169,7 +169,7 @@ function Login() {
                                 >
                                     Daftar
                                 </RouterLink>
-                                {/* <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+                                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
                                     <div className='container col-f full-width'>
                                         <GoogleLogin
                                             onSuccess={handleGLogin}
@@ -179,7 +179,7 @@ function Login() {
                                             useOneTap
                                         />
                                     </div>
-                                </GoogleOAuthProvider> */}
+                                </GoogleOAuthProvider>
                             </div>
                         </div>
                     </div>
