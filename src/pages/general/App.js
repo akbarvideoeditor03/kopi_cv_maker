@@ -32,6 +32,7 @@ import Help from './help';
 //PDF Page
 import CVDocument from '../client/pdfPreview';
 import MyPDFDocument from '../client/pdf2';
+import MyDocument2 from '../client/pdfPreview2';
 
 function App() {
     return (
@@ -63,6 +64,7 @@ function App() {
                 <Route path="/tentang" element={<About />}></Route>
 
                 <Route path="/pdf2" element={<MyPDFDocument />}></Route>
+                <Route path="/contohpdf2" element={<MyDocument2 />}></Route>
             </Route>
         </Routes>
     )

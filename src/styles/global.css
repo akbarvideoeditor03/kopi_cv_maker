@@ -124,6 +124,14 @@
     height: 1px;
 }
 
+.vline {
+    background-color: black;
+    width: 10px;
+    margin-inline: 0.5rem;
+    height: 100%;
+    border-radius: 5px;
+}
+
 .lp-section {
     min-height: 85vh;
     padding-block: 1rem;
@@ -472,6 +480,23 @@
     border-radius: 7px;
     padding: 1rem;
     background-color: #ededed;
+}
+
+.timeline-bullets {
+    list-style-type: disc;
+    list-style-position: outside;
+}
+
+ul, .timeline-bullets{
+    margin-left: -0.85rem;
+}
+
+.bullets-item {
+    margin-bottom: 2rem;
+}
+
+.bullets-item::marker {
+    font-size: 40px;
 }
 
 .footer-section {
