@@ -239,30 +239,32 @@ const MyPdf2 = ({
     return (
         <Document>
             <Page style={[styles.page, styles.container, styles.rowContainer]}>
-                <View style={[styles.container, styles.colContainer0, {width:'200px', backgroundColor:'grey'}]}>
-                    <Text>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the
-                        1500s, when an unknown printer took a galley of type and scrambled it to
-                        make a type specimen book. It has survived not only five centuries, but
-                        also the leap into electronic typesetting, remaining essentially
-                        unchanged. It was popularised in the 1960s with the release of Letraset
-                        sheets containing Lorem Ipsum passages, and more recently with desktop
-                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the
-                        1500s, when an unknown printer took a galley of type and scrambled it to
-                        make a type specimen book. It has survived not only five centuries, but
-                        also the leap into electronic typesetting, remaining essentially
-                        unchanged. It was popularised in the 1960s with the release of Letraset
-                        sheets containing Lorem Ipsum passages, and more recently with desktop
-                        publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                    </Text>
+                <View style={[styles.container, styles.colContainer, styles.textWhite, {width:"200px", backgroundColor:"#314755ff", marginLeft:"-40px", paddingLeft:"40px", paddingRight:"30px", marginTop:"-40px", marginBottom:"-40px", paddingTop:"40px", paddingBottom:"40px"}]}>
+                    <View style={[styles.container, styles.colContainer0, styles.fCenter]}>
+                        <View style={[styles.cvImg2]}>
+                            <Image
+                            style={[styles.cvImg]}
+                                src={userList?.foto_profil}
+                            />
+                        </View>
+                    </View>
+                    <View style={[styles.container, styles.colContainer, {fontSize:"11px", marginTop:"10px"}]}>
+                        <Text style={{
+                                fontSize: '14px',
+                                fontWeight:'bold'
+                            }}>Tentang Saya</Text>
+                        <Text
+                            style={{
+                                fontSize: '11px',
+                                lineHeight : '16px'
+                            }}
+                        >
+                            {userList?.tentang}
+                        </Text>
+                    </View>
                 </View>
-                <View style={[styles.container, styles.colContainer0, styles.f1]}>
-                    <Text>
-
-                    </Text>
+                <View style={[styles.container, styles.colContainer, styles.f1, {paddingLeft:"20px"}]}>
+                    <Text>Halo</Text>
                 </View>
             </Page>
         </Document>
