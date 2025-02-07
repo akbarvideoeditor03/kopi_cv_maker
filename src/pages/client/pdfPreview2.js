@@ -10,7 +10,6 @@ import {
     Font,
     Image,
     Link,
-    LinearGradient,
 } from '@react-pdf/renderer';
 import {
     getUserId,
@@ -28,7 +27,6 @@ dayjs.locale('id');
 const id = localStorage.getItem('id');
 const token = localStorage.getItem('token');
 const role = localStorage.getItem('role');
-const backgroundImage = 'https://raw.githubusercontent.com/akbarvideoeditor03/kopi_cv_maker/511ea6fa8dbd3652fd8c2265345d8e6019cc519e/public/assets/bg/Template%20CV%201.svg';
 
 Font.register({
     family: 'Figtree',
@@ -47,14 +45,6 @@ const styles = StyleSheet.create({
     page: {
         padding: '32px',
         fontFamily: 'Figtree',
-      },
-      background: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: -1,
     },
     h1: {
         fontSize: 25,
@@ -111,18 +101,6 @@ const styles = StyleSheet.create({
         height: '110px',
         backgroundColor: 'white',
         borderRadius: '50%'
-    },
-    hLineWhite: {
-        paddingBottom: '16px',
-        marginBottom: '4px',
-        borderBottom: '0.5px',
-        borderColor: 'white'
-    },
-    hLineBlack: {
-        paddingBottom: '6px',
-        marginBottom: '0px',
-        borderBottom: '0.5px',
-        borderColor: 'black'
     },
 });
 
@@ -209,11 +187,7 @@ const MyPdf2 = ({
     return (
         <Document>
             <Page style={[styles.page, styles.container, styles.rowContainer]}>
-            <View style={styles.background}>
-                <Image style={[{marginBottom:'-40px', height:'1800px'}]} src={backgroundImage} />
-            </View>
-            <View style={styles.gradientBackground} />
-                <View style={[styles.container, styles.colContainer, styles.textWhite, { width: "200px", marginLeft: "-40px", paddingLeft: "40px", paddingRight: "30px", marginTop: "-35px", marginBottom: "-40px", paddingTop: "35px", paddingBottom: "40px" }]}>
+                <View style={[styles.container, styles.colContainer, styles.textWhite, { width: "200px", backgroundColor: "#314755ff", marginLeft: "-40px", paddingLeft: "40px", paddingRight: "30px", marginTop: "-35px", marginBottom: "-40px", paddingTop: "35px", paddingBottom: "40px" }]}>
                     <View style={[styles.container, styles.colContainer0, styles.fCenter]}>
                         <View style={[styles.cvImg2]}>
                             <Image
@@ -222,7 +196,7 @@ const MyPdf2 = ({
                             />
                         </View>
                     </View>
-                    <View style={[styles.container, styles.colContainer, styles.hLineWhite, { fontSize: "11px", marginTop: "10px" }]}>
+                    <View style={[styles.container, styles.colContainer, { fontSize: "11px", marginTop: "10px" }]}>
                         <Text style={{
                             fontSize: '14px',
                             fontWeight: 'bold'
@@ -236,7 +210,7 @@ const MyPdf2 = ({
                             {userList?.tentang}
                         </Text>
                     </View>
-                    <View style={[styles.container, styles.colContainer, styles.hLineWhite, { fontSize: "11px", marginTop: "10px" }]}>
+                    <View style={[styles.container, styles.colContainer, { fontSize: "11px", marginTop: "10px" }]}>
                         <Text
                             style={{
                                 fontSize: '15px',
@@ -249,7 +223,7 @@ const MyPdf2 = ({
                             return (
                                 <View
                                     key={item.id}
-                                    style={[styles.container, styles.rowContainer,]}
+                                    style={[styles.container, styles.rowContainer]}
                                 >
                                     <View
                                         style={[
@@ -269,6 +243,14 @@ const MyPdf2 = ({
                                         >
                                             {item.keahlian}
                                         </Text>
+                                        <Text
+                                            style={{
+                                                fontSize: '11px',
+                                                textAlign: 'justify',
+                                            }}
+                                        >
+                                            {item.tingkat}
+                                        </Text>
                                     </View>
                                 </View>
                             );
@@ -276,62 +258,60 @@ const MyPdf2 = ({
                     </View>
                 </View>
                 <View style={[styles.container, styles.colContainer0, styles.f1, { paddingLeft: "20px" }]}>
-                    <View style={[styles.container, styles.rowContainer, styles.hLineBlack]}>
-                        <View style={[styles.container, styles.colContainer0, styles.f1]}>
-                            <Text style={styles.h1}>{userList?.nama}</Text>
-                            <Text style={styles.subheader}>
-                                {pendidikanTerakhir.find((item) => item.jurusan)?.jurusan}
-                            </Text>
-                        </View>
-                        <View style={[styles.container, styles.colContainer, styles.f1]}>
-                            <Text
-                                style={{
-                                    fontSize: '11px',
-                                }}
-                            >
-                                <Image
-                                    src={
-                                        'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/envelope-solid.png'
-                                    }
-                                />{' '}
-                                <Link
-                                    style={{
-                                        textDecoration: 'none',
-                                    }}
-                                >
-                                    {userList.email}
-                                </Link>{' '}
-                            </Text>
-                            <Text
-                                style={{
-                                    fontSize: '11px',
-                                }}
-                            >
-                                <Image
-                                    src={
-                                        'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/phone-solid.png'
-                                    }
-                                />{' '}
-                                {userList.no_telp}
-                            </Text>
-                            <Text
-                                style={{
-                                    fontSize: '11px',
-                                }}
-                            >
-                                <Image
-                                    src={
-                                        'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/location-dot-solid.png'
-                                    }
-                                />{' '}
-                                {userList.alamat}
-                            </Text>
-                        </View>
+                    <View>
+                        <Text style={styles.h1}>{userList?.nama}</Text>
+                        <Text style={styles.subheader}>
+                            {pendidikanTerakhir.find((item) => item.jurusan)?.jurusan}
+                        </Text>
                     </View>
-                    <View style={[styles.hLineBlack, { marginTop: 12 }]}>
+                    <View style={[styles.container, styles.rowContainer]}>
                         <Text
                             style={{
-                                fontSize: '14px',
+                                fontSize: '11px',
+                            }}
+                        >
+                            <Image
+                                src={
+                                    'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/envelope-solid.png'
+                                }
+                            />{' '}
+                            <Link
+                                style={{
+                                    textDecoration: 'none',
+                                }}
+                            >
+                                {userList.email}
+                            </Link>{' '}
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: '11px',
+                            }}
+                        >
+                            <Image
+                                src={
+                                    'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/phone-solid.png'
+                                }
+                            />{' '}
+                            {userList.no_telp}
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: '11px',
+                            }}
+                        >
+                            <Image
+                                src={
+                                    'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/location-dot-solid.png'
+                                }
+                            />{' '}
+                            {userList.alamat}
+                        </Text>
+                    </View>
+                    <View style={[{ marginTop: 12 }]}>
+                        <Text
+                            style={{
+                                fontSize: '15px',
                                 fontWeight: 'bold',
                             }}
                         >
@@ -356,7 +336,7 @@ const MyPdf2 = ({
                                     >
                                         <Text
                                             style={{
-                                                fontSize: '11px',
+                                                fontSize: '13px',
                                                 textAlign: 'justify',
                                                 fontWeight: 'bold',
                                             }}
@@ -403,7 +383,7 @@ const MyPdf2 = ({
                                                 <View key={item.id}
                                                     style={[
                                                         styles.container,
-                                                        styles.colContainer
+                                                        styles.rowContainer,
                                                     ]}
                                                 >
                                                     <Text
@@ -412,7 +392,9 @@ const MyPdf2 = ({
                                                                 fontSize: '11px',
                                                                 textAlign:
                                                                     'justify',
+                                                                fontWeight: 'bold',
                                                             },
+                                                            styles.f1,
                                                         ]}
                                                     >
                                                         {item.prestasi}
@@ -421,7 +403,6 @@ const MyPdf2 = ({
                                                         style={{
                                                             fontSize: '11px',
                                                             textAlign: 'justify',
-                                                            fontWeight:'black'
                                                         }}
                                                     >
                                                         Tahun{' '}
@@ -437,80 +418,10 @@ const MyPdf2 = ({
                             );
                         })}
                     </View>
-                    <View style={[styles.hLineBlack, styles.container, styles.colContainer, { marginTop: 12 }]}>
+                    <View style={[{ marginTop: 12 }]}>
                         <Text
                             style={{
-                                fontSize: '14px',
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            Pendidikan Terakhir
-                        </Text>
-                        {pendidikanTerakhir.map((item) => {
-                            return (
-                                <View
-                                    key={item.id}
-                                    style={[styles.container, styles.rowContainer]}
-                                >
-                                    <View
-                                        style={[
-                                            styles.container,
-                                            styles.colContainer,
-                                            styles.f1,
-                                        ]}
-                                    >
-                                        <Text
-                                            style={{
-                                                fontSize: '12px',
-                                                textAlign: 'justify',
-                                                fontWeight: 'bold',
-                                            }}
-                                        >
-                                            {item.institusi}
-                                        </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                            }}
-                                        >
-                                            {dayjs(item.tahun_mulai)
-                                                .locale('id')
-                                                .format('MMMM YYYY')}{' '}
-                                            - {item.tahun_selesai}
-                                        </Text>
-                                    </View>
-                                    <View
-                                        style={[
-                                            styles.container,
-                                            styles.colContainer,
-                                        ]}
-                                    >
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                            }}
-                                        >
-                                            Jurusan
-                                        </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                            }}
-                                        >
-                                            {item.jurusan}
-                                        </Text>
-                                    </View>
-                                </View>
-                            );
-                        })}
-                    </View>
-                    <View style={[styles.container, styles.colContainer, styles.hLineBlack, { marginTop: "12px" }]}>
-                        <Text
-                            style={{
-                                fontSize: '14px',
+                                fontSize: '15px',
                                 fontWeight: 'bold',
                             }}
                         >
