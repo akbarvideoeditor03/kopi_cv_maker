@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     f1: {
         flex: '1',
     },
-    textWhite : {
-        color:"white"
+    textWhite: {
+        color: "white"
     },
     cvImg: {
         width: '105px',
@@ -97,10 +97,10 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width:'110px',
-        height:'110px',
-        backgroundColor:'white',
-        borderRadius:'50%'
+        width: '110px',
+        height: '110px',
+        backgroundColor: 'white',
+        borderRadius: '50%'
     },
 });
 
@@ -176,58 +176,6 @@ function PDFPreview2() {
     }
 }
 
-// function PDFPreview2() {
-//     return (
-//         <main className="container col-f f-center-c">
-//             <section className="container col-f f-1 f-between section-max full-width">
-//                 <div className='container col-f'>
-//                     <div className='container row-f'>
-//                         <div className='container col-f' style={{ maxWidth: "200px" }}>
-//                             <p>Nama Pekerjaan</p>
-//                             <p>Tahun Dapat - Tahun Selesai</p>
-//                         </div>
-//                         <div className='container col-f f-1'>
-//                             <div className='container row-f'>
-//                                 <div className='vline'></div>
-//                                 <div className='container col-f'>
-//                                     <div className='container col-f' style={{marginBlockEnd:"1rem"}}>
-//                                         <ul className='timeline-bullets'>
-//                                             <li className='bullets-item'>
-//                                                 <div>
-//                                                     <p>Nama Pekerjaan</p>
-//                                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-//                                                 </div>
-//                                             </li>
-//                                             <li className='bullets-item'>
-//                                                 <div>
-//                                                     <p>Nama Pekerjaan</p>
-//                                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-//                                                 </div>
-//                                             </li>
-//                                             <li className='bullets-item'>
-//                                                 <div>
-//                                                     <p>Nama Pekerjaan</p>
-//                                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-//                                                 </div>
-//                                             </li>
-//                                             <li className='bullets-item'>
-//                                                 <div>
-//                                                     <p>Nama Pekerjaan</p>
-//                                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-//                                                 </div>
-//                                             </li>
-//                                         </ul>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </section>
-//         </main>
-//     );
-// }
-
 const MyPdf2 = ({
     userList,
     pengalamanKerja,
@@ -239,32 +187,196 @@ const MyPdf2 = ({
     return (
         <Document>
             <Page style={[styles.page, styles.container, styles.rowContainer]}>
-                <View style={[styles.container, styles.colContainer, styles.textWhite, {width:"200px", backgroundColor:"#314755ff", marginLeft:"-40px", paddingLeft:"40px", paddingRight:"30px", marginTop:"-40px", marginBottom:"-40px", paddingTop:"40px", paddingBottom:"40px"}]}>
+                <View style={[styles.container, styles.colContainer, styles.textWhite, { width: "200px", backgroundColor: "#314755ff", marginLeft: "-40px", paddingLeft: "40px", paddingRight: "30px", marginTop: "-35px", marginBottom: "-40px", paddingTop: "35px", paddingBottom: "40px" }]}>
                     <View style={[styles.container, styles.colContainer0, styles.fCenter]}>
                         <View style={[styles.cvImg2]}>
                             <Image
-                            style={[styles.cvImg]}
+                                style={[styles.cvImg]}
                                 src={userList?.foto_profil}
                             />
                         </View>
                     </View>
-                    <View style={[styles.container, styles.colContainer, {fontSize:"11px", marginTop:"10px"}]}>
+                    <View style={[styles.container, styles.colContainer, { fontSize: "11px", marginTop: "10px" }]}>
                         <Text style={{
-                                fontSize: '14px',
-                                fontWeight:'bold'
-                            }}>Tentang Saya</Text>
+                            fontSize: '14px',
+                            fontWeight: 'bold'
+                        }}>Tentang Saya</Text>
                         <Text
                             style={{
                                 fontSize: '11px',
-                                lineHeight : '16px'
+                                lineHeight: '16px'
                             }}
                         >
                             {userList?.tentang}
                         </Text>
                     </View>
                 </View>
-                <View style={[styles.container, styles.colContainer, styles.f1, {paddingLeft:"20px"}]}>
-                    <Text>Halo</Text>
+                <View style={[styles.container, styles.colContainer0, styles.f1, { paddingLeft: "20px" }]}>
+                    <View>
+                        <Text style={styles.h1}>{userList?.nama}</Text>
+                        <Text style={styles.subheader}>
+                            {pendidikanTerakhir.find((item) => item.jurusan)?.jurusan}
+                        </Text>
+                    </View>
+                    <View style={[{ marginTop: 12 }]}>
+                        <Text
+                            style={{
+                                fontSize: '15px',
+                                fontWeight: 'bold',
+                            }}
+                        >
+                            Pengalaman Kerja
+                        </Text>
+                        {pengalamanKerja.map((item) => {
+                            const prestasiId = item.id;
+                            return (
+                                <View
+                                    key={item.id}
+                                    style={[styles.container, styles.rowContainer]}
+                                >
+                                    <View
+                                        style={[
+                                            {
+                                                paddingBottom: '10px',
+                                            },
+                                            styles.container,
+                                            styles.colContainer,
+                                            styles.f1,
+                                        ]}
+                                    >
+                                        <Text
+                                            style={{
+                                                fontSize: '13px',
+                                                textAlign: 'justify',
+                                                fontWeight: 'bold',
+                                            }}
+                                        >
+                                            {item.lokasi}
+                                        </Text>
+                                        <Text
+                                            style={{
+                                                fontSize: '11px',
+                                                textAlign: 'justify',
+                                            }}
+                                        >
+                                            {dayjs(item.tahun_mulai)
+                                                .locale('id')
+                                                .format('MMMM YYYY')}{' '}
+                                            - {item.tahun_selesai}
+                                        </Text>
+                                        <Text
+                                            style={{
+                                                fontSize: '11px',
+                                                textAlign: 'justify',
+                                                lineHeight: '16px'
+                                            }}
+                                        >
+                                            {item.detail}
+                                        </Text>
+                                        {prestasiKerja.some(
+                                            (item) =>
+                                                item.id_pengalaman_kerja ===
+                                                prestasiId
+                                        ) && (
+                                                <Text
+                                                    style={{
+                                                        fontSize: '12px',
+                                                        fontWeight: 'bold',
+                                                    }}
+                                                >
+                                                    Prestasi Kerja
+                                                </Text>
+                                            )}
+                                        {prestasiKerja.map((item) =>
+                                            item.id_pengalaman_kerja ===
+                                                prestasiId ? (
+                                                <View key={item.id}
+                                                    style={[
+                                                        styles.container,
+                                                        styles.rowContainer,
+                                                    ]}
+                                                >
+                                                    <Text
+                                                        style={[
+                                                            {
+                                                                fontSize: '11px',
+                                                                textAlign:
+                                                                    'justify',
+                                                                fontWeight: 'bold',
+                                                            },
+                                                            styles.f1,
+                                                        ]}
+                                                    >
+                                                        {item.prestasi}
+                                                    </Text>
+                                                    <Text
+                                                        style={{
+                                                            fontSize: '11px',
+                                                            textAlign: 'justify',
+                                                        }}
+                                                    >
+                                                        Tahun{' '}
+                                                        {item.tahun.slice(0, 4)}
+                                                    </Text>
+                                                </View>
+                                            ) : (
+                                                ''
+                                            )
+                                        )}
+                                    </View>
+                                </View>
+                            );
+                        })}
+                    </View>
+                    <View style={[{ marginTop: 12 }]}>
+                        <Text
+                                                style={{
+                                                    fontSize: '15px',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Pelatihan
+                                            </Text>
+                                            {pelatihan.map((item) => {
+                                                return (
+                                                    <View
+                                                        key={item.id}
+                                                        style={[styles.container, styles.rowContainer]}
+                                                    >
+                                                        <View
+                                                            style={[
+                                                                styles.container,
+                                                                styles.rowContainer,
+                                                                styles.f1,
+                                                            ]}
+                                                        >
+                                                            <Text
+                                                                style={[
+                                                                    {
+                                                                        fontSize: '11px',
+                                                                        textAlign: 'justify',
+                                                                    },
+                                                                    styles.f1,
+                                                                ]}
+                                                            >
+                                                                {item.pelatihan}
+                                                            </Text>
+                                                            <Text
+                                                                style={{
+                                                                    fontSize: '11px',
+                                                                    textAlign: 'justify',
+                                                                }}
+                                                            >
+                                                                {dayjs(item.tahun_mulai)
+                                                                    .locale('id')
+                                                                    .format('MMMM YYYY')}{' '}
+                                                                - {item.tahun_selesai}
+                                                            </Text>
+                                                        </View>
+                                                    </View>
+                                                );
+                                            })}
+                    </View>
                 </View>
             </Page>
         </Document>
