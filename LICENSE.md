@@ -1,6 +1,6 @@
 Custom License
 
-Copyright © 2024 Ahmad Akbar
+Copyright © 2025 Ahmad Akbar
 akbarstudiowebsite03@gmail.com
 
 Permission is hereby granted to use this software for personal or educational purposes only, provided the following conditions are met:
