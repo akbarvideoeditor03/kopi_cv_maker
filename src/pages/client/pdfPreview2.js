@@ -45,12 +45,13 @@ const styles = StyleSheet.create({
     page: {
         fontFamily: 'Figtree',
     },
-    background: {
+    backgroundImage: {
         position: 'absolute',
         top: 0,
         left: 0,
-        right: 0,
-        bottom: 0,
+        width: '100%',
+        height: '100%',
+        paddingBottom: '-20px',
         zIndex: -1,
     },
     h1: {
@@ -205,321 +206,50 @@ const MyPdf2 = ({
 }) => {
     return (
         <Document>
-            <Page style={[styles.page, styles.container, styles.rowContainer]}>
-                <View style={styles.background}>
-                    <Image style={[{ marginBottom: '-40px', height: '1800px' }]} src={backgroundImage} />
-                </View>
-                <View style={styles.gradientBackground} />
-                <View style={[styles.container, styles.colContainer, styles.textWhite, { width: "200px", marginLeft: "-40px", paddingLeft: "40px", paddingRight: "30px", marginTop: "-35px", marginBottom: "-40px", paddingTop: "35px", paddingBottom: "40px" }]}>
-                    <View style={[styles.container, styles.colContainer0, styles.fCenter]}>
-                        <View style={[styles.cvImg2]}>
-                            <Image
-                                style={[styles.cvImg]}
-                                src={userList?.foto_profil}
-                            />
+            <Page wrap style={[styles.page]}>
+                <Image
+                    src="https://raw.githubusercontent.com/akbarvideoeditor03/kopi_cv_maker/refs/heads/kopi-branch-1/public/assets/bg/Template%20CV%201.png"
+                    style={styles.backgroundImage}
+                    fixed
+                />
+                <View style={[styles.container, styles.rowContainer, { padding: 32 }]}>
+                    <View style={[styles.container, styles.colContainer, styles.textWhite, { width: "200px", marginLeft: "-40px", paddingLeft: "40px", paddingRight: "30px" }]}>
+                        <View style={[styles.container, styles.colContainer0, styles.fCenter]}>
+                            <View style={[styles.cvImg2]}>
+                                <Image
+                                    style={[styles.cvImg]}
+                                    src={userList?.foto_profil}
+                                />
+                            </View>
                         </View>
-                    </View>
-                    <View style={[styles.container, styles.colContainer, styles.hLineWhite, { fontSize: "11px", marginTop: "10px" }]}>
-                        <Text style={{
-                            fontSize: '14px',
-                            fontWeight: 'bold'
-                        }}>Tentang Saya</Text>
-                        <Text
-                            style={{
-                                fontSize: '11px',
-                                lineHeight: '16px'
-                            }}
-                        >
-                            {userList?.tentang}
-                        </Text>
-                    </View>
-                    <View style={[styles.container, styles.colContainer, styles.hLineWhite, { fontSize: "11px", marginTop: "10px" }]}>
-                        <Text
-                            style={{
-                                fontSize: '15px',
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            Keahlian
-                        </Text>
-                        {keahlian.map((item) => {
-                            return (
-                                <View
-                                    key={item.id}
-                                    style={[styles.container, styles.rowContainer,]}
-                                >
-                                    <View
-                                        style={[
-                                            styles.container,
-                                            styles.rowContainer,
-                                            styles.f1,
-                                        ]}
-                                    >
-                                        <Text
-                                            style={[
-                                                {
-                                                    fontSize: '11px',
-                                                    textAlign: 'justify',
-                                                },
-                                                styles.f1,
-                                            ]}
-                                        >
-                                            {item.keahlian}
-                                        </Text>
-                                    </View>
-                                </View>
-                            );
-                        })}
-                    </View>
-                </View>
-                <View style={[styles.container, styles.colContainer0, styles.f1, { paddingLeft: "20px" }]}>
-                    <View style={[styles.container, styles.rowContainer, styles.hLineBlack]}>
-                        <View style={[styles.container, styles.colContainer0, styles.f1]}>
-                            <Text style={styles.h1}>{userList?.nama}</Text>
-                            <Text style={styles.subheader}>
-                                {pendidikanTerakhir.find((item) => item.jurusan)?.jurusan}
-                            </Text>
-                        </View>
-                        <View style={[styles.container, styles.colContainer, styles.f1]}>
+                        <View style={[styles.container, styles.colContainer, styles.hLineWhite, { fontSize: "11px", marginTop: "10px" }]}>
+                            <Text style={{
+                                fontSize: '14px',
+                                fontWeight: 'bold'
+                            }}>Tentang Saya</Text>
                             <Text
                                 style={{
                                     fontSize: '11px',
+                                    lineHeight: '16px'
                                 }}
                             >
-                                <Image
-                                    src={
-                                        'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/envelope-solid.png'
-                                    }
-                                />{' '}
-                                <Link
-                                    style={{
-                                        textDecoration: 'none',
-                                    }}
-                                >
-                                    {userList.email}
-                                </Link>{' '}
-                            </Text>
-                            <Text
-                                style={{
-                                    fontSize: '11px',
-                                }}
-                            >
-                                <Image
-                                    src={
-                                        'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/phone-solid.png'
-                                    }
-                                />{' '}
-                                {userList.no_telp}
-                            </Text>
-                            <Text
-                                style={{
-                                    fontSize: '11px',
-                                }}
-                            >
-                                <Image
-                                    src={
-                                        'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/location-dot-solid.png'
-                                    }
-                                />{' '}
-                                {userList.alamat}
+                                {userList?.tentang}
                             </Text>
                         </View>
-                    </View>
-                    <View style={[styles.hLineBlack, { marginTop: 12 }]}>
-                        <Text
-                            style={{
-                                fontSize: '14px',
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            Pengalaman Kerja
-                        </Text>
-                        {pengalamanKerja.map((item) => {
-                            const prestasiId = item.id;
-                            return (
-                                <View
-                                    key={item.id}
-                                    style={[styles.container, styles.rowContainer]}
-                                >
-                                    <View
-                                        style={[
-                                            {
-                                                paddingBottom: '10px',
-                                            },
-                                            styles.container,
-                                            styles.colContainer,
-                                            styles.f1,
-                                        ]}
-                                    >
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                                fontWeight: 'bold',
-                                            }}
-                                        >
-                                            {item.lokasi}
-                                        </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                            }}
-                                        >
-                                            {dayjs(item.tahun_mulai)
-                                                .locale('id')
-                                                .format('MMMM YYYY')}{' '}
-                                            - {item.tahun_selesai}
-                                        </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                                lineHeight: '16px'
-                                            }}
-                                        >
-                                            {item.detail}
-                                        </Text>
-                                        {prestasiKerja.some(
-                                            (item) =>
-                                                item.id_pengalaman_kerja ===
-                                                prestasiId
-                                        ) && (
-                                                <Text
-                                                    style={{
-                                                        fontSize: '12px',
-                                                        fontWeight: 'bold',
-                                                    }}
-                                                >
-                                                    Prestasi Kerja
-                                                </Text>
-                                            )}
-                                        {prestasiKerja.map((item) =>
-                                            item.id_pengalaman_kerja ===
-                                                prestasiId ? (
-                                                <View key={item.id}
-                                                    style={[
-                                                        styles.container,
-                                                        styles.colContainer
-                                                    ]}
-                                                >
-                                                    <Text
-                                                        style={[
-                                                            {
-                                                                fontSize: '11px',
-                                                                textAlign:
-                                                                    'justify',
-                                                            },
-                                                        ]}
-                                                    >
-                                                        {item.prestasi}
-                                                    </Text>
-                                                    <Text
-                                                        style={{
-                                                            fontSize: '11px',
-                                                            textAlign: 'justify',
-                                                            fontWeight: 'black'
-                                                        }}
-                                                    >
-                                                        Tahun{' '}
-                                                        {item.tahun.slice(0, 4)}
-                                                    </Text>
-                                                </View>
-                                            ) : (
-                                                ''
-                                            )
-                                        )}
-                                    </View>
-                                </View>
-                            );
-                        })}
-                    </View>
-                    <View style={[styles.hLineBlack, styles.container, styles.colContainer, { marginTop: 12 }]}>
-                        <Text
-                            style={{
-                                fontSize: '14px',
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            Pendidikan Terakhir
-                        </Text>
-                        {pendidikanTerakhir.map((item) => {
-                            return (
-                                <View
-                                    key={item.id}
-                                    style={[styles.container, styles.rowContainer]}
-                                >
-                                    <View
-                                        style={[
-                                            styles.container,
-                                            styles.colContainer,
-                                            styles.f1,
-                                        ]}
-                                    >
-                                        <Text
-                                            style={{
-                                                fontSize: '12px',
-                                                textAlign: 'justify',
-                                                fontWeight: 'bold',
-                                            }}
-                                        >
-                                            {item.institusi}
-                                        </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                            }}
-                                        >
-                                            {dayjs(item.tahun_mulai)
-                                                .locale('id')
-                                                .format('MMMM YYYY')}{' '}
-                                            - {item.tahun_selesai}
-                                        </Text>
-                                    </View>
-                                    <View
-                                        style={[
-                                            styles.container,
-                                            styles.colContainer,
-                                        ]}
-                                    >
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                            }}
-                                        >
-                                            Jurusan
-                                        </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                            }}
-                                        >
-                                            {item.jurusan}
-                                        </Text>
-                                    </View>
-                                </View>
-                            );
-                        })}
-                    </View>
-                    <View style={[styles.container, styles.colContainer, styles.hLineBlack, { marginTop: "12px" }]}>
-                        <Text
-                            style={{
-                                fontSize: '14px',
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            Pelatihan
-                        </Text>
-
-                        <Text>
-                            {pelatihan.map((item) => {
-                                return(
+                        <View style={[styles.container, styles.colContainer, styles.hLineWhite, { fontSize: "11px", marginTop: "10px" }]}>
+                            <Text
+                                style={{
+                                    fontSize: '14px',
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                Keahlian
+                            </Text>
+                            {keahlian.map((item) => {
+                                return (
                                     <View
                                         key={item.id}
-                                        style={[styles.container, styles.rowContainer]}
+                                        style={[styles.container, styles.rowContainer,]}
                                     >
                                         <View
                                             style={[
@@ -534,15 +264,213 @@ const MyPdf2 = ({
                                                         fontSize: '11px',
                                                         textAlign: 'justify',
                                                     },
+                                                    styles.f1,
                                                 ]}
                                             >
-                                                {item.pelatihan}
+                                                {item.keahlian}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                );
+                            })}
+                        </View>
+                    </View>
+                    <View style={[styles.container, styles.colContainer0, styles.f1, { paddingLeft: "20px" }]}>
+                        <View style={[styles.container, styles.rowContainer, styles.hLineBlack]}>
+                            <View style={[styles.container, styles.colContainer0, styles.f1]}>
+                                <Text style={styles.h1}>{userList?.nama}</Text>
+                                <Text style={styles.subheader}>
+                                    {pendidikanTerakhir.find((item) => item.jurusan)?.jurusan}
+                                </Text>
+                            </View>
+                            <View style={[styles.container, styles.colContainer, styles.f1]}>
+                                <Text
+                                    style={{
+                                        fontSize: '11px',
+                                    }}
+                                >
+                                    <Image
+                                        src={
+                                            'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/envelope-solid.png'
+                                        }
+                                    />{' '}
+                                    <Link
+                                        style={{
+                                            textDecoration: 'none',
+                                        }}
+                                    >
+                                        {userList.email}
+                                    </Link>{' '}
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontSize: '11px',
+                                    }}
+                                >
+                                    <Image
+                                        src={
+                                            'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/phone-solid.png'
+                                        }
+                                    />{' '}
+                                    {userList.no_telp}
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontSize: '11px',
+                                    }}
+                                >
+                                    <Image
+                                        src={
+                                            'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/location-dot-solid.png'
+                                        }
+                                    />{' '}
+                                    {userList.alamat}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={[styles.container ,styles.colContainer ,styles.hLineBlack, { marginTop: 12 }]}>
+                            <Text
+                                style={{
+                                    fontSize: '14px',
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                Pengalaman Kerja
+                            </Text>
+                            {pengalamanKerja.map((item) => {
+                                const prestasiId = item.id;
+                                return (
+                                    <View
+                                        key={item.id}
+                                        style={[styles.container, styles.rowContainer]}
+                                    >
+                                        <View
+                                            style={[
+                                                {
+                                                    paddingBottom: '10px',
+                                                },
+                                                styles.container,
+                                                styles.colContainer,
+                                            ]}
+                                        >
+                                            <Text
+                                                style={{
+                                                    fontSize: '11px',
+                                                    textAlign: 'justify',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                {item.lokasi}
                                             </Text>
                                             <Text
                                                 style={{
                                                     fontSize: '11px',
                                                     textAlign: 'justify',
-                                                    fontWeight: 'bold'
+                                                }}
+                                            >
+                                                {dayjs(item.tahun_mulai)
+                                                    .locale('id')
+                                                    .format('MMMM YYYY')}{' '}
+                                                - {item.tahun_selesai}
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    fontSize: '11px',
+                                                    textAlign: 'justify',
+                                                    lineHeight: '16px'
+                                                }}
+                                            >
+                                                {item.detail}
+                                            </Text>
+                                            {prestasiKerja.some(
+                                                (item) =>
+                                                    item.id_pengalaman_kerja ===
+                                                    prestasiId
+                                            ) && (
+                                                    <Text
+                                                        style={{
+                                                            fontSize: '12px',
+                                                            fontWeight: 'bold',
+                                                        }}
+                                                    >
+                                                        Prestasi Kerja
+                                                    </Text>
+                                                )}
+                                            {prestasiKerja.map((item) =>
+                                                item.id_pengalaman_kerja ===
+                                                    prestasiId ? (
+                                                    <View key={item.id}
+                                                        style={[
+                                                            styles.container,
+                                                            styles.colContainer
+                                                        ]}
+                                                    >
+                                                        <Text
+                                                            style={[
+                                                                {
+                                                                    fontSize: '11px',
+                                                                    textAlign:
+                                                                        'justify',
+                                                                },
+                                                            ]}
+                                                        >
+                                                            {item.prestasi}
+                                                        </Text>
+                                                        <Text
+                                                            style={{
+                                                                fontSize: '11px',
+                                                                textAlign: 'justify',
+                                                                fontWeight: 'black'
+                                                            }}
+                                                        >
+                                                            Tahun{' '}
+                                                            {item.tahun.slice(0, 4)}
+                                                        </Text>
+                                                    </View>
+                                                ) : (
+                                                    ''
+                                                )
+                                            )}
+                                        </View>
+                                    </View>
+                                );
+                            })}
+                        </View>
+                        <View style={[styles.hLineBlack, styles.container, styles.colContainer, { marginTop: 12 }]}>
+                            <Text
+                                style={{
+                                    fontSize: '14px',
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                Pendidikan Terakhir
+                            </Text>
+                            {pendidikanTerakhir.map((item) => {
+                                return (
+                                    <View
+                                        key={item.id}
+                                        style={[styles.container, styles.rowContainer]}
+                                    >
+                                        <View
+                                            style={[
+                                                styles.container,
+                                                styles.colContainer,
+                                                styles.f1,
+                                            ]}
+                                        >
+                                            <Text
+                                                style={{
+                                                    fontSize: '12px',
+                                                    textAlign: 'justify',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                {item.institusi}
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    fontSize: '11px',
+                                                    textAlign: 'justify',
                                                 }}
                                             >
                                                 {dayjs(item.tahun_mulai)
@@ -551,10 +479,75 @@ const MyPdf2 = ({
                                                 - {item.tahun_selesai}
                                             </Text>
                                         </View>
+                                        <View
+                                            style={[
+                                                styles.container,
+                                                styles.colContainer,
+                                                {
+                                                    width:'100px'
+                                                }
+                                            ]}
+                                        >
+                                            <Text
+                                                style={{
+                                                    fontSize: '11px',
+                                                }}
+                                            >
+                                                Jurusan
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    fontSize: '11px',
+                                                }}
+                                            >
+                                                {item.jurusan}
+                                            </Text>
+                                        </View>
                                     </View>
-                                )
+                                );
                             })}
-                        </Text>
+                        </View>
+                        <View style={[styles.container, styles.colContainer, styles.hLineBlack, { marginTop: "12px" }]}>
+                            <Text
+                                style={{
+                                    fontSize: '14px',
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                Pelatihan
+                            </Text>
+                            {pelatihan.map((item) => {
+                                return (
+                                    <View
+                                        key={item.id}
+                                        style={[styles.container, styles.colContainer]}
+                                    >
+                                        <Text
+                                            style={[
+                                                {
+                                                    fontSize: '11px',
+                                                    textAlign: 'justify',
+                                                },
+                                            ]}
+                                        >
+                                            {item.pelatihan}
+                                        </Text>
+                                        <Text
+                                            style={{
+                                                fontSize: '11px',
+                                                textAlign: 'justify',
+                                                fontWeight:'bold'
+                                            }}
+                                        >
+                                            {dayjs(item.tahun_mulai)
+                                                .locale('id')
+                                                .format('MMMM YYYY')}{' '}
+                                            - {item.tahun_selesai}
+                                        </Text>
+                                    </View>
+                                );
+                            })}
+                        </View>
                     </View>
                 </View>
             </Page>
