@@ -10,7 +10,6 @@ import {
     Font,
     Image,
     Link,
-    LinearGradient,
 } from '@react-pdf/renderer';
 import {
     getUserId,
@@ -28,7 +27,6 @@ dayjs.locale('id');
 const id = localStorage.getItem('id');
 const token = localStorage.getItem('token');
 const role = localStorage.getItem('role');
-const backgroundImage = 'https://raw.githubusercontent.com/akbarvideoeditor03/kopi_cv_maker/511ea6fa8dbd3652fd8c2265345d8e6019cc519e/public/assets/bg/Template%20CV%201.svg';
 
 Font.register({
     family: 'Figtree',
@@ -47,14 +45,6 @@ const styles = StyleSheet.create({
     page: {
         padding: '32px',
         fontFamily: 'Figtree',
-      },
-      background: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: -1,
     },
     h1: {
         fontSize: 25,
@@ -209,11 +199,7 @@ const MyPdf2 = ({
     return (
         <Document>
             <Page style={[styles.page, styles.container, styles.rowContainer]}>
-            <View style={styles.background}>
-                <Image style={[{marginBottom:'-40px', height:'1800px'}]} src={backgroundImage} />
-            </View>
-            <View style={styles.gradientBackground} />
-                <View style={[styles.container, styles.colContainer, styles.textWhite, { width: "200px", marginLeft: "-40px", paddingLeft: "40px", paddingRight: "30px", marginTop: "-35px", marginBottom: "-40px", paddingTop: "35px", paddingBottom: "40px" }]}>
+                <View style={[styles.container, styles.colContainer, styles.textWhite, { width: "200px", backgroundColor: "#314755ff", marginLeft: "-40px", paddingLeft: "40px", paddingRight: "30px", marginTop: "-35px", marginBottom: "-40px", paddingTop: "35px", paddingBottom: "40px" }]}>
                     <View style={[styles.container, styles.colContainer0, styles.fCenter]}>
                         <View style={[styles.cvImg2]}>
                             <Image
