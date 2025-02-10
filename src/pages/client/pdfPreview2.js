@@ -44,8 +44,8 @@ Font.register({
 const styles = StyleSheet.create({
     page: {
         fontFamily: 'Figtree',
-      },
-      background: {
+    },
+    background: {
         position: 'absolute',
         top: 0,
         left: 0,
@@ -206,10 +206,10 @@ const MyPdf2 = ({
     return (
         <Document>
             <Page style={[styles.page, styles.container, styles.rowContainer]}>
-            <View style={styles.background}>
-                <Image style={[{marginBottom:'-40px', height:'1800px'}]} src={backgroundImage} />
-            </View>
-            <View style={styles.gradientBackground} />
+                <View style={styles.background}>
+                    <Image style={[{ marginBottom: '-40px', height: '1800px' }]} src={backgroundImage} />
+                </View>
+                <View style={styles.gradientBackground} />
                 <View style={[styles.container, styles.colContainer, styles.textWhite, { width: "200px", marginLeft: "-40px", paddingLeft: "40px", paddingRight: "30px", marginTop: "-35px", marginBottom: "-40px", paddingTop: "35px", paddingBottom: "40px" }]}>
                     <View style={[styles.container, styles.colContainer0, styles.fCenter]}>
                         <View style={[styles.cvImg2]}>
@@ -418,7 +418,7 @@ const MyPdf2 = ({
                                                         style={{
                                                             fontSize: '11px',
                                                             textAlign: 'justify',
-                                                            fontWeight:'black'
+                                                            fontWeight: 'black'
                                                         }}
                                                     >
                                                         Tahun{' '}
@@ -513,45 +513,48 @@ const MyPdf2 = ({
                         >
                             Pelatihan
                         </Text>
-                        {pelatihan.map((item) => {
-                            return (
-                                <View
-                                    key={item.id}
-                                    style={[styles.container, styles.rowContainer]}
-                                >
+
+                        <Text>
+                            {pelatihan.map((item) => {
+                                return(
                                     <View
-                                        style={[
-                                            styles.container,
-                                            styles.rowContainer,
-                                            styles.f1,
-                                        ]}
+                                        key={item.id}
+                                        style={[styles.container, styles.rowContainer]}
                                     >
-                                        <Text
+                                        <View
                                             style={[
-                                                {
-                                                    fontSize: '11px',
-                                                    textAlign: 'justify',
-                                                },
+                                                styles.container,
+                                                styles.rowContainer,
+                                                styles.f1,
                                             ]}
                                         >
-                                            {item.pelatihan}
-                                        </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                                fontWeight:'bold'
-                                            }}
-                                        >
-                                            {dayjs(item.tahun_mulai)
-                                                .locale('id')
-                                                .format('MMMM YYYY')}{' '}
-                                            - {item.tahun_selesai}
-                                        </Text>
+                                            <Text
+                                                style={[
+                                                    {
+                                                        fontSize: '11px',
+                                                        textAlign: 'justify',
+                                                    },
+                                                ]}
+                                            >
+                                                {item.pelatihan}
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    fontSize: '11px',
+                                                    textAlign: 'justify',
+                                                    fontWeight: 'bold'
+                                                }}
+                                            >
+                                                {dayjs(item.tahun_mulai)
+                                                    .locale('id')
+                                                    .format('MMMM YYYY')}{' '}
+                                                - {item.tahun_selesai}
+                                            </Text>
+                                        </View>
                                     </View>
-                                );
+                                )
                             })}
-                        </View>
+                        </Text>
                     </View>
                 </View>
             </Page>
