@@ -239,7 +239,7 @@ const MyPdf2 = ({
                         <View style={[styles.container, styles.colContainer, styles.hLineWhite, { fontSize: "11px", marginTop: "10px" }]}>
                             <Text
                                 style={{
-                                    fontSize: '15px',
+                                    fontSize: '14px',
                                     fontWeight: 'bold',
                                 }}
                             >
@@ -483,12 +483,14 @@ const MyPdf2 = ({
                                             style={[
                                                 styles.container,
                                                 styles.colContainer,
+                                                {
+                                                    width:'100px'
+                                                }
                                             ]}
                                         >
                                             <Text
                                                 style={{
                                                     fontSize: '11px',
-                                                    textAlign: 'justify',
                                                 }}
                                             >
                                                 Jurusan
@@ -496,7 +498,6 @@ const MyPdf2 = ({
                                             <Text
                                                 style={{
                                                     fontSize: '11px',
-                                                    textAlign: 'justify',
                                                 }}
                                             >
                                                 {item.jurusan}

@@ -121,6 +121,12 @@ function HomeUser() {
                                 Preview PDF 2
                             </a>
                         </div>
+                        <div className="container row-f">
+                            <a className="btn btn-info-b" href="/contohpdf3">
+                                <i className="bi-file-earmark-pdf-fill"></i>{' '}
+                                Preview PDF 3
+                            </a>
+                        </div>
                     </div>
                     <div className='card-mini'>
                         <p>Jika Anda baru saja login dengan Google, password Anda adalah <b>12345678</b>. Kami sarankan untuk segera lakukan <a href="/user/otprequest"><b>Reset Password</b></a></p>
