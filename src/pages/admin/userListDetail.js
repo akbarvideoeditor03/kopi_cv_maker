@@ -28,6 +28,10 @@ function UserListDetail() {
     }, [error]);
 
     if (role === roleUser) {
+        const tentang = userList.tentang
+        const tentangParagraf = tentang?.split('\n').map((tentangs, index) => (
+            <p style={{ lineHeight: '1.5rem' }} key={index}>{tentangs} <br /></p>
+        ))
         return (
             <main className="container col-f f-center">
                 {isLoading ? (
@@ -56,7 +60,7 @@ function UserListDetail() {
                                 </div>
                                 <h4>Tentang</h4>
                                 <div className='text-bg'>
-                                    <p>{userList.tentang === null ? (<p>Data Kosong</p>) : (userList.tentang)}</p>
+                                    {tentangParagraf}
                                 </div>
                                 <h4>Email</h4>
                                 <div className='text-bg'>
