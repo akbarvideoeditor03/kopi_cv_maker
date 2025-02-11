@@ -35,6 +35,11 @@ import PDFPreview from '../client/PreviewPDFPage';
 import MyPDFDocument2 from '../client/pdfPreview2';
 import MyPDFDocument3 from '../client/pdfPreview3';
 
+//Info Pages
+import TambahTemplate from '../admin/templat/addTemplateList';
+import EditTemplate from '../admin/templat/editTemplateList';
+import TemplateDetail from '../admin/templat/viewTemplatDetail';
+
 function App() {
     return (
         <Routes>
@@ -68,6 +73,10 @@ function App() {
                 <Route path="/defaultcv" element={<CVDocument />}></Route>
                 <Route path="/cvkreatif" element={<MyPDFDocument2 />}></Route>
                 <Route path="/cvatsfirendly" element={<MyPDFDocument3 />}></Route>
+
+                <Route path="/addtemplate" element={<TambahTemplate />}></Route>
+                <Route path="/edittemplate/:id" element={<EditTemplate />}></Route>
+                <Route path="/templatedetail/:id" element={<TemplateDetail />}></Route>
             </Route>
         </Routes>
     )

@@ -93,6 +93,14 @@ function Dashboard() {
                                     >{`${userList?.meta?.totalData}`}</p>
                                 )}
                             </div>
+                            <div className="container col-f">
+                                <a
+                                    href="/addtemplate"
+                                    className="btn btn-primary"
+                                >
+                                    Tambah Templat CV
+                                </a>
+                            </div>
                         </div>
                         <div
                             style={{
@@ -107,14 +115,14 @@ function Dashboard() {
                                 placeholder="Cari"
                                 className="m-bt2 search-box"
                             />
-                            {/* <div className="container row-f f-wrap">
+                            <div className="container row-f f-wrap">
                                 <a
                                     href="/user/create"
                                     className="btn btn-primary"
                                 >
                                     Tambah Pengguna
                                 </a>
-                            </div> */}
+                            </div>
                             <div className="container col-f">
                                 <h1>Daftar Pengguna</h1>
                                 <div className="container col-f full-width list-container">

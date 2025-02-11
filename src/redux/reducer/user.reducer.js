@@ -179,6 +179,25 @@ const users = (state = initState, action) => {
                 error: action.payload,
             };
 
+        case userTypes.VIEW_TEMPLAT_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: true,
+                error: null,
+            };
+        case userTypes.VIEW_TEMPLAT_ID_REQUEST:
+            return {
+                ...state,
+                isLoading: false,
+                userList: action.payload,
+            };
+        case userTypes.VIEW_TEMPLAT_ID_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
         case userTypes.UPDATE_TEMPLAT_SUCCESS:
             return {
                 ...state,

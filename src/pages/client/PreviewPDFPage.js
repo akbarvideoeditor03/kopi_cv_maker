@@ -12,7 +12,7 @@ function pdfPreview() {
                     </a>
                     <a className="btn btn-info-b" href="/cvkreatif">
                         <i className="bi-file-earmark-pdf-fill"></i>{' '}
-                        CV Kreativ
+                        CV Kreatif
                     </a>
                     <a className="btn btn-info-b" href="/cvatsfirendly">
                         <i className="bi-file-earmark-pdf-fill"></i>{' '}
