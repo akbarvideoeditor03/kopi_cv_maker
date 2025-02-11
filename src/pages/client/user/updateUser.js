@@ -45,7 +45,7 @@ const UpdateUserSelf = ({ userId }) => {
 
     useEffect(() => {
         const warn = document.getElementById('warn');
-        if(wordCount > 100) {
+        if (wordCount > 100) {
             warn.classList.add("c-red", "fwd");
         } else {
             warn.classList.remove("c-red", "fwd");

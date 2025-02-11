@@ -110,21 +110,9 @@ function HomeUser() {
                     <div className="container row-f f-between f-wrap f-center">
                         <h1>Yuk lengkapi CV kamu</h1>
                         <div className="container row-f">
-                            <a className="btn btn-info-b" href="/doc/preview">
+                            <a className="btn btn-info-b" href="/pdfpreview">
                                 <i className="bi-file-earmark-pdf-fill"></i>{' '}
                                 Preview PDF
-                            </a>
-                        </div>
-                        <div className="container row-f">
-                            <a className="btn btn-info-b" href="/contohpdf2">
-                                <i className="bi-file-earmark-pdf-fill"></i>{' '}
-                                Preview PDF 2
-                            </a>
-                        </div>
-                        <div className="container row-f">
-                            <a className="btn btn-info-b" href="/contohpdf3">
-                                <i className="bi-file-earmark-pdf-fill"></i>{' '}
-                                Preview PDF 3
                             </a>
                         </div>
                     </div>

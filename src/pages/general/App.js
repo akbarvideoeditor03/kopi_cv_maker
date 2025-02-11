@@ -31,6 +31,7 @@ import Help from './help';
 
 //PDF Page
 import CVDocument from '../client/pdfPreview';
+import PDFPreview from '../client/PreviewPDFPage';
 import MyPDFDocument2 from '../client/pdfPreview2';
 import MyPDFDocument3 from '../client/pdfPreview3';
 
@@ -63,8 +64,10 @@ function App() {
                 <Route path="/bantuan" element={<Help />}></Route>
                 <Route path="/tentang" element={<About />}></Route>
 
-                <Route path="/contohpdf2" element={<MyPDFDocument2 />}></Route>
-                <Route path="/contohpdf3" element={<MyPDFDocument3 />}></Route>
+                <Route path="/pdfpreview" element={<PDFPreview />}></Route>
+                <Route path="/defaultcv" element={<CVDocument />}></Route>
+                <Route path="/cvkreatif" element={<MyPDFDocument2 />}></Route>
+                <Route path="/cvatsfirendly" element={<MyPDFDocument3 />}></Route>
             </Route>
         </Routes>
     )

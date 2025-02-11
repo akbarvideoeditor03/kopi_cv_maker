@@ -587,6 +587,67 @@ export const resetPassword = (data) => async (dispatch) => {
     }
 };
 
+//Templat CV (Only Admin)
+export const createTemplat = (templat) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_TEMPLAT_REQUEST });
+    try {
+        const response = await fetch(`${baseUrl}/kopi/user/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user),
+        });
+        if (response.status === 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else if (response.status === 400) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups...',
+                text: 'Email sudah ada yang punya, silakan gunakan email lain.',
+                showConfirmButton: false,
+                timer: 3000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Registrasi berhasil!',
+                text: 'Silakan masuk dengan akun Anda',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                Swal.close();
+                window.location = '/user/login';
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.CREATE_USER_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.CREATE_USER_FAILURE,
+            payload: error,
+        });
+    }
+};
+
 //Pengalaman Kerja
 export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PENGALAMAN_REQUEST });

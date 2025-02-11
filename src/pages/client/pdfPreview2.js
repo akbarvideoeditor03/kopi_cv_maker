@@ -262,7 +262,7 @@ const MyPdf2 = ({
                                                 style={[
                                                     {
                                                         fontSize: '11px',
-                                                        textAlign: 'justify',
+                                                        textAlign: 'left',
                                                     },
                                                     styles.f1,
                                                 ]}
