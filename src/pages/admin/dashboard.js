@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, deleteUser } from '../../redux/action/user.action';
+import { getUser, viewAllTemplate, deleteUser } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function Dashboard() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const dispatch = useDispatch();
-    const { userList, isLoading, error, isWebsite } = useSelector(
+    const { userList, isLoading, error, isWebsite, viewTemplate } = useSelector(
         (state) => state.userReducer
     );
     const roleUser = isWebsite;
@@ -81,16 +81,17 @@ function Dashboard() {
                             <h1>Jumlah Total Pengguna</h1>
                             <div className="container col-f f-center-c">
                                 {isLoading ? (
-                                    <div className="container col-f f-center-c list-container">
+                                    <div className="container col-f f-center-c left-dashboard-container">
                                         <div className="custom-loader"></div>
                                     </div>
                                 ) : (
-                                    <p
-                                        style={{
-                                            fontSize: '350%',
-                                            fontWeight: 'bold',
-                                        }}
-                                    >{`${userList?.meta?.totalData}`}</p>
+                                    <div className="container col-f f-center-c left-dashboard-container">
+                                        <p style={{ fontSize: '350%', fontWeight: 'bold' }}>
+                                            {userList?.meta?.totalData ? (
+                                                userList.meta.totalData
+                                            ) : ('')}
+                                        </p>
+                                    </div>
                                 )}
                             </div>
                             <div className="container col-f">
@@ -100,6 +101,11 @@ function Dashboard() {
                                 >
                                     Tambah Templat CV
                                 </a>
+                                <div className='grid gc-1 gc-2 grid-gap'>
+                                    <div className='container col-f'>
+                                        <img className='cv-image' src={`${viewAllTemplate.link_gambar}`} alt="link_gambar templat" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div
