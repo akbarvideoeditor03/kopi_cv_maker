@@ -727,7 +727,7 @@ export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
                 timerProgressBar: true,
             }).then(() => {
                 Swal.close();
-                window.location =`/templat/${id}`;
+                window.location =`/dashboard`;
             });
             const data = await response.json();
             dispatch({
