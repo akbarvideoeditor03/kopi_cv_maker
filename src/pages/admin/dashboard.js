@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { getUser, viewAllTemplate, deleteUser } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
@@ -7,7 +8,7 @@ function Dashboard() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const dispatch = useDispatch();
-    const { userList, isLoading, error, isWebsite, viewTemplate } = useSelector(
+    const { userList, isLoading, error, isWebsite, templatList } = useSelector(
         (state) => state.userReducer
     );
     const roleUser = isWebsite;
@@ -21,6 +22,10 @@ function Dashboard() {
             dispatch(getUser());
         }
     }, [dispatch, userList.data]);
+
+    useEffect(() => {
+        dispatch(viewAllTemplate());
+    }, [dispatch]);
 
     useEffect(() => {
         if (userList.data) {
@@ -71,7 +76,7 @@ function Dashboard() {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
-                    <div className="container row-f f-wrap">
+                    <div className="container row-f f-wrap-r f-wrap">
                         <div
                             style={{
                                 flexBasis: '300px',
@@ -102,9 +107,18 @@ function Dashboard() {
                                     Tambah Templat CV
                                 </a>
                                 <div className='grid gc-1 gc-2 grid-gap'>
-                                    <div className='container col-f'>
-                                        <img className='cv-image' src={`${viewAllTemplate.link_gambar}`} alt="link_gambar templat" />
-                                    </div>
+                                    {
+                                        templatList?.data?.map((item) => {
+                                            return(
+                                                <a className="templat-list templat-card" key={item.id} href={`/templatedetail/${item.id}`}>
+                                                    <div className='container col-f f-center'>
+                                                        <img className='cv-templat' src={`${item.link_gambar}`} alt="link_gambar templat" />
+                                                        <p>{`${item.caption}`}</p>
+                                                    </div>
+                                                </a>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </div>
                         </div>

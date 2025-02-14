@@ -163,8 +163,8 @@ const users = (state = initState, action) => {
         case userTypes.VIEW_TEMPLAT_SUCCESS:
             return {
                 ...state,
-                isLoading: true,
-                error: null,
+                isLoading: false,
+                templatList: action.payload,
             };
         case userTypes.VIEW_TEMPLAT_REQUEST:
             return {
