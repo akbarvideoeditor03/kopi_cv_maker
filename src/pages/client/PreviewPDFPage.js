@@ -1,23 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { viewAllTemplate } from '../../redux/action/user.action';
 
 function pdfPreview() {
+    const dispatch = useDispatch();
+    const { templatList } = useSelector((state) => state.userReducer);
+
+    useEffect(() => {
+        dispatch(viewAllTemplate());
+    }, [dispatch])
+
     return (
         <main className="container col-f f-center">
-            <div className="card container col-f fj-center section-max" style={{ width: '100%' }}>
+            <div className="card container col-f-0 section-max" style={{ width: '100%', minHeight:'100vh', gap:'2rem' }}>
                 <p>Silakan pilih templat yang ingin kamu pakai 🤗</p>
                 <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap grid-text">
-                    <a className="btn btn-info-b" href="/defaultcv">
-                        <i className="bi-file-earmark-pdf-fill"></i>{' '}
-                        Default CV
-                    </a>
-                    <a className="btn btn-info-b" href="/cvkreatif">
-                        <i className="bi-file-earmark-pdf-fill"></i>{' '}
-                        CV Kreatif
-                    </a>
-                    <a className="btn btn-info-b" href="/cvatsfirendly">
-                        <i className="bi-file-earmark-pdf-fill"></i>{' '}
-                        CV ATS
-                    </a>
+                    {templatList?.data?.map((item) => {
+                        return (
+                            <div key={item.id} className="container col-f f-center">
+                                <img src={item.link_gambar} className="preview-cv-image" alt="gambar_templatcv" />
+                                <a className="btn btn-info-b" href={item.link_page}>
+                                    <i className="bi-file-earmark-pdf-fill"></i>{' '}{item.caption}
+                                </a>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </main>

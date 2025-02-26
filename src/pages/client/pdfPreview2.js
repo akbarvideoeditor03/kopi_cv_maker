@@ -155,6 +155,12 @@ function PDFPreview2() {
                         <h1 className="t-center">
                             Yeay! Ini adalah preview dari CV yang kamu buat 😊
                         </h1>
+                        <a href="/pdfpreview" className='btn btn-primary-b' style={{width:'fit-content'}}>
+                            <div className='container' style={{gap:'0.3rem'}}>
+                                <i className="bi-arrow-left-circle"></i>
+                                <p>Template CV</p>
+                            </div>
+                        </a>
                         <div className='card-mini container col-f'>
                             <p><i className="bi-exclamation-triangle-fill"></i> Mohon maaf, untuk sementara fitur PDF Preview belum dapat digunakan bagi seluruh pengguna mobile.</p>
                             <p>Fitur ini dapat digunakan secara normal di browser <strong>Mozila Firefox <i className="bi-browser-firefox"></i></strong></p>

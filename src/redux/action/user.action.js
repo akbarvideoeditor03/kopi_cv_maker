@@ -622,7 +622,7 @@ export const createTemplat = (templat) => async (dispatch) => {
                 timerProgressBar: true,
             }).then(() => {
                 Swal.close();
-                window.location = '/templatedetail/:id';
+                window.location = '/dashboard';
             });
             const data = await response.json();
             dispatch({
@@ -693,6 +693,7 @@ export const viewAllTemplateId = (id) => {
 };
 
 export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
+    console.log(updatedTemplat);
     dispatch({ type: userTypes.UPDATE_TEMPLAT_REQUEST });
     try {
         const token = localStorage.getItem('token');
@@ -704,6 +705,7 @@ export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
             },
             body: JSON.stringify(updatedTemplat),
         });
+        const data = await response.json();
         if (response.status === 500) {
             Swal.fire({
                 icon: 'error',
@@ -729,7 +731,6 @@ export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
                 Swal.close();
                 window.location =`/dashboard`;
             });
-            const data = await response.json();
             dispatch({
                 type: userTypes.UPDATE_TEMPLAT_SUCCESS,
                 payload: data.data,

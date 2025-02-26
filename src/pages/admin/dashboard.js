@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getUser, viewAllTemplate, deleteUser } from '../../redux/action/user.action';
+import { getUser, viewAllTemplate, deleteUser, deleteTemplat } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function Dashboard() {
@@ -50,6 +50,32 @@ function Dashboard() {
             }
         });
     };
+
+    const deleteTemplats = (id) => {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Templat yang terhapus tidak dapat dikembalikan',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteTemplat(id)).then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Dihapus!',
+                        text: 'Templat berhasil dihapus.',
+                        timer: 2000,
+                        showConfirmButton: false,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        timerProgressBar: true,
+                    });
+                });
+            }
+        });
+    };    
 
     useEffect(() => {
         if (error) {
@@ -109,13 +135,28 @@ function Dashboard() {
                                 <div className='grid gc-1 gc-2 grid-gap'>
                                     {
                                         templatList?.data?.map((item) => {
-                                            return(
-                                                <a className="templat-list templat-card" key={item.id} href={`/templatedetail/${item.id}`}>
-                                                    <div className='container col-f f-center'>
-                                                        <img className='cv-templat' src={`${item.link_gambar}`} alt="link_gambar templat" />
-                                                        <p>{`${item.caption}`}</p>
+                                            return (
+                                                <div key={item.id} className='container col-f f-between'>
+                                                    <a className="templat-list templat-card f-1" href={`/templatedetail/${item.id}`}>
+                                                        <div className='container col-f f-center'>
+                                                            <img style={{height:'100%'}} className='cv-templat' src={`${item.link_gambar}`} alt="link_gambar templat" />
+                                                        </div>
+                                                    </a>
+                                                    <div className='container col-f f-center-c'>
+                                                    <p>{`${item.caption}`}</p>
+                                                    <div className='container row-f f-1 f-wrap f-center-c'>
+                                                        <a className="t-center btn btn-primary" href={`/edittemplate/${item.id}`}>Edit</a>
+                                                        <button
+                                                            onClick={() =>
+                                                                deleteTemplats(
+                                                                    item.id
+                                                                )
+                                                            }
+                                                            className="t-center btn btn-danger"
+                                                        >Hapus</button>
                                                     </div>
-                                                </a>
+                                                    </div>
+                                                </div>
                                             )
                                         })
                                     }

@@ -182,14 +182,14 @@ const users = (state = initState, action) => {
         case userTypes.VIEW_TEMPLAT_ID_SUCCESS:
             return {
                 ...state,
-                isLoading: true,
-                error: null,
+                isLoading: false,
+                templatList: action.payload,
             };
         case userTypes.VIEW_TEMPLAT_ID_REQUEST:
             return {
                 ...state,
                 isLoading: false,
-                userList: action.payload,
+                templatList: action.payload,
             };
         case userTypes.VIEW_TEMPLAT_ID_FAILURE:
             return {
@@ -198,13 +198,13 @@ const users = (state = initState, action) => {
                 error: action.payload,
             };
 
-        case userTypes.UPDATE_TEMPLAT_SUCCESS:
+        case userTypes.UPDATE_TEMPLAT_REQUEST:
             return {
                 ...state,
                 isLoading: true,
                 error: null,
             };
-        case userTypes.UPDATE_TEMPLAT_REQUEST:
+        case userTypes.UPDATE_TEMPLAT_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
@@ -225,16 +225,16 @@ const users = (state = initState, action) => {
         case userTypes.DELETE_TEMPLAT_SUCCESS:
             return {
                 ...state,
-                isLoading: true,
-                error: null,
+                isLoading: false,
+                templatList: state.templatList.filter(
+                    (templat) => templat.id !== action.payload
+                ),
             };
         case userTypes.DELETE_TEMPLAT_REQUEST:
             return {
                 ...state,
                 isLoading: false,
-                templatList: state.templatList.filter(
-                    (templat) => templat.id !== action.payload
-                ),
+                error: action.payload,
             };
         case userTypes.DELETE_TEMPLAT_FAILURE:
             return {

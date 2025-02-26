@@ -12,6 +12,7 @@ const addTemplat = () => {
     const [dataTemplat, setDataTemplat] = useState({
         link_gambar: '',
         caption: '',
+        link_page:'',
     });
 
     const cancelSubmit = async (e) => {
@@ -41,8 +42,7 @@ const addTemplat = () => {
             return;
         }
 
-        if (
-            !['image/jpg', 'image/jpeg', 'image/png'].includes(
+        if (!['image/jpg', 'image/jpeg', 'image/png'].includes(
                 dataTemplat.link_gambar.type
             )
         ) {
@@ -59,6 +59,15 @@ const addTemplat = () => {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Caption wajib diisi',
+            });
+            return;
+        }
+
+        if (!dataTemplat.link_page) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Link halaman wajib dibuat',
             });
             return;
         }
@@ -88,6 +97,7 @@ const addTemplat = () => {
                 const newTemplat = {
                     link_gambar: gambarTemplat,
                     caption: dataTemplat.caption,
+                    link_page: dataTemplat.link_page,
                 };
 
                 dispatch(createTemplat(newTemplat));
@@ -112,7 +122,7 @@ const addTemplat = () => {
                             className="container col-f full-width"
                         >
                             <div className="container col-f-0">
-                                <label>Foto Profil</label>
+                                <label>Foto Templat</label>
                                 <input
                                     className="full-width"
                                     name="link_gambar"
@@ -142,8 +152,33 @@ const addTemplat = () => {
                                         })
                                     }
                                     type="caption"
-                                    placeholder="Masukkan Caption Anda"
+                                    placeholder="Masukkan Caption Template"
                                 />
+                            </div>
+                            <div className="container col-f-0">
+                                <label>Link Halaman</label>
+                                <input
+                                    name="link_page"
+                                    className="full-width"
+                                    value={dataTemplat.link_page}
+                                    onChange={(e) =>
+                                        setDataTemplat({
+                                            ...dataTemplat,
+                                            [e.target.name]:
+                                                e.target.value,
+                                        })
+                                    }
+                                    type="link_page"
+                                    placeholder="Masukkan Link Page"
+                                />
+                                <p
+                                    style={{
+                                        fontSize: '0.75rem',
+                                        paddingTop: '0.5rem',
+                                    }}
+                                >
+                                    Sesuaikan link templat dengan yang ditentukan oleh developer
+                                </p>
                             </div>
                             <div className="container row-f">
                                 <button
