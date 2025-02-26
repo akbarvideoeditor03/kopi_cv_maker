@@ -540,23 +540,6 @@
     background-color: #ededed;
 }
 
-.timeline-bullets {
-    list-style-type: disc;
-    list-style-position: outside;
-}
-
-ul, .timeline-bullets{
-    margin-left: -0.85rem;
-}
-
-.bullets-item {
-    margin-bottom: 2rem;
-}
-
-.bullets-item::marker {
-    font-size: 40px;
-}
-
 .footer-section {
     min-height: 200px;
     flex-grow: 1;

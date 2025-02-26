@@ -16,7 +16,7 @@ function Help() {
     };
 
     return (
-        <main className="container col-f f-center-c">
+        <main className="container col-f f-center-c generalPg-bg">
             <section className="container col-f f-1 f-between section-max full-width">
                 <div className='container col-f'>
                     <h1>Bantuan</h1>
@@ -26,7 +26,7 @@ function Help() {
                         {isExpanded[1] ? <i className="bi-chevron-down"></i> : <i className="bi-chevron-up"></i>}
                     </button>
                     <div className="content-collapsible" style={{ display: openCollapse[1] ? 'flex' : 'none', }}>
-                        <ul type="1">
+                        <ol type='1'>
                             <li>
                                 Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="https://kopicvmaker.vercel.app/" className='btn btn-primary'>☕</a>
                             </li>
@@ -51,15 +51,16 @@ function Help() {
                                 sudah dibuat
                             </li>
                             <li>Yeay, pembuatan akun selesai!</li>
-                        </ul>
+                        </ol>
                     </div>
+
                     <button style={{ fontSize: '1rem', textAlign : "left", paddingInline : "1.5rem" }} type="button"
                         className="container row-f f-between collapsible btn btn-info c-white" onClick={() => handleToggle(2)}>
                         <p className='f-1'>Cara menambahkan pendidikan terakhir</p>
                         {isExpanded[2] ? <i className="bi-chevron-down"></i> : <i className="bi-chevron-up"></i>}
                     </button>
                     <div className="content-collapsible" style={{ display: openCollapse[2] ? 'flex' : 'none', }}>
-                        <ul type="1">
+                        <ol type='1'>
                             <li>
                                 Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="https://kopicvmaker.vercel.app/" className='btn btn-primary'>☕</a>
                             </li>
@@ -85,7 +86,7 @@ function Help() {
                                 Yeay!, data pendidikan terakhir berhasil masuk ke
                                 lembar CV-mu!
                             </li>
-                        </ul>
+                        </ol>
                     </div>
                     <button style={{ fontSize: '1rem', textAlign : "left", paddingInline : "1.5rem" }} type="button"
                         className="container row-f f-between collapsible btn btn-info c-white" onClick={() => handleToggle(3)}>
@@ -93,7 +94,7 @@ function Help() {
                         {isExpanded[3] ? <i className="bi-chevron-down"></i> : <i className="bi-chevron-up"></i>}
                     </button>
                     <div className="content-collapsible" style={{ display: openCollapse[3] ? 'flex' : 'none', }}>
-                        <ul type="1">
+                        <ol type='1'>
                             <li>
                                 Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="https://kopicvmaker.vercel.app/" className='btn btn-primary'>☕</a>
                             </li>
@@ -120,7 +121,7 @@ function Help() {
                                 Yeay!, data pengalaman kerja berhasil masuk ke
                                 lembar CV-mu!
                             </li>
-                        </ul>
+                        </ol>
                     </div>
                     <button style={{ fontSize: '1rem', textAlign : "left", paddingInline : "1.5rem" }} type="button"
                         className="container row-f f-between collapsible btn btn-info c-white" onClick={() => handleToggle(4)}>
@@ -128,7 +129,7 @@ function Help() {
                         {isExpanded[4] ? <i className="bi-chevron-down"></i> : <i className="bi-chevron-up"></i>}
                     </button>
                     <div className="content-collapsible" style={{ display: openCollapse[4] ? 'flex' : 'none', }}>
-                        <ul type="1">
+                        <ol type='1'>
                             <p style={{ marginBottom: '1rem', }}>
                                 <i className="bi-question-circle"></i> Untuk
                                 menambah daftar prestasi kerja, kamu harus
@@ -159,7 +160,7 @@ function Help() {
                                 Yeay!, data prestasi kerja berhasil masuk ke lembar
                                 CV-mu!
                             </li>
-                        </ul>
+                        </ol>
                     </div>
                     <button style={{ fontSize: '1rem', textAlign : "left", paddingInline : "1.5rem" }} type="button"
                         className="container row-f f-between collapsible btn btn-info c-white" onClick={() => handleToggle(5)}>
@@ -167,7 +168,7 @@ function Help() {
                         {isExpanded[5] ? <i className="bi-chevron-down"></i> : <i className="bi-chevron-up"></i>}
                     </button>
                     <div className="content-collapsible" style={{ display: openCollapse[5] ? 'flex' : 'none', }}>
-                        <ul type="1">
+                        <ol type='1'>
                             <li>
                                 Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="https://kopicvmaker.vercel.app/" className='btn btn-primary'>☕</a>
                             </li>
@@ -207,7 +208,7 @@ function Help() {
                                 Yeay!, data keahlian / skills kamu berhasil masuk ke
                                 lembar CV!
                             </li>
-                        </ul>
+                        </ol>
                     </div>
                     <button style={{ fontSize: '1rem', textAlign : "left", paddingInline : "1.5rem" }} type="button"
                         className="container row-f f-between collapsible btn btn-info c-white" onClick={() => handleToggle(6)}>
@@ -215,7 +216,7 @@ function Help() {
                         {isExpanded[6] ? <i className="bi-chevron-down"></i> : <i className="bi-chevron-up"></i>}
                     </button>
                     <div className="content-collapsible" style={{ display: openCollapse[6] ? 'flex' : 'none', }}>
-                        <ul type="1">
+                        <ol type='1'>
                             <li>
                                 Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="https://kopicvmaker.vercel.app/" className='btn btn-primary'>☕</a>
                             </li>
@@ -240,7 +241,7 @@ function Help() {
                                 Yeay!, data pelatihan / kursus berhasil masuk ke
                                 lembar CV-mu!
                             </li>
-                        </ul>
+                        </ol>
                     </div>
                     <button style={{ fontSize: '1rem', textAlign : "left", paddingInline : "1.5rem" }} type="button"
                         className="container row-f f-between collapsible btn btn-info c-white" onClick={() => handleToggle(7)}>
@@ -248,7 +249,7 @@ function Help() {
                         {isExpanded[7] ? <i className="bi-chevron-down"></i> : <i className="bi-chevron-up"></i>}
                     </button>
                     <div className="content-collapsible" style={{ display: openCollapse[7] ? 'flex' : 'none', }}>
-                        <ul type="1">
+                        <ol type='1'>
                             <li>
                                 Buka website KOPI <a style={{ maxWidth : '40px', display : 'inline' }} target="blank" href="https://kopicvmaker.vercel.app/" className='btn btn-primary'>☕</a>
                             </li>
@@ -278,7 +279,7 @@ function Help() {
                                 </ul>
                                 Dan selamat! CV kamu berhasil di download.
                             </li>
-                        </ul>
+                        </ol>
                     </div>
                     <button style={{ fontSize: '1rem', textAlign : "left", paddingInline : "1.5rem" }} type="button"
                         className="container row-f f-between collapsible btn btn-info c-white" onClick={() => handleToggle(8)}>

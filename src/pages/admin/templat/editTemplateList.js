@@ -213,7 +213,7 @@ function EditTemplat() {
                                     type="submit"
                                     className="btn btn-primary f-1"
                                 >
-                                    Tambah
+                                    Perbarui
                                 </button>
                             </div>
                         </form>

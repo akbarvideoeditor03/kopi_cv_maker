@@ -1,10 +1,23 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 function About() {
+    const { isWebsite } = useSelector((state) => state.userReducer);
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    const roleUser = isWebsite;
+
     return (
         <main className="container col-f f-center-c generalPg-bg">
             <section className="container col-f f-1 fj-center section-max">
-                <h1>Tentang Website</h1>
+                <div className='container row-f f-wrap f-center'>
+                    <h1>Tentang Website</h1>
+                    {
+                        token && role === roleUser ?
+                            <a href="" className='btn btn-primary' style={{ width: 'fit-content' }}>Edit Tentang</a>
+                            : ''
+                    }
+                </div>
                 <div className="container row-f f-wrap">
                     <div
                         style={{ flexBasis: '360px' }}
