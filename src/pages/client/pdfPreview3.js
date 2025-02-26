@@ -8,8 +8,6 @@ import {
     Text,
     StyleSheet,
     Font,
-    Image,
-    Link,
 } from '@react-pdf/renderer';
 import {
     getUserId,
@@ -343,6 +341,37 @@ const MyPdf = ({
                                                     .locale('id')
                                                     .format('MMMM YYYY')}{' '}
                                                 - {item.tahun_selesai}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            );
+                        })}
+                    </View>
+
+                    <View style={[styles.container, styles.colContainer, styles.hLineBlack, { textAlign: 'justify' }]}>
+                        <Text style={styles.sectionTittle}>Keahlian</Text>
+                        {keahlian.map((item) => {
+                            return (
+                                <View
+                                    key={item.id}
+                                    style={[styles.container, styles.rowContainer]}
+                                >
+                                    <View
+                                        style={[
+                                            styles.container,
+                                            styles.rowContainer,
+                                            styles.f1
+                                        ]}
+                                    >
+                                        <View style={[styles.f1, styles.sectionContent]}>
+                                            <Text>
+                                                {item.keahlian}
+                                            </Text>
+                                        </View>
+                                        <View style={[styles.sectionContent]}>
+                                            <Text>
+                                                {item.tingkat}
                                             </Text>
                                         </View>
                                     </View>

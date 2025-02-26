@@ -16,7 +16,7 @@ function Help() {
     };
 
     return (
-        <main className="container col-f f-center-c generalPg-bg">
+        <main className="container col-f f-center-c">
             <section className="container col-f f-1 f-between section-max full-width">
                 <div className='container col-f'>
                     <h1>Bantuan</h1>

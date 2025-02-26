@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { getUser, viewAllTemplate, deleteUser, deleteTemplat } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 

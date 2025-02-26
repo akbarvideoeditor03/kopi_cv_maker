@@ -236,7 +236,7 @@ const MyPdf2 = ({
                             <Text
                                 style={{
                                     fontSize: '11px',
-                                    lineHeight: '16px'
+                                    lineHeight: '16px',
                                 }}
                             >
                                 {userList?.tentang}
