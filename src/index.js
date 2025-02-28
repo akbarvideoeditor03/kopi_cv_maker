@@ -31,7 +31,9 @@ if (!token) {
     const startLogoutTimer = () => {
         clearTimeout(logoutTimer);
         logoutTimer = setTimeout(() => {
-            localStorage.clear();
+            localStorage.removeItem('id');
+            localStorage.removeItem('role');
+            localStorage.removeItem('token');
             window.location.href = '/';
         }, 3600000);
     };
@@ -47,7 +49,9 @@ if (!token) {
             const currentTime = Date.now();
             const elapsed = currentTime - lastActivity;
             if (elapsed > 3600000) {
-                localStorage.clear();
+                localStorage.removeItem('id');
+                localStorage.removeItem('role');
+                localStorage.removeItem('token');
                 window.location.href = '/';
             } else {
                 startLogoutTimer();

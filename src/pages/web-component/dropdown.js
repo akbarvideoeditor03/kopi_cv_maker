@@ -35,7 +35,9 @@ function Dropdown() {
             cancelButtonText: 'Tidak',
         }).then((result) => {
             if (result.isConfirmed) {
-                localStorage.clear();
+                localStorage.removeItem('id');
+                localStorage.removeItem('role');
+                localStorage.removeItem('token');
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil',

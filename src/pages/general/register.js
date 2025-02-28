@@ -338,19 +338,7 @@ const Register = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="container col-f f-center-c t-center">
-                        <p>Ada kendala? Yuk beri tahu kami</p>
-                        <RouterLink
-                            style={{
-                                maxWidth: '15rem',
-                            }}
-                            to="https://wa.link/s4zfm0"
-                            target="_blank"
-                            className="fwb btn btn-info full-width"
-                        >
-                            <i className="bi-whatsapp"></i> Admin
-                        </RouterLink>
-                    </div>
+                    
                 </div>
                 <div className="container col-f f-center-c login-right">
                     <img

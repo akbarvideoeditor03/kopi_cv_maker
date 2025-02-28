@@ -2,20 +2,14 @@ import React, {useState, useEffect, useRef} from "react";
 
 function Switch() {
     const [darkMode, setDarkMode] = useState(false);
-    const switchRef = useRef(null);
+    const switchRef = useRef();
 
     useEffect(() => {
         const data = localStorage.getItem("dark-mode");
         if (data === "true") {
             setDarkMode(true);
-            if (switchRef.current) {
-                switchRef.current.checked = true;
-            }
         } else {
             setDarkMode(false);
-            if (switchRef.current) {
-                switchRef.current.checked = false;
-            }
         }
     }, []);
 
@@ -31,7 +25,7 @@ function Switch() {
 
     return (
         <label className="switch">
-            <input ref={switchRef} id="input" type="checkbox" onClick={handleClick} checked={darkMode} onChange={handleClick}/>
+            <input id="input" type="checkbox" onClick={handleClick} checked={darkMode} onChange={handleClick}/>
             <div className="slider round">
                 <div className="sun-moon">
                     <svg id="moon-dot-1" className="moon-dot" viewBox="0 0 100 100">
