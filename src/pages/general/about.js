@@ -11,7 +11,7 @@ function About() {
         <main className="container col-f f-center-c generalPg-bg">
             <section className="container col-f f-1 fj-center section-max">
                 <div className='container row-f f-wrap f-center'>
-                    <h1>Tentang Website</h1>
+                    <h1>Tentang Website <i className="bi-info-circle"></i></h1>
                     {
                         token && role === roleUser ?
                             <a href="" className='btn btn-primary' style={{ width: 'fit-content' }}>Edit Tentang</a>

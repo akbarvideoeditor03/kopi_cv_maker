@@ -16,10 +16,10 @@ function Help() {
     };
 
     return (
-        <main className="container col-f f-center-c generalPg-bg">
+        <main className="container col-f f-center-c generalPg-bg-2">
             <section className="container col-f f-1 f-between section-max full-width">
                 <div className='container col-f'>
-                    <h1>Bantuan</h1>
+                    <h1>Bantuan <i className="bi-question-circle"></i></h1>
                     <button style={{ fontSize: '1rem', textAlign : "left", paddingInline : "1.5rem" }} type="button"
                         className="container row-f f-between collapsible btn btn-info c-white" onClick={() => handleToggle(1)}>
                         <p className='f-1'>Cara membuat akun KOPI</p>

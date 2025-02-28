@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import Switch from '../web-component/switch';
 
 function Home() {
     const token = localStorage.getItem('token');

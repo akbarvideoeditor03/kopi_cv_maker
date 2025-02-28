@@ -31,6 +31,14 @@
     color: white;
 }
 
+.generalPg-bg-2 {
+    background-color: rgb(6, 6, 6);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
 .about-img {
     min-width: 300px;
     max-width: 360px;

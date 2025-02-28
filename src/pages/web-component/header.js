@@ -2,6 +2,7 @@ import React from 'react';
 import Dropdown from './dropdown';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
+import Switch from './switch';
 
 function WebHeader() {
     const { isWebsite } = useSelector((state) => state.userReducer);
@@ -38,7 +39,7 @@ function WebHeader() {
     return (
         <nav>
             <section className="nav nav-s">
-                <div className="container col-f">
+                <div className="container row-f f-center-c full-width">
                     <div className="container col-f">
                         <a href="/">
                             <img
@@ -47,9 +48,13 @@ function WebHeader() {
                                 alt="logo-bw.png"
                             />
                         </a>
+                        
                     </div>
+                    <div className='container col-f f-1'>
+                    </div>
+                    <Switch />
+                    <Dropdown />
                 </div>
-                <Dropdown />
             </section>
             <section className="nav nav-l fw6 f-center-c">
                 <div className="container col-f nav-max">
@@ -63,6 +68,7 @@ function WebHeader() {
                 </div>
                 <div className="f-1"></div>
                 <div className="container row-f f-center">
+                <Switch />
                     {token && role === roleUser && (
                         <>
                             <div className="container col-f">
