@@ -35,7 +35,9 @@ function Dropdown() {
             cancelButtonText: 'Tidak',
         }).then((result) => {
             if (result.isConfirmed) {
-                localStorage.clear();
+                localStorage.removeItem('id');
+                localStorage.removeItem('role');
+                localStorage.removeItem('token');
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil',
@@ -60,8 +62,8 @@ function Dropdown() {
                 </button>
                 <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
                     <a href="/dashboard">Dashboard</a>
-                    {/* <a href="/bantuan">Bantuan</a>
-                    <a href="/tentang">Tentang</a> */}
+                    <a href="/bantuan">Bantuan</a>
+                    <a href="/tentang">Tentang</a>
                     <button
                         className="btn-dropdown full-width"
                         onClick={handleLogout}
@@ -79,8 +81,8 @@ function Dropdown() {
                 </button>
                 <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
                     <a href="/home">CV Saya</a>
-                    {/* <a href="/bantuan">Bantuan</a>
-                    <a href="/tentang">Tentang</a> */}
+                    <a href="/bantuan">Bantuan</a>
+                    <a href="/tentang">Tentang</a>
                     <button
                         className="btn-dropdown full-width"
                         onClick={handleLogout}
@@ -99,8 +101,8 @@ function Dropdown() {
                 <ul className={`dropdown-menu ${isOpen ? 'open' : ''}`}>
                     <a href="/user/login">Masuk</a>
                     <a href="/user/register">Daftar</a>
-                    {/* <a href="/bantuan">Bantuan</a>
-                    <a href="/tentang">Tentang</a> */}
+                    <a href="/bantuan">Bantuan</a>
+                    <a href="/tentang">Tentang</a>
                 </ul>
             </div>
         );

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, deleteUser } from '../../redux/action/user.action';
+import { getUser, viewAllTemplate, deleteUser, deleteTemplat } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function Dashboard() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const dispatch = useDispatch();
-    const { userList, isLoading, error, isWebsite } = useSelector(
+    const { userList, isLoading, error, isWebsite, templatList } = useSelector(
         (state) => state.userReducer
     );
     const roleUser = isWebsite;
@@ -21,6 +21,10 @@ function Dashboard() {
             dispatch(getUser());
         }
     }, [dispatch, userList.data]);
+
+    useEffect(() => {
+        dispatch(viewAllTemplate());
+    }, [dispatch]);
 
     useEffect(() => {
         if (userList.data) {
@@ -45,6 +49,32 @@ function Dashboard() {
             }
         });
     };
+
+    const deleteTemplats = (id) => {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Templat yang terhapus tidak dapat dikembalikan',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteTemplat(id)).then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Dihapus!',
+                        text: 'Templat berhasil dihapus.',
+                        timer: 2000,
+                        showConfirmButton: false,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        timerProgressBar: true,
+                    });
+                });
+            }
+        });
+    };    
 
     useEffect(() => {
         if (error) {
@@ -71,7 +101,7 @@ function Dashboard() {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
-                    <div className="container row-f f-wrap">
+                    <div className="container row-f f-wrap-r f-wrap">
                         <div
                             style={{
                                 flexBasis: '300px',
@@ -81,17 +111,55 @@ function Dashboard() {
                             <h1>Jumlah Total Pengguna</h1>
                             <div className="container col-f f-center-c">
                                 {isLoading ? (
-                                    <div className="container col-f f-center-c list-container">
+                                    <div className="container col-f f-center-c left-dashboard-container">
                                         <div className="custom-loader"></div>
                                     </div>
                                 ) : (
-                                    <p
-                                        style={{
-                                            fontSize: '350%',
-                                            fontWeight: 'bold',
-                                        }}
-                                    >{`${userList?.meta?.totalData}`}</p>
+                                    <div className="container col-f f-center-c left-dashboard-container">
+                                        <p style={{ fontSize: '350%', fontWeight: 'bold' }}>
+                                            {userList?.meta?.totalData ? (
+                                                userList.meta.totalData
+                                            ) : ('')}
+                                        </p>
+                                    </div>
                                 )}
+                            </div>
+                            <div className="container col-f">
+                                <a
+                                    href="/addtemplate"
+                                    className="btn btn-primary"
+                                >
+                                    Tambah Templat CV
+                                </a>
+                                <div className='grid gc-1 gc-2 grid-gap'>
+                                    {
+                                        templatList?.data?.map((item) => {
+                                            return (
+                                                <div key={item.id} className='container col-f f-between'>
+                                                    <a className="templat-list templat-card f-1" href={`/templatedetail/${item.id}`}>
+                                                        <div className='container col-f f-center'>
+                                                            <img style={{height:'100%'}} className='cv-templat' src={`${item.link_gambar}`} alt="link_gambar templat" />
+                                                        </div>
+                                                    </a>
+                                                    <div className='container col-f f-center-c'>
+                                                    <p>{`${item.caption}`}</p>
+                                                    <div className='container row-f f-1 f-wrap f-center-c'>
+                                                        <a className="t-center btn btn-primary" href={`/edittemplate/${item.id}`}>Edit</a>
+                                                        <button
+                                                            onClick={() =>
+                                                                deleteTemplats(
+                                                                    item.id
+                                                                )
+                                                            }
+                                                            className="t-center btn btn-danger"
+                                                        >Hapus</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
                             </div>
                         </div>
                         <div
@@ -107,14 +175,14 @@ function Dashboard() {
                                 placeholder="Cari"
                                 className="m-bt2 search-box"
                             />
-                            {/* <div className="container row-f f-wrap">
+                            <div className="container row-f f-wrap">
                                 <a
                                     href="/user/create"
                                     className="btn btn-primary"
                                 >
                                     Tambah Pengguna
                                 </a>
-                            </div> */}
+                            </div>
                             <div className="container col-f">
                                 <h1>Daftar Pengguna</h1>
                                 <div className="container col-f full-width list-container">

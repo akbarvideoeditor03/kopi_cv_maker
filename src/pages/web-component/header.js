@@ -2,6 +2,7 @@ import React from 'react';
 import Dropdown from './dropdown';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
+import Switch from './switch';
 
 function WebHeader() {
     const { isWebsite } = useSelector((state) => state.userReducer);
@@ -18,7 +19,9 @@ function WebHeader() {
             cancelButtonText: 'Tidak',
         }).then((result) => {
             if (result.isConfirmed) {
-                localStorage.clear();
+                localStorage.removeItem('id');
+                localStorage.removeItem('role');
+                localStorage.removeItem('token');
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil',
@@ -38,7 +41,7 @@ function WebHeader() {
     return (
         <nav>
             <section className="nav nav-s">
-                <div className="container col-f">
+                <div className="container row-f f-center-c full-width">
                     <div className="container col-f">
                         <a href="/">
                             <img
@@ -47,9 +50,13 @@ function WebHeader() {
                                 alt="logo-bw.png"
                             />
                         </a>
+                        
                     </div>
+                    <div className='container col-f f-1'>
+                    </div>
+                    <Switch />
+                    <Dropdown />
                 </div>
-                <Dropdown />
             </section>
             <section className="nav nav-l fw6 f-center-c">
                 <div className="container col-f nav-max">
@@ -63,17 +70,18 @@ function WebHeader() {
                 </div>
                 <div className="f-1"></div>
                 <div className="container row-f f-center">
+                <Switch />
                     {token && role === roleUser && (
                         <>
                             <div className="container col-f">
                                 <a href="/dashboard">Dashboard</a>
                             </div>
-                            {/* <div className="container col-f">
+                            <div className="container col-f">
                                 <a href="/bantuan">Bantuan</a>
                             </div>
                             <div className="container col-f">
                                 <a href="/tentang">Tentang</a>
-                            </div> */}
+                            </div>
                             <div className="container col-f">
                                 <button
                                     className="btn btn-danger"
@@ -89,12 +97,12 @@ function WebHeader() {
                             <div className="container col-f">
                                 <a href="/home">CV Saya</a>
                             </div>
-                            {/* <div className="container col-f">
+                            <div className="container col-f">
                                 <a href="/bantuan">Bantuan</a>
                             </div>
                             <div className="container col-f">
                                 <a href="/tentang">Tentang</a>
-                            </div> */}
+                            </div>
                             <div className="container col-f">
                                 <button
                                     className="btn btn-danger"
@@ -113,12 +121,12 @@ function WebHeader() {
                             <div className="container col-f">
                                 <a href="/user/login">Masuk</a>
                             </div>
-                            {/* <div className="container col-f">
+                            <div className="container col-f">
                                 <a href="/bantuan">Bantuan</a>
                             </div>
                             <div className="container col-f">
                                 <a href="/tentang">Tentang</a>
-                            </div> */}
+                            </div>
                         </div>
                     )}
                 </div>

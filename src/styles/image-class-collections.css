@@ -31,6 +31,14 @@
     color: white;
 }
 
+.generalPg-bg-2 {
+    background-color: rgb(6, 6, 6);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
 .about-img {
     min-width: 300px;
     max-width: 360px;
@@ -52,12 +60,40 @@
     background-color: rgb(227, 227, 227);
 }
 
-.login-img {
+.login-img-light {
     width: 100%;
     max-width: 720px;
     height: 100%;
+    min-height: 75vh;
     object-fit: cover;
     border-radius: 10px;
+    background-image: url('https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    animation: opacity 0.2s linear;
+}
+
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.login-img-dark {
+    width: 100%;
+    max-width: 720px;
+    min-height: 75vh;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    background-image: url('https://raw.githubusercontent.com/akbarvideoeditor03/kopi_cv_maker/refs/heads/kopi-branch-1/public/assets/images/nature-gora-oblako-luna-noch-temnii-87271.jpeg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .footer-img,

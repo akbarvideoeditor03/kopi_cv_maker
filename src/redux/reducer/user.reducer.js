@@ -7,8 +7,9 @@ const initState = {
     prestasiKerja: [],
     keahlian: [],
     pelatihan: [],
-    otpRequest:[],
-    resetPassword:[],
+    otpRequest: [],
+    resetPassword: [],
+    templatList: [],
     isWebsite: 'A@k3!o8%Np',
     isLoading: false,
     error: null,
@@ -122,19 +123,125 @@ const users = (state = initState, action) => {
 
         //OTP
         case userTypes.CREATE_RESET_PASSWORD_REQUEST:
-        return { ...state, isLoading: true, error: null };
-            case userTypes.CREATE_RESET_PASSWORD_SUCCESS:
-        return {
-            ...state,
-            isLoading: false,
-            resetPassword: [...state.resetPassword, action.payload],
-        };
-    case userTypes.CREATE_RESET_PASSWORD_FAILURE:
-        return {
-            ...state,
-            isLoading: false,
-            error: action.payload,
-        };
+            return { ...state, isLoading: true, error: null };
+        case userTypes.CREATE_RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                resetPassword: [...state.resetPassword, action.payload],
+            };
+        case userTypes.CREATE_RESET_PASSWORD_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        //TemplatCV
+        case userTypes.CREATE_TEMPLAT_SUCCESS:
+            return {
+                ...state,
+                isLoading: true,
+                error: null,
+            };
+        case userTypes.CREATE_TEMPLAT_REQUEST:
+            return {
+                ...state,
+                isLoading: false,
+                templatList: [
+                    ...state.templatList,
+                    action.payload,
+                ],
+            };
+        case userTypes.CREATE_TEMPLAT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        case userTypes.VIEW_TEMPLAT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                templatList: action.payload,
+            };
+        case userTypes.VIEW_TEMPLAT_REQUEST:
+            return {
+                ...state,
+                isLoading: false,
+                templatList: action.payload,
+            };
+        case userTypes.VIEW_TEMPLAT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        case userTypes.VIEW_TEMPLAT_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                templatList: action.payload,
+            };
+        case userTypes.VIEW_TEMPLAT_ID_REQUEST:
+            return {
+                ...state,
+                isLoading: false,
+                templatList: action.payload,
+            };
+        case userTypes.VIEW_TEMPLAT_ID_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        case userTypes.UPDATE_TEMPLAT_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                error: null,
+            };
+        case userTypes.UPDATE_TEMPLAT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                templatList: state.templatList.map(
+                    (templat) =>
+                        templat.id === action.payload.id
+                            ? action.payload
+                            : templat
+                ),
+            };
+        case userTypes.UPDATE_TEMPLAT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        case userTypes.DELETE_TEMPLAT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                templatList: state.templatList.filter(
+                    (templat) => templat.id !== action.payload
+                ),
+            };
+        case userTypes.DELETE_TEMPLAT_REQUEST:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+        case userTypes.DELETE_TEMPLAT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
 
         //Pendidikan Terakhir (CRUD)
         case userTypes.CREATE_PENDIDIKAN_ID_REQUEST:

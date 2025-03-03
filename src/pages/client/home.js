@@ -110,15 +110,15 @@ function HomeUser() {
                     <div className="container row-f f-between f-wrap f-center">
                         <h1>Yuk lengkapi CV kamu</h1>
                         <div className="container row-f">
-                            <a className="btn btn-info-b" href="/doc/preview">
+                            <a className="btn btn-info-b" href="/pdfpreview">
                                 <i className="bi-file-earmark-pdf-fill"></i>{' '}
                                 Preview PDF
                             </a>
                         </div>
                     </div>
-                    {/* <div className='card-mini'>
+                    <div className='card-mini'>
                         <p>Jika Anda baru saja login dengan Google, password Anda adalah <b>12345678</b>. Kami sarankan untuk segera lakukan <a href="/user/otprequest"><b>Reset Password</b></a></p>
-                    </div> */}
+                    </div>
                     {isLoading ? (
                         <div className="card container col-f f-center-c list-container">
                             <div className="custom-loader"></div>

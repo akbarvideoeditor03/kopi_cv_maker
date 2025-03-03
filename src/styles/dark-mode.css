@@ -1,0 +1,61 @@
+/* Percobaan Dark Mode */
+.dark-mode {
+    background-color: #0c0c0c;
+    color: rgb(255, 255, 255);
+}
+.dark-mode a {
+    color: rgb(255, 255, 255);
+}
+.dark-mode .card {
+    box-shadow: 0px 5px 10px #ffffff33;
+    background-color: #0c0c0c;
+}
+.dark-mode .card-mini {
+    box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.2);
+    background-color: #232323;
+}
+.dark-mode .nav {
+    background-color: #171717;
+}
+.dark-mode .line {
+    background-color: white;
+}
+.dark-mode input {
+    background-color: #313131;
+    color: white;
+}
+.dark-mode textarea {
+    background-color: #313131;
+    color: white;
+}
+.dark-mode select {
+    background-color: #313131;
+    color: white;
+}
+.dark-mode .dropdown-menu {
+    background-color: #5a5a5a;
+}
+.dark-mode button {
+    color: white;
+    border-color: white;
+}
+.dark-mode button:hover {
+    background-color: #5a5a5a;
+}
+.dark-mode .header-img {
+    filter: invert(1);
+}
+.dark-mode .text-bg {
+    background-color: #191919;
+}
+.dark-mode .menu-card {
+    background-color: #0c0c0c;
+    box-shadow: 0px 5px 10px hsla(0, 0%, 100%, 0.065);
+}
+.dark-mode .menu-card:hover {
+    background-color: #0c0c0c;
+    box-shadow: 0px 5px 10px hsla(0, 0%, 100%, 0.388);
+}
+.dark-mode footer {
+    background-color: #1b1b1b;
+}

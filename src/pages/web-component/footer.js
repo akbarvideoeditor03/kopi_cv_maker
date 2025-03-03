@@ -32,7 +32,7 @@ function WebFooter() {
                                 Daftar
                             </a>
                         </li>
-                        {/* <li>
+                        <li>
                             <a className="social-media" href="/bantuan">
                                 Bantuan
                             </a>
@@ -41,7 +41,7 @@ function WebFooter() {
                             <a className="social-media" href="/tentang">
                                 Tentang Kami
                             </a>
-                        </li> */}
+                        </li>
                     </ul>
                 </div>
                 <div className="footer-section f-1">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
@@ -8,6 +8,14 @@ import {
 import Swal from 'sweetalert2';
 
 const Register = () => {
+    const data = localStorage.getItem("dark-mode");
+    const [darkMode, setDarkMode] = useState();
+    useEffect(() => {
+        if (data === "true") {
+            setDarkMode(true);
+        }
+    }, []);
+
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         nama: '',
@@ -338,26 +346,10 @@ const Register = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="container col-f f-center-c t-center">
-                        <p>Ada kendala? Yuk beri tahu kami</p>
-                        <RouterLink
-                            style={{
-                                maxWidth: '15rem',
-                            }}
-                            to="https://wa.link/s4zfm0"
-                            target="_blank"
-                            className="fwb btn btn-info full-width"
-                        >
-                            <i className="bi-whatsapp"></i> Admin
-                        </RouterLink>
-                    </div>
+                    
                 </div>
                 <div className="container col-f f-center-c login-right">
-                    <img
-                        className="login-img"
-                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg"
-                        alt="login-img"
-                    />
+                    <div className={`${darkMode ? 'login-img-dark' : 'login-img-light'}`}></div>
                 </div>
             </section>
         </main>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
@@ -6,6 +6,13 @@ import { postUserLogin, gLogin } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function Login() {
+    const data = localStorage.getItem("dark-mode");
+    const [darkMode, setDarkMode] = useState();
+    useEffect(() => {
+        if (data === "true") {
+            setDarkMode(true);
+        }
+    }, []);
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         email: '',
@@ -169,7 +176,7 @@ function Login() {
                                 >
                                     Daftar
                                 </RouterLink>
-                                {/* <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+                                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
                                     <div className='container col-f full-width'>
                                         <GoogleLogin
                                             onSuccess={handleGLogin}
@@ -179,30 +186,13 @@ function Login() {
                                             useOneTap
                                         />
                                     </div>
-                                </GoogleOAuthProvider> */}
+                                </GoogleOAuthProvider>
                             </div>
                         </div>
                     </div>
-                    <div className="container col-f f-center-c t-center">
-                        <p>Ada kendala? Yuk beri tahu kami</p>
-                        <RouterLink
-                            style={{
-                                maxWidth: '15rem',
-                            }}
-                            to="https://wa.link/s4zfm0"
-                            target="_blank"
-                            className="fwb btn btn-info full-width"
-                        >
-                            <i className="bi-whatsapp"></i> Admin
-                        </RouterLink>
-                    </div>
                 </div>
                 <div className="container col-f f-center-c login-right">
-                    <img
-                        className="login-img"
-                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/68410c9b34629247e847d525bc85e3aa2c20dc4f/public/assets/images/login-image.svg"
-                        alt="login-img"
-                    />
+                    <div className={`${darkMode ? 'login-img-dark' : 'login-img-light'}`}></div>
                 </div>
             </section>
         </main>

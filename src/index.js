@@ -10,6 +10,8 @@ import './styles/global.css';
 import './styles/responsive.css';
 import './styles/button.css';
 import './styles/image-class-collections.css';
+import './styles/dark-mode.css';
+import './styles/switch.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,7 +31,9 @@ if (!token) {
     const startLogoutTimer = () => {
         clearTimeout(logoutTimer);
         logoutTimer = setTimeout(() => {
-            localStorage.clear();
+            localStorage.removeItem('id');
+            localStorage.removeItem('role');
+            localStorage.removeItem('token');
             window.location.href = '/';
         }, 3600000);
     };
@@ -45,7 +49,9 @@ if (!token) {
             const currentTime = Date.now();
             const elapsed = currentTime - lastActivity;
             if (elapsed > 3600000) {
-                localStorage.clear();
+                localStorage.removeItem('id');
+                localStorage.removeItem('role');
+                localStorage.removeItem('token');
                 window.location.href = '/';
             } else {
                 startLogoutTimer();
