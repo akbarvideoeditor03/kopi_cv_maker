@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { resetPassword } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function PasswordReset() {
+    const data = localStorage.getItem("dark-mode");
+    const [darkMode, setDarkMode] = useState();
+    useEffect(() => {
+        if (data === "true") {
+            setDarkMode(true);
+        }
+    }, []);
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         email: '',
@@ -15,7 +21,7 @@ function PasswordReset() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(!userData.email) {
+        if (!userData.email) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups...',
@@ -29,7 +35,7 @@ function PasswordReset() {
             return
         }
 
-        if(!userData.otp) {
+        if (!userData.otp) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups...',
@@ -43,7 +49,7 @@ function PasswordReset() {
             return
         }
 
-        if(userData.otp.length > 5 || userData.otp.length < 5) {
+        if (userData.otp.length > 5 || userData.otp.length < 5) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups...',
@@ -57,7 +63,7 @@ function PasswordReset() {
             return
         }
 
-        if(!userData.newPassword) {
+        if (!userData.newPassword) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups...',
@@ -71,7 +77,7 @@ function PasswordReset() {
             return
         }
 
-        if(userData.newPassword.length < 8) {
+        if (userData.newPassword.length < 8) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups...',
@@ -179,14 +185,10 @@ function PasswordReset() {
                             </form>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div className="container col-f f-center-c login-right">
-                    <img
-                        className="login-img"
-                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/68410c9b34629247e847d525bc85e3aa2c20dc4f/public/assets/images/login-image.svg"
-                        alt="login-img"
-                    />
+                    <div className={`${darkMode ? 'login-img-dark' : 'login-img-light'}`}></div>
                 </div>
             </section>
         </main>

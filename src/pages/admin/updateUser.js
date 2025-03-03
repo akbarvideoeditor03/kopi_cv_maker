@@ -7,6 +7,13 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 const UpdateUserAdmin = ({ userId }) => {
+    const data = localStorage.getItem("dark-mode");
+    const [darkMode, setDarkMode] = useState();
+    useEffect(() => {
+        if (data === "true") {
+            setDarkMode(true);
+        }
+    }, []);
     const { id } = useParams();
     const { userList, isWebsite } = useSelector((state) => state.userReducer);
     const role = localStorage.getItem('role');
@@ -324,11 +331,7 @@ const UpdateUserAdmin = ({ userId }) => {
                         </div>
                     </div>
                     <div className="container col-f f-center-c login-right">
-                        <img
-                            className="login-img"
-                            src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg"
-                            alt="login-img"
-                        />
+                        <div className={`${darkMode ? 'login-img-dark' : 'login-img-light'}`}></div>
                     </div>
                 </section>
             </main>

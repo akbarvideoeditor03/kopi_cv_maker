@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { otpRequestCode } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function RequestOtp() {
+    const data = localStorage.getItem("dark-mode");
+    const [darkMode, setDarkMode] = useState();
+    useEffect(() => {
+        if (data === "true") {
+            setDarkMode(true);
+        }
+    }, []);
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         email: '',
@@ -82,14 +88,10 @@ function RequestOtp() {
                             </form>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div className="container col-f f-center-c login-right">
-                    <img
-                        className="login-img"
-                        src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/68410c9b34629247e847d525bc85e3aa2c20dc4f/public/assets/images/login-image.svg"
-                        alt="login-img"
-                    />
+                    <div className={`${darkMode ? 'login-img-dark' : 'login-img-light'}`}></div>
                 </div>
             </section>
         </main>

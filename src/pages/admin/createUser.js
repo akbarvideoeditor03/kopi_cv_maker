@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createUser, uploadToSupabase } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 const CreateUserAdmin = () => {
+    const data = localStorage.getItem("dark-mode");
+    const [darkMode, setDarkMode] = useState();
+    useEffect(() => {
+        if (data === "true") {
+            setDarkMode(true);
+        }
+    }, []);
     const { isWebsite } = useSelector((state) => state.userReducer);
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
@@ -331,11 +337,7 @@ const CreateUserAdmin = () => {
                         </div>
                     </div>
                     <div className="container col-f f-center-c login-right">
-                        <img
-                            className="login-img"
-                            src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/3b0ef52d2ac1ed162d41f4df30ea58fde0828880/public/assets/images/login-image.svg"
-                            alt="login-img"
-                        />
+                        <div className={`${darkMode ? 'login-img-dark' : 'login-img-light'}`}></div>
                     </div>
                 </section>
             </main>
