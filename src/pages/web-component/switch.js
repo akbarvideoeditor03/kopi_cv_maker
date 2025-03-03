@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 function Switch() {
     const data = localStorage.getItem("dark-mode");
@@ -8,6 +8,8 @@ function Switch() {
     useEffect(() => {
         if (data === "true") {
             setDarkMode(true);
+        } else {
+            setDarkMode(false);
         }
     }, []);
 
@@ -18,13 +20,17 @@ function Switch() {
         if (switchRef.current) {
             switchRef.current.checked = newDarkMode;
         }
-        window.location.reload()
+        window.location.reload();
     };
 
     return (
-        <button ref={switchRef} onClick={handleClick} className="container f-center-c btn btn-moon">
+        <button
+            ref={switchRef}
+            onClick={handleClick}
+            className={`container f-center-c btn ${darkMode ? "btn-moon" : "btn-sun"}`}
+        >
         </button>
-    )
+    );
 }
 
 export default Switch;

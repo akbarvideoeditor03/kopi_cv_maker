@@ -1,21 +1,24 @@
 /* Percobaan Dark Mode */
 .dark-mode {
-    background-color: #232323;
+    background-color: #0c0c0c;
     color: rgb(255, 255, 255);
 }
 .dark-mode a {
     color: rgb(255, 255, 255);
 }
 .dark-mode .card {
-    box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.2);
-    background-color: #232323;
+    box-shadow: 0px 5px 10px #ffffff33;
+    background-color: #0c0c0c;
 }
 .dark-mode .card-mini {
     box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.2);
     background-color: #232323;
 }
 .dark-mode .nav {
-    background-color: #2c2c2c;
+    background-color: #171717;
+}
+.dark-mode .line {
+    background-color: white;
 }
 .dark-mode input {
     background-color: #313131;
@@ -41,4 +44,8 @@
 }
 .dark-mode .header-img {
     filter: invert(1);
+}
+
+.dark-mode footer {
+    background-color: #1b1b1b;
 }
