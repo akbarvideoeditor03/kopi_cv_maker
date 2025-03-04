@@ -17,11 +17,11 @@
 }
 
 .generalPg-bg {
-    background-image: url('../../public/assets/images/about-bg.svg');
+    background-image: url('../../public/assets/images/about-bg-light.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .generalPg-bg-2 {
@@ -36,10 +36,12 @@
     min-width: 300px;
     max-width: 360px;
     width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
 }
 
 .login-bg {
-    background-image: url('../../public/assets/images/login-image.svg');
+    background-image: url('../../public/assets/images/login-image.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
