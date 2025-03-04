@@ -6,6 +6,7 @@
     background-position: center;
     animation: pulse 5s ease-in-out infinite;
     filter: drop-shadow(2px 0px 10px rgb(0, 157, 255));
+    animation: opacity 0.2s linear;
 }
 
 @keyframes pulse {
@@ -15,6 +16,15 @@
     }
     50% {
         transform: scale(1.1);
+    }
+}
+
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }
 
