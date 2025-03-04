@@ -531,6 +531,7 @@ export const otpRequestCode = (otp) => async (dispatch) => {
 export const resetPassword = (data) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_RESET_PASSWORD_REQUEST });
     try {
+        const token = localStorage.getItem('token');
         const response = await fetch(`${baseUrl}/kopi/user/passwordreset`, {
             method: 'POST',
             headers: {
@@ -571,7 +572,11 @@ export const resetPassword = (data) => async (dispatch) => {
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
-                window.location.href = '/user/login';
+                if(!token) {
+                    window.location.href = '/user/login';
+                } else {
+                    window.location.href = '/home';
+                }
             });
             const data = await response.json();
             dispatch({

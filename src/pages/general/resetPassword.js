@@ -1,38 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { resetPassword } from '../../redux/action/user.action';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetPassword, getUserId } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function PasswordReset() {
+    const dispatch = useDispatch();
+    const id = localStorage.getItem('id');
+    const token = localStorage.getItem('token');
     const data = localStorage.getItem("dark-mode");
     const [darkMode, setDarkMode] = useState();
-    useEffect(() => {
-        if (data === "true") {
-            setDarkMode(true);
-        }
-    }, []);
-    const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         email: '',
         otp: '',
         newPassword: '',
     });
+    const { userList } = useSelector((state) => state.userReducer);
+
+    useEffect(() => {
+        if (data === "true") {
+            setDarkMode(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        dispatch(getUserId(id));
+    }, [dispatch, id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!userData.email) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups...',
-                text: 'Email tidak boleh kosong',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-            return
+        if(!token) {
+            if (!userData.email) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ups...',
+                    text: 'Email tidak boleh kosong',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                });
+                return
+            }
         }
 
         if (!userData.otp) {
@@ -91,24 +100,46 @@ function PasswordReset() {
             return
         }
 
-        try {
-            Swal.fire({
-                title: 'Sebentar...',
-                html: '<div className="custom-loader"></div>',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-            });
-            const makeNewPassword = {
-                email: userData.email,
-                otp: userData.otp,
-                newPassword: userData.newPassword
-            };
-            dispatch(resetPassword(makeNewPassword));
-        } catch (error) {
-            console.log(error);
+        if(token) {
+            try {
+                Swal.fire({
+                    title: 'Sebentar...',
+                    html: '<div className="custom-loader"></div>',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+                const makeNewPassword = {
+                    email: userList.email,
+                    otp: userData.otp,
+                    newPassword: userData.newPassword
+                };
+                dispatch(resetPassword(makeNewPassword));
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            try {
+                Swal.fire({
+                    title: 'Sebentar...',
+                    html: '<div className="custom-loader"></div>',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+                const makeNewPassword = {
+                    email: userData.email,
+                    otp: userData.otp,
+                    newPassword: userData.newPassword
+                };
+                dispatch(resetPassword(makeNewPassword));
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
 
@@ -128,21 +159,23 @@ function PasswordReset() {
                                 <div className='card-mini m-b1'>
                                     <p><i className="bi-emoji-smile"></i> Buat password-nya hati-hati ya...</p>
                                 </div>
-                                <div className="container col-f-0">
-                                    <label>Email</label>
-                                    <input
-                                        name="email"
-                                        value={userData.email}
-                                        onChange={(e) =>
-                                            setUserData({
-                                                ...userData,
-                                                [e.target.name]: e.target.value,
-                                            })
-                                        }
-                                        type="email"
-                                        placeholder="Masukkan Email"
-                                    />
-                                </div>
+                                {
+                                    !token ?
+                                    <div className="container col-f-0">
+                                        <label>Email</label>
+                                        <input
+                                            name="email"
+                                            value={userData.email}
+                                            onChange={(e) =>
+                                                setUserData({
+                                                    ...userData,
+                                                    [e.target.name]: e.target.value,
+                                                })
+                                            }
+                                            type="email"
+                                            placeholder="Masukkan Email"
+                                        />
+                                    </div> : '' }
                                 <div className="container col-f-0">
                                     <label>Kode OTP</label>
                                     <input

@@ -12,6 +12,7 @@ import {
     deletePelatihan,
     readPrestasi,
     deletePrestasi,
+    otpRequestCode,
 } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
@@ -78,6 +79,47 @@ function HomeUser() {
         });
     };
 
+    const handleSubmitWithEmail = (e) => {
+        e.preventDefault();
+        if (!userList?.email) {
+            Swal.fire({
+                icon: 'error',
+                text: 'Opps... Email Kosong',
+                timer: 2000,
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                return;
+            });
+        }
+        try {
+            Swal.fire({
+                title: 'Sebentar...',
+                html: '<div className="custom-loader"></div>',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+            const otpReq = {
+                email: userList.email,
+            };
+            dispatch(otpRequestCode(otpReq));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+    //Contoh menampilkan data 1 kali saja
+    // useEffect(() => {
+    //     console.log(userList?.email == undefined ? '' : userList.email);
+    // }, [userList.email]);
+
+
     if (token && role === 'user' || isWebsite) {
         const tentang = userList.tentang
         const tentangParagraf = tentang?.split('\n').map((tentangs, index) => (
@@ -116,9 +158,13 @@ function HomeUser() {
                             </a>
                         </div>
                     </div>
-                    <div className='card-mini'>
-                        <p>Jika Anda baru saja login dengan Google, password Anda adalah <b>12345678</b>. Kami sarankan untuk segera lakukan <a href="/user/otprequest"><b>Reset Password</b></a></p>
-                    </div>
+                    {
+                        userList.google === true ?
+                        <div className='container row-f card-mini f-center-c'>
+                            <p className='f-1'>Jika Anda baru saja login melalui akun Google, password Anda adalah <b>12345678</b>. Kami sarankan untuk segera lakukan</p>
+                            <button className='btn btn-warning' onClick={handleSubmitWithEmail}>Reset Password</button>
+                        </div> : ''
+                    }
                     {isLoading ? (
                         <div className="card container col-f f-center-c list-container">
                             <div className="custom-loader"></div>
