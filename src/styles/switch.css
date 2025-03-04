@@ -4,14 +4,12 @@
     background-image: url('/public/assets/icon/sun.svg');
     background-repeat: no-repeat;
     background-position: center;
-    animation: pulse 5s ease-in-out infinite;
+    animation: pulse 5s ease-in-out infinite, opacity 0.2s linear;
     filter: drop-shadow(2px 0px 10px rgb(0, 157, 255));
-    animation: opacity 0.2s linear;
 }
 
 @keyframes pulse {
-    0%,
-    100% {
+    0%, 100% {
         transform: scale(1);
     }
     50% {
