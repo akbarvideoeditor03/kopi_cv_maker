@@ -289,7 +289,7 @@ function Help() {
                         {isExpanded[8] ? <i className="bi-chevron-down"></i> : <i className="bi-chevron-up"></i>}
                     </button>
                     <div className="content-collapsible f-center-c" style={{ display: openCollapse[8] ? 'flex' : 'none', }}>
-                        <iframe style={{ borderRadius: '10px' }} width="960" height="540" src="https://www.youtube.com/embed/sv1SvoI1ORE?si=MOx-48u4dyiTsAs5&amp;start=570" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen='true'></iframe>
+                        <iframe style={{ borderRadius: '10px' }} width="960" height="540" src="https://www.youtube.com/embed/sv1SvoI1ORE?si=MOx-48u4dyiTsAs5&amp;start=570" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen={true}></iframe>
                     </div>
                 </div>
                 {
