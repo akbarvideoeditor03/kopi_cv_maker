@@ -28,11 +28,25 @@
     .btn-text-small {
         font-size: 70%;
     }
+
+    .bg-1 {
+        background-image: url('../../public/assets/images/pexels-olly-842548-1.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
 }
 
 @media screen and (min-width: 540.5px) {
     .nav-s {
         display: none;
+    }
+
+    .bg-1 {
+        background-image: url('../../public/assets/images/pexels-olly-842548.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
     }
 }
 

@@ -1,12 +1,5 @@
 /* This is a CSS file specifically for image class and colors background collections. */
 
-.bg-1 {
-    background-image: url('../../public/assets/images/pexels-olly-842548.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
 .bg-2 {
     background-image: url('../../public/assets/images/bg-2.jpg');
     background-repeat: no-repeat;

@@ -49,6 +49,7 @@ function Home() {
                                 Bantuan
                             </RouterLink>
                         </div>
+                        <p>Photo by <a style={{color: 'white'}} target='blank' href="https://www.pexels.com/id-id/foto/pria-memegang-mug-di-depan-laptop-842548/"><b>Andrea Piacquadio {''} <i className="fa-solid fa-external-link"></i></b></a></p>
                     </div>
                 </div>
             </section>
