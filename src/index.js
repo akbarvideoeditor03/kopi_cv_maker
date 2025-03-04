@@ -34,6 +34,7 @@ if (!token) {
             localStorage.removeItem('id');
             localStorage.removeItem('role');
             localStorage.removeItem('token');
+            localStorage.removeItem('lastActivity');
             window.location.href = '/';
         }, 3600000);
     };
@@ -52,6 +53,7 @@ if (!token) {
                 localStorage.removeItem('id');
                 localStorage.removeItem('role');
                 localStorage.removeItem('token');
+                localStorage.removeItem('lastActivity');
                 window.location.href = '/';
             } else {
                 startLogoutTimer();

@@ -38,6 +38,7 @@ function Dropdown() {
                 localStorage.removeItem('id');
                 localStorage.removeItem('role');
                 localStorage.removeItem('token');
+                localStorage.removeItem('lastActivity');
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil',

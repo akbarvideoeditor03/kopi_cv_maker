@@ -1,25 +1,26 @@
 .btn-sun {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     background-image: url('/public/assets/icon/sun.svg');
     background-repeat: no-repeat;
     background-position: center;
     animation: pulse 5s ease-in-out infinite;
+    filter: drop-shadow(2px 0px 10px rgb(0, 157, 255));
 }
 
 @keyframes pulse {
     0%,
     100% {
-        transform: scale(0.8);
+        transform: scale(1);
     }
     50% {
-        transform: scale(0.9);
+        transform: scale(1.1);
     }
 }
 
 .btn-moon {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     background-image: url('/public/assets/icon/moon.svg');
     background-repeat: no-repeat;
     background-position: center;
@@ -30,9 +31,9 @@
 @keyframes pulse {
     0%,
     100% {
-        transform: scale(0.8);
+        transform: scale(0.9);
     }
     50% {
-        transform: scale(0.9);
+        transform: scale(1);
     }
 }
