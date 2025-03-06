@@ -70,7 +70,6 @@ function EditTemplat() {
                         caption: dataTemplat.caption,
                         link_page: dataTemplat.link_page,
                     };
-                    console.log(updatedTemplat);
                     dispatch(updateTemplat(id, updatedTemplat));
                 }
             } else {

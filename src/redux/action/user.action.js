@@ -143,6 +143,7 @@ export const createUserSelf = (user) => async (dispatch) => {
 
 //Login
 export const postUserLogin = (user) => async (dispatch) => {
+    localStorage.removeItem('lastActivity');
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
         const response = await fetch(`${baseUrl}/kopi/user/login`, {
@@ -698,7 +699,6 @@ export const viewAllTemplateId = (id) => {
 };
 
 export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
-    console.log(updatedTemplat);
     dispatch({ type: userTypes.UPDATE_TEMPLAT_REQUEST });
     try {
         const token = localStorage.getItem('token');

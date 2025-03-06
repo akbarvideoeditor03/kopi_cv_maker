@@ -26,8 +26,6 @@ function Login() {
     useEffect(() => {
         if(token) {
             dispatch(getUserId(id))
-        } else {
-            console.log('Silahkan login terlebih dahulu');
         }
     }, [dispatch, userList.id])
 
@@ -96,7 +94,7 @@ function Login() {
             };
             dispatch(gLogin(googleResponse));
         } catch (error) {
-            console.log('Google Login Error:', error);
+            // console.log('Google Login Error:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Google Login Gagal',
@@ -136,7 +134,11 @@ function Login() {
             };
             dispatch(otpRequestCode(otpReq));
         } catch (error) {
-            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Terjadi kesalahan ${error}. Coba lagi`,
+            });
         }
     };
 

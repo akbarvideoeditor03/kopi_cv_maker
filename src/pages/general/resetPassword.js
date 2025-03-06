@@ -118,7 +118,11 @@ function PasswordReset() {
                 };
                 dispatch(resetPassword(makeNewPassword));
             } catch (error) {
-                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Terjadi kesalahan ${error}. Coba lagi`,
+                });
             }
         } else {
             try {
@@ -138,7 +142,11 @@ function PasswordReset() {
                 };
                 dispatch(resetPassword(makeNewPassword));
             } catch (error) {
-                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Terjadi kesalahan ${error}. Coba lagi`,
+                });
             }
         }
     };
