@@ -57,7 +57,7 @@
     box-shadow: 0px 5px 10px hsla(0, 0%, 100%, 0.388);
 }
 .dark-mode .generalPg-bg {
-    background-image: url('../../public/assets/images/about-bg.jpg');
+    background-image: url('https://raw.githubusercontent.com/akbarvideoeditor03/kopi_cv_maker/refs/heads/master/public/assets/images/about-bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
