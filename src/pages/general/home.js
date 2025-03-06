@@ -1,9 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import Switch from '../web-component/switch';
+import { getUserId } from '../../redux/action/user.action';
 
 function Home() {
+    const dispatch = useDispatch();
     const token = localStorage.getItem('token');
+    const id = localStorage.getItem('id')
+    const { userList, isLoading } = useSelector((state) => state.userReducer);
+    const [nama, setNama] = useState('...');
+
+    useEffect(() => {
+        if (userList?.nama === undefined || userList?.nama === null) {
+            setNama('...');
+        } else {
+            setNama(userList.nama);
+        }
+    }, [userList]);
+
+    useEffect(() => {
+        if(token) {
+            dispatch(getUserId(id));
+        }
+    }, [dispatch, id])
+
+
     return (
         <main>
             <section className="container bg-1 f-center-c lp-section c-white">
@@ -12,6 +33,9 @@ function Home() {
                         style={{ paddingRight: '20vw' }}
                         className="container col-f"
                     >
+                        {
+                            token ? <h1>Halo, {isLoading ? '' : `${nama}`}</h1> : ''
+                        }
                         <h1 className="text-h1">🚀 Bangun CV Anda Sekarang!</h1>
                         <p>
                             Mulai perjalanan karier Anda dengan CV menarik, dan
@@ -49,7 +73,7 @@ function Home() {
                                 Bantuan
                             </RouterLink>
                         </div>
-                        <p>Photo by <a style={{color: 'white'}} target='blank' href="https://www.pexels.com/id-id/foto/pria-memegang-mug-di-depan-laptop-842548/"><b>Andrea Piacquadio {''} <i className="fa-solid fa-external-link"></i></b></a></p>
+                        <p>Photo by <a style={{ color: 'white' }} target='blank' href="https://www.pexels.com/id-id/foto/pria-memegang-mug-di-depan-laptop-842548/"><b>Andrea Piacquadio {''} <i className="fa-solid fa-external-link"></i></b></a></p>
                     </div>
                 </div>
             </section>

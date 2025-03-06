@@ -4,7 +4,7 @@
     background-image: url('/public/assets/icon/sun.svg');
     background-repeat: no-repeat;
     background-position: center;
-    animation: pulse 5s ease-in-out infinite, opacity 0.2s linear;
+    animation: pulse 5s ease-in-out infinite, opacity 0.3s linear;
     filter: drop-shadow(2px 0px 10px rgb(0, 157, 255));
 }
 
@@ -19,6 +19,9 @@
 
 @keyframes opacity {
     0% {
+        opacity: 0;
+    }
+    90% {
         opacity: 0;
     }
     100% {
