@@ -70,7 +70,7 @@ function RequestOtp() {
                         >
                             <div className="container col-f-0">
                                 <div className='card-mini m-b1'>
-                                    <p><i className="bi-emoji-smile"></i> Pastikan email kamu aktif ya...</p>
+                                    <p><i className="bi-emoji-smile"></i> Pastikan email kamu terdaftar dan aktif ya...</p>
                                 </div>
                                 <label>Email</label>
                                 <input

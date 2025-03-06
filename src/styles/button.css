@@ -13,6 +13,29 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
+.btn-reset-pw {
+    min-height: 15px;
+    text-align: right;
+    font-weight: bold;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 7px;
+    border-style: none;
+    cursor: pointer;
+    color: rgb(0, 106, 255) !important;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.btn-reset-pw:hover {
+    background-color: transparent !important;
+    color: rgb(64, 111, 176) !important;
+}
+
+.btn-reset-pw:active {
+    background-color: transparent !important;
+    color: rgb(37, 67, 109) !important;
+}
+
 .btn-primary {
     background-color: rgb(32, 76, 137);
 }

@@ -70,3 +70,24 @@
 .dark-mode footer {
     background-color: #1b1b1b;
 }
+.dark-mode .btn-reset-pw {
+    min-height: 15px;
+    text-align: right;
+    font-weight: bold;
+    align-items: center;
+    font-size: 16px;
+    border-radius: 7px;
+    border-style: none;
+    cursor: pointer;
+    color: rgb(0, 162, 255) !important;
+    background-color: rgba(0, 0, 0, 0);
+}
+.dark-mode .btn-reset-pw:hover {
+    background-color: transparent !important;
+    color: white !important;
+}
+.dark-mode .btn-reset-pw:active {
+    background-color: transparent !important;
+    color: rgb(182, 182, 182) !important;
+}
+

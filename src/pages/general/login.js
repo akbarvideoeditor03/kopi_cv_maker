@@ -1,23 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { postUserLogin, gLogin } from '../../redux/action/user.action';
+import { postUserLogin, gLogin, getUserId, otpRequestCode } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function Login() {
+    const dispatch = useDispatch();
+    const token = localStorage.getItem('token');
+    const id = localStorage.getItem('id')
     const data = localStorage.getItem("dark-mode");
     const [darkMode, setDarkMode] = useState();
+    const { userList } = useSelector((state) => state.userReducer);
+    const [userData, setUserData] = useState({
+        email: '',
+        password: '',
+    });
+
     useEffect(() => {
         if (data === "true") {
             setDarkMode(true);
         }
     }, []);
-    const dispatch = useDispatch();
-    const [userData, setUserData] = useState({
-        email: '',
-        password: '',
-    });
+    
+    useEffect(() => {
+        if(token) {
+            dispatch(getUserId(id))
+        } else {
+            console.log('Silahkan login terlebih dahulu');
+        }
+    }, [dispatch, userList.id])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -94,6 +106,39 @@ function Login() {
         }
     };
 
+    const handleSubmitWithEmail = (e) => {
+        e.preventDefault();
+        if (!userList?.email) {
+            Swal.fire({
+                icon: 'error',
+                text: 'Opps... Email Kosong',
+                timer: 2000,
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                return;
+            });
+        }
+        try {
+            Swal.fire({
+                title: 'Sebentar...',
+                html: '<div className="custom-loader"></div>',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+            const otpReq = {
+                email: userList.email,
+            };
+            dispatch(otpRequestCode(otpReq));
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <main className="container col-f f-center-c">
@@ -145,9 +190,12 @@ function Login() {
                                         placeholder="Masukkan Password"
                                     />
                                 </div>
-                                <div className="container col-f-0 f-center-r">
-                                    <a href="/user/otprequest">Reset Password?</a>
-                                </div>
+                                {
+                                    token ? <button className='btn-reset-pw' onClick={handleSubmitWithEmail}>Reset Password?</button> :
+                                    <div className="container col-f-0 f-center-r">
+                                        <a href="/user/otprequest">Reset Password?</a>
+                                    </div>
+                                }
                                 <button
                                     style={{
                                         fontSize: '1rem',
