@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { postUserLogin, gLogin, getUserId, otpRequestCode } from '../../redux/action/user.action';
+import { postUserLogin, otpRequestCode } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function Login() {
@@ -75,32 +74,6 @@ function Login() {
             dispatch(postUserLogin(userLogin));
         } catch (error) {
             console.log(error);
-        }
-    };
-
-    const handleGLogin = async (response) => {
-        try {
-            Swal.fire({
-                title: 'Sebentar...',
-                html: '<div className="custom-loader"></div>',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-            });
-            const googleResponse = {
-                token: response.credential,
-            };
-            dispatch(gLogin(googleResponse));
-        } catch (error) {
-            // console.log('Google Login Error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Google Login Gagal',
-                text: 'Terjadi kesalahan saat mencoba login dengan Google.',
-                showConfirmButton: true,
-            });
         }
     };
 
@@ -226,17 +199,6 @@ function Login() {
                                 >
                                     Daftar
                                 </RouterLink>
-                                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-                                    <div className='container col-f full-width'>
-                                        <GoogleLogin
-                                            onSuccess={handleGLogin}
-                                            onError={() => {
-                                                dispatch(setUserData("Gagal Login dengan Google"));
-                                            }}
-                                            useOneTap
-                                        />
-                                    </div>
-                                </GoogleOAuthProvider>
                             </div>
                         </div>
                     </div>

@@ -106,7 +106,7 @@ export const createUserSelf = (user) => async (dispatch) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups...',
-                text: 'Email sudah ada yang punya, silakan gunakan email lain.',
+                text: 'Email sudah dipakai, silakan masuk atau gunakan email lain.',
                 showConfirmButton: false,
                 timer: 3000,
                 allowEscapeKey: false,
@@ -359,7 +359,7 @@ export const gLogin = (response) => {
             } else if (result.status === 400) {
                 Swal.fire({
                     icon: 'error',
-                    text: 'Email sudah ada yang punya, silakan gunakan email lain.',
+                    text: 'Email sudah dipakai, silakan masuk atau gunakan email lain.',
                     showConfirmButton: true,
                     allowEscapeKey: false,
                     allowOutsideClick: false,

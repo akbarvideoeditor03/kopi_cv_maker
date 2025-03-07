@@ -5,9 +5,12 @@ import {
     createUserSelf,
     uploadToSupabase,
 } from '../../redux/action/user.action';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { gLogin} from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 const Register = () => {
+    const dispatch = useDispatch();
     const data = localStorage.getItem("dark-mode");
     const [darkMode, setDarkMode] = useState();
     useEffect(() => {
@@ -16,7 +19,6 @@ const Register = () => {
         }
     }, []);
 
-    const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         nama: '',
         no_telp: '',
@@ -31,6 +33,7 @@ const Register = () => {
         .trim()
         .split(/\s+/)
         .filter(Boolean).length;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -179,6 +182,31 @@ const Register = () => {
             });
         }
     };
+
+    const handleGLogin = async (response) => {
+            try {
+                Swal.fire({
+                    title: 'Sebentar...',
+                    html: '<div className="custom-loader"></div>',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+                const googleResponse = {
+                    token: response.credential,
+                };
+                dispatch(gLogin(googleResponse));
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Google Login Gagal',
+                    text: `Terjadi kesalahan saat mencoba login dengan Google. ${error}`,
+                    showConfirmButton: true,
+                });
+            }
+        };
 
     return (
         <main className="container col-f f-center-c">
@@ -343,6 +371,27 @@ const Register = () => {
                                 >
                                     Masuk
                                 </RouterLink>
+                                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+                                    <div className='container col-f full-width'>
+                                        <GoogleLogin
+                                            context='signup'
+                                            logo_alignment='center'
+                                            shape='pill'
+                                            size='large'
+                                            text='signup_with'
+                                            onSuccess={handleGLogin}
+                                            onError={() => {
+                                                dispatch(setUserData("Gagal Daftar dengan Google. Coba Lagi"));
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: 'Gagal Daftar dengan Google!. Coba Lagi',
+                                                });
+                                            }}
+                                            useOneTap
+                                        />
+                                    </div>
+                                </GoogleOAuthProvider>
                             </div>
                         </div>
                     </div>
