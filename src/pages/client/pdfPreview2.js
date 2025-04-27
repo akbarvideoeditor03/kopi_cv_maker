@@ -215,7 +215,7 @@ const MyPdf2 = ({
         <Document>
             <Page wrap style={[styles.page]}>
                 <Image
-                    src="https://raw.githubusercontent.com/akbarvideoeditor03/kopi_cv_maker/refs/heads/kopi-branch-1/public/assets/bg/Template%20CV%201.png"
+                    src="https://raw.githubusercontent.com/akbarvideoeditor03/kopi_cv_maker/refs/heads/master/public/assets/bg/Template%20CV%201.png"
                     style={styles.backgroundImage}
                     fixed
                 />
