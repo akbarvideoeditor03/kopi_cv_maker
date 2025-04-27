@@ -210,6 +210,7 @@ const MyPdf2 = ({
     pelatihan,
     prestasiKerja,
 }) => {
+    const userID = userList?.id;
     return (
         <Document>
             <Page wrap style={[styles.page]}>
@@ -334,7 +335,9 @@ const MyPdf2 = ({
                                 </Text>
                             </View>
                         </View>
-                        <View style={[styles.container ,styles.colContainer ,styles.hLineBlack, { marginTop: 12 }]}>
+                        {
+                            pengalamanKerja.some((item) => item.id_user === userID) && (
+                                <View style={[styles.container ,styles.colContainer ,styles.hLineBlack, { marginTop: 12 }]}>
                             <Text
                                 style={{
                                     fontSize: '14px',
@@ -442,6 +445,8 @@ const MyPdf2 = ({
                                 );
                             })}
                         </View>
+                            )
+                        }
                         <View style={[styles.hLineBlack, styles.container, styles.colContainer, { marginTop: 12 }]}>
                             <Text
                                 style={{
@@ -513,7 +518,9 @@ const MyPdf2 = ({
                                 );
                             })}
                         </View>
-                        <View style={[styles.container, styles.colContainer, styles.hLineBlack, { marginTop: "12px" }]}>
+                        {
+                            pelatihan.some((item) => item.id_user === userID) && (
+                                <View style={[styles.container, styles.colContainer, styles.hLineBlack, { marginTop: "12px" }]}>
                             <Text
                                 style={{
                                     fontSize: '14px',
@@ -554,6 +561,8 @@ const MyPdf2 = ({
                                 );
                             })}
                         </View>
+                            )
+                        }
                     </View>
                 </View>
             </Page>
