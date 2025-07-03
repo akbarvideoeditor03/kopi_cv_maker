@@ -164,7 +164,7 @@ const UpdateUserSelf = ({ userId }) => {
         }
     };
 
-    if (token && role === 'user' || isWebsite) {
+    if (token && (role === 'user' || role === isWebsite)) {
         return (
             <main className="container col-f f-center-c">
                 <section className="card container row-f f-wrap-r full-width section-max">

@@ -120,7 +120,7 @@ function HomeUser() {
     // }, [userList.email]);
 
 
-    if (token && role === 'user' || isWebsite) {
+    if (token && (role === 'user' || role === isWebsite)) {
         const tentang = userList.tentang
         const tentangParagraf = tentang?.split('\n').map((tentangs, index) => (
             <p style={{ lineHeight: '1.5rem' }} key={index}>{tentangs} <br /></p>

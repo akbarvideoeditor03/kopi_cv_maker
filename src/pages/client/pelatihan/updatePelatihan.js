@@ -85,7 +85,7 @@ const UpdatePelatihan = () => {
             });
         }
     };
-    if (token && role === 'user' || isWebsite) {
+    if (token && (role === 'user' || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
