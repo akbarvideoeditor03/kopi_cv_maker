@@ -45,6 +45,9 @@
 .dark-mode .header-img {
     filter: invert(1);
 }
+.dark-mode .login-icon {
+    filter: invert(1);
+}
 .dark-mode .text-bg {
     background-color: #191919;
 }

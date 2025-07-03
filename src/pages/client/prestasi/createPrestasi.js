@@ -149,19 +149,7 @@ function CreatePrestasi() {
             </main>
         );
     } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oow...',
-            text: 'Akses Dilarang!',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            showCancelButton: false,
-            confirmButtonText: 'Ok',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = `/user/login`;
-            }
-        });
+        window.location.href = `/user/login`;
     }
 }
 

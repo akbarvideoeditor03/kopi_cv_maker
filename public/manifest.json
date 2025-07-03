@@ -1,5 +1,5 @@
 {
-    "short_name": "KOPI",
+    "short_name": "KOPI CV Maker",
     "name": "Karajo Pintar CV Maker",
     "icons": [
         {
@@ -21,5 +21,5 @@
     "start_url": ".",
     "display": "standalone",
     "theme_color": "#000000",
-    "background_color": "#000000FF"
+    "background_color": "#1C1006FF"
 }

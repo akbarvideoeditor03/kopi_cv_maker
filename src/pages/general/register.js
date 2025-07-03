@@ -217,7 +217,7 @@ const Register = () => {
                         <div className="container f-center-c">
                             <img
                                 className="login-icon"
-                                src="./assets/icon/logo-bw.png"
+                                src="/assets/icon/logo-bw.png"
                                 alt=""
                             />
                         </div>

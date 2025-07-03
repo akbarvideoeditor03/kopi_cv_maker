@@ -47,7 +47,7 @@ function WebHeader() {
                         <a href="/">
                             <img
                                 className="header-img"
-                                src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/Logo-bw.png"
+                                src="/assets/icon/Logo-bw.png"
                                 alt="logo-bw.png"
                             />
                         </a>
@@ -64,7 +64,7 @@ function WebHeader() {
                     <a href="/">
                         <img
                             className="header-img"
-                            src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/Logo-bw.png"
+                            src="/assets/icon/Logo-bw.png"
                             alt="logo-bw.png"
                         />
                     </a>

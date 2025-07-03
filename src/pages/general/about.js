@@ -25,7 +25,7 @@ function About() {
                     >
                         <img
                             className="about-img"
-                            src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/logo.png"
+                            src="/assets/icon/logo.png"
                             alt=""
                         />
                     </div>
