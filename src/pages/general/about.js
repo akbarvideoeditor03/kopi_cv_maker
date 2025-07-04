@@ -25,7 +25,7 @@ function About() {
                     >
                         <img
                             className="about-img"
-                            src="/assets/icon/logo.png"
+                            src="/assets/icon/Logo.png"
                             alt=""
                         />
                     </div>
