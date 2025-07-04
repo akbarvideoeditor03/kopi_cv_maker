@@ -19,6 +19,7 @@ import {
     readPelatihan,
     readPrestasi,
 } from '../../redux/action/user.action';
+import NotifDownload from '../web-component/notifDownload';
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import CustomFontRegular from '../font/Figtree-Regular.ttf';
@@ -155,16 +156,13 @@ function PDFPreview2() {
                         <h1 className="t-center">
                             Yeay! Ini adalah preview dari CV yang kamu buat 😊
                         </h1>
-                        <a href="/pdfpreview" className='btn btn-primary-b' style={{width:'fit-content'}}>
-                            <div className='container' style={{gap:'0.3rem'}}>
+                        <a href="/pdfpreview" className='btn btn-primary-b' style={{ width: 'fit-content' }}>
+                            <div className='container' style={{ gap: '0.3rem' }}>
                                 <i className="bi-arrow-left-circle"></i>
                                 <p>Template CV</p>
                             </div>
                         </a>
-                        <div className='card-mini container col-f'>
-                            <p><i className="bi-exclamation-triangle-fill"></i> Mohon maaf, untuk sementara fitur PDF Preview belum dapat digunakan bagi seluruh pengguna mobile.</p>
-                            <p>Fitur ini dapat digunakan secara normal di browser <strong>Mozila Firefox <i className="bi-browser-firefox"></i></strong></p>
-                        </div>
+                        <NotifDownload />
                     </div>
                     {isLoading ? (
                         <div className="container col-f f-center-c list-container">
@@ -305,6 +303,7 @@ const MyPdf2 = ({
                                         style={{
                                             textDecoration: 'none',
                                         }}
+                                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${userList.email}&su=Judul_pesan&body=Isi_pesan`}
                                     >
                                         {userList.email}
                                     </Link>{' '}
@@ -337,114 +336,114 @@ const MyPdf2 = ({
                         </View>
                         {
                             pengalamanKerja.some((item) => item.id_user === userID) && (
-                                <View style={[styles.container ,styles.colContainer ,styles.hLineBlack, { marginTop: 12 }]}>
-                            <Text
-                                style={{
-                                    fontSize: '14px',
-                                    fontWeight: 'bold',
-                                }}
-                            >
-                                Pengalaman Kerja
-                            </Text>
-                            {pengalamanKerja.map((item) => {
-                                const prestasiId = item.id;
-                                return (
-                                    <View
-                                        key={item.id}
-                                        style={[styles.container, styles.rowContainer]}
+                                <View style={[styles.container, styles.colContainer, styles.hLineBlack, { marginTop: 12 }]}>
+                                    <Text
+                                        style={{
+                                            fontSize: '14px',
+                                            fontWeight: 'bold',
+                                        }}
                                     >
-                                        <View
-                                            style={[
-                                                {
-                                                    paddingBottom: '10px',
-                                                },
-                                                styles.container,
-                                                styles.colContainer,
-                                            ]}
-                                        >
-                                            <Text
-                                                style={{
-                                                    fontSize: '11px',
-                                                    textAlign: 'justify',
-                                                    fontWeight: 'bold',
-                                                }}
+                                        Pengalaman Kerja
+                                    </Text>
+                                    {pengalamanKerja.map((item) => {
+                                        const prestasiId = item.id;
+                                        return (
+                                            <View
+                                                key={item.id}
+                                                style={[styles.container, styles.rowContainer]}
                                             >
-                                                {item.lokasi}
-                                            </Text>
-                                            <Text
-                                                style={{
-                                                    fontSize: '11px',
-                                                    textAlign: 'justify',
-                                                }}
-                                            >
-                                                {dayjs(item.tahun_mulai)
-                                                    .locale('id')
-                                                    .format('MMMM YYYY')}{' '}
-                                                - {item.tahun_selesai}
-                                            </Text>
-                                            <Text
-                                                style={{
-                                                    fontSize: '11px',
-                                                    textAlign: 'justify',
-                                                    lineHeight: '16px'
-                                                }}
-                                            >
-                                                {item.detail}
-                                            </Text>
-                                            {prestasiKerja.some(
-                                                (item) =>
-                                                    item.id_pengalaman_kerja ===
-                                                    prestasiId
-                                            ) && (
+                                                <View
+                                                    style={[
+                                                        {
+                                                            paddingBottom: '10px',
+                                                        },
+                                                        styles.container,
+                                                        styles.colContainer,
+                                                    ]}
+                                                >
                                                     <Text
                                                         style={{
-                                                            fontSize: '12px',
+                                                            fontSize: '11px',
+                                                            textAlign: 'justify',
                                                             fontWeight: 'bold',
                                                         }}
                                                     >
-                                                        Prestasi Kerja
+                                                        {item.lokasi}
                                                     </Text>
-                                                )}
-                                            {prestasiKerja.map((item) =>
-                                                item.id_pengalaman_kerja ===
-                                                    prestasiId ? (
-                                                    <View key={item.id}
-                                                        style={[
-                                                            styles.container,
-                                                            styles.colContainer
-                                                        ]}
+                                                    <Text
+                                                        style={{
+                                                            fontSize: '11px',
+                                                            textAlign: 'justify',
+                                                        }}
                                                     >
-                                                        <Text
-                                                            style={[
-                                                                {
-                                                                    fontSize: '11px',
-                                                                    textAlign:
-                                                                        'justify',
-                                                                },
-                                                            ]}
-                                                        >
-                                                            {item.prestasi}
-                                                        </Text>
-                                                        <Text
-                                                            style={{
-                                                                fontSize: '11px',
-                                                                textAlign: 'justify',
-                                                                fontWeight: 'black'
-                                                            }}
-                                                        >
-                                                            Tahun{' '}
-                                                            {item.tahun.slice(0, 4)}
-                                                        </Text>
-                                                    </View>
-                                                ) : (
-                                                    ''
-                                                )
-                                            )}
-                                        </View>
-                                    </View>
-                                );
-                            })}
-                        </View>
+                                                        {dayjs(item.tahun_mulai)
+                                                            .locale('id')
+                                                            .format('MMMM YYYY')}{' '}
+                                                        - {item.tahun_selesai}
+                                                    </Text>
+                                                    <Text
+                                                        style={{
+                                                            fontSize: '11px',
+                                                            textAlign: 'justify',
+                                                            lineHeight: '16px'
+                                                        }}
+                                                    >
+                                                        {item.detail}
+                                                    </Text>
+                                                    {prestasiKerja.some(
+                                                        (item) =>
+                                                            item.id_pengalaman_kerja ===
+                                                            prestasiId
+                                                    ) && (
+                                                            <Text
+                                                                style={{
+                                                                    fontSize: '12px',
+                                                                    fontWeight: 'bold',
+                                                                }}
+                                                            >
+                                                                Prestasi Kerja
+                                                            </Text>
+                                                        )}
+                                                    {prestasiKerja.map((item) =>
+                                                        item.id_pengalaman_kerja ===
+                                                            prestasiId ? (
+                                                            <View key={item.id}
+                                                                style={[
+                                                                    styles.container,
+                                                                    styles.colContainer
+                                                                ]}
+                                                            >
+                                                                <Text
+                                                                    style={[
+                                                                        {
+                                                                            fontSize: '11px',
+                                                                            textAlign:
+                                                                                'justify',
+                                                                        },
+                                                                    ]}
+                                                                >
+                                                                    {item.prestasi}
+                                                                </Text>
+                                                                <Text
+                                                                    style={{
+                                                                        fontSize: '11px',
+                                                                        textAlign: 'justify',
+                                                                        fontWeight: 'black'
+                                                                    }}
+                                                                >
+                                                                    Tahun{' '}
+                                                                    {item.tahun.slice(0, 4)}
+                                                                </Text>
+                                                            </View>
+                                                        ) : (
+                                                            ''
+                                                        )
+                                                    )}
+                                                </View>
+                                            </View>
+                                        );
+                                    })}
+                                </View>
                             )
                         }
                         <View style={[styles.hLineBlack, styles.container, styles.colContainer, { marginTop: 12 }]}>
@@ -495,7 +494,7 @@ const MyPdf2 = ({
                                                 styles.container,
                                                 styles.colContainer,
                                                 {
-                                                    width:'100px'
+                                                    width: '100px'
                                                 }
                                             ]}
                                         >
@@ -521,46 +520,46 @@ const MyPdf2 = ({
                         {
                             pelatihan.some((item) => item.id_user === userID) && (
                                 <View style={[styles.container, styles.colContainer, styles.hLineBlack, { marginTop: "12px" }]}>
-                            <Text
-                                style={{
-                                    fontSize: '14px',
-                                    fontWeight: 'bold',
-                                }}
-                            >
-                                Pelatihan
-                            </Text>
-                            {pelatihan.map((item) => {
-                                return (
-                                    <View
-                                        key={item.id}
-                                        style={[styles.container, styles.colContainer]}
+                                    <Text
+                                        style={{
+                                            fontSize: '14px',
+                                            fontWeight: 'bold',
+                                        }}
                                     >
-                                        <Text
-                                            style={[
-                                                {
-                                                    fontSize: '11px',
-                                                    textAlign: 'justify',
-                                                },
-                                            ]}
-                                        >
-                                            {item.pelatihan}
-                                        </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                                fontWeight:'bold'
-                                            }}
-                                        >
-                                            {dayjs(item.tahun_mulai)
-                                                .locale('id')
-                                                .format('MMMM YYYY')}{' '}
-                                            - {item.tahun_selesai}
-                                        </Text>
-                                    </View>
-                                );
-                            })}
-                        </View>
+                                        Pelatihan
+                                    </Text>
+                                    {pelatihan.map((item) => {
+                                        return (
+                                            <View
+                                                key={item.id}
+                                                style={[styles.container, styles.colContainer]}
+                                            >
+                                                <Text
+                                                    style={[
+                                                        {
+                                                            fontSize: '11px',
+                                                            textAlign: 'justify',
+                                                        },
+                                                    ]}
+                                                >
+                                                    {item.pelatihan}
+                                                </Text>
+                                                <Text
+                                                    style={{
+                                                        fontSize: '11px',
+                                                        textAlign: 'justify',
+                                                        fontWeight: 'bold'
+                                                    }}
+                                                >
+                                                    {dayjs(item.tahun_mulai)
+                                                        .locale('id')
+                                                        .format('MMMM YYYY')}{' '}
+                                                    - {item.tahun_selesai}
+                                                </Text>
+                                            </View>
+                                        );
+                                    })}
+                                </View>
                             )
                         }
                     </View>

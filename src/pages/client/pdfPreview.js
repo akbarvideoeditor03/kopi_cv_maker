@@ -23,6 +23,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import CustomFontRegular from '../font/Figtree-Regular.ttf';
 import CustomFontBold from '../font/Figtree-Bold.ttf';
+import NotifDownload from '../web-component/notifDownload';
 dayjs.locale('id');
 const id = localStorage.getItem('id');
 const token = localStorage.getItem('token');
@@ -132,10 +133,7 @@ function PDFPreview() {
                                 <p>Template CV</p>
                             </div>
                         </a>
-                        <div className='card-mini container col-f'>
-                            <p><i className="bi-exclamation-triangle-fill"></i> Mohon maaf, untuk sementara fitur PDF Preview belum dapat digunakan bagi seluruh pengguna mobile.</p>
-                            <p>Fitur ini dapat digunakan secara normal di browser <strong>Mozila Firefox <i className="bi-browser-firefox"></i></strong></p>
-                        </div>
+                        <NotifDownload/>
                     </div>
                     {isLoading ? (
                         <div className="container col-f f-center-c list-container">
@@ -234,6 +232,7 @@ const MyPdf = ({
                                     style={{
                                         textDecoration: 'none',
                                     }}
+                                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${userList.email}&su=Judul_pesan&body=Isi_pesan`}
                                 >
                                     {userList.email}
                                 </Link>{' '}

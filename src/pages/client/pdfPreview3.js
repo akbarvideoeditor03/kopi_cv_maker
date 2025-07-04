@@ -17,6 +17,7 @@ import {
     readPelatihan,
     readPrestasi,
 } from '../../redux/action/user.action';
+import NotifDownload from '../web-component/notifDownload';
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 dayjs.locale('id');
@@ -135,10 +136,7 @@ function PDFPreviewATS() {
                                 <p>Template CV</p>
                             </div>
                         </a>
-                        <div className='card-mini container col-f'>
-                            <p><i className="bi-exclamation-triangle-fill"></i> Mohon maaf, untuk sementara fitur PDF Preview belum dapat digunakan bagi seluruh pengguna mobile.</p>
-                            <p>Fitur ini dapat digunakan secara normal di browser <strong>Mozila Firefox <i className="bi-browser-firefox"></i></strong></p>
-                        </div>
+                        <NotifDownload/>
                     </div>
                     {isLoading ? (
                         <div className="container col-f f-center-c list-container">
