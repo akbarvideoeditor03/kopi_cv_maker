@@ -540,6 +540,10 @@
     background-color: #ededed;
 }
 
+.t-italic {
+    font-style: italic;
+}
+
 .footer-section {
     min-height: 200px;
     flex-grow: 1;

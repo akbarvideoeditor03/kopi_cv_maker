@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import dayjs from 'dayjs';
+import 'dayjs/locale/id'
 
 function WebFooter() {
+    const yearCopyright = dayjs().year();
     return (
         <footer className="container col-f f-1">
             <section className="container row-f f-1 f-wrap">
@@ -118,7 +121,7 @@ function WebFooter() {
                     <i style={{ color: 'red' }} className="bi-heart-fill"></i>{' '}
                     by Ahmad Akbar
                 </p>
-                <p>All Right Reserved © 2025</p>
+                <p>All Right Reserved © {`${yearCopyright}`}</p>
             </section>
         </footer>
     );

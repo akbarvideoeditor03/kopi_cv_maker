@@ -8,6 +8,7 @@ import {
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { gLogin} from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
+import 'animate.css';
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -33,6 +34,32 @@ const Register = () => {
         .trim()
         .split(/\s+/)
         .filter(Boolean).length;
+
+    const infoAkun = () => {
+            Swal.fire({
+                title: "Cuma buat CV, kok harus login? 🙄",
+                html: `
+                <div class='container col-f'>
+                    <p>Sebagai bentuk penghargaan atas waktu dan upaya Anda dalam menyusun CV di situs ini, kami menyimpan data Anda secara aman agar dapat diakses kembali kapan pun dibutuhkan.</p>
+                    <sub class='t-italic'>Admin KOPI</sub>
+                </div>
+                `,
+                showClass: {
+                    popup: `
+                    animate__animated
+                    animate__fadeInUp
+                    animate__faster
+                    `
+                },
+                hideClass: {
+                    popup: `
+                    animate__animated
+                    animate__fadeOutDown
+                    animate__faster
+                    `
+                }
+            });
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -213,8 +240,8 @@ const Register = () => {
             <section className="card container row-f f-wrap-r full-width section-max">
                 <div className="container col-f login-left f-1 f-between">
                     <div className="container col-f">
-                        <h1>Daftar</h1>
-                        <div className="container f-center-c">
+                        <h1>Daftar <i className="bi-question-circle fwb" onClick={infoAkun}></i></h1>
+                        <div className="container f-center-c" style={{minHeight:'7.5rem'}}>
                             <img
                                 className="login-icon"
                                 src="/assets/icon/Logo-bw.png"
