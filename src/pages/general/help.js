@@ -262,13 +262,11 @@ function Help() {
                                 Preview CV untuk melihat CV
                             </li>
                             <li>
-                                Untuk download CV, kamu cukup menekan tombol panah ke bawah seperti di gambar.
-                            </li>
-                            <li style={{ listStyle: 'none', marginTop: '1rem' }}>
-                                <img style={{ maxWidth: "240px", width: "100%" }} src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/images/download-location.jpg" alt="" />
+                                <p>Untuk download CV, kamu cukup menekan tombol panah ke bawah seperti di gambar.</p>
+                                <img style={{ maxWidth: "240px", width: "100%", borderRadius:'0.5rem', marginTop:'0.5rem' }} src="https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/images/download-location.jpg" alt="" />
                             </li>
                             <li>
-                                Untuk pengguna mobile, fitur preview PDF sementara ini belum dapat digunakan. Namun, dokumen PDF tetap bisa di download seperti biasa. Dengan cara :
+                                <p className='fwb' style={{color:'yellow', display:'inline'}}>Untuk pengguna mobile, fitur preview PDF sementara ini belum dapat digunakan.</p> Namun, dokumen PDF tetap bisa diunduh seperti biasa. Dengan cara :
                                 <ul style={{ listStyle: 'inside' }}>
                                     <li>Klik, dan tahan tombol Open</li>
                                     <li style={{ listStyle: 'none' }}>
