@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/id'
 
 function WebFooter() {
+    const token = localStorage.getItem('token');
     const yearCopyright = dayjs().year();
     return (
         <footer className="container col-f f-1">
@@ -26,7 +27,7 @@ function WebFooter() {
                     </p>
                     <ul>
                         <li>
-                            <a className="social-media" href="/">
+                            <a className="social-media" href={`${token ? '/home' : '/user/login'}`}>
                                 Buat CV Sekarang
                             </a>
                         </li>
@@ -104,6 +105,22 @@ function WebFooter() {
                             />{' '}
                             Ahmad Akbar
                         </RouterLink>
+                    </div>
+                </div>
+                <div className="footer-section f-1">
+                    <p style={{ color: '#ffc400' }} className="fw6">
+                        Kontak & Alamat Kami
+                    </p>
+                    <div className="container col-f">
+                        <RouterLink
+                            className="social-media"
+                            target={`${token ? 'blank' : ''}`}
+                            to={`${token ? 'https://mail.google.com/mail/?view=cm&fs=1&to=akbarstudiowebsite03@gmail.com&su=Laporan_Bug&body=Halo_Admin' : '/user/login'}`}
+                        >
+                            <i className="bi bi-envelope-fill fwb"></i>
+                            Email
+                        </RouterLink>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d230.43980423242738!2d103.62808566745915!3d-1.6160288000000032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e25899aa1b147fd%3A0x692fe2caade5aa68!2sAkbar%20Studio!5e1!3m2!1sid!2sid!4v1751615094346!5m2!1sid!2sid" style={{border:'none', borderRadius:'0.5rem', minHeight:'15rem'}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </section>

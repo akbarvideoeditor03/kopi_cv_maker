@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { getUserId } from '../../redux/action/user.action';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function Home() {
     const dispatch = useDispatch();
@@ -24,6 +26,14 @@ function Home() {
         }
     }, [dispatch, id])
 
+    useEffect(() => {
+        AOS.init({
+            duration: 1500,
+            delay: 0,
+            once: false,
+            mirror: true,
+        });
+    }, []);
 
     return (
         <main>
@@ -32,6 +42,7 @@ function Home() {
                     <div
                         style={{ paddingRight: '20vw' }}
                         className="container col-f"
+                        data-aos="fade-up" data-aos-anchor-placement="top-center"
                     >
                         {
                             token ? <h1>Halo, {isLoading ? '' : `${nama}`}</h1> : ''
@@ -79,7 +90,7 @@ function Home() {
             </section>
             <section className="container f-center-c lp-section bg-2 c-white">
                 <div className="section-max">
-                    <div className="container col-f f-center t-center">
+                    <div className="container col-f f-center t-center" data-aos="fade-up" data-aos-anchor-placement="top-center">
                         <h1 className="text-h1">
                             <i className="fa-solid fa-circle-check"></i> Mudah,
                             dan Cepat
@@ -127,7 +138,7 @@ function Home() {
             </section>
             <section className="container f-center-c lp-section bg-3">
                 <div className="section-max">
-                    <div className="container col-f f-center t-center">
+                    <div className="container col-f f-center t-center" data-aos="fade-up" data-aos-anchor-placement="top-center">
                         <h1 className="text-h1">
                             Siap Untuk Melangkah Lebih Dekat
                         </h1>
