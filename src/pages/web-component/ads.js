@@ -12,7 +12,7 @@ function AdHeader() {
 
     return (
         <ins className="adsbygoogle"
-            style={{ display: 'block' }}
+            style={{ display: 'flex', width: '100%' }}
             data-ad-client="ca-pub-2846989538167510"
             data-ad-slot="9585066112"
             data-ad-format="auto"
