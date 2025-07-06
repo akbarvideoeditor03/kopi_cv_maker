@@ -26,7 +26,7 @@ function Layout() {
     return (
         <section id='page' className='dark-mode'>
             <WebHeader />
-                <AdHeader />
+                {/* <AdHeader /> */}
                 <Outlet />
             <WebFooter />
         </section>
