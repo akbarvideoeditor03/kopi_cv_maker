@@ -423,8 +423,7 @@
 .cut-text {
     text-overflow: ellipsis;
     overflow: hidden;
-    max-width: calc(70%);
-    height: 1.2em;
+    max-width: 10rem;
     white-space: wrap;
 }
 

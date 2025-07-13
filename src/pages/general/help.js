@@ -292,8 +292,9 @@ function Help() {
                 </div>
                 {
                     token && role ?
-                        <div className='container row-f-0 f-center'>
-                            <p style={{ marginInlineEnd: '5px' }}>Ada yang nggak bisa dipahami? Yok</p><a style={{ maxWidth: '10rem', gap: '5px' }} className='container row-f-0 btn btn-success' href="https://wa.link/kx8g0f" target='blank'><i className="bi-whatsapp"></i>Tanya Admin</a>
+                        <div className='container col-f'>
+                            <p style={{ marginInlineEnd: '5px' }} className='f-1'>Ada yang nggak bisa dipahami? Yok</p>
+                            <a style={{ gap: '5px' }} className='container row-f-0 btn btn-success f-1 full-width' href="https://wa.link/kx8g0f" target='blank'><i className="bi-whatsapp"></i>Tanya Admin</a>
                         </div> : ''
                 }
             </section>

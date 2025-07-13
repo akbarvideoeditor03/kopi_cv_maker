@@ -103,27 +103,8 @@ function Dashboard() {
                 <section className="container col-f full-width section-max">
                     <div className="container row-f f-wrap-r f-wrap">
                         <div
-                            style={{
-                                flexBasis: '300px',
-                            }}
                             className="container col-f f-1"
                         >
-                            <h1>Jumlah Total Pengguna</h1>
-                            <div className="container col-f f-center-c">
-                                {isLoading ? (
-                                    <div className="container col-f f-center-c left-dashboard-container">
-                                        <div className="custom-loader"></div>
-                                    </div>
-                                ) : (
-                                    <div className="container col-f f-center-c left-dashboard-container">
-                                        <p style={{ fontSize: '350%', fontWeight: 'bold' }}>
-                                            {userList?.meta?.totalData ? (
-                                                userList.meta.totalData
-                                            ) : ('')}
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
                             <div className="container col-f">
                                 <a
                                     href="/addtemplate"
@@ -163,17 +144,30 @@ function Dashboard() {
                             </div>
                         </div>
                         <div
-                            style={{
-                                flexBasis: '340px',
-                            }}
+                            style={{}}
                             className="container col-f f-1"
                         >
+                            <h1>Jumlah Total Pengguna</h1>
+                                <div className="container col-f f-center-c">
+                                    {isLoading ? (
+                                        <div className="container col-f f-center-c left-dashboard-container">
+                                            <div className="custom-loader"></div>
+                                        </div>
+                                    ) : (
+                                        <div className="container col-f f-center-c left-dashboard-container">
+                                            <p style={{ fontSize: '350%', fontWeight: 'bold' }}>
+                                                {userList?.meta?.totalData ? (
+                                                    userList.meta.totalData
+                                                ) : ('')}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
                             <input
                                 type="text"
                                 value={searchItem}
                                 onChange={(e) => setSearchItem(e.target.value)}
                                 placeholder="Cari"
-                                className="m-bt2 search-box"
                             />
                             <div className="container row-f f-wrap">
                                 <a
@@ -185,7 +179,7 @@ function Dashboard() {
                             </div>
                             <div className="container col-f">
                                 <h1>Daftar Pengguna</h1>
-                                <div className="container col-f full-width list-container">
+                                <div className="container f-1 col-f list-container">
                                     {isLoading ? (
                                         <div className="container col-f f-center-c list-container">
                                             <div className="custom-loader"></div>
@@ -202,15 +196,15 @@ function Dashboard() {
                                                 return (
                                                     <div
                                                         key={item.id}
-                                                        className="menu-card container col-f full-width"
+                                                        className="menu-card"
                                                     >
                                                         <div className="container swap">
-                                                            <div className="container col-f left-card-menu fj-center f-1">
+                                                            <div className="container col-f left-list fj-center f-1">
                                                                 <a
                                                                     className="user-list"
                                                                     href={`/user/${item.id}`}
                                                                 >
-                                                                    <div className="container col-f f-wrap">
+                                                                    <div style={{gap:'0.5rem', flexDirection:'column'}} className="container f-wrap">
                                                                         <h3>
                                                                             {item.nama}
                                                                         </h3>

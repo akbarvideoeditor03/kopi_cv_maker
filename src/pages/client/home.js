@@ -129,7 +129,7 @@ function HomeUser() {
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
                     <h1>Menu</h1>
-                    <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap m-bt2">
+                    <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap m-bt2 t-center">
                         <a
                             href="/pendidikanterakhir"
                             className="btn btn-primary"
