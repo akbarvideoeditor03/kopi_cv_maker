@@ -5,13 +5,14 @@ const baseUrl = process.env.REACT_APP_BASE_URL;
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseBucket = process.env.REACT_APP_SUPABASE_BUCKET;
 const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
+const supabaseFolder = process.env.REACT_APP_SUPABASE_FOLDER;
 const supabase = createClient(supabaseUrl, supabaseKey, supabaseBucket);
 export default supabase;
 
 export const uploadToSupabase = async (newFileName, file) => {
     try {
         const { data, error } = await supabase.storage
-            .from('final_project')
+            .from(`${supabaseFolder}`)
             .upload(newFileName, file, {
                 contentType: file.type,
                 upsert: false,
@@ -21,7 +22,7 @@ export const uploadToSupabase = async (newFileName, file) => {
             throw error;
         }
         const publicUrlResponse = supabase.storage
-            .from('final_project')
+            .from(`${supabaseFolder}`)
             .getPublicUrl(data.path);
 
         return publicUrlResponse.data.publicUrl;
