@@ -1,5 +1,6 @@
 import { userTypes } from '../actionTypes';
 const adminKey = process.env.REACT_APP_ADMIN_KEY;
+console.log(adminKey);
 
 const initState = {
     userList: [],

@@ -336,6 +336,7 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
 
 //Google Login
 export const gLogin = (response) => {
+    localStorage.removeItem('lastActivity');
     return async (dispatch) => {
         dispatch({ type: userTypes.CREATE_USER_REQUEST });
         try {
