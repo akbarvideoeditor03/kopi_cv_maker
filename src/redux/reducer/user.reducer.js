@@ -1,5 +1,6 @@
 import { userTypes } from '../actionTypes';
-const adminKey = process.env.REACT_APP_ADMIN_KEY;
+const adminKey = process.env.REACT_APP_ADMIN_KEY || '___';
+const userKey = process.env.REACT_APP_USER_KEY || '___';
 
 const initState = {
     userList: [],
@@ -11,13 +12,70 @@ const initState = {
     otpRequest: [],
     resetPassword: [],
     templatList: [],
-    isWebsite: `${adminKey}`,
+    isWebsite: adminKey,   // dari .env
+    isUser: userKey,       // dari .env
     isLoading: false,
     error: null,
 };
 
 const users = (state = initState, action) => {
     switch (action.type) {
+        //Login
+        case userTypes.LOGIN_USER_REQUEST:
+            return { ...state, isLoading: true, error: null };
+        case userTypes.LOGIN_USER_SUCCESS:
+            try {
+                if (!action.payload || !action.payload.token) {
+                    return { ...state, error: 'Token tidak ditemukan' };
+                }
+
+                const decoded = jwtDecode(action.payload.token);
+                const idFromToken = decoded.user_id; // sesuai struktur JWT
+                const roleFromToken = decoded.role;
+
+                console.log(roleFromToken);
+
+                return {
+                    ...state,
+                    isLoading: false,
+                    isID: idFromToken,
+                    isWebSite: roleFromToken === adminKey ? roleFromToken : null,
+                    isUSer: roleFromToken === userKey ? roleFromToken : null,
+                };
+            } catch (err) {
+                return {
+                    ...state,
+                    isLoading: false,
+                    isID: null,
+                    isWebSite: null,
+                    isUSer: null,
+                    error: 'Token tidak valid',
+                };
+            }
+
+        case userTypes.LOGIN_USER_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        //Register
+        case userTypes.REGISTER_REQUEST:
+            return { ...state, isLoading: true, error: null };
+        case userTypes.REGISTER_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                userList: [...state.userList, action.payload],
+            };
+        case userTypes.REGISTER_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
         // User (CRUD)
         case userTypes.CREATE_USER_REQUEST:
             return { ...state, isLoading: true, error: null };
