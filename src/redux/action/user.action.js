@@ -180,10 +180,8 @@ export const postUserLogin = (user) => async (dispatch) => {
             });
         } else {
             const data = await response.json();
-            const idUser = data.id;
             const token = data.token;
-            const roleUser = data.role;
-            if (!idUser && !token && !roleUser) {
+            if (!token) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oow...',
@@ -205,8 +203,6 @@ export const postUserLogin = (user) => async (dispatch) => {
                     allowOutsideClick: false,
                     timerProgressBar: true,
                 }).then(() => {
-                    localStorage.setItem('id', idUser);
-                    localStorage.setItem('role', roleUser);
                     localStorage.setItem('token', token);
                     window.location = '/';
                 });

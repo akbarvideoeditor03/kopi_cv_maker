@@ -1,3 +1,4 @@
+import { jwtDecode } from 'jwt-decode';
 import { userTypes } from '../actionTypes';
 const adminKey = process.env.REACT_APP_ADMIN_KEY || '___';
 const userKey = process.env.REACT_APP_USER_KEY || '___';
@@ -12,8 +13,8 @@ const initState = {
     otpRequest: [],
     resetPassword: [],
     templatList: [],
-    isWebsite: adminKey,   // dari .env
-    isUser: userKey,       // dari .env
+    isWebsite: adminKey,
+    isViews: userKey,
     isLoading: false,
     error: null,
 };
@@ -30,7 +31,7 @@ const users = (state = initState, action) => {
                 }
 
                 const decoded = jwtDecode(action.payload.token);
-                const idFromToken = decoded.user_id; // sesuai struktur JWT
+                const idFromToken = decoded.id;
                 const roleFromToken = decoded.role;
 
                 console.log(roleFromToken);
