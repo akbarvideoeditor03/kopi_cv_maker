@@ -1,7 +1,6 @@
 import Swal from 'sweetalert2';
 import { userTypes } from '../actionTypes';
 import { createClient } from '@supabase/supabase-js';
-import { jwtDecode } from 'jwt-decode';
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseBucket = process.env.REACT_APP_SUPABASE_BUCKET;
@@ -84,7 +83,7 @@ export const createUser = (user) => async (dispatch) => {
 
 //Register
 export const createUserSelf = (user) => async (dispatch) => {
-    dispatch({ type: userTypes.REGISTER_REQUEST });
+    dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
         const response = await fetch(`${baseUrl}/kopi/user/register`, {
             method: 'POST',
@@ -131,13 +130,13 @@ export const createUserSelf = (user) => async (dispatch) => {
             });
             const data = await response.json();
             dispatch({
-                type: userTypes.REGISTER_SUCCESS,
+                type: userTypes.CREATE_USER_SUCCESS,
                 payload: data.data,
             });
         }
     } catch (error) {
         dispatch({
-            type: userTypes.REGISTER_FAILURE,
+            type: userTypes.CREATE_USER_FAILURE,
             payload: error,
         });
     }
@@ -146,7 +145,7 @@ export const createUserSelf = (user) => async (dispatch) => {
 //Login
 export const postUserLogin = (user) => async (dispatch) => {
     localStorage.removeItem('lastActivity');
-    dispatch({ type: userTypes.LOGIN_USER_REQUEST});
+    dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
         const response = await fetch(`${baseUrl}/kopi/user/login`, {
             method: 'POST',
@@ -207,7 +206,7 @@ export const postUserLogin = (user) => async (dispatch) => {
                     window.location = '/';
                 });
                 dispatch({
-                    type: userTypes.LOGIN_USER_SUCCESS,
+                    type: userTypes.CREATE_USER_SUCCESS,
                     payload: data.data,
                 });
             }
@@ -215,7 +214,7 @@ export const postUserLogin = (user) => async (dispatch) => {
     } catch (error) {
         console.error('Error during login:', error);
         dispatch({
-            type: userTypes.LOGIN_USER_FAILURE,
+            type: userTypes.CREATE_USER_FAILURE,
             payload: error,
         });
     }

@@ -28,7 +28,8 @@ function Home() {
 
     useEffect(() => {
         AOS.init({
-            duration: 1250,
+            duration: 1500,
+            delay: 0,
             once: false,
             mirror: true,
         });
@@ -89,7 +90,7 @@ function Home() {
             </section>
             <section className="container f-center-c lp-section bg-2 c-white">
                 <div className="section-max">
-                    <div className="container col-f f-center t-center" data-aos="fade-up" data-aos-anchor-placement="top-center" data-aos-offset="-250">
+                    <div className="container col-f f-center t-center" data-aos="fade-up" data-aos-anchor-placement="top-center">
                         <h1 className="text-h1">
                             <i className="fa-solid fa-circle-check"></i> Mudah,
                             dan Cepat
@@ -137,7 +138,7 @@ function Home() {
             </section>
             <section className="container f-center-c lp-section bg-3">
                 <div className="section-max">
-                    <div className="container col-f f-center t-center" data-aos="fade-up" data-aos-anchor-placement="top-center" data-aos-offset="-250">
+                    <div className="container col-f f-center t-center" data-aos="fade-up" data-aos-anchor-placement="top-center">
                         <h1 className="text-h1">
                             Siap Untuk Melangkah Lebih Dekat
                         </h1>

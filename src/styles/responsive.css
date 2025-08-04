@@ -1,14 +1,4 @@
 /* This is a CSS file specifically for handling responsive styling. */
-@media screen and (min-width: 401.5px) {
-    .left-list {
-        flex-basis: 240px;
-    }
-}
-@media screen and (max-width: 401.5px) {
-    .left-list {
-        flex-basis: 0px;
-    }
-}
 
 @media screen and (min-width: 447.5px) {
     footer div p {
@@ -27,23 +17,6 @@
     .swap {
         flex-direction: row;
         gap: 1rem;
-    }
-}
-
-@media screen and (max-width: 900.5px) {
-    .cut-text {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 10rem;
-        white-space: wrap;
-    }
-}
-@media screen and (min-width: 900.5px) {
-    .cut-text {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 85%;
-        white-space: wrap;
     }
 }
 
