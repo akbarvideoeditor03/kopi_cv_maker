@@ -13,7 +13,7 @@ const UpdatePelatihan = () => {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const dispatch = useDispatch();
-    const { pelatihan, isWebsite } = useSelector((state) => state.userReducer);
+    const { pelatihan, isWebsite, isUser } = useSelector((state) => state.userReducer);
 
     const [data, setData] = useState({
         pelatihan: '',
@@ -85,7 +85,7 @@ const UpdatePelatihan = () => {
             });
         }
     };
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isUser || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">

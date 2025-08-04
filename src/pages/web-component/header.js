@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 import Switch from './switch';
 
 function WebHeader() {
-    const { isWebsite } = useSelector((state) => state.userReducer);
+    const { isWebsite, isUser } = useSelector((state) => state.userReducer);
     const roleUser = isWebsite;
+    const roleUsEr = isUser;
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
 
@@ -93,7 +94,7 @@ function WebHeader() {
                             </div>
                         </>
                     )}
-                    {token && role === 'user' && (
+                    {token && role === roleUsEr && (
                         <>
                             <div className="container col-f">
                                 <a href="/home">CV Saya</a>

@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
 function Dropdown() {
-    const { isWebsite } = useSelector((state) => state.userReducer);
+    const { isWebsite, isUser } = useSelector((state) => state.userReducer);
     const roleUser = isWebsite;
+    const roleUSer = isUser;
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const [isOpen, setIsOpen] = useState(false);
@@ -74,7 +75,7 @@ function Dropdown() {
                 </ul>
             </div>
         );
-    } else if (token && role === 'user') {
+    } else if (token && role === roleUSer) {
         return (
             <div className="dropdown">
                 <button className="hamburger-btn" onClick={toggleDropdown}>

@@ -13,7 +13,7 @@ function UpdatePendidikanTerakhir() {
     const idUser = localStorage.getItem('id');
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
-    const { pendidikanTerakhir, isWebsite } = useSelector((state) => state.userReducer);
+    const { pendidikanTerakhir, isWebsite, isUser } = useSelector((state) => state.userReducer);
 
     const [data, setData] = useState({
         institusi: '',
@@ -90,7 +90,7 @@ function UpdatePendidikanTerakhir() {
         }
     };
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isUser || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">

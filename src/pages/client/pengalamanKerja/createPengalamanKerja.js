@@ -8,7 +8,7 @@ function CreatePengalamanKerja() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const id = localStorage.getItem('id');
-    const { isWebsite } = useSelector((state) => state.userReducer)
+    const { isWebsite, isUser } = useSelector((state) => state.userReducer)
     const [pengalamanKerja, setPengalamanKerja] = useState({
         id_user: '',
         lokasi: '',
@@ -108,7 +108,7 @@ function CreatePengalamanKerja() {
         }
     };
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isUser || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">

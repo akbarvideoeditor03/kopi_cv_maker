@@ -1,5 +1,6 @@
 import { userTypes } from '../actionTypes';
 const adminKey = process.env.REACT_APP_ADMIN_KEY;
+const userKey = process.env.REACT_APP_USER_KEY;
 
 const initState = {
     userList: [],
@@ -11,7 +12,8 @@ const initState = {
     otpRequest: [],
     resetPassword: [],
     templatList: [],
-    isWebsite: `${adminKey}`,
+    isWebsite: adminKey,
+    isUser: userKey,
     isLoading: false,
     error: null,
 };

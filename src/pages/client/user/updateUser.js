@@ -18,7 +18,7 @@ const UpdateUserSelf = ({ userId }) => {
     const token = localStorage.getItem('token');
     const { id } = useParams();
     const dispatch = useDispatch();
-    const { userList, isWebsite } = useSelector((state) => state.userReducer);
+    const { userList, isWebsite, isUser } = useSelector((state) => state.userReducer);
     useEffect(() => {
         dispatch(getUserId(id));
     }, [dispatch, id]);
@@ -164,7 +164,7 @@ const UpdateUserSelf = ({ userId }) => {
         }
     };
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isUser || role === isWebsite)) {
         return (
             <main className="container col-f f-center-c">
                 <section className="card container row-f f-wrap-r full-width section-max">

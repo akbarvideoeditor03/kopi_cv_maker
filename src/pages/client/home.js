@@ -33,6 +33,7 @@ function HomeUser() {
         prestasiKerja,
         isLoading,
         isWebsite,
+        isUser,
     } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
@@ -120,7 +121,7 @@ function HomeUser() {
     // }, [userList.email]);
 
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isUser || role === isWebsite)) {
         const tentang = userList.tentang
         const tentangParagraf = tentang?.split('\n').map((tentangs, index) => (
             <p style={{ lineHeight: '1.5rem' }} key={index}>{tentangs} <br /></p>
