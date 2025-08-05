@@ -20,10 +20,10 @@ import 'dayjs/locale/id';
 dayjs.locale('id');
 
 function HomeUser() {
-    const id = localStorage.getItem('id');
     const dispatch = useDispatch();
-    const token = localStorage.getItem('token');
+    const id = localStorage.getItem('id');
     const role = localStorage.getItem('role');
+    const token = localStorage.getItem('token');
     const {
         userList,
         pengalamanKerja,

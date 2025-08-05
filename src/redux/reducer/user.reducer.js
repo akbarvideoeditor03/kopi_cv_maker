@@ -1,6 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
 import { userTypes } from '../actionTypes';
 const adminKey = process.env.REACT_APP_ADMIN_KEY;
+const userKey = process.env.REACT_APP_USER_KEY;
 
 const initState = {
     userList: [],
@@ -12,8 +13,8 @@ const initState = {
     otpRequest: [],
     resetPassword: [],
     templatList: [],
-    isWebsite: adminKey,   // dari .env
-    isUser: userKey,       // dari .env
+    isWebsite: adminKey,
+    isUser: userKey,
     isLoading: false,
     error: null,
 };
@@ -21,39 +22,15 @@ const initState = {
 const users = (state = initState, action) => {
     switch (action.type) {
         //Login
-        case userTypes.LOGIN_USER_REQUEST:
+        case userTypes.LOGIN_REQUEST:
             return { ...state, isLoading: true, error: null };
-        case userTypes.LOGIN_USER_SUCCESS:
-            try {
-                if (!action.payload || !action.payload.token) {
-                    return { ...state, error: 'Token tidak ditemukan' };
-                }
-
-                const decoded = jwtDecode(action.payload.token);
-                const idFromToken = decoded.user_id; // sesuai struktur JWT
-                const roleFromToken = decoded.role;
-
-                console.log(roleFromToken);
-
-                return {
-                    ...state,
-                    isLoading: false,
-                    isID: idFromToken,
-                    isWebSite: roleFromToken === adminKey ? roleFromToken : null,
-                    isUSer: roleFromToken === userKey ? roleFromToken : null,
-                };
-            } catch (err) {
-                return {
-                    ...state,
-                    isLoading: false,
-                    isID: null,
-                    isWebSite: null,
-                    isUSer: null,
-                    error: 'Token tidak valid',
-                };
-            }
-
-        case userTypes.LOGIN_USER_FAILURE:
+        case userTypes.LOGIN_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                userList: [...state.userList, action.payload],
+            };
+        case userTypes.LOGIN_FAILURE:
             return {
                 ...state,
                 isLoading: false,

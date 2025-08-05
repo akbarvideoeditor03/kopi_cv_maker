@@ -82,10 +82,10 @@ export const createUser = (user) => async (dispatch) => {
 };
 
 //Register
-export const createUserSelf = (user) => async (dispatch) => {
-    dispatch({ type: userTypes.CREATE_USER_REQUEST });
+export const register = (user) => async (dispatch) => {
+    dispatch({ type: userTypes.REGISTER_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/kopi/user/register`, {
+        const response = await fetch(`${baseUrl}/kopi/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -130,13 +130,13 @@ export const createUserSelf = (user) => async (dispatch) => {
             });
             const data = await response.json();
             dispatch({
-                type: userTypes.CREATE_USER_SUCCESS,
+                type: userTypes.REGISTER_SUCCESS,
                 payload: data.data,
             });
         }
     } catch (error) {
         dispatch({
-            type: userTypes.CREATE_USER_FAILURE,
+            type: userTypes.REGISTER_FAILURE,
             payload: error,
         });
     }
@@ -145,9 +145,9 @@ export const createUserSelf = (user) => async (dispatch) => {
 //Login
 export const postUserLogin = (user) => async (dispatch) => {
     localStorage.removeItem('lastActivity');
-    dispatch({ type: userTypes.CREATE_USER_REQUEST });
+    dispatch({ type: userTypes.LOGIN_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/kopi/user/login`, {
+        const response = await fetch(`${baseUrl}/kopi/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -179,6 +179,8 @@ export const postUserLogin = (user) => async (dispatch) => {
             });
         } else {
             const data = await response.json();
+            const id = data.id;
+            const role = data.role;
             const token = data.token;
             if (!token) {
                 Swal.fire({
@@ -202,11 +204,13 @@ export const postUserLogin = (user) => async (dispatch) => {
                     allowOutsideClick: false,
                     timerProgressBar: true,
                 }).then(() => {
+                    localStorage.setItem('id', id);
+                    localStorage.setItem('role', role);
                     localStorage.setItem('token', token);
                     window.location = '/';
                 });
                 dispatch({
-                    type: userTypes.CREATE_USER_SUCCESS,
+                    type: userTypes.LOGIN_SUCCESS,
                     payload: data.data,
                 });
             }
@@ -214,7 +218,7 @@ export const postUserLogin = (user) => async (dispatch) => {
     } catch (error) {
         console.error('Error during login:', error);
         dispatch({
-            type: userTypes.CREATE_USER_FAILURE,
+            type: userTypes.LOGIN_FAILURE,
             payload: error,
         });
     }
@@ -259,17 +263,43 @@ export const getUserId = (id) => {
                     Authorization: `Bearer ${token}`,
                 },
             });
+
+            // Cek jika status error
+            if (!response.ok) {
+                if (response.status >= 400) {
+                    // Hapus semua localStorage kecuali dark-mode
+                    Object.keys(localStorage).forEach(key => {
+                        if (key !== 'dark-mode') {
+                            localStorage.removeItem(key);
+                        }
+                    });
+
+                    // Redirect paksa ke halaman login
+                    window.location.href = '/user/login';
+                    return; // stop eksekusi
+                }
+            }
+
             const data = await response.json();
             dispatch({
                 type: userTypes.GET_USER_ID_LIST_SUCCESS,
                 payload: data.data,
             });
             return data;
+
         } catch (error) {
             dispatch({
                 type: userTypes.GET_USER_ID_LIST_FAILURE,
                 payload: error,
             });
+
+            // Tangani juga jika error berasal dari network/fetch
+            Object.keys(localStorage).forEach(key => {
+                if (key !== 'dark-mode') {
+                    localStorage.removeItem(key);
+                }
+            });
+            window.location.href = '/user/login';
         }
     };
 };

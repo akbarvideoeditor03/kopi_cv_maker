@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
-    createUserSelf,
+    register,
     uploadToSupabase,
 } from '../../redux/action/user.action';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
@@ -199,7 +199,7 @@ const Register = () => {
                     password: userData.password,
                 };
 
-                dispatch(createUserSelf(newUser));
+                dispatch(register(newUser));
             }
         } catch (error) {
             Swal.fire({

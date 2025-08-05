@@ -13,18 +13,18 @@ function Home() {
     const [nama, setNama] = useState('...');
 
     useEffect(() => {
+        if(token) {
+            dispatch(getUserId(id));
+        }
+    }, [dispatch, id])
+
+    useEffect(() => {
         if (userList?.nama === undefined || userList?.nama === null) {
             setNama('...');
         } else {
             setNama(userList.nama);
         }
     }, [userList]);
-
-    useEffect(() => {
-        if(token) {
-            dispatch(getUserId(id));
-        }
-    }, [dispatch, id])
 
     useEffect(() => {
         AOS.init({
