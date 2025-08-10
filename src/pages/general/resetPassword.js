@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword, getUserId } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 function PasswordReset() {
     const dispatch = useDispatch();
     const id = localStorage.getItem('id');
+    const role = localStorage.getItem('role');
     const token = localStorage.getItem('token');
     const data = localStorage.getItem("dark-mode");
     const [darkMode, setDarkMode] = useState();
@@ -23,8 +24,8 @@ function PasswordReset() {
     }, []);
 
     useEffect(() => {
-        dispatch(getUserId(id));
-    }, [dispatch, id]);
+        dispatch(getUserId(id, role));
+    }, [dispatch, id, role]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

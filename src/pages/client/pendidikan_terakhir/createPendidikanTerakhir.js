@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPendidikanTerakhir } from '../../../redux/action/user.action';
+import { createPendidikanTerakhir, getUserId } from '../../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function CreatePendidikanTerakhir() {
@@ -8,7 +8,7 @@ function CreatePendidikanTerakhir() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const id = localStorage.getItem('id');
-    const { isWebsite } = useSelector((state) => state.userReducer)
+    const { isWebsite, isViews, userList } = useSelector((state) => state.userReducer);
     const [pendidikanTerakhir, setPendidikanTerakhir] = useState({
         id_user: '',
         institusi: '',
@@ -16,21 +16,10 @@ function CreatePendidikanTerakhir() {
         tahun_mulai: '',
         tahun_selesai: '',
     });
-    const cancelSubmit = async (e) => {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Yakin mau batal?',
-            text: 'Tulisan kamu bakal hilang loh...',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Iya',
-            cancelButtonText: 'Lanjutin',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '/home';
-            }
-        });
-    };
+
+    useEffect(() => {
+        dispatch(getUserId(id, role));
+    }, [dispatch, id, role]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -64,25 +53,40 @@ function CreatePendidikanTerakhir() {
 
         try {
             const pendidikanTerakhirUser = {
-                id_user: `${id}`,
+                id_user: `${userList.id}`,
                 institusi: pendidikanTerakhir.institusi,
                 jurusan: pendidikanTerakhir.jurusan,
                 tahun_mulai: pendidikanTerakhir.tahun_mulai,
                 tahun_selesai:
                     pendidikanTerakhir.tahun_selesai || 'Hingga saat ini',
             };
-
-            dispatch(createPendidikanTerakhir(pendidikanTerakhirUser));
+            dispatch(createPendidikanTerakhir(id, role, pendidikanTerakhirUser));
         } catch (error) {
-            Swal.fire({
+            await Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!',
+                text: `Ada yang salah nih, ${error}`,
             });
         }
     };
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    const cancelSubmit = async (e) => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Yakin mau batal?',
+            text: 'Tulisan kamu bakal hilang loh...',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Iya',
+            cancelButtonText: 'Lanjutin',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/home';
+            }
+        });
+    };
+
+    if (token && (role === isViews || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">

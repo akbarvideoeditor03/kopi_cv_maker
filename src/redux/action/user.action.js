@@ -32,55 +32,6 @@ export const uploadToSupabase = async (newFileName, file) => {
     }
 };
 
-// Create User Form Admin
-export const createUser = (user) => async (dispatch) => {
-    dispatch({ type: userTypes.CREATE_USER_REQUEST });
-    try {
-        const response = await fetch(`${baseUrl}/kopi/user/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user),
-        });
-        if (response.status === 500) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'Server lagi error nih',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Selamat',
-                text: 'User berhasil ditambah',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                window.location.href = '/dashboard';
-            });
-            const data = await response.json();
-            dispatch({
-                type: userTypes.CREATE_USER_SUCCESS,
-                payload: data.data,
-            });
-        }
-    } catch (error) {
-        dispatch({
-            type: userTypes.CREATE_USER_FAILURE,
-            payload: error,
-        });
-    }
-};
-
 //Register
 export const register = (user) => async (dispatch) => {
     dispatch({ type: userTypes.REGISTER_REQUEST });
@@ -92,7 +43,7 @@ export const register = (user) => async (dispatch) => {
             },
             body: JSON.stringify(user),
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -155,7 +106,7 @@ export const postUserLogin = (user) => async (dispatch) => {
             body: JSON.stringify(user),
         });
 
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -224,6 +175,55 @@ export const postUserLogin = (user) => async (dispatch) => {
     }
 };
 
+// Create User Form Admin
+export const createUser = (user) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_USER_REQUEST });
+    try {
+        const response = await fetch(`${baseUrl}/kopi/user/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user),
+        });
+        if (response.status >= 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Selamat',
+                text: 'User berhasil ditambah',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location.href = '/dashboard';
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.CREATE_USER_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.CREATE_USER_FAILURE,
+            payload: error,
+        });
+    }
+};
+
 export const getUser = () => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_LIST_REQUEST });
@@ -253,30 +253,26 @@ export const getUser = () => {
     };
 };
 
-export const getUserId = (id) => {
+export const getUserId = (id, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/user/${id}`, {
+            const response = await fetch(`${baseUrl}/kopi/user/${id}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
-            // Cek jika status error
             if (!response.ok) {
                 if (response.status >= 400) {
-                    // Hapus semua localStorage kecuali dark-mode
                     Object.keys(localStorage).forEach(key => {
                         if (key !== 'dark-mode') {
                             localStorage.removeItem(key);
                         }
                     });
-
-                    // Redirect paksa ke halaman login
                     window.location.href = '/user/login';
-                    return; // stop eksekusi
+                    return;
                 }
             }
 
@@ -293,7 +289,6 @@ export const getUserId = (id) => {
                 payload: error,
             });
 
-            // Tangani juga jika error berasal dari network/fetch
             Object.keys(localStorage).forEach(key => {
                 if (key !== 'dark-mode') {
                     localStorage.removeItem(key);
@@ -304,12 +299,11 @@ export const getUserId = (id) => {
     };
 };
 
-export const updateUser = (id, updatedUser) => async (dispatch) => {
+export const updateUser = (id, role, userId, updatedUser) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const role = localStorage.getItem('role');
-        const response = await fetch(`${baseUrl}/kopi/user/${id}`, {
+        const response = await fetch(`${baseUrl}/kopi/user/${id}/${role}/${userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -317,7 +311,7 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
             },
             body: JSON.stringify(updatedUser),
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -339,12 +333,7 @@ export const updateUser = (id, updatedUser) => async (dispatch) => {
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
-                Swal.close();
-                if (role === 'user') {
-                    window.location = '/home';
-                } else {
-                    window.location =`/user/${id}`;
-                }
+                window.location.href = '/home'
             });
             const data = await response.json();
             dispatch({
@@ -373,7 +362,7 @@ export const gLogin = (response) => {
                 },
                 body: JSON.stringify({ token: response.token }),
             })
-            if (result.status === 500) {
+            if (result.status >= 500) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Ups, Maaf...',
@@ -459,7 +448,7 @@ export const deleteUser = (id) => async (dispatch) => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -497,17 +486,17 @@ export const deleteUser = (id) => async (dispatch) => {
 };
 
 //OTP
-export const otpRequestCode = (otp) => async (dispatch) => {
+export const otpRequestCode = (emailReq) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_OTP_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/kopi/user/trypasswordreset`, {
+        const response = await fetch(`${baseUrl}/kopi/auth/trypasswordreset`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(otp),
+            body: JSON.stringify(emailReq),
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -540,7 +529,7 @@ export const otpRequestCode = (otp) => async (dispatch) => {
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
-                window.location.href = '/user/resetpassword';
+                window.location.href = '/user/passwordreset';
             });
             const data = await response.json();
             dispatch({
@@ -568,7 +557,7 @@ export const resetPassword = (data) => async (dispatch) => {
             },
             body: JSON.stringify(data),
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -601,7 +590,7 @@ export const resetPassword = (data) => async (dispatch) => {
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
-                if(!token) {
+                if (!token) {
                     window.location.href = '/user/login';
                 } else {
                     window.location.href = '/home';
@@ -634,7 +623,7 @@ export const createTemplat = (templat) => async (dispatch) => {
             },
             body: JSON.stringify(templat),
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -739,7 +728,7 @@ export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
             body: JSON.stringify(updatedTemplat),
         });
         const data = await response.json();
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -762,7 +751,7 @@ export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
                 timerProgressBar: true,
             }).then(() => {
                 Swal.close();
-                window.location =`/templatedetail/${id}`;
+                window.location = `/templatedetail/${id}`;
             });
             dispatch({
                 type: userTypes.UPDATE_TEMPLAT_SUCCESS,
@@ -787,7 +776,7 @@ export const deleteTemplat = (id) => async (dispatch) => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -825,11 +814,11 @@ export const deleteTemplat = (id) => async (dispatch) => {
 };
 
 //Pengalaman Kerja
-export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
+export const createPengalamanKerja = (id, role, pengalaman_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PENGALAMAN_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/pengalamankerja/`, {
+        const response = await fetch(`${baseUrl}/kopi/pengalamankerja/${id}/${role}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -837,7 +826,7 @@ export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
             },
             body: JSON.stringify(pengalaman_kerja),
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -876,13 +865,41 @@ export const createPengalamanKerja = (pengalaman_kerja) => async (dispatch) => {
     }
 };
 
-export const readPengalamanKerja = (id) => {
+export const readPengalamanKerja = (id_user, role, id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
             const response = await fetch(
-                `${baseUrl}/kopi/pengalamankerja/${id}`,
+                `${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const data = await response.json();
+            dispatch({
+                type: userTypes.GET_PENGALAMAN_ID_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+        } catch (error) {
+            dispatch({
+                type: userTypes.GET_PENGALAMAN_ID_FAILURE,
+                payload: error,
+            });
+        }
+    };
+};
+
+export const readPengalamanKerjaId = (id_user, role, id, id_pengalaman_kerja) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(
+                `${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}/${id_pengalaman_kerja}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -905,13 +922,12 @@ export const readPengalamanKerja = (id) => {
 };
 
 export const updatePengalamanKerja =
-    (id, updatedPengalamanKerja) => async (dispatch) => {
+    (id_user, role, id, id_pengalaman_kerja, updatedPengalamanKerja) => async (dispatch) => {
         dispatch({ type: userTypes.UPDATE_PENGALAMAN_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const id_user = localStorage.getItem('id');
             const response = await fetch(
-                `${baseUrl}/kopi/pengalamankerja/${id_user}/${id}`,
+                `${baseUrl}/kopi/pengalamankerja/edit/${id_user}/${role}/${id}/${id_pengalaman_kerja}`,
                 {
                     method: 'PUT',
                     headers: {
@@ -921,7 +937,7 @@ export const updatePengalamanKerja =
                     body: JSON.stringify(updatedPengalamanKerja),
                 }
             );
-            if (response.status === 500) {
+            if (response.status >= 500) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Ups, Maaf...',
@@ -943,6 +959,7 @@ export const updatePengalamanKerja =
                     allowOutsideClick: false,
                     timerProgressBar: true,
                 }).then(() => {
+                    Swal.close();
                     window.location = '/home';
                 });
                 const data = await response.json();
@@ -959,12 +976,11 @@ export const updatePengalamanKerja =
         }
     };
 
-export const deletePengalamanKerja = (id) => async (dispatch) => {
+export const deletePengalamanKerja = (id_user, role, id, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PENGALAMAN_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const id_user = localStorage.getItem('id');
-        await fetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${id}`, {
+        await fetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}/${idData}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -984,11 +1000,11 @@ export const deletePengalamanKerja = (id) => async (dispatch) => {
 
 //Pendidikan Terakhir
 export const createPendidikanTerakhir =
-    (pendidikan_terakhir) => async (dispatch) => {
+    (id, role, pendidikan_terakhir) => async (dispatch) => {
         dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/pendidikanterakhir`, {
+            const response = await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id}/${role}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -996,7 +1012,7 @@ export const createPendidikanTerakhir =
                 },
                 body: JSON.stringify(pendidikan_terakhir),
             });
-            if (response.status === 500) {
+            if (response.status >= 500) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Ups, Maaf...',
@@ -1018,6 +1034,7 @@ export const createPendidikanTerakhir =
                     allowOutsideClick: false,
                     timerProgressBar: true,
                 }).then(() => {
+                    Swal.close();
                     window.location = '/home';
                 });
                 const data = await response.json();
@@ -1034,13 +1051,13 @@ export const createPendidikanTerakhir =
         }
     };
 
-export const readPendidikanTerakhir = (id) => {
+export const readPendidikanTerakhir = (id_user, role, id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
             const response = await fetch(
-                `${baseUrl}/kopi/pendidikanterakhir/${id}`,
+                `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -1048,7 +1065,34 @@ export const readPendidikanTerakhir = (id) => {
                 }
             );
             const data = await response.json();
+            dispatch({
+                type: userTypes.GET_PENDIDIKAN_ID_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+        } catch (error) {
+            dispatch({
+                type: userTypes.GET_PENDIDIKAN_ID_FAILURE,
+                payload: error,
+            });
+        }
+    };
+};
 
+export const readPendidikanTerakhirId = (id_user, role, id, idPendidikanTerakhir) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(
+                `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}/${idPendidikanTerakhir}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const data = await response.json();
             dispatch({
                 type: userTypes.GET_PENDIDIKAN_ID_SUCCESS,
                 payload: data.data,
@@ -1064,13 +1108,12 @@ export const readPendidikanTerakhir = (id) => {
 };
 
 export const updatePendidikanTerakhir =
-    (id, updatedPendidikanTerakhir) => async (dispatch) => {
+    (id_user, role, id, idPendidikanTerakhir, updatedPendidikanTerakhir) => async (dispatch) => {
         dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const id_user = localStorage.getItem('id');
             const response = await fetch(
-                `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${id}`,
+                `${baseUrl}/kopi/pendidikanterakhir/edit/${id_user}/${role}/${id}/${idPendidikanTerakhir}`,
                 {
                     method: 'PUT',
                     headers: {
@@ -1080,7 +1123,7 @@ export const updatePendidikanTerakhir =
                     body: JSON.stringify(updatedPendidikanTerakhir),
                 }
             );
-            if (response.status === 500) {
+            if (response.status >= 500) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Ups, Maaf...',
@@ -1102,6 +1145,7 @@ export const updatePendidikanTerakhir =
                     allowOutsideClick: false,
                     timerProgressBar: true,
                 }).then(() => {
+                    Swal.close();
                     window.location = '/home';
                 });
                 const data = await response.json();
@@ -1118,12 +1162,11 @@ export const updatePendidikanTerakhir =
         }
     };
 
-export const deletePendidikanTerakhir = (id) => async (dispatch) => {
+export const deletePendidikanTerakhir = (id_user, role, id, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PENDIDIKAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const id_user = localStorage.getItem('id');
-        await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${id}`, {
+        await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}/${idData}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -1154,7 +1197,7 @@ export const createKeahlian = (keahlian) => async (dispatch) => {
             },
             body: JSON.stringify(keahlian),
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -1192,12 +1235,12 @@ export const createKeahlian = (keahlian) => async (dispatch) => {
     }
 };
 
-export const readKeahlian = (id) => {
+export const readKeahlian = (id, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_KEAHLIAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/keahlian/${id}`, {
+            const response = await fetch(`${baseUrl}/kopi/keahlian/${id}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1234,7 +1277,7 @@ export const updateKeahlian = (id, updatedKeahlian) => async (dispatch) => {
                 body: JSON.stringify(updatedKeahlian),
             }
         );
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -1286,7 +1329,7 @@ export const deleteKeahlian = (id) => async (dispatch) => {
                 },
             }
         );
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -1324,7 +1367,7 @@ export const createPrestasi = (prestasi) => async (dispatch) => {
             },
             body: JSON.stringify(prestasi),
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -1362,12 +1405,12 @@ export const createPrestasi = (prestasi) => async (dispatch) => {
     }
 };
 
-export const readPrestasi = () => {
+export const readPrestasi = (id, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PRESTASI_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/prestasikerja`, {
+            const response = await fetch(`${baseUrl}/kopi/prestasikerja/${id}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1403,7 +1446,7 @@ export const updatePrestasi =
                     body: JSON.stringify(updatedPrestasi),
                 }
             );
-            if (response.status === 500) {
+            if (response.status >= 500) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Ups, Maaf...',
@@ -1454,7 +1497,7 @@ export const deletePrestasi = (id, id_pengalaman_kerja) => async (dispatch) => {
                 },
             }
         );
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -1492,7 +1535,7 @@ export const createPelatihan = (pelatihan) => async (dispatch) => {
             },
             body: JSON.stringify(pelatihan),
         });
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -1530,12 +1573,12 @@ export const createPelatihan = (pelatihan) => async (dispatch) => {
     }
 };
 
-export const readPelatihan = (id) => {
+export const readPelatihan = (id, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PELATIHAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/pelatihan/${id}`, {
+            const response = await fetch(`${baseUrl}/kopi/pelatihan/${id}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1571,7 +1614,7 @@ export const updatePelatihan = (id, updatedPelatihan) => async (dispatch) => {
                 body: JSON.stringify(updatedPelatihan),
             }
         );
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
@@ -1623,7 +1666,7 @@ export const deletePelatihan = (id) => async (dispatch) => {
                 },
             }
         );
-        if (response.status === 500) {
+        if (response.status >= 500) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',

@@ -8,21 +8,25 @@ import 'aos/dist/aos.css';
 function Home() {
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
-    const id = localStorage.getItem('id')
+    const role = localStorage.getItem('role');
+    const id = localStorage.getItem('id');
     const { userList, isLoading } = useSelector((state) => state.userReducer);
     const [nama, setNama] = useState('...');
 
     useEffect(() => {
-        if(token) {
-            dispatch(getUserId(id));
+        if (token) {
+            dispatch(getUserId(id, role));
         }
-    }, [dispatch, id])
+    }, [dispatch, id, role]);
+
 
     useEffect(() => {
-        if (userList?.nama === undefined || userList?.nama === null) {
-            setNama('...');
-        } else {
-            setNama(userList.nama);
+        if (userList) {
+            if (userList.nama === undefined || userList.nama === null) {
+                setNama('...');
+            } else {
+                setNama(userList.nama);
+            }
         }
     }, [userList]);
 

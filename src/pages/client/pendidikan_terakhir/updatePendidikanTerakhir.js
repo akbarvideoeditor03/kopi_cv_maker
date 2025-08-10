@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
-    readPendidikanTerakhir,
+    readPendidikanTerakhirId,
     updatePendidikanTerakhir,
+    getUserId
 } from '../../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function UpdatePendidikanTerakhir() {
     const dispatch = useDispatch();
-    const { id } = useParams();
-    const idUser = localStorage.getItem('id');
+    const param = useParams();
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
-    const { pendidikanTerakhir, isWebsite } = useSelector((state) => state.userReducer);
+    const id = localStorage.getItem('id');
+    const { pendidikanTerakhir, isWebsite, isViews } = useSelector((state) => state.userReducer);
 
     const [data, setData] = useState({
+        id: '',
         institusi: '',
         jurusan: '',
         tahun_mulai: '',
@@ -23,24 +25,26 @@ function UpdatePendidikanTerakhir() {
     });
 
     useEffect(() => {
-        if (idUser) {
-            dispatch(readPendidikanTerakhir(idUser));
-        }
-    }, [dispatch, idUser]);
+        dispatch(getUserId(id, role));
+    }, [dispatch, id, role]);
 
     useEffect(() => {
-        const currentData = pendidikanTerakhir.find(
-            (item) => item.id === parseInt(id)
-        );
-        if (currentData) {
+        if (id) {
+            dispatch(readPendidikanTerakhirId(id, role, param.id, param.id_pendidikan_terakhir));
+        }
+    }, [dispatch, id, role, param.id, param.id_pendidikan_terakhir]);
+
+    useEffect(() => {
+        if (pendidikanTerakhir) {
             setData({
-                institusi: currentData.institusi || '',
-                jurusan: currentData.jurusan || '',
-                tahun_mulai: currentData.tahun_mulai || '',
-                tahun_selesai: currentData.tahun_selesai || '',
+                id: pendidikanTerakhir.id,
+                institusi: pendidikanTerakhir.institusi || '',
+                jurusan: pendidikanTerakhir.jurusan || '',
+                tahun_mulai: pendidikanTerakhir.tahun_mulai || '',
+                tahun_selesai: pendidikanTerakhir.tahun_selesai || '',
             });
         }
-    }, [pendidikanTerakhir, idUser]);
+    }, [pendidikanTerakhir]);
 
     const cancelSubmit = async (e) => {
         e.preventDefault();
@@ -78,19 +82,19 @@ function UpdatePendidikanTerakhir() {
                     tahun_selesai: data.tahun_selesai || 'Hingga saat ini',
                 };
                 dispatch(
-                    updatePendidikanTerakhir(id, updatedPendidikanTerakhir)
+                    updatePendidikanTerakhir(id, role, param.id, param.id_pendidikan_terakhir, updatedPendidikanTerakhir)
                 );
             }
         } catch (error) {
-            Swal.fire({
+            await Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!',
+                text: `Ada yang salah nih, ${error}`,
             });
         }
     };
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isViews || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">

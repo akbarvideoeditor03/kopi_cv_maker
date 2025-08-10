@@ -6,22 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-const UpdateUserSelf = ({ userId }) => {
-    const data = localStorage.getItem("dark-mode");
-    const [darkMode, setDarkMode] = useState();
-    useEffect(() => {
-        if (data === "true") {
-            setDarkMode(true);
-        }
-    }, []);
-    const role = localStorage.getItem('role');
-    const token = localStorage.getItem('token');
-    const { id } = useParams();
+const UpdateUserSelf = () => {
     const dispatch = useDispatch();
-    const { userList, isWebsite } = useSelector((state) => state.userReducer);
-    useEffect(() => {
-        dispatch(getUserId(id));
-    }, [dispatch, id]);
+    const data = localStorage.getItem("dark-mode");
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    const id = localStorage.getItem('id');
+    const { userList, isWebsite, isViews } = useSelector((state) => state.userReducer);
+    const [darkMode, setDarkMode] = useState();
     const [userData, setUserData] = useState({
         nama: '',
         no_telp: '',
@@ -32,10 +24,14 @@ const UpdateUserSelf = ({ userId }) => {
     });
 
     useEffect(() => {
-        if (userId) {
-            dispatch(getUserId(userId));
+        if (data === "true") {
+            setDarkMode(true);
         }
-    }, [dispatch, userId]);
+    }, []);
+    
+    useEffect(() => {
+        dispatch(getUserId(id, role));
+    }, [dispatch, id, role]);
 
     useEffect(() => {
         if (userList) {
@@ -94,6 +90,7 @@ const UpdateUserSelf = ({ userId }) => {
                 });
 
                 if (result.isConfirmed) {
+                    const userId = userList.id
                     const updatedUser = {
                         nama: userData.nama,
                         no_telp: userData.no_telp,
@@ -101,7 +98,7 @@ const UpdateUserSelf = ({ userId }) => {
                         tentang: userData.tentang,
                         email: userData.email,
                     };
-                    dispatch(updateUser(id, updatedUser));
+                    dispatch(updateUser(id, role, userId, updatedUser));
                 }
             } else {
                 const result = await Swal.fire({
@@ -136,6 +133,7 @@ const UpdateUserSelf = ({ userId }) => {
                         let foto = null;
                         foto = await uploadToSupabase(newFileName, file);
 
+                        const userId = userList.id;
                         const updatedUser = {
                             nama: userData.nama,
                             no_telp: userData.no_telp,
@@ -144,8 +142,7 @@ const UpdateUserSelf = ({ userId }) => {
                             foto_profil: foto,
                             email: userData.email,
                         };
-
-                        dispatch(updateUser(id, updatedUser));
+                        dispatch(updateUser(id, role, userId, updatedUser));
                     } catch (error) {
                         Swal.fire({
                             icon: 'error',
@@ -164,7 +161,7 @@ const UpdateUserSelf = ({ userId }) => {
         }
     };
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isViews || role === isWebsite)) {
         return (
             <main className="container col-f f-center-c">
                 <section className="card container row-f f-wrap-r full-width section-max">

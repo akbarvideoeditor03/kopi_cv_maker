@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { postUserLogin, otpRequestCode } from '../../redux/action/user.action';
+import { postUserLogin, otpRequestCode, getUserId } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 import 'animate.css';
 
 function Login() {
     const dispatch = useDispatch();
-    const token = localStorage.getItem('token');
-    const id = localStorage.getItem('id')
     const data = localStorage.getItem("dark-mode");
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    const id = localStorage.getItem('id')
     const [darkMode, setDarkMode] = useState();
     const { userList } = useSelector((state) => state.userReducer);
     const [userData, setUserData] = useState({
@@ -22,12 +23,12 @@ function Login() {
             setDarkMode(true);
         }
     }, []);
-    
+
     useEffect(() => {
-        if(token) {
-            dispatch(getUserId(id))
+        if (token) {
+            dispatch(getUserId(id, role))
         }
-    }, [dispatch, userList.id])
+    }, [dispatch, id, role])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,7 +58,7 @@ function Login() {
             });
             return;
         }
-        
+
         try {
             Swal.fire({
                 title: 'Sebentar...',
@@ -106,39 +107,28 @@ function Login() {
 
     const handleSubmitWithEmail = (e) => {
         e.preventDefault();
-        if (!userList?.email) {
-            Swal.fire({
-                icon: 'error',
-                text: 'Opps... Email Kosong',
-                timer: 2000,
-                showConfirmButton: false,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                return;
-            });
-        }
-        try {
-            Swal.fire({
-                title: 'Sebentar...',
-                html: '<div className="custom-loader"></div>',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-            });
-            const otpReq = {
-                email: userList.email,
-            };
-            dispatch(otpRequestCode(otpReq));
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `Terjadi kesalahan ${error}. Coba lagi`,
-            });
+        if (userList.email) {
+            try {
+                Swal.fire({
+                    title: 'Sebentar...',
+                    html: '<div className="custom-loader"></div>',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+                const emailReq = {
+                    email: userList.email,
+                };
+                dispatch(otpRequestCode(emailReq));
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Terjadi kesalahan ${error}. Coba lagi`,
+                });
+            }
         }
     };
 
@@ -150,7 +140,7 @@ function Login() {
                 <div className="container col-f login-left f-1 f-between">
                     <div className="container col-f">
                         <h1>Masuk <i className="bi-question-circle fwb" onClick={infoAkun}></i></h1>
-                        <div className="container f-center-c" style={{minHeight:'7.5rem'}}>
+                        <div className="container f-center-c" style={{ minHeight: '7.5rem' }}>
                             <img
                                 className="login-icon"
                                 src="/assets/icon/Logo-bw.png"
@@ -194,9 +184,9 @@ function Login() {
                                 </div>
                                 {
                                     token ? <button className='btn-reset-pw' onClick={handleSubmitWithEmail}>Reset Password?</button> :
-                                    <div className="container col-f-0 f-center-r">
-                                        <a href="/user/otprequest">Reset Password?</a>
-                                    </div>
+                                        <div className="container col-f-0 f-center-r">
+                                            <a href="/user/otprequest">Reset Password?</a>
+                                        </div>
                                 }
                                 <button
                                     style={{

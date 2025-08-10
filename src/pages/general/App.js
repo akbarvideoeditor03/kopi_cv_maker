@@ -50,11 +50,11 @@ function App() {
                 <Route path="/user/edit/:id" element={<UpdateUserAdmin />}></Route>
                 <Route path="/dashboard" element={<UserList />}></Route>
                 <Route path="/home" element={<HomeUser />}></Route>
-                <Route path="/edit/:id" element={<UpdateUserSelf />}></Route>
+                <Route path="/edit/:id_user/:role" element={<UpdateUserSelf />}></Route>
                 <Route path="/createpengalamankerja" element={<CreatePengalamanKerja />}></Route>
-                <Route path="/pengalamankerja/:id_user/:id" element={<UpdatePengalamanKerja />}></Route>
+                <Route path="/pengalamankerja/:id_user/:role/:id/:id_pengalaman_kerja" element={<UpdatePengalamanKerja />}></Route>
                 <Route path="/pendidikanterakhir" element={<CreatePendidikanTerakhir />}></Route>
-                <Route path="/pendidikanterakhir/:id_user/:id" element={<UpdatePendidikanTerakhir />}></Route>
+                <Route path="/pendidikanterakhir/:id_user/:role/:id/:id_pendidikan_terakhir" element={<UpdatePendidikanTerakhir />}></Route>
                 <Route path="/keahlian" element={<CreateKeahlian />}></Route>
                 <Route path="/keahlian/:id_user/:id" element={<UpdateKeahlian />}></Route>
                 <Route path="/pelatihan" element={<CreatePelatihan />}></Route>
@@ -65,7 +65,7 @@ function App() {
                 <Route path="/user/login" element={<Login />}></Route>
                 <Route path="/user/register" element={<Register />}></Route>
                 <Route path="/user/otprequest" element={<RequestOtp />}></Route>
-                <Route path="/user/resetpassword" element={<PasswordReset />}></Route>
+                <Route path="/user/passwordreset" element={<PasswordReset />}></Route>
 
                 <Route path="/bantuan" element={<Help />}></Route>
                 <Route path="/tentang" element={<About />}></Route>

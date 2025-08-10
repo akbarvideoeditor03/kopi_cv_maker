@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import {
-    readPengalamanKerja,
+    readPengalamanKerjaId,
     updatePengalamanKerja,
+    getUserId
 } from '../../../redux/action/user.action';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 const UpdatePengalamanKerja = () => {
-    const { id } = useParams();
-    const idUser = localStorage.getItem('id');
+    const dispatch = useDispatch();
+    const param = useParams();
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
-    const dispatch = useDispatch();
-    const { pengalamanKerja, isWebsite } = useSelector((state) => state.userReducer);
+    const id = localStorage.getItem('id');
+    const { pengalamanKerja, isWebsite, isViews } = useSelector((state) => state.userReducer);
 
     const [data, setData] = useState({
-        id_user: idUser || '',
+        id: '',
         lokasi: '',
         jabatan: '',
         detail: '',
@@ -25,26 +26,27 @@ const UpdatePengalamanKerja = () => {
     });
 
     useEffect(() => {
-        if (idUser) {
-            dispatch(readPengalamanKerja(idUser));
-        }
-    }, [dispatch, idUser]);
+        dispatch(getUserId(id, role));
+    }, [dispatch, id, role]);
 
     useEffect(() => {
-        const currentData = pengalamanKerja.find(
-            (item) => item.id === parseInt(id)
-        );
-        if (currentData) {
+        if (id) {
+            dispatch(readPengalamanKerjaId(id, role, param.id, param.id_pengalaman_kerja));
+        }
+    }, [dispatch, id, role, param.id, param.id_pengalaman_kerja]);
+
+    useEffect(() => {
+        if (pengalamanKerja) {
             setData({
                 id_user: '',
-                lokasi: currentData.lokasi || '',
-                jabatan: currentData.jabatan || '',
-                detail: currentData.detail || '',
-                tahun_mulai: currentData.tahun_mulai || '',
-                tahun_selesai: currentData.tahun_selesai || '',
+                lokasi: pengalamanKerja.lokasi || '',
+                jabatan: pengalamanKerja.jabatan || '',
+                detail: pengalamanKerja.detail || '',
+                tahun_mulai: pengalamanKerja.tahun_mulai || '',
+                tahun_selesai: pengalamanKerja.tahun_selesai || '',
             });
         }
-    }, [pengalamanKerja, idUser]);
+    }, [pengalamanKerja]);
 
     const wordCount = data.detail.trim().split(/\s+/).filter(Boolean).length;
     useEffect(() => {
@@ -54,7 +56,8 @@ const UpdatePengalamanKerja = () => {
         } else {
             warnText.classList.remove("c-red", "fwb")
         }
-    })
+    });
+
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -91,18 +94,17 @@ const UpdatePengalamanKerja = () => {
                     tahun_mulai: data.tahun_mulai,
                     tahun_selesai: data.tahun_selesai || 'Hingga saat ini',
                 };
-                dispatch(updatePengalamanKerja(id, updatedPengalamanKerja));
+                dispatch(updatePengalamanKerja(id, role, param.id, param.id_pengalaman_kerja, updatedPengalamanKerja));
             }
         } catch (error) {
-            console.error('Error saat menambahkan pengalaman kerja:', error);
             await Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!',
+                text: `Ada yang salah nih, ${error}`,
             });
         }
     };
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isViews || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">

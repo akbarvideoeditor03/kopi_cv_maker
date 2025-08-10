@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPengalamanKerja } from '../../../redux/action/user.action';
+import { createPengalamanKerja, getUserId } from '../../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function CreatePengalamanKerja() {
@@ -8,7 +8,7 @@ function CreatePengalamanKerja() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const id = localStorage.getItem('id');
-    const { isWebsite } = useSelector((state) => state.userReducer)
+    const { isWebsite, isViews, userList } = useSelector((state) => state.userReducer);
     const [pengalamanKerja, setPengalamanKerja] = useState({
         id_user: '',
         lokasi: '',
@@ -17,6 +17,10 @@ function CreatePengalamanKerja() {
         tahun_mulai: '',
         tahun_selesai: '',
     });
+
+    useEffect(() => {
+        dispatch(getUserId(id, role));
+    }, [dispatch, id, role]);
 
     const wordCount = pengalamanKerja.detail
         .trim()
@@ -32,25 +36,8 @@ function CreatePengalamanKerja() {
         }
     })
 
-    const cancelSubmit = async (e) => {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Yakin mau batal?',
-            text: 'Tulisan kamu bakal hilang loh...',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Iya',
-            cancelButtonText: 'Lanjutin',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '/home';
-            }
-        });
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!pengalamanKerja.lokasi) {
             Swal.fire({
                 icon: 'error',
@@ -89,7 +76,7 @@ function CreatePengalamanKerja() {
 
         try {
             const pengalamanKerjaUser = {
-                id_user: `${id}`,
+                id_user: `${userList.id}`,
                 lokasi: pengalamanKerja.lokasi,
                 jabatan: pengalamanKerja.jabatan,
                 detail: pengalamanKerja.detail,
@@ -97,18 +84,33 @@ function CreatePengalamanKerja() {
                 tahun_selesai:
                     pengalamanKerja.tahun_selesai || 'Hingga saat ini',
             };
-            dispatch(createPengalamanKerja(pengalamanKerjaUser));
+            dispatch(createPengalamanKerja(id, role, pengalamanKerjaUser));
         } catch (error) {
-            console.error('Error saat menambahkan pengalaman kerja:', error);
             await Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!',
+                text: `Ada yang salah nih, ${error}`,
             });
         }
     };
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    const cancelSubmit = async (e) => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Yakin mau batal?',
+            text: 'Tulisan kamu bakal hilang loh...',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Iya',
+            cancelButtonText: 'Lanjutin',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/home';
+            }
+        });
+    };
+
+    if (token && (role === isViews || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">

@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import { jwtDecode } from 'jwt-decode';
 import Dropdown from './dropdown';
 import Swal from 'sweetalert2';
 import Switch from './switch';
@@ -7,15 +6,7 @@ import Switch from './switch';
 function WebHeader() {
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
     const token = localStorage.getItem('token');
-
-    let decodedToken = null;
-    if (token) {
-        try {
-            decodedToken = jwtDecode(token);
-        } catch (error) {
-            console.error('Gagal decode token:', error);
-        }
-    }
+    const role = localStorage.getItem('role')
 
     const handleLogout = () => {
         Swal.fire({
@@ -47,7 +38,7 @@ function WebHeader() {
     };
 
     const renderMenu = () => {
-        if (decodedToken?.role === isWebsite) {
+        if (token && role === isWebsite) {
             return (
                 <>
                     <div className="container col-f"><a href="/dashboard">Dashboard</a></div>
@@ -60,7 +51,7 @@ function WebHeader() {
             );
         }
 
-        if (decodedToken?.role === isViews) {
+        if (token && role === isViews) {
             return (
                 <>
                     <div className="container col-f"><a href="/home">CV Saya</a></div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getUserId,
@@ -33,18 +33,22 @@ function HomeUser() {
         prestasiKerja,
         isLoading,
         isWebsite,
+        isViews
     } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
-        dispatch(getUserId(id));
-        dispatch(readPengalamanKerja(id));
-        dispatch(readPendidikanTerakhir(id));
-        dispatch(readKeahlian(id));
-        dispatch(readPelatihan(id));
-        dispatch(readPrestasi());
-    }, [dispatch, id]);
+        dispatch(getUserId(id, role));
+    }, [dispatch,  id, role]);
 
-    const deleteData = (id, type) => {
+    useEffect(() => {
+        dispatch(readPendidikanTerakhir(id, role, userList.id));
+        dispatch(readPengalamanKerja(id, role, userList.id));
+        dispatch(readKeahlian(id, role, userList.id));
+        dispatch(readPelatihan(id, role, userList.id));
+        dispatch(readPrestasi(id, role, userList.id));
+    }, [dispatch,  id, role, userList.id]);
+
+    const deleteData = (idData, type) => {
         Swal.fire({
             title: 'Apakah Anda yakin?',
             text: 'Data yang dihapus tidak dapat dikembalikan!',
@@ -55,15 +59,15 @@ function HomeUser() {
         }).then((result) => {
             if (result.isConfirmed) {
                 if (type === 'pendidikan') {
-                    dispatch(deletePendidikanTerakhir(id));
+                    dispatch(deletePendidikanTerakhir(id, role, userList.id, idData));
                 } else if (type === 'pengalamanKerja') {
-                    dispatch(deletePengalamanKerja(id));
+                    dispatch(deletePengalamanKerja(id, role, userList.id, idData));
                 } else if (type === 'keahlian') {
-                    dispatch(deleteKeahlian(id));
+                    dispatch(deleteKeahlian(id, role, userList.id, idData));
                 } else if (type === 'pelatihan') {
-                    dispatch(deletePelatihan(id));
+                    dispatch(deletePelatihan(id, role, userList.id, idData));
                 } else if (type === 'prestasi') {
-                    dispatch(deletePrestasi(id));
+                    dispatch(deletePrestasi(id, role, userList.id, idData));
                 }
                 Swal.fire({
                     icon: 'success',
@@ -74,6 +78,9 @@ function HomeUser() {
                     allowEscapeKey: false,
                     allowOutsideClick: false,
                     timerProgressBar: true,
+                }).then(()=> {
+                    Swal.close();
+                    window.location.reload();
                 });
             }
         });
@@ -113,14 +120,7 @@ function HomeUser() {
         }
     };
 
-
-    //Contoh menampilkan data 1 kali saja
-    // useEffect(() => {
-    //     console.log(userList?.email == undefined ? '' : userList.email);
-    // }, [userList.email]);
-
-
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isViews || role === isWebsite)) {
         const tentang = userList.tentang
         const tentangParagraf = tentang?.split('\n').map((tentangs, index) => (
             <p style={{ lineHeight: '1.5rem' }} key={index}>{tentangs} <br /></p>
@@ -222,7 +222,7 @@ function HomeUser() {
                                 <div className="container col-f">
                                     <a
                                         className="btn btn-primary"
-                                        href={`/edit/${id}`}
+                                        href={`/edit/${id}/${role}`}
                                     >
                                         <i className="bi-pencil-square"></i>
                                     </a>
@@ -289,17 +289,14 @@ function HomeUser() {
                                                     <div className="container row-f">
                                                         <a
                                                             className="btn btn-primary"
-                                                            href={`/pendidikanterakhir/${userList.id}/${item.id}`}
+                                                            href={`/pendidikanterakhir/${id}/${role}/${userList.id}/${item.id}`}
                                                         >
                                                             <i className="bi-pencil-square"></i>
                                                         </a>
                                                         <button
                                                             className="btn btn-danger"
                                                             onClick={() =>
-                                                                deleteData(
-                                                                    item.id,
-                                                                    'pendidikan'
-                                                                )
+                                                                deleteData(item.id, 'pendidikan')
                                                             }
                                                         >
                                                             <i className="bi-trash"></i>
@@ -434,7 +431,7 @@ function HomeUser() {
                                                 <div className="container row-f">
                                                     <a
                                                         className="btn btn-primary"
-                                                        href={`/pengalamankerja/${userList.id}/${item.id}`}
+                                                        href={`/pengalamankerja/${id}/${role}/${userList.id}/${item.id}`}
                                                     >
                                                         <i className="bi-pencil-square"></i>
                                                     </a>

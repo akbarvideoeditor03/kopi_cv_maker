@@ -1,22 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { jwtDecode } from 'jwt-decode';
 
 function Dropdown() {
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
     const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
     const [isOpen, setIsOpen] = useState(false);
-    let role = null;
-
-    if (token) {
-        try {
-            const decoded = jwtDecode(token);
-            role = decoded.role;
-        } catch (error) {
-            console.error('Gagal decode token:', error);
-        }
-    }
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);

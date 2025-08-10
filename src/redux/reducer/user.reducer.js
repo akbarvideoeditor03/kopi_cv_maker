@@ -1,7 +1,8 @@
-import { jwtDecode } from 'jwt-decode';
+import hashValue from '../../util/encrypt';
 import { userTypes } from '../actionTypes';
-const adminKey = process.env.REACT_APP_ADMIN_KEY;
-const userKey = process.env.REACT_APP_USER_KEY;
+
+const adminKey = await hashValue(process.env.REACT_APP_ADMIN_KEY);
+const userKey = await hashValue(process.env.REACT_APP_USER_KEY);
 
 const initState = {
     userList: [],
@@ -14,7 +15,7 @@ const initState = {
     resetPassword: [],
     templatList: [],
     isWebsite: adminKey,
-    isUser: userKey,
+    isViews: userKey,
     isLoading: false,
     error: null,
 };
@@ -105,6 +106,13 @@ const users = (state = initState, action) => {
                 ...state,
                 isLoading: false,
                 error: action.payload,
+            };
+
+            case userTypes.SET_HASHED_ROLES:
+            return {
+                ...state,
+                isWebsite: action.payload.isWebsite,
+                isViews: action.payload.isViews,
             };
 
         case userTypes.UPDATE_USER_REQUEST:
