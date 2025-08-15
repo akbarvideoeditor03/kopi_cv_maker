@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
-    readKeahlian,
+    readKeahlianId,
     updateKeahlian,
+    getUserId
 } from '../../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function UpdateKeahlian() {
     const dispatch = useDispatch();
-    const { id } = useParams();
-    const idUser = localStorage.getItem('id');
+    const param = useParams();
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
-    const { keahlian, isWebsite } = useSelector((state) => state.userReducer);
+    const id = localStorage.getItem('id');
+    const { keahlian, isWebsite, isViews } = useSelector((state) => state.userReducer);
 
     const [data, setData] = useState({
         keahlian: '',
@@ -21,20 +22,23 @@ function UpdateKeahlian() {
     });
 
     useEffect(() => {
-        if (idUser) {
-            dispatch(readKeahlian(idUser));
-        }
-    }, [dispatch, idUser]);
+        dispatch(getUserId(id, role));
+    }, [dispatch, id, role]);
 
     useEffect(() => {
-        const currentData = keahlian.find((item) => item.id === parseInt(id));
-        if (currentData) {
+        if (id) {
+            dispatch(readKeahlianId(id, role, param.id, param.id_keahlian));
+        }
+    }, [dispatch, id, role, param.id, param.id_keahlian]);
+
+    useEffect(() => {
+        if (keahlian) {
             setData({
-                keahlian: currentData.keahlian || '',
-                tingkat: currentData.tingkat || '',
+                keahlian: keahlian.keahlian,
+                tingkat: keahlian.tingkat || '',
             });
         }
-    }, [keahlian, idUser]);
+    }, [keahlian]);
 
     const cancelSubmit = async (e) => {
         e.preventDefault();
@@ -55,11 +59,24 @@ function UpdateKeahlian() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const keahlianUser = {
-                keahlian: data.keahlian,
-                tingkat: data.tingkat,
-            };
-            dispatch(updateKeahlian(id, keahlianUser));
+            const keahlianUser = await Swal.fire({
+                icon: 'question',
+                title: 'Tunggu',
+                text: 'Apa informasinya udah benar semua?',
+                confirmButtonText: 'Iya, udah',
+                cancelButtonText: 'Lanjutin',
+                allowOutsideClick: false,
+                showCancelButton: true,
+            });
+            if(keahlianUser.isConfirmed) {
+                const keahlianUserUpdate = {
+                    keahlian: data.keahlian,
+                    tingkat: data.tingkat,
+                }
+                dispatch(
+                    updateKeahlian(id, role, param.id, param.id_keahlian, keahlianUserUpdate)
+                );
+            }
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -69,7 +86,7 @@ function UpdateKeahlian() {
         }
     };
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isViews || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">

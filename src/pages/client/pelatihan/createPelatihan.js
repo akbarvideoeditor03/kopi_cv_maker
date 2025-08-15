@@ -8,7 +8,7 @@ function CreatePelatihan() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const id = localStorage.getItem('id');
-    const { isWebsite } = useSelector((state) => state.userReducer)
+    const { isWebsite, isViews } = useSelector((state) => state.userReducer)
     const [pelatihan, setPelatihan] = useState({
         pelatihan: '',
         tahun_mulai: '',
@@ -68,7 +68,7 @@ function CreatePelatihan() {
         }
     };
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isViews || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">

@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2';
 import { userTypes } from '../actionTypes';
 import { createClient } from '@supabase/supabase-js';
+import apiFetch from '../../util/api';
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseBucket = process.env.REACT_APP_SUPABASE_BUCKET;
@@ -36,7 +37,7 @@ export const uploadToSupabase = async (newFileName, file) => {
 export const register = (user) => async (dispatch) => {
     dispatch({ type: userTypes.REGISTER_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/kopi/auth/register`, {
+        const response = await apiFetch(`${baseUrl}/kopi/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -97,8 +98,9 @@ export const register = (user) => async (dispatch) => {
 export const postUserLogin = (user) => async (dispatch) => {
     localStorage.removeItem('lastActivity');
     dispatch({ type: userTypes.LOGIN_REQUEST });
+
     try {
-        const response = await fetch(`${baseUrl}/kopi/auth/login`, {
+        const response = await apiFetch(`${baseUrl}/kopi/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -106,66 +108,52 @@ export const postUserLogin = (user) => async (dispatch) => {
             body: JSON.stringify(user),
         });
 
-        if (response.status >= 500) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'Server kami lagi error nih',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else if (response.status === 401) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups...',
-                text: 'Pengguna tidak ditemukan. Atau password salah',
-                showConfirmButton: false,
-                timer: 3000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else {
-            const data = await response.json();
-            const id = data.id;
-            const role = data.role;
-            const token = data.token;
-            if (!token) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oow...',
-                    text: 'Akun tidak ditemukan. Atau password salah',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                });
-            } else {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Selamat',
-                    text: 'Akun berhasil masuk',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                }).then(() => {
-                    localStorage.setItem('id', id);
-                    localStorage.setItem('role', role);
-                    localStorage.setItem('token', token);
-                    window.location = '/';
-                });
-                dispatch({
-                    type: userTypes.LOGIN_SUCCESS,
-                    payload: data.data,
-                });
-            }
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        const data = await response.json();
+        const { id, role, token } = data;
+
+        if (!token) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oow...',
+                text: 'Akun tidak ditemukan. Atau password salah',
+                timer: 3000,
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+            dispatch({
+                type: userTypes.LOGIN_FAILURE,
+                payload: 'Token missing',
+            });
+            return;
+        }
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Selamat',
+            text: 'Akun berhasil masuk',
+            timer: 3000,
+            showConfirmButton: false,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            timerProgressBar: true,
+        }).then(() => {
+            localStorage.setItem('id', id);
+            localStorage.setItem('role', role);
+            localStorage.setItem('token', token);
+            window.location = '/';
+        });
+
+        dispatch({
+            type: userTypes.LOGIN_SUCCESS,
+            payload: data.data,
+        });
+
     } catch (error) {
         console.error('Error during login:', error);
         dispatch({
@@ -175,11 +163,12 @@ export const postUserLogin = (user) => async (dispatch) => {
     }
 };
 
+
 // Create User Form Admin
 export const createUser = (user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/kopi/user/register`, {
+        const response = await apiFetch(`${baseUrl}/kopi/user/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -229,7 +218,7 @@ export const getUser = () => {
         dispatch({ type: userTypes.GET_USER_LIST_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/user`, {
+            const response = await apiFetch(`${baseUrl}/kopi/user`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -258,7 +247,7 @@ export const getUserId = (id, role) => {
         dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/user/${id}/${role}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/user/${id}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -303,7 +292,7 @@ export const updateUser = (id, role, userId, updatedUser) => async (dispatch) =>
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/user/${id}/${role}/${userId}`, {
+        const response = await apiFetch(`${baseUrl}/kopi/user/${id}/${role}/${userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -355,7 +344,7 @@ export const gLogin = (response) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.CREATE_USER_REQUEST });
         try {
-            const result = await fetch(`${baseUrl}/kopi/user/glogin`, {
+            const result = await apiFetch(`${baseUrl}/kopi/user/glogin`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -442,7 +431,7 @@ export const deleteUser = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_USER_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/user/${id}`, {
+        const response = await apiFetch(`${baseUrl}/kopi/user/${id}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -489,7 +478,7 @@ export const deleteUser = (id) => async (dispatch) => {
 export const otpRequestCode = (emailReq) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_OTP_REQUEST });
     try {
-        const response = await fetch(`${baseUrl}/kopi/auth/trypasswordreset`, {
+        const response = await apiFetch(`${baseUrl}/kopi/auth/trypasswordreset`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -550,7 +539,7 @@ export const resetPassword = (data) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_RESET_PASSWORD_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/user/passwordreset`, {
+        const response = await apiFetch(`${baseUrl}/kopi/user/passwordreset`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -615,7 +604,7 @@ export const createTemplat = (templat) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_TEMPLAT_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/templat`, {
+        const response = await apiFetch(`${baseUrl}/kopi/templat`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -666,7 +655,7 @@ export const viewAllTemplate = () => {
         dispatch({ type: userTypes.VIEW_TEMPLAT_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/templat`, {
+            const response = await apiFetch(`${baseUrl}/kopi/templat`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -695,7 +684,7 @@ export const viewAllTemplateId = (id) => {
         dispatch({ type: userTypes.VIEW_TEMPLAT_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/templat/${id}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/templat/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -719,7 +708,7 @@ export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_TEMPLAT_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/templat/${id}`, {
+        const response = await apiFetch(`${baseUrl}/kopi/templat/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -770,7 +759,7 @@ export const deleteTemplat = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_TEMPLAT_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/templat/${id}`, {
+        const response = await apiFetch(`${baseUrl}/kopi/templat/${id}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -818,7 +807,7 @@ export const createPengalamanKerja = (id, role, pengalaman_kerja) => async (disp
     dispatch({ type: userTypes.CREATE_PENGALAMAN_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/pengalamankerja/${id}/${role}`, {
+        const response = await apiFetch(`${baseUrl}/kopi/pengalamankerja/${id}/${role}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -870,7 +859,7 @@ export const readPengalamanKerja = (id_user, role, id) => {
         dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(
+            const response = await apiFetch(
                 `${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}`,
                 {
                     headers: {
@@ -898,7 +887,7 @@ export const readPengalamanKerjaId = (id_user, role, id, id_pengalaman_kerja) =>
         dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(
+            const response = await apiFetch(
                 `${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}/${id_pengalaman_kerja}`,
                 {
                     headers: {
@@ -926,7 +915,7 @@ export const updatePengalamanKerja =
         dispatch({ type: userTypes.UPDATE_PENGALAMAN_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(
+            const response = await apiFetch(
                 `${baseUrl}/kopi/pengalamankerja/edit/${id_user}/${role}/${id}/${id_pengalaman_kerja}`,
                 {
                     method: 'PUT',
@@ -980,7 +969,7 @@ export const deletePengalamanKerja = (id_user, role, id, idData) => async (dispa
     dispatch({ type: userTypes.DELETE_PENGALAMAN_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        await fetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}/${idData}`, {
+        await apiFetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}/${idData}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -1004,7 +993,7 @@ export const createPendidikanTerakhir =
         dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id}/${role}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/pendidikanterakhir/${id}/${role}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1056,7 +1045,7 @@ export const readPendidikanTerakhir = (id_user, role, id) => {
         dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(
+            const response = await apiFetch(
                 `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}`,
                 {
                     headers: {
@@ -1084,7 +1073,7 @@ export const readPendidikanTerakhirId = (id_user, role, id, idPendidikanTerakhir
         dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(
+            const response = await apiFetch(
                 `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}/${idPendidikanTerakhir}`,
                 {
                     headers: {
@@ -1112,7 +1101,7 @@ export const updatePendidikanTerakhir =
         dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(
+            const response = await apiFetch(
                 `${baseUrl}/kopi/pendidikanterakhir/edit/${id_user}/${role}/${id}/${idPendidikanTerakhir}`,
                 {
                     method: 'PUT',
@@ -1166,7 +1155,7 @@ export const deletePendidikanTerakhir = (id_user, role, id, idData) => async (di
     dispatch({ type: userTypes.DELETE_PENDIDIKAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        await fetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}/${idData}`, {
+        await apiFetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}/${idData}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -1185,11 +1174,11 @@ export const deletePendidikanTerakhir = (id_user, role, id, idData) => async (di
 };
 
 //Keahlian
-export const createKeahlian = (keahlian) => async (dispatch) => {
+export const createKeahlian = (id, role, keahlian) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_KEAHLIAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/keahlian`, {
+        const response = await apiFetch(`${baseUrl}/kopi/keahlian/${id}/${role}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1219,6 +1208,7 @@ export const createKeahlian = (keahlian) => async (dispatch) => {
                 allowOutsideClick: false,
                 timerProgressBar: true,
             }).then(() => {
+                Swal.close();
                 window.location = '/home';
             });
             const data = await response.json();
@@ -1235,12 +1225,12 @@ export const createKeahlian = (keahlian) => async (dispatch) => {
     }
 };
 
-export const readKeahlian = (id, role) => {
+export const readKeahlian = (id_user, role, id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_KEAHLIAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/keahlian/${id}/${role}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1261,20 +1251,44 @@ export const readKeahlian = (id, role) => {
     };
 };
 
-export const updateKeahlian = (id, updatedKeahlian) => async (dispatch) => {
+export const readKeahlianId = (id_user, role, id, idKeahlian) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_KEAHLIAN_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('token');
+            const response = await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${id}/${idKeahlian}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.GET_KEAHLIAN_ID_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+        } catch (error) {
+            dispatch({
+                type: userTypes.GET_KEAHLIAN_ID_FAILURE,
+                payload: error,
+            });
+        }
+    };
+};
+
+export const updateKeahlian = (id_user, role, id, idKeahlian, keahlianUserUpdate) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_KEAHLIAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const id_user = localStorage.getItem('id');
-        const response = await fetch(
-            `${baseUrl}/kopi/keahlian/${id_user}/${id}`,
+        const response = await apiFetch(
+            `${baseUrl}/kopi/keahlian/edit/${id_user}/${role}/${id}/${idKeahlian}`,
             {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify(updatedKeahlian),
+                body: JSON.stringify(keahlianUserUpdate),
             }
         );
         if (response.status >= 500) {
@@ -1315,37 +1329,21 @@ export const updateKeahlian = (id, updatedKeahlian) => async (dispatch) => {
     }
 };
 
-export const deleteKeahlian = (id) => async (dispatch) => {
+export const deleteKeahlian = (id_user, role, id, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const id_user = localStorage.getItem('id');
-        const response = await fetch(
-            `${baseUrl}/kopi/keahlian/${id_user}/${id}`,
+        await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${id}/${idData}`,
             {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            }
-        );
-        if (response.status >= 500) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'Server kami lagi error nih',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
             });
-        } else {
-            dispatch({
-                type: userTypes.DELETE_KEAHLIAN_ID_SUCCESS,
-                payload: id,
-            });
-        }
+        dispatch({
+            type: userTypes.DELETE_KEAHLIAN_ID_SUCCESS,
+            payload: id,
+        });
     } catch (error) {
         dispatch({
             type: userTypes.DELETE_KEAHLIAN_ID_FAILURE,
@@ -1359,7 +1357,7 @@ export const createPrestasi = (prestasi) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PRESTASI_ID_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/prestasikerja`, {
+        const response = await apiFetch(`${baseUrl}/kopi/prestasikerja`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1410,7 +1408,7 @@ export const readPrestasi = (id, role) => {
         dispatch({ type: userTypes.GET_PRESTASI_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/prestasikerja/${id}/${role}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/prestasikerja/${id}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1435,7 +1433,7 @@ export const updatePrestasi =
         dispatch({ type: userTypes.UPDATE_PRESTASI_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(
+            const response = await apiFetch(
                 `${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`,
                 {
                     method: 'PUT',
@@ -1488,7 +1486,7 @@ export const deletePrestasi = (id, id_pengalaman_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PRESTASI_ID_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(
+        const response = await apiFetch(
             `${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`,
             {
                 method: 'DELETE',
@@ -1527,7 +1525,7 @@ export const createPelatihan = (pelatihan) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PELATIHAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${baseUrl}/kopi/pelatihan`, {
+        const response = await apiFetch(`${baseUrl}/kopi/pelatihan`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1578,7 +1576,7 @@ export const readPelatihan = (id, role) => {
         dispatch({ type: userTypes.GET_PELATIHAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${baseUrl}/kopi/pelatihan/${id}/${role}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/pelatihan/${id}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1603,7 +1601,7 @@ export const updatePelatihan = (id, updatedPelatihan) => async (dispatch) => {
     try {
         const token = localStorage.getItem('token');
         const id_user = localStorage.getItem('id');
-        const response = await fetch(
+        const response = await apiFetch(
             `${baseUrl}/kopi/pelatihan/${id_user}/${id}`,
             {
                 method: 'PUT',
@@ -1657,7 +1655,7 @@ export const deletePelatihan = (id) => async (dispatch) => {
     try {
         const token = localStorage.getItem('token');
         const id_user = localStorage.getItem('id');
-        const response = await fetch(
+        const response = await apiFetch(
             `${baseUrl}/kopi/pelatihan/${id_user}/${id}`,
             {
                 method: 'DELETE',

@@ -56,7 +56,7 @@ function App() {
                 <Route path="/pendidikanterakhir" element={<CreatePendidikanTerakhir />}></Route>
                 <Route path="/pendidikanterakhir/:id_user/:role/:id/:id_pendidikan_terakhir" element={<UpdatePendidikanTerakhir />}></Route>
                 <Route path="/keahlian" element={<CreateKeahlian />}></Route>
-                <Route path="/keahlian/:id_user/:id" element={<UpdateKeahlian />}></Route>
+                <Route path="/keahlian/:id_user/:role/:id/:id_keahlian" element={<UpdateKeahlian />}></Route>
                 <Route path="/pelatihan" element={<CreatePelatihan />}></Route>
                 <Route path="/pelatihan/:id_user/:id" element={<UpdatePelatihan />}></Route>
                 <Route path="/prestasi/:id" element={<CreatePrestasi />}></Route>

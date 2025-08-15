@@ -69,19 +69,6 @@ function HomeUser() {
                 } else if (type === 'prestasi') {
                     dispatch(deletePrestasi(id, role, userList.id, idData));
                 }
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Dihapus!',
-                    text: 'Data berhasil dihapus.',
-                    timer: 2000,
-                    showConfirmButton: false,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                }).then(()=> {
-                    Swal.close();
-                    window.location.reload();
-                });
             }
         });
     };
@@ -493,7 +480,7 @@ function HomeUser() {
                                                             <div className="container row-f">
                                                                 <a
                                                                     className="btn btn-primary"
-                                                                    href={`/keahlian/${userList.id}/${item.id}`}
+                                                                    href={`/keahlian/${id}/${role}/${userList.id}/${item.id}`}
                                                                 >
                                                                     <i className="bi-pencil-square"></i>
                                                                 </a>

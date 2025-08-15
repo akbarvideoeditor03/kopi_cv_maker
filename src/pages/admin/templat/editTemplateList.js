@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Swal from 'sweetalert2';
 
 function EditTemplat() {
-    const { isWebsite } = useSelector((state) => state.userReducer);
+    const { isWebsite, isViews } = useSelector((state) => state.userReducer);
     const dispatch = useDispatch();
     const { id } = useParams();
     const token = localStorage.getItem('token');

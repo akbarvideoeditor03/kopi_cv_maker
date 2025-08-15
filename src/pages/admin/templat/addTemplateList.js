@@ -4,7 +4,7 @@ import { createTemplat, uploadToSupabase } from '../../../redux/action/user.acti
 import Swal from 'sweetalert2';
 
 const addTemplat = () => {
-    const { isWebsite } = useSelector((state) => state.userReducer);
+    const { isWebsite, isViews } = useSelector((state) => state.userReducer);
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const roleUser = isWebsite;

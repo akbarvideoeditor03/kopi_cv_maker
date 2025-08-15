@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createKeahlian } from '../../../redux/action/user.action';
+import { createKeahlian, getUserId } from '../../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function CreateKeahlian() {
@@ -8,11 +8,16 @@ function CreateKeahlian() {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
     const id = localStorage.getItem('id');
-    const { isWebsite } = useSelector((state) => state.userReducer)
+    const { isWebsite, isViews, userList } = useSelector((state) => state.userReducer)
     const [keahlian, setKeahlian] = useState({
         keahlian: '',
         tingkat: '',
     });
+
+    useEffect(() => {
+        dispatch(getUserId(id, role));
+    }, [dispatch, id, role]);
+
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -52,11 +57,12 @@ function CreateKeahlian() {
 
         try {
             const keahlianUser = {
-                id_user: `${id}`,
+                id_user: `${userList.id}`,
                 keahlian: keahlian.keahlian,
                 tingkat: keahlian.tingkat,
             };
-            dispatch(createKeahlian(keahlianUser));
+            (keahlianUser);
+            dispatch(createKeahlian(id, role, keahlianUser));
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -66,7 +72,7 @@ function CreateKeahlian() {
         }
     };
 
-    if (token && (role === 'user' || role === isWebsite)) {
+    if (token && (role === isViews || role === isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
