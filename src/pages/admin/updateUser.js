@@ -16,7 +16,7 @@ const UpdateUserAdmin = ({ userId }) => {
     }, []);
     const { id } = useParams();
     const { userList, isWebsite } = useSelector((state) => state.userReducer);
-    const role = localStorage.getItem('role');
+    const role = localStorage.getItem('$f*');
     const roleUser = isWebsite;
     const dispatch = useDispatch();
 

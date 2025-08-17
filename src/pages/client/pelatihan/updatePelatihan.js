@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
-import {
-    readPelatihan,
-    updatePelatihan,
-} from '../../../redux/action/user.action';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import {
+    readPelatihanId,
+    updatePelatihan,
+    getUserId
+} from '../../../redux/action/user.action';
+import Swal from 'sweetalert2';
 
 const UpdatePelatihan = () => {
-    const { id } = useParams();
-    const idUser = localStorage.getItem('id');
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
     const dispatch = useDispatch();
-    const { pelatihan, isWebsite } = useSelector((state) => state.userReducer);
+    const param = useParams();
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
+    const { pelatihan, isWebsite, isViews } = useSelector((state) => state.userReducer);
 
     const [data, setData] = useState({
         pelatihan: '',
@@ -21,38 +22,25 @@ const UpdatePelatihan = () => {
         tahun_selesai: '',
     });
 
-    useEffect(() => {
-        if (idUser) {
-            dispatch(readPelatihan(idUser));
-        }
-    }, [dispatch, idUser]);
+        useEffect(() => {
+        dispatch(getUserId(id, role));
+    }, [dispatch, id, role]);
 
     useEffect(() => {
-        const currentData = pelatihan.find((item) => item.id === parseInt(id));
-        if (currentData) {
+        if (id) {
+            dispatch(readPelatihanId(id, role, param.id, param.id_pelatihan));
+        }
+    }, [dispatch, id, role, param.id, param.id_pelatihan]);
+
+    useEffect(() => {
+        if (pelatihan) {
             setData({
-                pelatihan: currentData.pelatihan || '',
-                tahun_mulai: currentData.tahun_mulai || '',
-                tahun_selesai: currentData.tahun_selesai || '',
+                pelatihan: pelatihan.pelatihan || '',
+                tahun_mulai: pelatihan.tahun_mulai || '',
+                tahun_selesai: pelatihan.tahun_selesai || '',
             });
         }
-    }, [pelatihan, idUser]);
-
-    const cancelSubmit = async (e) => {
-        e.preventDefault();
-        Swal.fire({
-            title: 'Yakin mau batal?',
-            text: 'Perubahan kamu bakal hilang loh...',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Iya',
-            cancelButtonText: 'Lanjutin',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '/home';
-            }
-        });
-    };
+    }, [pelatihan]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -73,8 +61,7 @@ const UpdatePelatihan = () => {
                     tahun_mulai: data.tahun_mulai,
                     tahun_selesai: data.tahun_selesai || 'Hingga saat ini',
                 };
-
-                dispatch(updatePelatihan(id, updatedPelatihan));
+                dispatch(updatePelatihan(id, role, param.id, param.id_pelatihan, updatedPelatihan));
             }
         } catch (error) {
             console.error('Error saat menambahkan pengalaman kerja:', error);
@@ -85,6 +72,23 @@ const UpdatePelatihan = () => {
             });
         }
     };
+
+    const cancelSubmit = async (e) => {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Yakin mau batal?',
+            text: 'Perubahan kamu bakal hilang loh...',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Iya',
+            cancelButtonText: 'Lanjutin',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/home';
+            }
+        });
+    };
+
     if (token && (role === isViews || role === isWebsite)) {
         return (
             <main className="container col-f f-center">

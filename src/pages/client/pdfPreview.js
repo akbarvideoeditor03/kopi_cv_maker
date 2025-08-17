@@ -16,7 +16,7 @@ import {
     readPengalamanKerja,
     readPendidikanTerakhir,
     readKeahlian,
-    readPelatihan,
+    readPelatihanId,
     readPrestasi,
 } from '../../redux/action/user.action';
 import dayjs from 'dayjs';
@@ -25,9 +25,9 @@ import CustomFontRegular from '../font/Figtree-Regular.ttf';
 import CustomFontBold from '../font/Figtree-Bold.ttf';
 import NotifDownload from '../web-component/notifDownload';
 dayjs.locale('id');
-const id = localStorage.getItem('id');
-const token = localStorage.getItem('token');
-const role = localStorage.getItem('role');
+const id = localStorage.getItem('/v%');
+const token = localStorage.getItem('&l2');
+const role = localStorage.getItem('$f*');
 
 Font.register({
     family: 'Figtree',

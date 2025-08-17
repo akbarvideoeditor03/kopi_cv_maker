@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 function UserListDetail() {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const role = localStorage.getItem('role');
+    const role = localStorage.getItem('$f*');
     const { isWebsite, userList, isLoading, error } = useSelector(
         (state) => state.userReducer
     );

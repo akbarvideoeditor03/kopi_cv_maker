@@ -143,9 +143,9 @@ export const postUserLogin = (user) => async (dispatch) => {
             allowOutsideClick: false,
             timerProgressBar: true,
         }).then(() => {
-            localStorage.setItem('id', id);
-            localStorage.setItem('role', role);
-            localStorage.setItem('token', token);
+            localStorage.setItem('/v%', id);
+            localStorage.setItem('$f*', role);
+            localStorage.setItem('&l2', token);
             window.location = '/';
         });
 
@@ -217,7 +217,7 @@ export const getUser = () => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_LIST_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(`${baseUrl}/kopi/user`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -246,7 +246,7 @@ export const getUserId = (id, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(`${baseUrl}/kopi/user/${id}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -291,7 +291,7 @@ export const getUserId = (id, role) => {
 export const updateUser = (id, role, userId, updatedUser) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(`${baseUrl}/kopi/user/${id}/${role}/${userId}`, {
             method: 'PUT',
             headers: {
@@ -430,7 +430,7 @@ export const gLogin = (response) => {
 export const deleteUser = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_USER_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(`${baseUrl}/kopi/user/${id}`, {
             method: 'DELETE',
             headers: {
@@ -538,7 +538,7 @@ export const otpRequestCode = (emailReq) => async (dispatch) => {
 export const resetPassword = (data) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_RESET_PASSWORD_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(`${baseUrl}/kopi/user/passwordreset`, {
             method: 'POST',
             headers: {
@@ -603,7 +603,7 @@ export const resetPassword = (data) => async (dispatch) => {
 export const createTemplat = (templat) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_TEMPLAT_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(`${baseUrl}/kopi/templat`, {
             method: 'POST',
             headers: {
@@ -654,7 +654,7 @@ export const viewAllTemplate = () => {
     return async (dispatch) => {
         dispatch({ type: userTypes.VIEW_TEMPLAT_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(`${baseUrl}/kopi/templat`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -683,7 +683,7 @@ export const viewAllTemplateId = (id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.VIEW_TEMPLAT_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(`${baseUrl}/kopi/templat/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -707,7 +707,7 @@ export const viewAllTemplateId = (id) => {
 export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_TEMPLAT_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(`${baseUrl}/kopi/templat/${id}`, {
             method: 'PUT',
             headers: {
@@ -758,7 +758,7 @@ export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
 export const deleteTemplat = (id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_TEMPLAT_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(`${baseUrl}/kopi/templat/${id}`, {
             method: 'DELETE',
             headers: {
@@ -806,7 +806,7 @@ export const deleteTemplat = (id) => async (dispatch) => {
 export const createPengalamanKerja = (id, role, pengalaman_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PENGALAMAN_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(`${baseUrl}/kopi/pengalamankerja/${id}/${role}`, {
             method: 'POST',
             headers: {
@@ -858,7 +858,7 @@ export const readPengalamanKerja = (id_user, role, id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(
                 `${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}`,
                 {
@@ -886,7 +886,7 @@ export const readPengalamanKerjaId = (id_user, role, id, id_pengalaman_kerja) =>
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(
                 `${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}/${id_pengalaman_kerja}`,
                 {
@@ -914,7 +914,7 @@ export const updatePengalamanKerja =
     (id_user, role, id, id_pengalaman_kerja, updatedPengalamanKerja) => async (dispatch) => {
         dispatch({ type: userTypes.UPDATE_PENGALAMAN_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(
                 `${baseUrl}/kopi/pengalamankerja/edit/${id_user}/${role}/${id}/${id_pengalaman_kerja}`,
                 {
@@ -968,7 +968,7 @@ export const updatePengalamanKerja =
 export const deletePengalamanKerja = (id_user, role, id, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PENGALAMAN_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         await apiFetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}/${idData}`, {
             method: 'DELETE',
             headers: {
@@ -992,7 +992,7 @@ export const createPendidikanTerakhir =
     (id, role, pendidikan_terakhir) => async (dispatch) => {
         dispatch({ type: userTypes.CREATE_PENDIDIKAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(`${baseUrl}/kopi/pendidikanterakhir/${id}/${role}`, {
                 method: 'POST',
                 headers: {
@@ -1044,7 +1044,7 @@ export const readPendidikanTerakhir = (id_user, role, id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(
                 `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}`,
                 {
@@ -1072,7 +1072,7 @@ export const readPendidikanTerakhirId = (id_user, role, id, idPendidikanTerakhir
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(
                 `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}/${idPendidikanTerakhir}`,
                 {
@@ -1100,7 +1100,7 @@ export const updatePendidikanTerakhir =
     (id_user, role, id, idPendidikanTerakhir, updatedPendidikanTerakhir) => async (dispatch) => {
         dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(
                 `${baseUrl}/kopi/pendidikanterakhir/edit/${id_user}/${role}/${id}/${idPendidikanTerakhir}`,
                 {
@@ -1154,7 +1154,7 @@ export const updatePendidikanTerakhir =
 export const deletePendidikanTerakhir = (id_user, role, id, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PENDIDIKAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         await apiFetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}/${idData}`, {
             method: 'DELETE',
             headers: {
@@ -1177,7 +1177,7 @@ export const deletePendidikanTerakhir = (id_user, role, id, idData) => async (di
 export const createKeahlian = (id, role, keahlian) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_KEAHLIAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(`${baseUrl}/kopi/keahlian/${id}/${role}`, {
             method: 'POST',
             headers: {
@@ -1229,7 +1229,7 @@ export const readKeahlian = (id_user, role, id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_KEAHLIAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -1255,7 +1255,7 @@ export const readKeahlianId = (id_user, role, id, idKeahlian) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_KEAHLIAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${id}/${idKeahlian}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -1279,7 +1279,7 @@ export const readKeahlianId = (id_user, role, id, idKeahlian) => {
 export const updateKeahlian = (id_user, role, id, idKeahlian, keahlianUserUpdate) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_KEAHLIAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(
             `${baseUrl}/kopi/keahlian/edit/${id_user}/${role}/${id}/${idKeahlian}`,
             {
@@ -1332,7 +1332,7 @@ export const updateKeahlian = (id_user, role, id, idKeahlian, keahlianUserUpdate
 export const deleteKeahlian = (id_user, role, id, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${id}/${idData}`,
             {
                 method: 'DELETE',
@@ -1352,12 +1352,12 @@ export const deleteKeahlian = (id_user, role, id, idData) => async (dispatch) =>
     }
 };
 
-//Prestasi Kerja
-export const createPrestasi = (prestasi) => async (dispatch) => {
-    dispatch({ type: userTypes.CREATE_PRESTASI_ID_REQUEST });
+//Prestasi Kerja /:id_user/:role/:id_pengalaman_kerja
+export const createPrestasi = (id_user, role, id_pengalaman_kerja, prestasi) => async (dispatch) => {
+dispatch({ type: userTypes.CREATE_PRESTASI_ID_REQUEST });
     try {
-        const token = localStorage.getItem('token');
-        const response = await apiFetch(`${baseUrl}/kopi/prestasikerja`, {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(`${baseUrl}/kopi/prestasikerja/${id_user}/${role}/${id_pengalaman_kerja}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1403,12 +1403,12 @@ export const createPrestasi = (prestasi) => async (dispatch) => {
     }
 };
 
-export const readPrestasi = (id, role) => {
+export const readPrestasi = (id_user, role, id_pengalaman_kerja) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PRESTASI_REQUEST });
         try {
-            const token = localStorage.getItem('token');
-            const response = await apiFetch(`${baseUrl}/kopi/prestasikerja/${id}/${role}`, {
+            const token = localStorage.getItem('&l2');
+            const response = await apiFetch(`${baseUrl}/kopi/prestasikerja/${id_user}/${role}/${id_pengalaman_kerja}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1428,13 +1428,39 @@ export const readPrestasi = (id, role) => {
     };
 };
 
+export const readPrestasiId = (id_user, role, id_pengalaman_kerja, id_prestasi_kerja) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_PRESTASI_REQUEST });
+        try {
+            const token = localStorage.getItem('&l2');
+            const response = await apiFetch(`${baseUrl}/kopi/prestasikerja/${id_user}/${role}/${id_pengalaman_kerja}/${id_prestasi_kerja}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.GET_PRESTASI_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+        } catch (error) {
+            dispatch({
+                type: userTypes.GET_PRESTASI_FAILURE,
+                payload: error,
+            });
+        }
+    };
+};
+//edit/:id_user/:role/:id_pengalaman_kerja/:id_prestasi_kerja
+
 export const updatePrestasi =
-    (id, id_pengalaman_kerja, updatedPrestasi) => async (dispatch) => {
+    (id_user, role, id_pengalaman_kerja, id_prestasi_kerja, updatedPrestasi) => async (dispatch) => {
         dispatch({ type: userTypes.UPDATE_PRESTASI_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('&l2');
             const response = await apiFetch(
-                `${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`,
+                `${baseUrl}/kopi/prestasikerja/edit/${id_user}/${role}/${id_pengalaman_kerja}/${id_prestasi_kerja}`,
                 {
                     method: 'PUT',
                     headers: {
@@ -1482,12 +1508,12 @@ export const updatePrestasi =
         }
     };
 
-export const deletePrestasi = (id, id_pengalaman_kerja) => async (dispatch) => {
+export const deletePrestasi = (id_user, role, id_pengalaman_kerja, id_prestasi_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PRESTASI_ID_REQUEST });
     try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(
-            `${baseUrl}/kopi/prestasikerja/${id_pengalaman_kerja}/${id}`,
+            `${baseUrl}/kopi/prestasikerja/${id_user}/${role}/${id_pengalaman_kerja}/${id_prestasi_kerja}`,
             {
                 method: 'DELETE',
                 headers: {
@@ -1521,11 +1547,11 @@ export const deletePrestasi = (id, id_pengalaman_kerja) => async (dispatch) => {
 };
 
 //Pelatihan
-export const createPelatihan = (pelatihan) => async (dispatch) => {
+export const createPelatihan = (id, role, pelatihan) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_PELATIHAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem('token');
-        const response = await apiFetch(`${baseUrl}/kopi/pelatihan`, {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(`${baseUrl}/kopi/pelatihan/${id}/${role}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1571,12 +1597,12 @@ export const createPelatihan = (pelatihan) => async (dispatch) => {
     }
 };
 
-export const readPelatihan = (id, role) => {
+export const readPelatihan = (id_user, role, id) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PELATIHAN_ID_REQUEST });
         try {
-            const token = localStorage.getItem('token');
-            const response = await apiFetch(`${baseUrl}/kopi/pelatihan/${id}/${role}`, {
+            const token = localStorage.getItem('&l2');
+            const response = await apiFetch(`${baseUrl}/kopi/pelatihan/${id_user}/${role}/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1596,13 +1622,37 @@ export const readPelatihan = (id, role) => {
     };
 };
 
-export const updatePelatihan = (id, updatedPelatihan) => async (dispatch) => {
+export const readPelatihanId = (id_user, role, id, idPelatihan) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_PELATIHAN_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('&l2');
+            const response = await apiFetch(`${baseUrl}/kopi/pelatihan/${id_user}/${role}/${id}/${idPelatihan}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.GET_PELATIHAN_ID_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+        } catch (error) {
+            dispatch({
+                type: userTypes.GET_PELATIHAN_ID_FAILURE,
+                payload: error,
+            });
+        }
+    };
+};
+
+export const updatePelatihan = (id_user, role, id, idPelatihan, updatedPelatihan) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem('token');
-        const id_user = localStorage.getItem('id');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(
-            `${baseUrl}/kopi/pelatihan/${id_user}/${id}`,
+            `${baseUrl}/kopi/pelatihan/edit/${id_user}/${role}/${id}/${idPelatihan}`,
             {
                 method: 'PUT',
                 headers: {
@@ -1650,13 +1700,12 @@ export const updatePelatihan = (id, updatedPelatihan) => async (dispatch) => {
     }
 };
 
-export const deletePelatihan = (id) => async (dispatch) => {
+export const deletePelatihan = (id_user, role, id, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PELATIHAN_ID_REQUEST });
     try {
-        const token = localStorage.getItem('token');
-        const id_user = localStorage.getItem('id');
+        const token = localStorage.getItem('&l2');
         const response = await apiFetch(
-            `${baseUrl}/kopi/pelatihan/${id_user}/${id}`,
+            `${baseUrl}/kopi/pelatihan/${id_user}/${role}/${id}/${idData}`,
             {
                 method: 'DELETE',
                 headers: {

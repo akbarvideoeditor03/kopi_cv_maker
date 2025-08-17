@@ -11,9 +11,9 @@ import Swal from 'sweetalert2';
 function UpdateKeahlian() {
     const dispatch = useDispatch();
     const param = useParams();
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-    const id = localStorage.getItem('id');
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
     const { keahlian, isWebsite, isViews } = useSelector((state) => state.userReducer);
 
     const [data, setData] = useState({

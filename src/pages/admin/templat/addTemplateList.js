@@ -5,8 +5,8 @@ import Swal from 'sweetalert2';
 
 const addTemplat = () => {
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
     const roleUser = isWebsite;
     const dispatch = useDispatch();
     const [dataTemplat, setDataTemplat] = useState({

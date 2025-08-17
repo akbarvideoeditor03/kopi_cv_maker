@@ -8,8 +8,8 @@ function EditTemplat() {
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
     const dispatch = useDispatch();
     const { id } = useParams();
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
     const roleUser = isWebsite;
     const { templatList } = useSelector((state) => state.userReducer);
 

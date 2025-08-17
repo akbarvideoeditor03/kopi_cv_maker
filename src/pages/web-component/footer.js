@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/id'
 
 function WebFooter() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('&l2');
     const yearCopyright = dayjs().year();
     return (
         <footer className="container col-f f-1">

@@ -4,8 +4,8 @@ import { getUser, viewAllTemplate, deleteUser, deleteTemplat } from '../../redux
 import Swal from 'sweetalert2';
 
 function Dashboard() {
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
     const dispatch = useDispatch();
     const { userList, isLoading, error, isWebsite, templatList } = useSelector(
         (state) => state.userReducer

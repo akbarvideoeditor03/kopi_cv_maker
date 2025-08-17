@@ -4,8 +4,8 @@ import Swal from 'sweetalert2';
 
 function Dropdown() {
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -34,9 +34,9 @@ function Dropdown() {
             cancelButtonText: 'Tidak',
         }).then((result) => {
             if (result.isConfirmed) {
-                localStorage.removeItem('id');
-                localStorage.removeItem('role');
-                localStorage.removeItem('token');
+                localStorage.removeItem('/v%');
+                localStorage.removeItem('$f*');
+                localStorage.removeItem('&l2');
                 localStorage.removeItem('lastActivity');
                 Swal.fire({
                     icon: 'success',

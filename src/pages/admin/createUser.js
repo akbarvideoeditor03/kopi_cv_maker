@@ -12,8 +12,8 @@ const CreateUserAdmin = () => {
         }
     }, []);
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
     const roleUser = isWebsite;
     const dispatch = useDispatch();
     const [userData, setUserData] = useState({

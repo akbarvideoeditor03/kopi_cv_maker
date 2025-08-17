@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import {
     readPengalamanKerjaId,
     updatePengalamanKerja,
     getUserId
 } from '../../../redux/action/user.action';
-import { useParams } from 'react-router-dom';
 
 const UpdatePengalamanKerja = () => {
     const dispatch = useDispatch();
     const param = useParams();
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-    const id = localStorage.getItem('id');
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
     const { pengalamanKerja, isWebsite, isViews } = useSelector((state) => state.userReducer);
 
     const [data, setData] = useState({

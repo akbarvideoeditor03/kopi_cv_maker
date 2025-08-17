@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 function Help() {
-    const role = localStorage.getItem('role');
-    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('$f*');
+    const token = localStorage.getItem('&l2');
     const [openCollapse, setOpenCollapse] = useState({});
     const [isExpanded, setIsExpanded] = useState(false);
 

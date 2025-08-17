@@ -4,7 +4,7 @@ import { viewAllTemplate } from '../../redux/action/user.action';
 import Swal from "sweetalert2";
 
 function pdfPreview() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('&l2');
     const dispatch = useDispatch();
     const { templatList } = useSelector((state) => state.userReducer);
 

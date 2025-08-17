@@ -58,9 +58,9 @@ function App() {
                 <Route path="/keahlian" element={<CreateKeahlian />}></Route>
                 <Route path="/keahlian/:id_user/:role/:id/:id_keahlian" element={<UpdateKeahlian />}></Route>
                 <Route path="/pelatihan" element={<CreatePelatihan />}></Route>
-                <Route path="/pelatihan/:id_user/:id" element={<UpdatePelatihan />}></Route>
-                <Route path="/prestasi/:id" element={<CreatePrestasi />}></Route>
-                <Route path="/prestasi/:id_pengalaman_kerja/:id" element={<UpdatePrestasi />}></Route>
+                <Route path="/pelatihan/:id_user/:role/:id/:id_pelatihan" element={<UpdatePelatihan />}></Route>
+                <Route path="/prestasi/:id_user/:role/:id/:id_pengalaman_kerja" element={<CreatePrestasi />}></Route>
+                <Route path="/prestasi/edit/:id_user/:role/:id_pengalaman_kerja/:id_prestasi_kerja" element={<UpdatePrestasi />}></Route>
                 <Route path="/doc/preview" element={<CVDocument />}></Route>
                 <Route path="/user/login" element={<Login />}></Route>
                 <Route path="/user/register" element={<Register />}></Route>

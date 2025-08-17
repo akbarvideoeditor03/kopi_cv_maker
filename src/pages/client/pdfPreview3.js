@@ -14,16 +14,16 @@ import {
     readPengalamanKerja,
     readPendidikanTerakhir,
     readKeahlian,
-    readPelatihan,
+    readPelatihanId,
     readPrestasi,
 } from '../../redux/action/user.action';
 import NotifDownload from '../web-component/notifDownload';
 import dayjs from 'dayjs';
 import 'dayjs/locale/id';
 dayjs.locale('id');
-const id = localStorage.getItem('id');
-const token = localStorage.getItem('token');
-const role = localStorage.getItem('role');
+const id = localStorage.getItem('/v%');
+const token = localStorage.getItem('&l2');
+const role = localStorage.getItem('$f*');
 
 Font.register({
     family: 'Times-Roman',

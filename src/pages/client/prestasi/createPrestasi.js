@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPrestasi } from '../../../redux/action/user.action';
+import { createPrestasi, readPengalamanKerjaId } from '../../../redux/action/user.action';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 function CreatePrestasi() {
     const dispatch = useDispatch();
-    const { id } = useParams();
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-    const { isWebsite, isViews } = useSelector((state) => state.userReducer)
+    const param = useParams();
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
+    const { isWebsite, isViews, pengalamanKerja } = useSelector((state) => state.userReducer)
     const [prestasi, setPrestasi] = useState({
         prestasi: '',
         tahun: '',
     });
+
+    useEffect(() => {
+        dispatch(readPengalamanKerjaId(id, role, param.id, param.id_pengalaman_kerja));
+    }, [dispatch, id, role, param.id, param.id_pengalaman_kerja]);
 
     const cancelSubmit = async (e) => {
         e.preventDefault();
@@ -53,11 +58,11 @@ function CreatePrestasi() {
 
         try {
             const prestasiUser = {
-                id_pengalaman_kerja: id,
+                id_pengalaman_kerja: `${pengalamanKerja.id}`,
                 prestasi: prestasi.prestasi,
                 tahun: prestasi.tahun,
             };
-            dispatch(createPrestasi(prestasiUser));
+            dispatch(createPrestasi(id, role, param.id_pengalaman_kerja, prestasiUser));
         } catch (error) {
             console.error('Error saat menambahkan prestasi:', error);
             await Swal.fire({

@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 function RequestOtp() {
     const dispatch = useDispatch();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('&l2');
     const id = localStorage.getItem('id')
     const data = localStorage.getItem("dark-mode");
     const { userList } = useSelector((state) => state.userReducer);

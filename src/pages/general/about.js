@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 
 function About() {
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
     const roleUser = isWebsite;
 
     return (

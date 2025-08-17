@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPelatihan } from '../../../redux/action/user.action';
+import { createPelatihan, getUserId } from '../../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function CreatePelatihan() {
     const dispatch = useDispatch();
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-    const id = localStorage.getItem('id');
-    const { isWebsite, isViews } = useSelector((state) => state.userReducer)
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
+    const { isWebsite, isViews, userList } = useSelector((state) => state.userReducer)
     const [pelatihan, setPelatihan] = useState({
+        id_user: '',
         pelatihan: '',
         tahun_mulai: '',
         tahun_selesai: '',
     });
+
+    useEffect(() => {
+        dispatch(getUserId(id, role));
+    }, [dispatch, id, role]);
+
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -52,12 +58,12 @@ function CreatePelatihan() {
 
         try {
             const pelatihanUser = {
-                id_user: `${id}`,
+                id_user: `${userList.id}`,
                 pelatihan: pelatihan.pelatihan,
                 tahun_mulai: pelatihan.tahun_mulai,
                 tahun_selesai: pelatihan.tahun_selesai || 'Hingga saat ini',
             };
-            dispatch(createPelatihan(pelatihanUser));
+            dispatch(createPelatihan(id, role, pelatihanUser));
         } catch (error) {
             console.error('Error saat menambahkan pelatihan:', error);
             await Swal.fire({

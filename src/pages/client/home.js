@@ -21,9 +21,9 @@ dayjs.locale('id');
 
 function HomeUser() {
     const dispatch = useDispatch();
-    const id = localStorage.getItem('id');
-    const role = localStorage.getItem('role');
-    const token = localStorage.getItem('token');
+    const id = localStorage.getItem('/v%');
+    const role = localStorage.getItem('$f*');
+    const token = localStorage.getItem('&l2');
     const {
         userList,
         pengalamanKerja,
@@ -38,15 +38,25 @@ function HomeUser() {
 
     useEffect(() => {
         dispatch(getUserId(id, role));
-    }, [dispatch,  id, role]);
+    }, [dispatch, id, role]);
 
     useEffect(() => {
-        dispatch(readPendidikanTerakhir(id, role, userList.id));
-        dispatch(readPengalamanKerja(id, role, userList.id));
-        dispatch(readKeahlian(id, role, userList.id));
-        dispatch(readPelatihan(id, role, userList.id));
-        dispatch(readPrestasi(id, role, userList.id));
-    }, [dispatch,  id, role, userList.id]);
+        if (userList?.id) {
+            [
+                readPendidikanTerakhir,
+                readPengalamanKerja,
+                readKeahlian,
+                readPelatihan
+            ].forEach(action => dispatch(action(id, role, userList.id)));
+        }
+    }, [dispatch, id, role, userList.id]);
+
+    useEffect(() => {
+        if (pengalamanKerja?.length > 0) {
+            const [idReqPengalaman] = pengalamanKerja.map(item => item.id);
+            dispatch(readPrestasi(id, role, idReqPengalaman));
+        }
+    }, [dispatch, pengalamanKerja, id, role]);
 
     const deleteData = (idData, type) => {
         Swal.fire({
@@ -66,11 +76,30 @@ function HomeUser() {
                     dispatch(deleteKeahlian(id, role, userList.id, idData));
                 } else if (type === 'pelatihan') {
                     dispatch(deletePelatihan(id, role, userList.id, idData));
-                } else if (type === 'prestasi') {
-                    dispatch(deletePrestasi(id, role, userList.id, idData));
                 }
             }
+        }).then(() => {
+            window.location.reload();
         });
+    };
+
+    const subDeleteData = (idReqPengalaman, idData, type) => {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data yang dihapus tidak dapat dikembalikan!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (type === 'prestasi') {
+                    dispatch(deletePrestasi(id, role, idReqPengalaman, idData));
+                }
+            }
+        }).then(() => {
+            window.location.reload();
+        });;
     };
 
     const handleSubmitWithEmail = (e) => {
@@ -117,16 +146,10 @@ function HomeUser() {
                 <section className="container col-f full-width section-max">
                     <h1>Menu</h1>
                     <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap m-bt2">
-                        <a
-                            href="/pendidikanterakhir"
-                            className="btn btn-primary"
-                        >
+                        <a href="/pendidikanterakhir" className="btn btn-primary">
                             Tambah Pendidikan Terakhir
                         </a>
-                        <a
-                            href="/createpengalamankerja"
-                            className="btn btn-primary"
-                        >
+                        <a href="/createpengalamankerja" className="btn btn-primary">
                             Tambah Pengalaman Kerja
                         </a>
                         <a href="/keahlian" className="btn btn-primary">
@@ -147,10 +170,11 @@ function HomeUser() {
                     </div>
                     {
                         userList.google === true ?
-                        <div className='container row-f card-mini f-center-c'>
-                            <p className='f-1'>Jika Anda baru saja login melalui akun Google, password Anda adalah <b>12345678</b>. Kami sarankan untuk segera lakukan</p>
-                            <button className='btn btn-warning' onClick={handleSubmitWithEmail}>Reset Password</button>
-                        </div> : ''
+                            <div className='container row-f card-mini f-center-c'>
+                                <p className='f-1'>Jika Anda baru saja login melalui akun Google, password Anda adalah <b>12345678</b>. Kami
+                                    sarankan untuk segera lakukan</p>
+                                <button className='btn btn-warning' onClick={handleSubmitWithEmail}>Reset Password</button>
+                            </div> : ''
                     }
                     {isLoading ? (
                         <div className="card container col-f f-center-c list-container">
@@ -158,14 +182,9 @@ function HomeUser() {
                         </div>
                     ) : (
                         <div className="card container col-f f-1">
-                            <div className="container row-f f-wrap">
-                                <div
-                                    style={{
-                                        paddingBottom: '1rem',
-                                        flexBasis: '360px',
-                                    }}
-                                    className="container col-f f-1"
-                                >
+                            <div className="card-mini container row-f f-wrap">
+                                <div style={{ paddingBottom: '1rem', flexBasis: '360px', }} className="container col-f f-1">
+                                    <h3>Data Diri</h3>
                                     <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap grid-text">
                                         <div className="box-1 container col-f-0 f-1">
                                             <h1 className="name-text">
@@ -176,11 +195,7 @@ function HomeUser() {
                                             </p>
                                         </div>
                                         <div className="box-2 container col-f f-center-c">
-                                            <img
-                                                className="cv-image"
-                                                src={`${userList.foto_profil}`}
-                                                alt=""
-                                            />
+                                            <img className="cv-image" src={`${userList.foto_profil}`} alt="" />
                                         </div>
                                         <div className="box-3 container col-f f-1">
                                             <p>
@@ -207,49 +222,24 @@ function HomeUser() {
                                     </div>
                                 </div>
                                 <div className="container col-f">
-                                    <a
-                                        className="btn btn-primary"
-                                        href={`/edit/${id}/${role}`}
-                                    >
+                                    <a className="btn btn-primary" href={`/edit/${id}/${role}`}>
                                         <i className="bi-pencil-square"></i>
                                     </a>
                                 </div>
                             </div>
-                            <div className="container row-f f-wrap m-b1">
+                            <div className="card-mini container row-f f-wrap m-b1">
                                 <div className="container col-f f-1">
                                     <h1>Pendidikan</h1>
                                     {pendidikanTerakhir.map((item) => {
                                         return (
-                                            <div
-                                                style={{
-                                                    paddingBlock: '1rem',
-                                                }}
-                                                key={item.id}
-                                                className="container row-f f-wrap"
-                                            >
-                                                <div
-                                                    style={{
-                                                        flexBasis: '720px',
-                                                    }}
-                                                    className="container row-f f-1"
-                                                >
-                                                    <div
-                                                        style={{
-                                                            maxWidth: '17.5rem',
-                                                            flexBasis: '360px',
-                                                        }}
-                                                        className="container col-f full-width"
-                                                    >
-                                                        <p
-                                                            style={{
-                                                                fontSize:
-                                                                    '1.15rem',
-                                                            }}
-                                                            className="fw7"
-                                                        >
+                                            <div key={item.id} className="container row-f f-wrap">
+                                                <div style={{ flexBasis: '720px', }} className="container row-f f-1">
+                                                    <div style={{ maxWidth: '17.5rem', flexBasis: '360px', }}
+                                                        className="container col-f full-width">
+                                                        <p style={{ fontSize: '1.15rem', }} >
                                                             {item.institusi}
                                                         </p>
-                                                        <p className="fw6">
+                                                        <p >
                                                             {item.tahun_mulai.slice(
                                                                 0,
                                                                 4
@@ -262,29 +252,20 @@ function HomeUser() {
                                                             </span>
                                                         </p>
                                                     </div>
-                                                    <div
-                                                        style={{
-                                                            flexBasis: '360px',
-                                                        }}
-                                                        className="container col-f f-1"
-                                                    >
+                                                    <div style={{ flexBasis: '360px', }} className="container col-f f-1">
                                                         <p>Jurusan</p>
                                                         <p>{item.jurusan}</p>
                                                     </div>
                                                 </div>
                                                 <div className="container col-f">
                                                     <div className="container row-f">
-                                                        <a
-                                                            className="btn btn-primary"
-                                                            href={`/pendidikanterakhir/${id}/${role}/${userList.id}/${item.id}`}
-                                                        >
+                                                        <a className="btn btn-primary"
+                                                            href={`/pendidikanterakhir/${id}/${role}/${userList.id}/${item.id}`}>
                                                             <i className="bi-pencil-square"></i>
                                                         </a>
-                                                        <button
-                                                            className="btn btn-danger"
-                                                            onClick={() =>
-                                                                deleteData(item.id, 'pendidikan')
-                                                            }
+                                                        <button className="btn btn-danger" onClick={() =>
+                                                            deleteData(item.id, 'pendidikan')
+                                                        }
                                                         >
                                                             <i className="bi-trash"></i>
                                                         </button>
@@ -295,7 +276,7 @@ function HomeUser() {
                                     })}
                                 </div>
                             </div>
-                            <div className="container row-f f-wrap">
+                            <div className="card-mini container row-f f-wrap">
                                 <div className="container col-f f-1">
                                     <h1>Pengalaman Kerja</h1>
                                     {pengalamanKerja.map((item) => {
@@ -305,34 +286,15 @@ function HomeUser() {
                                             <p key={index}>{paragrafs} <br /></p>
                                         ))
                                         return (
-                                            <div
-                                                key={item.id}
-                                                className="container col-f"
-                                            >
-                                                <div
-                                                    style={{
-                                                        paddingBlock: '1rem',
-                                                    }}
-                                                    className="container row-f f-wrap"
-                                                >
-                                                    <div
-                                                        style={{
-                                                            maxWidth: '17.5rem',
-                                                            flexBasis: '360px',
-                                                        }}
-                                                        className="container col-f full-width"
-                                                    >
+                                            <div key={item.id} className="container col-f">
+                                                <div className="container row-f f-wrap">
+                                                    <div style={{ maxWidth: '17.5rem', flexBasis: '360px', }}
+                                                        className="container col-f full-width">
                                                         <div className="container col-f">
-                                                            <p
-                                                                style={{
-                                                                    fontSize:
-                                                                        '1.15rem',
-                                                                }}
-                                                                className="fw7"
-                                                            >
+                                                            <p style={{ fontSize: '1.15rem', }} >
                                                                 {item.lokasi}
                                                             </p>
-                                                            <p className="fw6">
+                                                            <p >
                                                                 {dayjs(
                                                                     item.tahun_mulai
                                                                 )
@@ -351,13 +313,8 @@ function HomeUser() {
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div
-                                                        style={{
-                                                            flexBasis: '360px',
-                                                        }}
-                                                        className="container col-f f-1"
-                                                    >
-                                                        <p className="fw6">
+                                                    <div style={{ flexBasis: '360px', }} className="container col-f f-1">
+                                                        <p >
                                                             {item.jabatan}
                                                         </p>
                                                         <div style={{ lineHeight: '1.5rem' }}>{words}</div>
@@ -371,10 +328,7 @@ function HomeUser() {
                                                 {prestasiKerja.map((item) =>
                                                     item.id_pengalaman_kerja ===
                                                         prestasiId ? (
-                                                        <div
-                                                            key={item.id}
-                                                            className="container col-f"
-                                                        >
+                                                        <div key={item.id} className="card-mini container col-f">
                                                             <div className="container row-f">
                                                                 <div className="container col-f f-1">
                                                                     <h4>
@@ -391,20 +345,17 @@ function HomeUser() {
                                                                     </p>
                                                                 </div>
                                                                 <div className="container row-f f-center-c">
-                                                                    <a
-                                                                        className="btn btn-primary"
-                                                                        href={`/prestasi/${prestasiId}/${item.id}`}
-                                                                    >
+                                                                    <a className="btn btn-primary"
+                                                                        href={`/prestasi/edit/${id}/${role}/${item.id_pengalaman_kerja}/${item.id}`}>
                                                                         <i className="bi-pencil-square"></i>
                                                                     </a>
-                                                                    <button
-                                                                        className="btn btn-danger"
-                                                                        onClick={() =>
-                                                                            deleteData(
-                                                                                item.id,
-                                                                                'prestasi'
-                                                                            )
-                                                                        }
+                                                                    <button className="btn btn-danger" onClick={() =>
+                                                                        subDeleteData(
+                                                                            prestasiId,
+                                                                            item.id,
+                                                                            'prestasi'
+                                                                        )
+                                                                    }
                                                                     >
                                                                         <i className="bi-trash"></i>
                                                                     </button>
@@ -415,28 +366,22 @@ function HomeUser() {
                                                         ''
                                                     )
                                                 )}
+                                                <hr />
                                                 <div className="container row-f">
-                                                    <a
-                                                        className="btn btn-primary"
-                                                        href={`/pengalamankerja/${id}/${role}/${userList.id}/${item.id}`}
-                                                    >
+                                                    <a className="btn btn-primary"
+                                                        href={`/pengalamankerja/${id}/${role}/${userList.id}/${item.id}`}>
                                                         <i className="bi-pencil-square"></i>
                                                     </a>
-                                                    <button
-                                                        className="btn btn-danger"
-                                                        onClick={() =>
-                                                            deleteData(
-                                                                item.id,
-                                                                'pengalamanKerja'
-                                                            )
-                                                        }
+                                                    <button className="btn btn-danger" onClick={() =>
+                                                        deleteData(
+                                                            item.id,
+                                                            'pengalamanKerja'
+                                                        )
+                                                    }
                                                     >
                                                         <i className="bi-trash"></i>
                                                     </button>
-                                                    <a
-                                                        className="btn btn-primary"
-                                                        href={`/prestasi/${item.id}`}
-                                                    >
+                                                    <a className="btn btn-primary" href={`/prestasi/${id}/${role}/${userList.id}/${item.id}`}>
                                                         <i className="bi-plus"></i>
                                                         Tambah Prestasi Kerja
                                                     </a>
@@ -446,29 +391,15 @@ function HomeUser() {
                                     })}
                                 </div>
                             </div>
-                            <div className="container row-f f-wrap">
+                            <div className="card-mini container row-f f-wrap m-b1">
                                 <div className="container col-f f-1">
                                     <h1>Keahlian / Skill</h1>
                                     <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap">
                                         {keahlian.map((item) => {
                                             return (
-                                                <div
-                                                    key={item.id}
-                                                    className="card-mini container col-f"
-                                                >
-                                                    <div
-                                                        style={{
-                                                            minHeight: '3.5rem',
-                                                        }}
-                                                        className="container row-f f-wrap"
-                                                    >
-                                                        <div
-                                                            style={{
-                                                                flexBasis:
-                                                                    '360px',
-                                                            }}
-                                                            className="container col-f-0 f-1"
-                                                        >
+                                                <div key={item.id} className="card-mini container col-f">
+                                                    <div style={{ minHeight: '3.5rem', }} className="container row-f f-wrap">
+                                                        <div style={{ flexBasis: '360px', }} className="container col-f-0 f-1">
                                                             <h3>
                                                                 {item.keahlian}
                                                             </h3>
@@ -478,20 +409,16 @@ function HomeUser() {
                                                         </div>
                                                         <div className="container col-f">
                                                             <div className="container row-f">
-                                                                <a
-                                                                    className="btn btn-primary"
-                                                                    href={`/keahlian/${id}/${role}/${userList.id}/${item.id}`}
-                                                                >
+                                                                <a className="btn btn-primary"
+                                                                    href={`/keahlian/${id}/${role}/${userList.id}/${item.id}`}>
                                                                     <i className="bi-pencil-square"></i>
                                                                 </a>
-                                                                <button
-                                                                    className="btn btn-danger"
-                                                                    onClick={() =>
-                                                                        deleteData(
-                                                                            item.id,
-                                                                            'keahlian'
-                                                                        )
-                                                                    }
+                                                                <button className="btn btn-danger" onClick={() =>
+                                                                    deleteData(
+                                                                        item.id,
+                                                                        'keahlian'
+                                                                    )
+                                                                }
                                                                 >
                                                                     <i className="bi-trash"></i>
                                                                 </button>
@@ -504,26 +431,18 @@ function HomeUser() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="container row-f f-wrap m-b1">
+                            <div className="card-mini container row-f f-wrap">
                                 <div className="container col-f f-1">
                                     <h1>Pelatihan / Kursus</h1>
                                     <div className="container col-f f-1">
                                         {pelatihan.map((item) => {
                                             return (
-                                                <div
-                                                    key={item.id}
-                                                    className="container row-f f-wrap card-mini"
-                                                >
-                                                    <div
-                                                        style={{
-                                                            flexBasis: '360px',
-                                                        }}
-                                                        className="container col-f f-1 f-wrap"
-                                                    >
+                                                <div key={item.id} className="container row-f f-wrap card-mini">
+                                                    <div style={{ flexBasis: '360px', }} className="container col-f f-1 f-wrap">
                                                         <h3>
                                                             {item.pelatihan}
                                                         </h3>
-                                                        <p className="fw6">
+                                                        <p >
                                                             {dayjs(
                                                                 item.tahun_mulai
                                                             )
@@ -541,20 +460,16 @@ function HomeUser() {
                                                     </div>
                                                     <div className="container col-f">
                                                         <div className="container row-f">
-                                                            <a
-                                                                className="btn btn-primary"
-                                                                href={`/pelatihan/${userList.id}/${item.id}`}
-                                                            >
+                                                            <a className="btn btn-primary"
+                                                                href={`/pelatihan/${id}/${role}/${userList.id}/${item.id}`}>
                                                                 <i className="bi-pencil-square"></i>
                                                             </a>
-                                                            <button
-                                                                className="btn btn-danger"
-                                                                onClick={() =>
-                                                                    deleteData(
-                                                                        item.id,
-                                                                        'pelatihan'
-                                                                    )
-                                                                }
+                                                            <button className="btn btn-danger" onClick={() =>
+                                                                deleteData(
+                                                                    item.id,
+                                                                    'pelatihan'
+                                                                )
+                                                            }
                                                             >
                                                                 <i className="bi-trash"></i>
                                                             </button>

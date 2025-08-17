@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    readPrestasi,
-    updatePrestasi,
-} from '../../../redux/action/user.action';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import {
+    readPrestasiId,
+    updatePrestasi
+} from '../../../redux/action/user.action';
 
 function UpdatePrestasi() {
-    const { id, id_pengalaman_kerja } = useParams();
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
     const dispatch = useDispatch();
-    const { prestasiKerja, isWebsite } = useSelector((state) => state.userReducer);
+    const param = useParams();
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
+    const { prestasiKerja, isWebsite, isViews } = useSelector((state) => state.userReducer);
 
     const [data, setData] = useState({
         prestasi: '',
@@ -21,22 +22,19 @@ function UpdatePrestasi() {
 
     useEffect(() => {
         if (id) {
-            dispatch(readPrestasi(id));
+            dispatch(readPrestasiId(id, role, param.id_pengalaman_kerja, param.id_prestasi_kerja));
         }
-    }, [dispatch, id]);
+    }, [dispatch, id, role, param.id_pengalaman_kerja, param.id_prestasi_kerja]);
 
     useEffect(() => {
-        const currentData = prestasiKerja.find(
-            (item) => item.id === parseInt(id)
-        );
-        if (currentData) {
+        if (prestasiKerja) {
             setData({
-                prestasi: currentData.prestasi || '',
-                tahun: currentData.tahun || '',
+                prestasi: prestasiKerja.prestasi || '',
+                tahun: prestasiKerja.tahun || '',
             });
         }
-    }, [prestasiKerja, id, id_pengalaman_kerja]);
-
+    }, [prestasiKerja]);
+    
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -73,7 +71,7 @@ function UpdatePrestasi() {
                     tahun: data.tahun,
                 };
                 dispatch(
-                    updatePrestasi(id, id_pengalaman_kerja, updatedPrestasi)
+                    updatePrestasi(id, role, param.id_pengalaman_kerja, param.id_prestasi_kerja, updatedPrestasi)
                 );
             }
         } catch (error) {
@@ -90,7 +88,7 @@ function UpdatePrestasi() {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
-                    <h1>Tambah Prestasi Kerja</h1>
+                    <h1>Edit Prestasi Kerja</h1>
                     <div className="container col-f f-center-c">
                         <form
                             onSubmit={handleSubmit}

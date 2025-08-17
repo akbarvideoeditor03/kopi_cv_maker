@@ -30,9 +30,9 @@ let prevToken = null;
 let monitoringStarted = false;
 
 const monitorLocalStorage = () => {
-    const currId = localStorage.getItem('id');
-    const currRole = localStorage.getItem('role');
-    const currToken = localStorage.getItem('token');
+    const currId = localStorage.getItem('/v%');
+    const currRole = localStorage.getItem('$f*');
+    const currToken = localStorage.getItem('&l2');
 
     if (!monitoringStarted && currId && currRole && currToken) {
         prevId = currId;
@@ -45,9 +45,9 @@ const monitorLocalStorage = () => {
     if (monitoringStarted) {
         if (currId !== prevId || currRole !== prevRole || currToken !== prevToken) {
             console.warn('❌ Deteksi manipulasi id, role, atau token. Melakukan logout...');
-            localStorage.removeItem('id');
-            localStorage.removeItem('role');
-            localStorage.removeItem('token');
+            localStorage.removeItem('/v%');
+            localStorage.removeItem('$f*');
+            localStorage.removeItem('&l2');
             window.location.href = '/';
         }
     }
@@ -55,16 +55,16 @@ const monitorLocalStorage = () => {
 
 setInterval(monitorLocalStorage, 1000);
 
-const token = localStorage.getItem('token');
+const token = localStorage.getItem('&l2');
 if (token) {
     let logoutTimer;
 
     const startLogoutTimer = () => {
         clearTimeout(logoutTimer);
         logoutTimer = setTimeout(() => {
-            localStorage.removeItem('id');
-            localStorage.removeItem('role');
-            localStorage.removeItem('token');
+            localStorage.removeItem('/v%');
+            localStorage.removeItem('$f*');
+            localStorage.removeItem('&l2');
             window.location.href = '/';
         }, 3600000);
     };
@@ -80,9 +80,9 @@ if (token) {
             const currentTime = Date.now();
             const elapsed = currentTime - lastActivity;
             if (elapsed > 3600000) {
-                localStorage.removeItem('id');
-                localStorage.removeItem('role');
-                localStorage.removeItem('token');
+                localStorage.removeItem('/v%');
+                localStorage.removeItem('$f*');
+                localStorage.removeItem('&l2');
                 window.location.href = '/';
             } else {
                 startLogoutTimer();

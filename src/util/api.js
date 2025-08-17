@@ -8,23 +8,53 @@ export async function apiFetch(url, options = {}) {
             sessionStorage.clear();
             throw new Error('403 Forbidden');
         case 404:
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Hmm, halamannya nggak ada',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
             throw new Error('404 Not Found');
-        // case 500:
-        //     Swal.fire({
-        //         icon: 'error',
-        //         title: 'Ups, Maaf...',
-        //         text: 'Server kami lagi error nih',
-        //         showConfirmButton: false,
-        //         timer: 2000,
-        //         allowEscapeKey: false,
-        //         allowOutsideClick: false,
-        //         timerProgressBar: true,
-        //     });
-        //     throw new Error('500 Internal Server Error');
-        // case 502:
-        //     throw new Error('502 Bad Gateway');
-        // case 503:
-        //     throw new Error('503 Service Unavailable');
+        case 500:
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+            throw new Error('500 Internal Server Error');
+        case 502:
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server lagi bad gateway',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+            throw new Error('502 Bad Gateway');
+        case 503:
+            Swal.fire({
+                icon: 'error',
+                title: 'O, ow...',
+                text: 'Layanan kosong',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+            throw new Error('503 Service Unavailable');
         default:
             break;
     }

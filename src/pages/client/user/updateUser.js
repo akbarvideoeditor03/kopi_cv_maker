@@ -9,9 +9,9 @@ import { useParams } from 'react-router-dom';
 const UpdateUserSelf = () => {
     const dispatch = useDispatch();
     const data = localStorage.getItem("dark-mode");
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-    const id = localStorage.getItem('id');
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
     const { userList, isWebsite, isViews } = useSelector((state) => state.userReducer);
     const [darkMode, setDarkMode] = useState();
     const [userData, setUserData] = useState({
