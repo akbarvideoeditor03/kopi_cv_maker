@@ -600,11 +600,11 @@ export const resetPassword = (data) => async (dispatch) => {
 };
 
 //Templat CV (Only Admin)
-export const createTemplat = (templat) => async (dispatch) => {
+export const createTemplat = (id_user, role, templat) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_TEMPLAT_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
-        const response = await apiFetch(`${baseUrl}/kopi/templat`, {
+        const response = await apiFetch(`${baseUrl}/kopi/galeri/${id_user}/${role}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -655,7 +655,7 @@ export const viewAllTemplate = () => {
         dispatch({ type: userTypes.VIEW_TEMPLAT_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/templat`, {
+            const response = await apiFetch(`${baseUrl}/kopi/galeri`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -684,7 +684,7 @@ export const viewAllTemplateId = (id) => {
         dispatch({ type: userTypes.VIEW_TEMPLAT_ID_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/templat/${id}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/galeri/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -704,11 +704,11 @@ export const viewAllTemplateId = (id) => {
     };
 };
 
-export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
+export const updateTemplat = (id_user, role, id, updatedTemplat) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_TEMPLAT_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
-        const response = await apiFetch(`${baseUrl}/kopi/templat/${id}`, {
+        const response = await apiFetch(`${baseUrl}/kopi/galeri/edit/${id_user}/${role}/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -755,11 +755,11 @@ export const updateTemplat = (id, updatedTemplat) => async (dispatch) => {
     }
 };
 
-export const deleteTemplat = (id) => async (dispatch) => {
+export const deleteTemplat = (id_user, role, id) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_TEMPLAT_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
-        const response = await apiFetch(`${baseUrl}/kopi/templat/${id}`, {
+        const response = await apiFetch(`${baseUrl}/kopi/templat/${id_user}/${role}/${id}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
