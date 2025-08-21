@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { viewAllTemplate } from '../../redux/action/user.action';
-import Swal from "sweetalert2";
 
 function pdfPreview() {
-    const token = localStorage.getItem('&l2');
     const dispatch = useDispatch();
+    const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
     const { templatList } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
         dispatch(viewAllTemplate());
     }, [dispatch])
 
-    if (token && role) {
+    if (token && role && id) {
         return (
             <main className="container col-f-0 f-center">
                 <div className="container col-f full-width section-max">

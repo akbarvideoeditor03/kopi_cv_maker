@@ -306,29 +306,29 @@ export const resetPassword = (data) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_RESET_PASSWORD_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
-        const response = await apiFetch(`${baseUrl}/kopi/user/passwordreset`, {
+        const response = await apiFetch(`${baseUrl}/kopi/auth/passwordreset`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
         });
-        if (response.status >= 500) {
+        if (response.status === 401) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
-                text: 'Server lagi error nih',
+                text: 'OTP salah atau udah kadaluarsa. Coba lagi',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 timerProgressBar: true,
             });
-        } else if (response.status === 401) {
+        } else if  (response.status === 404) {
             Swal.fire({
                 icon: 'error',
                 title: 'Ups, Maaf...',
-                text: 'OTP salah atau udah kadaluarsa. Coba lagi',
+                text: 'Silakan coba lagi',
                 showConfirmButton: false,
                 timer: 2000,
                 allowEscapeKey: false,

@@ -1,11 +1,13 @@
-import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import dayjs from 'dayjs';
 import 'dayjs/locale/id'
 
 function WebFooter() {
     const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
     const yearCopyright = dayjs().year();
+
     return (
         <footer className="container col-f f-1">
             <section className="container row-f f-1 f-wrap">
@@ -27,7 +29,7 @@ function WebFooter() {
                     </p>
                     <ul>
                         <li>
-                            <a className="social-media" href={`${token ? '/home' : '/user/login'}`}>
+                            <a className="social-media" href={`${token && role && id ? '/home' : '/user/login'}`}>
                                 Buat CV Sekarang
                             </a>
                         </li>

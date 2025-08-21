@@ -5,18 +5,18 @@ import Swal from 'sweetalert2';
 
 function PasswordReset() {
     const dispatch = useDispatch();
-    const id = localStorage.getItem('/v%');
-    const role = localStorage.getItem('$f*');
     const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
     const data = localStorage.getItem("dark-mode");
     const [darkMode, setDarkMode] = useState();
+    const { userList } = useSelector((state) => state.userReducer);
     const [userData, setUserData] = useState({
         email: '',
         otp: '',
         newPassword: '',
     });
-    const { userList } = useSelector((state) => state.userReducer);
-
+    
     useEffect(() => {
         if (data === "true") {
             setDarkMode(true);
@@ -24,8 +24,18 @@ function PasswordReset() {
     }, []);
 
     useEffect(() => {
-        dispatch(getUserId(id, role));
+        if(token && role && id) {
+            dispatch(getUserId(id, role));
+        }
     }, [dispatch, id, role]);
+
+    useEffect(() => {
+        if (userList) {
+            setUserData({
+                email: userList.email,
+            });
+        }
+    }, [userList]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -169,7 +179,7 @@ function PasswordReset() {
                                     <p><i className="bi-emoji-smile"></i> Buat password-nya hati-hati ya...</p>
                                 </div>
                                 {
-                                    !token ?
+                                    !token && !role && !id ?
                                     <div className="container col-f-0">
                                         <label>Email</label>
                                         <input
