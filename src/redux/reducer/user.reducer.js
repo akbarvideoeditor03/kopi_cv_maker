@@ -1,11 +1,11 @@
-import hashValue from '../../util/encrypt';
 import { userTypes } from '../actionTypes';
 
-const adminKey = await hashValue(process.env.REACT_APP_ADMIN_KEY);
-const userKey = await hashValue(process.env.REACT_APP_USER_KEY);
+const adminKey = process.env.REACT_APP_ADMIN_KEY;
+const userKey = process.env.REACT_APP_USER_KEY;
 
 const initState = {
     userList: [],
+    userData: [],
     pengalamanKerja: [],
     pendidikanTerakhir: [],
     prestasiKerja: [],
@@ -48,6 +48,79 @@ const users = (state = initState, action) => {
                 userList: [...state.userList, action.payload],
             };
         case userTypes.REGISTER_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        //Admin
+        case userTypes.GET_ADMIN_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                error: null,
+            };
+        case userTypes.GET_ADMIN_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                userData: action.payload,
+            };
+        case userTypes.GET_ADMIN_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        case userTypes.GET_ADMIN_ID_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                error: null,
+            };
+        case userTypes.GET_ADMIN_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                userData: action.payload,
+            };
+        case userTypes.GET_ADMIN_ID_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        case userTypes.UPDATE_ADMIN_ID_REQUEST:
+            return { ...state, isLoading: true, error: null };
+        case userTypes.UPDATE_ADMIN_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                userData: state.userData.map((user) =>
+                    user.id === action.payload.id ? action.payload : user
+                ),
+            };
+        case userTypes.UPDATE_ADMIN_ID_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        case userTypes.DESTROY_ADMIN_ID_REQUEST:
+            return { ...state, isLoading: true, error: null };
+        case userTypes.DESTROY_ADMIN_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                userData: state.userData.filter(
+                    (user) => user.id !== action.payload
+                ),
+            };
+        case userTypes.DESTROY_ADMIN_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,

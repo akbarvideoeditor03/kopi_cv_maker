@@ -58,7 +58,6 @@ export async function apiFetch(url, options = {}) {
         default:
             break;
     }
-
     return response;
 }
 

@@ -163,15 +163,16 @@ export const postUserLogin = (user) => async (dispatch) => {
     }
 };
 
-
-// Create User Form Admin
-export const createUser = (user) => async (dispatch) => {
+// Ranah Admin
+export const createUser = (id_user, role, user) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_USER_REQUEST });
     try {
-        const response = await apiFetch(`${baseUrl}/kopi/user/register`, {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(`${baseUrl}/kopi/user/data/${id_user}/${role}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(user),
         });
@@ -213,12 +214,12 @@ export const createUser = (user) => async (dispatch) => {
     }
 };
 
-export const getUser = () => {
+export const getUserAdm = (id, role) => {
     return async (dispatch) => {
-        dispatch({ type: userTypes.GET_USER_LIST_REQUEST });
+        dispatch({ type: userTypes.GET_ADMIN_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/user`, {
+            const response = await apiFetch(`${baseUrl}/kopi/user/data/${id}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -227,7 +228,7 @@ export const getUser = () => {
             const dataNumber = data.meta;
 
             dispatch({
-                type: userTypes.GET_USER_LIST_SUCCESS,
+                type: userTypes.GET_ADMIN_SUCCESS,
                 payload: {
                     data: data.data,
                     meta: dataNumber,
@@ -235,13 +236,360 @@ export const getUser = () => {
             });
         } catch (error) {
             dispatch({
-                type: userTypes.GET_USER_LIST_FAILURE,
+                type: userTypes.GET_ADMIN_FAILURE,
                 payload: error,
             });
         }
     };
 };
 
+export const getDataId = (id_user, role, id) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_ADMIN_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('&l2');
+            const response = await apiFetch(`${baseUrl}/kopi/user/data/${id_user}/${role}/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                if (response.status >= 400) {
+                    Object.keys(localStorage).forEach(key => {
+                        if (key !== 'dark-mode') {
+                            localStorage.removeItem(key);
+                        }
+                    });
+                    window.location.href = '/user/login';
+                    return;
+                }
+            }
+
+            const data = await response.json();
+            dispatch({
+                type: userTypes.GET_ADMIN_ID_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+
+        } catch (error) {
+            dispatch({
+                type: userTypes.GET_ADMIN_ID_FAILURE,
+                payload: error,
+            });
+
+            Object.keys(localStorage).forEach(key => {
+                if (key !== 'dark-mode') {
+                    localStorage.removeItem(key);
+                }
+            });
+            window.location.href = '/user/login';
+        }
+    };
+};
+
+export const updateData = (id, role, userId, updatedUser) => async (dispatch) => {
+    dispatch({ type: userTypes.UPDATE_USER_REQUEST });
+    try {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(`${baseUrl}/kopi/user/edit/data/${id}/${role}/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedUser),
+        });
+        if (response.status >= 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Data berhasil diubah',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location.href = '/dashboard'
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.UPDATE_USER_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.UPDATE_USER_FAILURE,
+            payload: error,
+        });
+    }
+};
+
+export const deleteUser = (id_user, role, id) => async (dispatch) => {
+    dispatch({ type: userTypes.DESTROY_ADMIN_ID_REQUEST });
+    try {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(`${baseUrl}/kopi/user/data/${id_user}/${role}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        if (response.status >= 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Dihapus!',
+                text: 'Data berhasil dihapus.',
+                timer: 2000,
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location.reload();
+            });
+            dispatch({
+                type: userTypes.DESTROY_ADMIN_ID_SUCCESS,
+                payload: id,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.DESTROY_ADMIN_ID_FAILURE,
+            payload: error,
+        });
+    }
+};
+
+export const createTemplat = (id_user, role, templat) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_TEMPLAT_REQUEST });
+    try {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(`${baseUrl}/kopi/galeri/${id_user}/${role}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(templat),
+        });
+        if (response.status >= 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Penambahan berhasil!',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                Swal.close();
+                window.location = '/dashboard';
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.CREATE_TEMPLAT_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.CREATE_TEMPLAT_FAILURE,
+            payload: error,
+        });
+    }
+};
+
+export const viewAllTemplate = () => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.VIEW_TEMPLAT_REQUEST });
+        try {
+            const token = localStorage.getItem('&l2');
+            const response = await apiFetch(`${baseUrl}/kopi/galeri`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            const dataNumber = data.meta;
+
+            dispatch({
+                type: userTypes.VIEW_TEMPLAT_SUCCESS,
+                payload: {
+                    data: data.data,
+                    meta: dataNumber,
+                },
+            });
+        } catch (error) {
+            dispatch({
+                type: userTypes.VIEW_TEMPLAT_FAILURE,
+                payload: error,
+            });
+        }
+    };
+};
+
+export const viewAllTemplateId = (id) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.VIEW_TEMPLAT_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('&l2');
+            const response = await apiFetch(`${baseUrl}/kopi/galeri/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.VIEW_TEMPLAT_ID_SUCCESS,
+                payload: data.data,
+            });
+            return data;
+        } catch (error) {
+            dispatch({
+                type: userTypes.VIEW_TEMPLAT_ID_FAILURE,
+                payload: error,
+            });
+        }
+    };
+};
+
+export const updateTemplat = (id_user, role, id, updatedTemplat) => async (dispatch) => {
+    dispatch({ type: userTypes.UPDATE_TEMPLAT_REQUEST });
+    try {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(`${baseUrl}/kopi/galeri/edit/${id_user}/${role}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(updatedTemplat),
+        });
+        const data = await response.json();
+        console.log(data);
+        if (response.status >= 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Data templat berhasil diubah',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                Swal.close();
+                window.location = `/templatedetail/${id}`;
+            });
+            dispatch({
+                type: userTypes.UPDATE_TEMPLAT_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.UPDATE_TEMPLAT_FAILURE,
+            payload: error,
+        });
+    }
+};
+
+export const deleteTemplat = (id_user, role, id) => async (dispatch) => {
+    dispatch({ type: userTypes.DELETE_TEMPLAT_REQUEST });
+    try {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(`${baseUrl}/kopi/galeri/${id_user}/${role}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        if (response.status >= 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server kami lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Dihapus!',
+                text: 'Data templat berhasil dihapus.',
+                timer: 2000,
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location.reload();
+            });
+            dispatch({
+                type: userTypes.DELETE_TEMPLAT_SUCCESS,
+                payload: id,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.DELETE_TEMPLAT_FAILURE,
+            payload: error,
+        });
+    }
+};
+
+//Ranah Umum
 export const getUserId = (id, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_USER_ID_LIST_REQUEST });
@@ -426,54 +774,6 @@ export const gLogin = (response) => {
     }
 }
 
-//Only Admin
-export const deleteUser = (id) => async (dispatch) => {
-    dispatch({ type: userTypes.DELETE_USER_REQUEST });
-    try {
-        const token = localStorage.getItem('&l2');
-        const response = await apiFetch(`${baseUrl}/kopi/user/${id}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        if (response.status >= 500) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'Server kami lagi error nih',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Dihapus!',
-                text: 'Data berhasil dihapus.',
-                timer: 2000,
-                showConfirmButton: false,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                window.location.reload();
-            });
-            dispatch({
-                type: userTypes.DELETE_USER_SUCCESS,
-                payload: id,
-            });
-        }
-    } catch (error) {
-        dispatch({
-            type: userTypes.DELETE_USER_FAILURE,
-            payload: error,
-        });
-    }
-};
-
 //OTP
 export const otpRequestCode = (emailReq) => async (dispatch) => {
     dispatch({ type: userTypes.CREATE_OTP_REQUEST });
@@ -594,209 +894,6 @@ export const resetPassword = (data) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: userTypes.CREATE_RESET_PASSWORD_FAILURE,
-            payload: error,
-        });
-    }
-};
-
-//Templat CV (Only Admin)
-export const createTemplat = (id_user, role, templat) => async (dispatch) => {
-    dispatch({ type: userTypes.CREATE_TEMPLAT_REQUEST });
-    try {
-        const token = localStorage.getItem('&l2');
-        const response = await apiFetch(`${baseUrl}/kopi/galeri/${id_user}/${role}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(templat),
-        });
-        if (response.status >= 500) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'Server kami lagi error nih',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Penambahan berhasil!',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                Swal.close();
-                window.location = '/dashboard';
-            });
-            const data = await response.json();
-            dispatch({
-                type: userTypes.CREATE_TEMPLAT_SUCCESS,
-                payload: data.data,
-            });
-        }
-    } catch (error) {
-        dispatch({
-            type: userTypes.CREATE_TEMPLAT_FAILURE,
-            payload: error,
-        });
-    }
-};
-
-export const viewAllTemplate = () => {
-    return async (dispatch) => {
-        dispatch({ type: userTypes.VIEW_TEMPLAT_REQUEST });
-        try {
-            const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/galeri`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            const data = await response.json();
-            const dataNumber = data.meta;
-
-            dispatch({
-                type: userTypes.VIEW_TEMPLAT_SUCCESS,
-                payload: {
-                    data: data.data,
-                    meta: dataNumber,
-                },
-            });
-        } catch (error) {
-            dispatch({
-                type: userTypes.VIEW_TEMPLAT_FAILURE,
-                payload: error,
-            });
-        }
-    };
-};
-
-export const viewAllTemplateId = (id) => {
-    return async (dispatch) => {
-        dispatch({ type: userTypes.VIEW_TEMPLAT_ID_REQUEST });
-        try {
-            const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/galeri/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            const data = await response.json();
-            dispatch({
-                type: userTypes.VIEW_TEMPLAT_ID_SUCCESS,
-                payload: data.data,
-            });
-            return data;
-        } catch (error) {
-            dispatch({
-                type: userTypes.VIEW_TEMPLAT_ID_FAILURE,
-                payload: error,
-            });
-        }
-    };
-};
-
-export const updateTemplat = (id_user, role, id, updatedTemplat) => async (dispatch) => {
-    dispatch({ type: userTypes.UPDATE_TEMPLAT_REQUEST });
-    try {
-        const token = localStorage.getItem('&l2');
-        const response = await apiFetch(`${baseUrl}/kopi/galeri/edit/${id_user}/${role}/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(updatedTemplat),
-        });
-        const data = await response.json();
-        if (response.status >= 500) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'Server kami lagi error nih',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Selamat',
-                text: 'Data templat berhasil diubah',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                Swal.close();
-                window.location = `/templatedetail/${id}`;
-            });
-            dispatch({
-                type: userTypes.UPDATE_TEMPLAT_SUCCESS,
-                payload: data.data,
-            });
-        }
-    } catch (error) {
-        dispatch({
-            type: userTypes.UPDATE_TEMPLAT_FAILURE,
-            payload: error,
-        });
-    }
-};
-
-export const deleteTemplat = (id_user, role, id) => async (dispatch) => {
-    dispatch({ type: userTypes.DELETE_TEMPLAT_REQUEST });
-    try {
-        const token = localStorage.getItem('&l2');
-        const response = await apiFetch(`${baseUrl}/kopi/templat/${id_user}/${role}/${id}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        if (response.status >= 500) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'Server kami lagi error nih',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Dihapus!',
-                text: 'Data templat berhasil dihapus.',
-                timer: 2000,
-                showConfirmButton: false,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                window.location.reload();
-            });
-            dispatch({
-                type: userTypes.DELETE_TEMPLAT_SUCCESS,
-                payload: id,
-            });
-        }
-    } catch (error) {
-        dispatch({
-            type: userTypes.DELETE_TEMPLAT_FAILURE,
             payload: error,
         });
     }
