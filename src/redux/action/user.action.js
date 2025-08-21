@@ -94,7 +94,7 @@ export const register = (user) => async (dispatch) => {
     }
 };
 
-//Login
+//Ranah Login
 export const postUserLogin = (user) => async (dispatch) => {
     localStorage.removeItem('lastActivity');
     dispatch({ type: userTypes.LOGIN_REQUEST });
@@ -113,9 +113,27 @@ export const postUserLogin = (user) => async (dispatch) => {
         }
 
         const data = await response.json();
-        const { id, role, token } = data;
-
-        if (!token) {
+        if (data) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Akun berhasil masuk',
+                timer: 3000,
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                localStorage.setItem('/v%', data.id);
+                localStorage.setItem('$f*', data.role);
+                localStorage.setItem('&l2', data.token);
+                window.location = '/';
+            });
+            dispatch({
+                type: userTypes.LOGIN_SUCCESS,
+                payload: data.data,
+            });
+        } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Oow...',
@@ -132,32 +150,217 @@ export const postUserLogin = (user) => async (dispatch) => {
             });
             return;
         }
-
-        Swal.fire({
-            icon: 'success',
-            title: 'Selamat',
-            text: 'Akun berhasil masuk',
-            timer: 3000,
-            showConfirmButton: false,
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            timerProgressBar: true,
-        }).then(() => {
-            localStorage.setItem('/v%', id);
-            localStorage.setItem('$f*', role);
-            localStorage.setItem('&l2', token);
-            window.location = '/';
-        });
-
-        dispatch({
-            type: userTypes.LOGIN_SUCCESS,
-            payload: data.data,
-        });
-
     } catch (error) {
         console.error('Error during login:', error);
         dispatch({
             type: userTypes.LOGIN_FAILURE,
+            payload: error,
+        });
+    }
+};
+
+export const gLogin = (response) => {
+    localStorage.removeItem('lastActivity');
+    return async (dispatch) => {
+        dispatch({ type: userTypes.CREATE_USER_REQUEST });
+        try {
+            const result = await apiFetch(`${baseUrl}/kopi/auth/glogin`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token: response.token }),
+            })
+            if (result.status >= 500) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ups, Maaf...',
+                    text: 'Server kami lagi error nih',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    timerProgressBar: true,
+                });
+            } else if (result.status === 400) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Email sudah dipakai, silakan masuk atau gunakan email lain.',
+                    showConfirmButton: true,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                });
+            } else if (result.status === 401 || result.status === 403) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Autentikasi Gagal',
+                    text: 'Token tidak valid atau sesi telah berakhir.',
+                    showConfirmButton: true,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+            } else {
+                const data = await result.json();
+                if (data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Selamat',
+                        text: 'Akun berhasil masuk',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        timerProgressBar: true,
+                    }).then(() => {
+                        localStorage.setItem('/v%', data.id);
+                        localStorage.setItem('$f*', data.role);
+                        localStorage.setItem('&l2', data.token);
+                        window.location = '/';
+                    });
+                    dispatch({
+                        type: userTypes.CREATE_USER_SUCCESS,
+                        payload: data.data,
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oow...',
+                        text: 'Silakan coba lagi',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        timerProgressBar: true,
+                    });
+                }
+            }
+        } catch (error) {
+            dispatch({
+                type: userTypes.CREATE_USER_FAILURE,
+                payload: error,
+            });
+        }
+    }
+}
+
+export const otpRequestCode = (emailReq) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_OTP_REQUEST });
+    try {
+        const response = await apiFetch(`${baseUrl}/kopi/auth/trypasswordreset`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(emailReq),
+        });
+        if (response.status >= 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else if (response.status === 404) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups...',
+                text: 'Email tidak ditemukan',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Kode OTP berhasil dikirim. Cek email sekarang!',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                window.location.href = '/user/passwordreset';
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.CREATE_OTP_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.CREATE_OTP_FAILURE,
+            payload: error,
+        });
+    }
+};
+
+export const resetPassword = (data) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_RESET_PASSWORD_REQUEST });
+    try {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(`${baseUrl}/kopi/user/passwordreset`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        if (response.status >= 500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'Server lagi error nih',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else if (response.status === 401) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups, Maaf...',
+                text: 'OTP salah atau udah kadaluarsa. Coba lagi',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Selamat',
+                text: 'Password berhasil direset',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                if (!token) {
+                    window.location.href = '/user/login';
+                } else {
+                    window.location.href = '/home';
+                }
+            });
+            const data = await response.json();
+            dispatch({
+                type: userTypes.CREATE_RESET_PASSWORD_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.CREATE_RESET_PASSWORD_FAILURE,
             payload: error,
         });
     }
@@ -681,219 +884,6 @@ export const updateUser = (id, role, userId, updatedUser) => async (dispatch) =>
     } catch (error) {
         dispatch({
             type: userTypes.UPDATE_USER_FAILURE,
-            payload: error,
-        });
-    }
-};
-
-//Google Login
-export const gLogin = (response) => {
-    localStorage.removeItem('lastActivity');
-    return async (dispatch) => {
-        dispatch({ type: userTypes.CREATE_USER_REQUEST });
-        try {
-            const result = await apiFetch(`${baseUrl}/kopi/user/glogin`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ token: response.token }),
-            })
-            if (result.status >= 500) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ups, Maaf...',
-                    text: 'Server kami lagi error nih',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timerProgressBar: true,
-                });
-            } else if (result.status === 400) {
-                Swal.fire({
-                    icon: 'error',
-                    text: 'Email sudah dipakai, silakan masuk atau gunakan email lain.',
-                    showConfirmButton: true,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                });
-            } else if (result.status === 401 || result.status === 403) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Autentikasi Gagal',
-                    text: 'Token tidak valid atau sesi telah berakhir.',
-                    showConfirmButton: true,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                })
-            } else {
-                const data = await result.json();
-                const idUser = data.id;
-                const token = data.token;
-                const roleUser = data.role;
-                if (!idUser && !token && !roleUser) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oow...',
-                        text: 'Akun tidak ditemukan. Atau password salah',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        timerProgressBar: true,
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Selamat',
-                        text: 'Akun berhasil masuk',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        timerProgressBar: true,
-                    }).then(() => {
-                        localStorage.setItem('id', idUser);
-                        localStorage.setItem('role', roleUser);
-                        localStorage.setItem('token', token);
-                        window.location = '/';
-                    });
-                    dispatch({
-                        type: userTypes.CREATE_USER_SUCCESS,
-                        payload: data.data,
-                    });
-                }
-            }
-        } catch (error) {
-            dispatch({
-                type: userTypes.CREATE_USER_FAILURE,
-                payload: error,
-            });
-        }
-    }
-}
-
-//OTP
-export const otpRequestCode = (emailReq) => async (dispatch) => {
-    dispatch({ type: userTypes.CREATE_OTP_REQUEST });
-    try {
-        const response = await apiFetch(`${baseUrl}/kopi/auth/trypasswordreset`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(emailReq),
-        });
-        if (response.status >= 500) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'Server lagi error nih',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else if (response.status === 404) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups...',
-                text: 'Email tidak ditemukan',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Selamat',
-                text: 'Kode OTP berhasil dikirim. Cek email sekarang!',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                window.location.href = '/user/passwordreset';
-            });
-            const data = await response.json();
-            dispatch({
-                type: userTypes.CREATE_OTP_SUCCESS,
-                payload: data.data,
-            });
-        }
-    } catch (error) {
-        dispatch({
-            type: userTypes.CREATE_OTP_FAILURE,
-            payload: error,
-        });
-    }
-};
-
-//Reset Password
-export const resetPassword = (data) => async (dispatch) => {
-    dispatch({ type: userTypes.CREATE_RESET_PASSWORD_REQUEST });
-    try {
-        const token = localStorage.getItem('&l2');
-        const response = await apiFetch(`${baseUrl}/kopi/user/passwordreset`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-        if (response.status >= 500) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'Server lagi error nih',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else if (response.status === 401) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'OTP salah atau udah kadaluarsa. Coba lagi',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Selamat',
-                text: 'Password berhasil direset',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            }).then(() => {
-                if (!token) {
-                    window.location.href = '/user/login';
-                } else {
-                    window.location.href = '/home';
-                }
-            });
-            const data = await response.json();
-            dispatch({
-                type: userTypes.CREATE_RESET_PASSWORD_SUCCESS,
-                payload: data.data,
-            });
-        }
-    } catch (error) {
-        dispatch({
-            type: userTypes.CREATE_RESET_PASSWORD_FAILURE,
             payload: error,
         });
     }
@@ -1451,7 +1441,7 @@ export const deleteKeahlian = (id_user, role, id, idData) => async (dispatch) =>
 
 //Prestasi Kerja /:id_user/:role/:id_pengalaman_kerja
 export const createPrestasi = (id_user, role, id_pengalaman_kerja, prestasi) => async (dispatch) => {
-dispatch({ type: userTypes.CREATE_PRESTASI_ID_REQUEST });
+    dispatch({ type: userTypes.CREATE_PRESTASI_ID_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
         const response = await apiFetch(`${baseUrl}/kopi/prestasikerja/${id_user}/${role}/${id_pengalaman_kerja}`, {

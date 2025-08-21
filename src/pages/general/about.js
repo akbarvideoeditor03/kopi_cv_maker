@@ -1,11 +1,8 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 
 function About() {
-    const { isWebsite, isViews } = useSelector((state) => state.userReducer);
+    const { isWebsite } = useSelector((state) => state.userReducer);
     const token = localStorage.getItem('&l2');
-    const role = localStorage.getItem('$f*');
-    const roleUser = isWebsite;
 
     return (
         <main className="container col-f f-center-c generalPg-bg">
@@ -13,7 +10,7 @@ function About() {
                 <div className='container row-f f-wrap f-center'>
                     <h1>Tentang Website <i className="bi-info-circle"></i></h1>
                     {
-                        token && role === roleUser ?
+                        token && isWebsite ?
                             <a href="" className='btn btn-primary' style={{ width: 'fit-content' }}>Edit Tentang</a>
                             : ''
                     }

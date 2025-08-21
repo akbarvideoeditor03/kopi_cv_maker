@@ -3,8 +3,25 @@ export async function apiFetch(url, options = {}) {
     const response = await fetch(url, options);
 
     switch (response.status) {
+        case 401:
+            Swal.fire({
+                icon: 'error',
+                title: 'Ups...',
+                text: 'Maaf, pengguna tidak ditemukan atau belum terdaftar',
+                showConfirmButton: false,
+                timer: 2000,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true,
+            }).then(() => {
+                Swal.close();
+                window.location.reload();
+            });
+            throw new Error('401 Unauthorized');
         case 403:
-            localStorage.clear();
+            localStorage.removeItem('/v%');
+            localStorage.removeItem('$f*');
+            localStorage.removeItem('&l2');
             sessionStorage.clear();
             throw new Error('403 Forbidden');
         case 404:

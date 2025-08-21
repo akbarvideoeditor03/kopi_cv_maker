@@ -44,7 +44,7 @@ const monitorLocalStorage = () => {
 
     if (monitoringStarted) {
         if (currId !== prevId || currRole !== prevRole || currToken !== prevToken) {
-            console.warn('❌ Deteksi manipulasi id, role, atau token. Melakukan logout...');
+            console.warn('❌ Deteksi manipulasi. Melakukan logout...');
             localStorage.removeItem('/v%');
             localStorage.removeItem('$f*');
             localStorage.removeItem('&l2');

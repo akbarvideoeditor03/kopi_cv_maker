@@ -55,7 +55,7 @@ function Dropdown() {
     };
 
     const renderMenuItems = () => {
-        if (token && role === isWebsite) {
+        if (token && isWebsite) {
             return (
                 <>
                     <a href="/dashboard">Dashboard</a>
@@ -66,7 +66,7 @@ function Dropdown() {
                     </button>
                 </>
             );
-        } else if (token && role === isViews) {
+        } else if (token && isViews) {
             return (
                 <>
                     <a href="/home">CV Saya</a>

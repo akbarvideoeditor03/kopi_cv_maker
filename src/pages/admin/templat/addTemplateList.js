@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { createTemplat, uploadToSupabase } from '../../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 const addTemplat = () => {
-    const { isWebsite, isViews } = useSelector((state) => state.userReducer);
+    const { isWebsite } = useSelector((state) => state.userReducer);
     const token = localStorage.getItem('&l2');
     const role = localStorage.getItem('$f*');
-    const roleUser = isWebsite;
     const dispatch = useDispatch();
     const [dataTemplat, setDataTemplat] = useState({
         link_gambar: '',
@@ -111,7 +110,7 @@ const addTemplat = () => {
         }
     };
 
-    if (token && role === roleUser) {
+    if (token && isWebsite) {
         return (
             <main className="container col-f f-center">
                 <div className="card container col-f section-max full-width">
