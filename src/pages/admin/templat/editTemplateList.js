@@ -116,10 +116,6 @@ function EditTemplat() {
                             icon: 'error',
                             title: 'Oops...',
                             text: 'Terjadi kesalahan saat memperbarui data.',
-                            timer:2000
-                        }).then(() => {
-                            Swal.close();
-                            window.location.reload();
                         });
                     }
                 }
