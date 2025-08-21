@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { viewAllTemplateId, updateTemplat, uploadToSupabase } from '../../../redux/action/user.action';
 import { useParams } from "react-router-dom";
 import Swal from 'sweetalert2';
 
 function EditTemplat() {
-    const { isWebsite, isViews } = useSelector((state) => state.userReducer);
     const dispatch = useDispatch();
-    const { id } = useParams();
+    const param = useParams();
     const token = localStorage.getItem('&l2');
     const role = localStorage.getItem('$f*');
-    const roleUser = isWebsite;
-    const { templatList } = useSelector((state) => state.userReducer);
+    const id = localStorage.getItem('/v%');
+    const { templatList, isWebsite } = useSelector((state) => state.userReducer);
 
     const [dataTemplat, setDataTemplat] = useState({
         caption: '',
@@ -20,17 +19,17 @@ function EditTemplat() {
     });
 
     useEffect(() => {
-        dispatch(viewAllTemplateId(id));
+        dispatch(viewAllTemplateId(param.id));
     }, [dispatch, id]);
 
-    const caption = templatList?.map((item) => item.caption);
-    const link_page = templatList?.map((item) => item.link_page);
+    const caption = templatList?.caption;
+    const link_page = templatList?.link_page;
 
     useEffect(() => {
         if (templatList) {
             setDataTemplat({
-                caption: `${caption}` || '',
-                link_page: `${link_page}` || '',
+                caption: caption || '',
+                link_page: link_page || '',
                 link_gambar: null,
             });
         }
@@ -70,7 +69,8 @@ function EditTemplat() {
                         caption: dataTemplat.caption,
                         link_page: dataTemplat.link_page,
                     };
-                    dispatch(updateTemplat(id, updatedTemplat));
+                    
+                    dispatch(updateTemplat(id, role, templatList?.id, updatedTemplat));
                 }
             } else {
                 const result = await Swal.fire({
@@ -110,12 +110,17 @@ function EditTemplat() {
                             link_page: dataTemplat.link_page,
                             caption: dataTemplat.caption,
                         };
-                        dispatch(updateTemplat(id, updatedTemplat));
+                        
+                        dispatch(updateTemplat(id, role, templatList?.id, updatedTemplat));
                     } catch (error) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
                             text: 'Terjadi kesalahan saat memperbarui data.',
+                            timer:2000
+                        }).then(() => {
+                            Swal.close();
+                            window.location.reload();
                         });
                     }
                 }
@@ -129,7 +134,7 @@ function EditTemplat() {
         }
     };
 
-    if (token && role === roleUser) {
+    if (token && isWebsite && id) {
         return (
             <main className="container col-f f-center">
                 <div className="card container col-f section-max full-width">

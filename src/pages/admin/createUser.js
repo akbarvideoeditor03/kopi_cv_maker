@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createUser, uploadToSupabase } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 const CreateUserAdmin = () => {
-    const data = localStorage.getItem("dark-mode");
+    const theme = localStorage.getItem("dark-mode");
     const [darkMode, setDarkMode] = useState();
     useEffect(() => {
-        if (data === "true") {
+        if (theme === "true") {
             setDarkMode(true);
         }
     }, []);
-    const { isWebsite, isViews } = useSelector((state) => state.userReducer);
+    const dispatch = useDispatch();
+    const { isWebsite } = useSelector((state) => state.userReducer);
     const token = localStorage.getItem('&l2');
     const role = localStorage.getItem('$f*');
-    const roleUser = isWebsite;
-    const dispatch = useDispatch();
+    const idAdm = localStorage.getItem('/v%');
     const [userData, setUserData] = useState({
         nama: '',
         no_telp: '',
@@ -167,8 +167,7 @@ const CreateUserAdmin = () => {
                     email: userData.email,
                     password: userData.password,
                 };
-
-                dispatch(createUser(newUser));
+                dispatch(createUser(idAdm, role, newUser));
             }
         } catch (error) {
             Swal.fire({
@@ -179,7 +178,7 @@ const CreateUserAdmin = () => {
         }
     };
 
-    if (token && role === roleUser) {
+    if (token && isWebsite && idAdm) {
         return (
             <main className="container col-f f-center-c">
                 <section className="card container row-f f-wrap-r full-width section-max">

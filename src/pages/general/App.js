@@ -8,7 +8,7 @@ import PasswordReset from './resetPassword';
 import Register from './register';
 import HomeUser from '../client/home';
 import UserList from '../admin/dashboard';
-import UserListDetail from '../admin/userListDetail';
+import UserDetails from '../admin/userDetail';
 import CreateUserAdmin from '../admin/createUser';
 import UpdateUserAdmin from '../admin/updateUser';
 import UpdateUserSelf from '../client/user/updateUser';
@@ -45,9 +45,9 @@ function App() {
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />}></Route>
-                <Route path="/user/:id" element={<UserListDetail />}></Route>
+                <Route path="/user/:id_user/:role/:id" element={<UserDetails />}></Route>
                 <Route path="/user/create" element={<CreateUserAdmin />}></Route>
-                <Route path="/user/edit/:id" element={<UpdateUserAdmin />}></Route>
+                <Route path="/user/edit/:id_user/:role/:id" element={<UpdateUserAdmin />}></Route>
                 <Route path="/dashboard" element={<UserList />}></Route>
                 <Route path="/home" element={<HomeUser />}></Route>
                 <Route path="/edit/:id_user/:role" element={<UpdateUserSelf />}></Route>
@@ -76,7 +76,7 @@ function App() {
                 <Route path="/cvatsfirendly" element={<MyPDFDocument3 />}></Route>
 
                 <Route path="/addtemplate" element={<TambahTemplate />}></Route>
-                <Route path="/edittemplate/:id" element={<EditTemplate />}></Route>
+                <Route path="/edittemplate/:id_user/:role/:id" element={<EditTemplate />}></Route>
                 <Route path="/templatedetail/:id" element={<TemplateDetail />}></Route>
 
             </Route>
