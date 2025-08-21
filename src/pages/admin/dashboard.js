@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, viewAllTemplate, deleteUser, deleteTemplat } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function Dashboard() {
-    const dispatch = useDispatch();
     const token = localStorage.getItem('&l2');
     const role = localStorage.getItem('$f*');
-    const id = localStorage.getItem('/v%');
+    const dispatch = useDispatch();
     const { userList, isLoading, error, isWebsite, templatList } = useSelector(
         (state) => state.userReducer
     );
@@ -145,7 +144,7 @@ function Dashboard() {
                                                     <div className='container col-f f-center-c'>
                                                     <p>{`${item.caption}`}</p>
                                                     <div className='container row-f f-1 f-wrap f-center-c'>
-                                                        <a className="t-center btn btn-primary" href={`/edittemplate/${id}/${role}/${item.id}`}>Edit</a>
+                                                        <a className="t-center btn btn-primary" href={`/edittemplate/${item.id}`}>Edit</a>
                                                         <button
                                                             onClick={() =>
                                                                 deleteTemplats(

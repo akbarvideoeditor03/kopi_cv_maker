@@ -76,7 +76,7 @@ function App() {
                 <Route path="/cvatsfirendly" element={<MyPDFDocument3 />}></Route>
 
                 <Route path="/addtemplate" element={<TambahTemplate />}></Route>
-                <Route path="/edittemplate/:id_user/:role/:id" element={<EditTemplate />}></Route>
+                <Route path="/edittemplate/:id" element={<EditTemplate />}></Route>
                 <Route path="/templatedetail/:id" element={<TemplateDetail />}></Route>
 
             </Route>
