@@ -184,7 +184,7 @@ function HomeUser() {
                         <div className="card container col-f f-1">
                             <div className="card-mini container row-f f-wrap">
                                 <div style={{ paddingBottom: '1rem', flexBasis: '360px', }} className="container col-f f-1">
-                                    <h3><i style={{ fontSize:'85%' }} className="fa-solid fa-circle-user"></i> Data Diri</h3>
+                                    <h3>Data Diri</h3>
                                     <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap grid-text">
                                         <div className="box-1 container col-f-0 f-1">
                                             <h1 className="name-text">
@@ -229,7 +229,7 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap m-b1">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize:'85%' }} className="fa-solid fa-school"></i> Pendidikan</h1>
+                                    <h1>Pendidikan</h1>
                                     {pendidikanTerakhir.map((item) => {
                                         return (
                                             <div key={item.id} className="container row-f f-wrap">
@@ -278,7 +278,7 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize:'75%' }} className="fa-solid fa-user-tie"></i> Pengalaman Kerja</h1>
+                                    <h1>Pengalaman Kerja</h1>
                                     {pengalamanKerja.map((item) => {
                                         const prestasiId = item.id;
                                         const paragraf = item.detail
@@ -324,12 +324,12 @@ function HomeUser() {
                                                     (item) =>
                                                         item.id_pengalaman_kerja ===
                                                         prestasiId
-                                                ) && <h1><i style={{ fontSize:'75%' }} className="fa-solid fa-trophy"></i> Prestasi Kerja</h1>}
+                                                ) && <h1>Prestasi Kerja</h1>}
                                                 {prestasiKerja.map((item) =>
                                                     item.id_pengalaman_kerja ===
                                                         prestasiId ? (
                                                         <div key={item.id} className="card-mini container col-f">
-                                                            <div className="container col-row">
+                                                            <div className="container row-f">
                                                                 <div className="container col-f f-1">
                                                                     <h4>
                                                                         {
@@ -393,7 +393,7 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap m-b1">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize:'75%' }} className="fa-solid fa-gear"></i> Keahlian / Skill</h1>
+                                    <h1>Keahlian / Skill</h1>
                                     <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap">
                                         {keahlian.map((item) => {
                                             return (
@@ -433,7 +433,7 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize:'75%' }} className="fa-solid fa-book-open-reader"></i> Pelatihan / Kursus</h1>
+                                    <h1>Pelatihan / Kursus</h1>
                                     <div className="container col-f f-1">
                                         {pelatihan.map((item) => {
                                             return (

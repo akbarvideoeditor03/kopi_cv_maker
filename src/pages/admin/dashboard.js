@@ -1,37 +1,40 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserAdm, viewAllTemplate, deleteUser, deleteTemplat } from '../../redux/action/user.action';
+import { getUser, viewAllTemplate, deleteUser, deleteTemplat } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function Dashboard() {
     const dispatch = useDispatch();
     const token = localStorage.getItem('&l2');
     const role = localStorage.getItem('$f*');
-    const idAdm = localStorage.getItem('/v%');
+    const id = localStorage.getItem('/v%');
+    const { userList, isLoading, error, isWebsite, templatList } = useSelector(
+        (state) => state.userReducer
+    );
+    const roleUser = isWebsite;
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const [searchItem, setSearchItem] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
-    const { userData, isLoading, error, isWebsite, templatList } = useSelector(
-        (state) => state.userReducer
-    );
 
     useEffect(() => {
-        dispatch(getUserAdm(idAdm, role));
-    }, [dispatch, idAdm, role]);
+        if (!userList.data) {
+            dispatch(getUser());
+        }
+    }, [dispatch, userList.data]);
 
     useEffect(() => {
         dispatch(viewAllTemplate());
     }, [dispatch]);
 
     useEffect(() => {
-        if (userData.data) {
-            const filteredItem = userData.data.filter((user) =>
+        if (userList.data) {
+            const filteredItem = userList.data.filter((user) =>
                 user.nama.toLowerCase().includes(searchItem.toLowerCase()) || user.email.toLowerCase().includes(searchItem.toLowerCase())
             );
             setFilteredUsers(filteredItem);
         }
-    }, [searchItem, userData.data]);
+    }, [searchItem, userList.data]);
 
     const deleteData = (id) => {
         Swal.fire({
@@ -43,7 +46,7 @@ function Dashboard() {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteUser(idAdm, role, id));
+                dispatch(deleteUser(id));
             }
         });
     };
@@ -58,7 +61,7 @@ function Dashboard() {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteTemplat(idAdm, role, id)).then(() => {
+                dispatch(deleteTemplat(id)).then(() => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Dihapus!',
@@ -95,7 +98,7 @@ function Dashboard() {
         setCurrentPage(page);
     };
 
-    if (token && isWebsite) {
+    if (token && role === roleUser) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
@@ -115,8 +118,8 @@ function Dashboard() {
                                 ) : (
                                     <div className="container col-f f-center-c left-dashboard-container">
                                         <p style={{ fontSize: '350%', fontWeight: 'bold' }}>
-                                            {userData?.meta?.totalData ? (
-                                                userData.meta.totalData
+                                            {userList?.meta?.totalData ? (
+                                                userList.meta.totalData
                                             ) : ('')}
                                         </p>
                                     </div>
@@ -142,7 +145,7 @@ function Dashboard() {
                                                     <div className='container col-f f-center-c'>
                                                     <p>{`${item.caption}`}</p>
                                                     <div className='container row-f f-1 f-wrap f-center-c'>
-                                                        <a className="t-center btn btn-primary" href={`/edittemplate/${idAdm}/${role}/${item.id}`}>Edit</a>
+                                                        <a className="t-center btn btn-primary" href={`/edittemplate/${id}/${role}/${item.id}`}>Edit</a>
                                                         <button
                                                             onClick={() =>
                                                                 deleteTemplats(
@@ -206,7 +209,7 @@ function Dashboard() {
                                                             <div className="container col-f left-card-menu fj-center f-1">
                                                                 <a
                                                                     className="user-list"
-                                                                    href={`/user/${idAdm}/${role}/${item.id}`}
+                                                                    href={`/user/${item.id}`}
                                                                 >
                                                                     <div className="container col-f f-wrap">
                                                                         <h3>
@@ -223,7 +226,7 @@ function Dashboard() {
                                                             </div>
                                                             <div className="container col-f right-card-menu">
                                                                 <a
-                                                                    href={`user/edit/${idAdm}/${role}/${item.id}`}
+                                                                    href={`user/edit/${item.id}`}
                                                                     className="t-center btn btn-info"
                                                                 >
                                                                     Ubah

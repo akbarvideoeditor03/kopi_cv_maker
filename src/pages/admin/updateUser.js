@@ -1,26 +1,30 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import { getDataId, updateData } from '../../redux/action/user.action';
+import { getUserId, updateUser } from '../../redux/action/user.action';
 import { uploadToSupabase } from '../../redux/action/user.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 const UpdateUserAdmin = ({ userId }) => {
-    const dispatch = useDispatch();
-    const param = useParams();
-    const token = localStorage.getItem('&l2');
-    const role = localStorage.getItem('$f*');
-    const idAdm = localStorage.getItem('/v%');
     const data = localStorage.getItem("dark-mode");
-    const { userData, isWebsite } = useSelector((state) => state.userReducer);
     const [darkMode, setDarkMode] = useState();
     useEffect(() => {
         if (data === "true") {
             setDarkMode(true);
         }
     }, []);
-    const [userDataId, setUserDataId] = useState({
+    const { id } = useParams();
+    const { userList, isWebsite } = useSelector((state) => state.userReducer);
+    const role = localStorage.getItem('$f*');
+    const roleUser = isWebsite;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUserId(id));
+    }, [dispatch, id]);
+
+    const [userData, setUserData] = useState({
         nama: '',
         no_telp: '',
         alamat: '',
@@ -30,28 +34,28 @@ const UpdateUserAdmin = ({ userId }) => {
     });
 
     useEffect(() => {
-        dispatch(getDataId(idAdm, role, param.id));
-    }, [dispatch, idAdm, role, param.id]);
-
+        if (userId) {
+            dispatch(getUserId(userId));
+        }
+    }, [dispatch, userId]);
 
     useEffect(() => {
-        if (userData) {
-            setUserDataId({
-                nama: userData.nama || '',
-                no_telp: userData.no_telp || '',
-                alamat: userData.alamat || '',
-                tentang: userData.tentang || '',
+        if (userList) {
+            setUserData({
+                nama: userList.nama || '',
+                no_telp: userList.no_telp || '',
+                alamat: userList.alamat || '',
+                tentang: userList.tentang || '',
                 foto_profil: null,
-                email: userData.email || '',
+                email: userList.email || '',
             });
         }
-        }, [userData]);
+    }, [userList]);
 
-    const wordCount = (userDataId?.tentang || "")
+    const wordCount = userData.tentang
         .trim()
         .split(/\s+/)
         .filter(Boolean).length;
-
     const cancelSubmit = async (e) => {
         e.preventDefault();
         Swal.fire({
@@ -79,7 +83,7 @@ const UpdateUserAdmin = ({ userId }) => {
         // }
 
         try {
-            if (userDataId.foto_profil === null || userDataId.foto_profil === '') {
+            if (userData.foto_profil === null || userData.foto_profil === '') {
                 const result = await Swal.fire({
                     icon: 'question',
                     title: 'Update data?',
@@ -92,13 +96,13 @@ const UpdateUserAdmin = ({ userId }) => {
 
                 if (result.isConfirmed) {
                     const updatedUser = {
-                        nama: userDataId.nama,
-                        no_telp: userDataId.no_telp,
-                        alamat: userDataId.alamat,
-                        tentang: userDataId.tentang,
-                        email: userDataId.email,
+                        nama: userData.nama,
+                        no_telp: userData.no_telp,
+                        alamat: userData.alamat,
+                        tentang: userData.tentang,
+                        email: userData.email,
                     };
-                    dispatch(updateData(idAdm, role, param.id, updatedUser));
+                    dispatch(updateUser(id, updatedUser));
                 }
             } else {
                 const result = await Swal.fire({
@@ -121,7 +125,7 @@ const UpdateUserAdmin = ({ userId }) => {
                         },
                     });
                     try {
-                        const file = userDataId.foto_profil;
+                        const file = userData.foto_profil;
                         const fileParts = file.name
                             .split('.')
                             .filter(Boolean);
@@ -134,23 +138,20 @@ const UpdateUserAdmin = ({ userId }) => {
                         foto = await uploadToSupabase(newFileName, file);
 
                         const updatedUser = {
-                            nama: userDataId.nama,
-                            no_telp: userDataId.no_telp,
-                            alamat: userDataId.alamat,
-                            tentang: userDataId.tentang,
+                            nama: userData.nama,
+                            no_telp: userData.no_telp,
+                            alamat: userData.alamat,
+                            tentang: userData.tentang,
                             foto_profil: foto,
-                            email: userDataId.email,
+                            email: userData.email,
                         };
-                        dispatch(updateData(idAdm, role, param.id, updatedUser));
+
+                        dispatch(updateUser(id, updatedUser));
                     } catch (error) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
                             text: 'Terjadi kesalahan saat memperbarui data.',
-                            timer:2000
-                        }).then(() => {
-                            Swal.close();
-                            window.location.reload();
                         });
                     }
                 }
@@ -164,7 +165,7 @@ const UpdateUserAdmin = ({ userId }) => {
         }
     };
 
-    if (token && isWebsite && idAdm) {
+    if (role === roleUser) {
         return (
             <main className="container col-f f-center-c">
                 <section className="card container row-f f-wrap-r full-width section-max">
@@ -187,10 +188,10 @@ const UpdateUserAdmin = ({ userId }) => {
                                         <label>Nama</label>
                                         <input
                                             name="nama"
-                                            value={userDataId.nama}
+                                            value={userData.nama}
                                             onChange={(e) =>
-                                                setUserDataId({
-                                                    ...userDataId,
+                                                setUserData({
+                                                    ...userData,
                                                     [e.target.name]:
                                                         e.target.value,
                                                 })
@@ -203,10 +204,10 @@ const UpdateUserAdmin = ({ userId }) => {
                                         <label>Nomor Telepon</label>
                                         <input
                                             name="no_telp"
-                                            value={userDataId.no_telp}
+                                            value={userData.no_telp}
                                             onChange={(e) =>
-                                                setUserDataId({
-                                                    ...userDataId,
+                                                setUserData({
+                                                    ...userData,
                                                     [e.target.name]:
                                                         e.target.value,
                                                 })
@@ -219,10 +220,10 @@ const UpdateUserAdmin = ({ userId }) => {
                                         <label>Alamat</label>
                                         <input
                                             name="alamat"
-                                            value={userDataId.alamat}
+                                            value={userData.alamat}
                                             onChange={(e) =>
-                                                setUserDataId({
-                                                    ...userDataId,
+                                                setUserData({
+                                                    ...userData,
                                                     [e.target.name]:
                                                         e.target.value,
                                                 })
@@ -239,10 +240,10 @@ const UpdateUserAdmin = ({ userId }) => {
                                             }}
                                             className="textarea"
                                             name="tentang"
-                                            value={userDataId.tentang}
+                                            value={userData.tentang}
                                             onChange={(e) =>
-                                                setUserDataId({
-                                                    ...userDataId,
+                                                setUserData({
+                                                    ...userData,
                                                     [e.target.name]:
                                                         e.target.value,
                                                 })
@@ -265,8 +266,8 @@ const UpdateUserAdmin = ({ userId }) => {
                                             className="full-width"
                                             name="foto_profil"
                                             onChange={(e) =>
-                                                setUserDataId({
-                                                    ...userDataId,
+                                                setUserData({
+                                                    ...userData,
                                                     foto_profil:
                                                         e.target.files[0],
                                                 })
@@ -280,10 +281,10 @@ const UpdateUserAdmin = ({ userId }) => {
                                         <label>Email</label>
                                         <input
                                             name="email"
-                                            value={userDataId.email}
+                                            value={userData.email}
                                             onChange={(e) =>
-                                                setUserDataId({
-                                                    ...userDataId,
+                                                setUserData({
+                                                    ...userData,
                                                     [e.target.name]:
                                                         e.target.value,
                                                 })
