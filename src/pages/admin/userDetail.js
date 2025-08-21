@@ -1,20 +1,22 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserId } from '../../redux/action/user.action';
+import { getDataId } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
 
-function UserListDetail() {
-    const { id } = useParams();
+function UserDetails() {
     const dispatch = useDispatch();
+    const param = useParams();
+    const token = localStorage.getItem('&l2');
     const role = localStorage.getItem('$f*');
-    const { isWebsite, userList, isLoading, error } = useSelector(
+    const idAdm = localStorage.getItem('/v%');
+    const { isWebsite, userData, isLoading, error } = useSelector(
         (state) => state.userReducer
     );
-    const roleUser = isWebsite;
+
     useEffect(() => {
-        dispatch(getUserId(id));
-    }, [dispatch, id]);
+        dispatch(getDataId(idAdm, role, param.id));
+    }, [dispatch, idAdm, role, param.id]);
 
     useEffect(() => {
         if (error) {
@@ -27,8 +29,8 @@ function UserListDetail() {
         }
     }, [error]);
 
-    if (role === roleUser) {
-        const tentang = userList.tentang
+    if (token && isWebsite && idAdm) {
+        const tentang = userData.tentang
         const tentangParagraf = tentang?.split('\n').map((tentangs, index) => (
             <p style={{ lineHeight: '1.5rem' }} key={index}>{tentangs} <br /></p>
         ))
@@ -40,23 +42,23 @@ function UserListDetail() {
                     </div>
                 ) : (
                     <div className="card container col-f fj-center section-max">
-                        <h1>Detail Data {userList.nama}</h1>
+                        <h1>Detail Data {userData.nama}</h1>
                         <div className='container col-f'>
                             <div className='container col-f f-1 f-center-c m-b1'>
-                                <img className="detail-img full-width" src={`${userList.foto_profil}`} alt="" />
+                                <img className="detail-img full-width" src={`${userData.foto_profil}`} alt="" />
                             </div>
                             <div className='container col-f'>
                                 <h4>Nama</h4>
                                 <div className='text-bg'>
-                                    <p>{userList.nama}</p>
+                                    <p>{userData.nama}</p>
                                 </div>
                                 <h4>Nomor Telepon</h4>
                                 <div className='text-bg'>
-                                    <p>{userList.no_telp}</p>
+                                    <p>{userData.no_telp}</p>
                                 </div>
                                 <h4>Alamat</h4>
                                 <div className='text-bg'>
-                                    <p>{userList.alamat}</p>
+                                    <p>{userData.alamat}</p>
                                 </div>
                                 <h4>Tentang</h4>
                                 <div className='text-bg'>
@@ -64,7 +66,7 @@ function UserListDetail() {
                                 </div>
                                 <h4>Email</h4>
                                 <div className='text-bg'>
-                                    <p className='cut-text'>{userList.email}</p>
+                                    <p className='cut-text'>{userData.email}</p>
                                 </div>
                             </div>
                         </div>
@@ -77,4 +79,4 @@ function UserListDetail() {
     }
 }
 
-export default UserListDetail;
+export default UserDetails;
