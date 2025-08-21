@@ -136,7 +136,7 @@ function HomeUser() {
         }
     };
 
-    if (token && (role === isViews || role === isWebsite)) {
+    if (token && (isViews || isWebsite)) {
         const tentang = userList.tentang
         const tentangParagraf = tentang?.split('\n').map((tentangs, index) => (
             <p style={{ lineHeight: '1.5rem' }} key={index}>{tentangs} <br /></p>

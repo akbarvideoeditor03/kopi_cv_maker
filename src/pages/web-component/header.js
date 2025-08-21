@@ -6,7 +6,6 @@ import Switch from './switch';
 function WebHeader() {
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
     const token = localStorage.getItem('&l2');
-    const role = localStorage.getItem('$f*')
 
     const handleLogout = () => {
         Swal.fire({
@@ -38,7 +37,7 @@ function WebHeader() {
     };
 
     const renderMenu = () => {
-        if (token && role === isWebsite) {
+        if (token && isWebsite) {
             return (
                 <>
                     <div className="container col-f"><a href="/dashboard">Dashboard</a></div>
@@ -51,7 +50,7 @@ function WebHeader() {
             );
         }
 
-        if (token && role === isViews) {
+        if (token && isViews) {
             return (
                 <>
                     <div className="container col-f"><a href="/home">CV Saya</a></div>
