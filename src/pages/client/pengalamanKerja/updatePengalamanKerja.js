@@ -104,7 +104,7 @@ const UpdatePengalamanKerja = () => {
             });
         }
     };
-    if (token && (role === isViews || role === isWebsite)) {
+    if (token && (isViews || isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
