@@ -21,9 +21,9 @@ dayjs.locale('id');
 
 function HomeUser() {
     const dispatch = useDispatch();
-    const id = localStorage.getItem('/v%');
-    const role = localStorage.getItem('$f*');
     const token = localStorage.getItem('&l2');
+    const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
     const {
         userList,
         pengalamanKerja,
@@ -37,7 +37,9 @@ function HomeUser() {
     } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
-        dispatch(getUserId(id, role));
+        if(token) {
+            dispatch(getUserId(id, role));
+        }
     }, [dispatch, id, role]);
 
     useEffect(() => {
@@ -136,7 +138,7 @@ function HomeUser() {
         }
     };
 
-    if (token && (isViews || isWebsite)) {
+    if (token && (role === isViews || isWebsite)) {
         const tentang = userList.tentang
         const tentangParagraf = tentang?.split('\n').map((tentangs, index) => (
             <p style={{ lineHeight: '1.5rem' }} key={index}>{tentangs} <br /></p>

@@ -165,7 +165,7 @@ const UpdateUserSelf = () => {
         }
     };
 
-    if (token && (isViews || isWebsite)) {
+    if (token && (role === isViews || isWebsite)) {
         return (
             <main className="container col-f f-center-c">
                 <section className="card container row-f f-wrap-r full-width section-max">

@@ -18,12 +18,12 @@ export async function apiFetch(url, options = {}) {
                 window.location.reload();
             });
             throw new Error('401 Unauthorized');
-        case 403:
-            localStorage.removeItem('/v%');
-            localStorage.removeItem('$f*');
-            localStorage.removeItem('&l2');
-            sessionStorage.clear();
-            throw new Error('403 Forbidden');
+        // case 403:
+        //     localStorage.removeItem('/v%');
+        //     localStorage.removeItem('$f*');
+        //     localStorage.removeItem('&l2');
+        //     sessionStorage.clear();
+        //     throw new Error('403 Forbidden');
         case 404:
             Swal.fire({
                 icon: 'error',

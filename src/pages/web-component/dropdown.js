@@ -4,8 +4,8 @@ import Swal from 'sweetalert2';
 
 function Dropdown() {
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
-    const token = localStorage.getItem('&l2');
-    const role = localStorage.getItem('$f*');
+    const J$P7 = localStorage.getItem('&l2');
+    const $s0M = localStorage.getItem('$f*');
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -55,7 +55,7 @@ function Dropdown() {
     };
 
     const renderMenuItems = () => {
-        if (token && isWebsite) {
+        if (J$P7 && $s0M === isWebsite) {
             return (
                 <>
                     <a href="/dashboard">Dashboard</a>
@@ -66,7 +66,7 @@ function Dropdown() {
                     </button>
                 </>
             );
-        } else if (token && isViews) {
+        } else if (J$P7 && $s0M === isViews) {
             return (
                 <>
                     <a href="/home">CV Saya</a>

@@ -457,18 +457,6 @@ export const getDataId = (id_user, role, id) => {
                 },
             });
 
-            if (!response.ok) {
-                if (response.status >= 400) {
-                    Object.keys(localStorage).forEach(key => {
-                        if (key !== 'dark-mode') {
-                            localStorage.removeItem(key);
-                        }
-                    });
-                    window.location.href = '/user/login';
-                    return;
-                }
-            }
-
             const data = await response.json();
             dispatch({
                 type: userTypes.GET_ADMIN_ID_SUCCESS,
@@ -803,18 +791,6 @@ export const getUserId = (id, role) => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-
-            if (!response.ok) {
-                if (response.status >= 400) {
-                    Object.keys(localStorage).forEach(key => {
-                        if (key !== 'dark-mode') {
-                            localStorage.removeItem(key);
-                        }
-                    });
-                    window.location.href = '/user/login';
-                    return;
-                }
-            }
 
             const data = await response.json();
             dispatch({

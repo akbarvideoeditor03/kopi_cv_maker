@@ -72,7 +72,7 @@ function CreateKeahlian() {
         }
     };
 
-    if (token && (isViews || isWebsite)) {
+    if (token && (role === isViews || isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">

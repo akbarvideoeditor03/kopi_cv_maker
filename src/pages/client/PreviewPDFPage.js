@@ -12,7 +12,7 @@ function pdfPreview() {
         dispatch(viewAllTemplate());
     }, [dispatch])
 
-    if (token) {
+    if (token && role) {
         return (
             <main className="container col-f-0 f-center">
                 <div className="container col-f full-width section-max">

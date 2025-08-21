@@ -5,7 +5,8 @@ import Switch from './switch';
 
 function WebHeader() {
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
-    const token = localStorage.getItem('&l2');
+    const $s0M = localStorage.getItem('$f*');
+    const J$P7 = localStorage.getItem('&l2');
 
     const handleLogout = () => {
         Swal.fire({
@@ -37,7 +38,7 @@ function WebHeader() {
     };
 
     const renderMenu = () => {
-        if (token && isWebsite) {
+        if (J$P7 && $s0M === isWebsite) {
             return (
                 <>
                     <div className="container col-f"><a href="/dashboard">Dashboard</a></div>
@@ -50,7 +51,7 @@ function WebHeader() {
             );
         }
 
-        if (token && isViews) {
+        if (J$P7 && $s0M === isViews) {
             return (
                 <>
                     <div className="container col-f"><a href="/home">CV Saya</a></div>
