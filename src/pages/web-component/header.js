@@ -1,12 +1,33 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserId, otpRequestCode } from '../../redux/action/user.action';
 import Dropdown from './dropdown';
 import Swal from 'sweetalert2';
 import Switch from './switch';
 
 function WebHeader() {
+    const dispatch = useDispatch();
     const { isWebsite, isViews } = useSelector((state) => state.userReducer);
-    const $s0M = localStorage.getItem('$f*');
     const J$P7 = localStorage.getItem('&l2');
+    const $s0M = localStorage.getItem('$f*');
+    const $Yd0 = localStorage.getItem('/v%');
+    const { userList } = useSelector((state) => state.userReducer);
+
+    useEffect(() => {
+        if(J$P7 && $s0M && $Yd0) {
+            dispatch(getUserId($Yd0, $s0M));
+        }
+    }, [dispatch, $Yd0, $s0M]);
+
+    const sentEmail = (e) => {
+        e.preventDefault();
+        if(J$P7 && $s0M && $Yd0) {
+            const emailReq = {
+                email : userList?.email
+            };
+            dispatch(otpRequestCode(emailReq));
+        }
+    }
 
     const handleLogout = () => {
         Swal.fire({
@@ -44,8 +65,15 @@ function WebHeader() {
                     <div className="container col-f"><a href="/dashboard">Dashboard</a></div>
                     <div className="container col-f"><a href="/bantuan">Bantuan</a></div>
                     <div className="container col-f"><a href="/tentang">Tentang</a></div>
-                    <div className="container col-f">
+                    <div className="container row-f">
                         <button className="btn btn-danger" onClick={handleLogout}>Keluar</button>
+                        {
+                            J$P7 && $s0M && $Yd0 ? 
+                            <button className='btn btn-info-b' onClick={sentEmail}>
+                                Ganti Password
+                            </button>
+                            : ``
+                        }
                     </div>
                 </>
             );

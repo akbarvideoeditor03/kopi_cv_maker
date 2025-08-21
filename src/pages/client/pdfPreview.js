@@ -130,7 +130,7 @@ function PDFPreview() {
             }
         }, [dispatch, pengalamanKerja, id, role]);
 
-    if (!token && !role) {
+    if (!token && !role && !id) {
         window.location.href = '/user/login'
     } else {
         return (

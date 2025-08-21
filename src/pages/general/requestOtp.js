@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { otpRequestCode, getUserId } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 
 function RequestOtp() {
     const dispatch = useDispatch();
-    const token = localStorage.getItem('&l2');
-    const id = localStorage.getItem('id')
     const data = localStorage.getItem("dark-mode");
-    const { userList } = useSelector((state) => state.userReducer);
     const [darkMode, setDarkMode] = useState();
-
-    useEffect(() => {
-        dispatch(getUserId(id));
-    }, [dispatch, id]);
-
-
+    
     useEffect(() => {
         if (data === "true") {
             setDarkMode(true);

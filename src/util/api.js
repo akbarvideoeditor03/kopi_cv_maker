@@ -18,24 +18,12 @@ export async function apiFetch(url, options = {}) {
                 window.location.reload();
             });
             throw new Error('401 Unauthorized');
-        // case 403:
-        //     localStorage.removeItem('/v%');
-        //     localStorage.removeItem('$f*');
-        //     localStorage.removeItem('&l2');
-        //     sessionStorage.clear();
-        //     throw new Error('403 Forbidden');
-        case 404:
-            Swal.fire({
-                icon: 'error',
-                title: 'Ups, Maaf...',
-                text: 'Hmm, halamannya nggak ada',
-                showConfirmButton: false,
-                timer: 2000,
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timerProgressBar: true,
-            });
-            throw new Error('404 Not Found');
+        case 403:
+            localStorage.removeItem('/v%');
+            localStorage.removeItem('$f*');
+            localStorage.removeItem('&l2');
+            sessionStorage.clear();
+            throw new Error('403 Forbidden');
         case 500:
             Swal.fire({
                 icon: 'error',
