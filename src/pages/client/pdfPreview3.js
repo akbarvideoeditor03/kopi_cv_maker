@@ -14,7 +14,7 @@ import {
     readPengalamanKerja,
     readPendidikanTerakhir,
     readKeahlian,
-    readPelatihanId,
+    readPelatihan,
     readPrestasi,
 } from '../../redux/action/user.action';
 import NotifDownload from '../web-component/notifDownload';
@@ -112,13 +112,26 @@ function PDFPreviewATS() {
     } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
-        dispatch(getUserId(id));
-        dispatch(readPengalamanKerja(id));
-        dispatch(readPendidikanTerakhir(id));
-        dispatch(readKeahlian(id));
-        dispatch(readPelatihan(id));
-        dispatch(readPrestasi());
-    }, [dispatch, id]);
+            dispatch(getUserId(id, role));
+        }, [dispatch, id, role]);
+    
+        useEffect(() => {
+            if (userList?.id) {
+                [
+                    readPendidikanTerakhir,
+                    readPengalamanKerja,
+                    readKeahlian,
+                    readPelatihan
+                ].forEach(action => dispatch(action(id, role, userList.id)));
+            }
+        }, [dispatch, id, role, userList.id]);
+    
+        useEffect(() => {
+            if (pengalamanKerja?.length > 0) {
+                const [idReqPengalaman] = pengalamanKerja.map(item => item.id);
+                dispatch(readPrestasi(id, role, idReqPengalaman));
+            }
+        }, [dispatch, pengalamanKerja, id, role]);
 
     if (!token && !role) {
         window.location.href = '/user/login'
