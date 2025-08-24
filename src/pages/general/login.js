@@ -75,7 +75,13 @@ function Login() {
             };
             dispatch(postUserLogin(userLogin));
         } catch (error) {
-            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Terjadi kesalahan. Coba lagi',
+            }).then(() => {
+                Swal.close()
+            });
         }
     };
 
@@ -126,7 +132,9 @@ function Login() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: `Terjadi kesalahan ${error}. Coba lagi`,
+                    text: 'Terjadi kesalahan. Coba lagi',
+                }).then(() => {
+                    Swal.close()
                 });
             }
         }

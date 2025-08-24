@@ -52,7 +52,9 @@ function WebHeader() {
                     allowOutsideClick: false,
                     timerProgressBar: true,
                 }).then(() => {
-                    window.location.href = '/';
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
                 });
             }
         });

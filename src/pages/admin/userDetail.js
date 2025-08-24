@@ -41,7 +41,7 @@ function UserDetails() {
                         <div className="custom-loader"></div>
                     </div>
                 ) : (
-                    <div className="card container col-f fj-center section-max">
+                    <div className="card container col-f fj-center section-max full-width">
                         <h1>Detail Data {userData.nama}</h1>
                         <div className='container col-f'>
                             <div className='container col-f f-1 f-center-c m-b1'>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { viewAllTemplateId } from '../../../redux/action/user.action';
@@ -6,16 +6,15 @@ import { viewAllTemplateId } from '../../../redux/action/user.action';
 function viewDetailTemplat() {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const { templatList, isWebsite } = useSelector((state) => state.userReducer);
-    const roleUser = isWebsite;
+    const { templatList } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
         dispatch(viewAllTemplateId(id));
     }, [dispatch, id]);
 
-    const caption = templatList?.map((item) => item.caption);
-    const link_page = templatList?.map((item) => item.link_page);
-    const link_gambar = templatList?.map((item) => item.link_gambar);
+    const caption = templatList?.caption;
+    const link_page = templatList?.link_page;
+    const link_gambar = templatList?.link_gambar;
 
     return (
         <main className="container col-f f-center">

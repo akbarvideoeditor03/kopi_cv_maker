@@ -111,7 +111,7 @@ function PasswordReset() {
             return
         }
 
-        if(token) {
+        if(token && role && id) {
             try {
                 Swal.fire({
                     title: 'Sebentar...',
@@ -132,7 +132,9 @@ function PasswordReset() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: `Terjadi kesalahan ${error}. Coba lagi`,
+                    text: 'Terjadi kesalahan. Coba lagi',
+                }).then(() => {
+                    Swal.close()
                 });
             }
         } else {
@@ -156,7 +158,9 @@ function PasswordReset() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: `Terjadi kesalahan ${error}. Coba lagi`,
+                    text: 'Terjadi kesalahan. Coba lagi',
+                }).then(() => {
+                    Swal.close()
                 });
             }
         }

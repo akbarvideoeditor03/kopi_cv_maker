@@ -295,9 +295,9 @@ const MyPdf2 = ({
                     </View>
                     <View style={[styles.container, styles.colContainer0, styles.f1, { paddingLeft: "20px" }]}>
                         <View style={[styles.container, styles.rowContainer, styles.hLineBlack]}>
-                            <View style={[styles.container, styles.colContainer0, styles.f1]}>
-                                <Text style={styles.h1}>{userList?.nama}</Text>
-                                <Text style={styles.subheader}>
+                            <View style={[styles.container, styles.colContainer0, styles.f1, { maxWidth: "7rem" }]}>
+                                <Text style={[styles.h3, {fontWeight: '700'}]}>{userList?.nama}</Text>
+                                <Text style={[styles.subheader, { fontSize: "12px" }]}>
                                     {pendidikanTerakhir.find((item) => item.jurusan)?.jurusan}
                                 </Text>
                             </View>
@@ -309,7 +309,7 @@ const MyPdf2 = ({
                                 >
                                     <Image
                                         src={
-                                            'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/envelope-solid.png'
+                                            '/assets/icon/envelope-solid.png'
                                         }
                                     />{' '}
                                     <Link
@@ -328,7 +328,7 @@ const MyPdf2 = ({
                                 >
                                     <Image
                                         src={
-                                            'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/phone-solid.png'
+                                            '/assets/icon/phone-solid.png'
                                         }
                                     />{' '}
                                     {userList.no_telp}
@@ -340,7 +340,7 @@ const MyPdf2 = ({
                                 >
                                     <Image
                                         src={
-                                            'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/location-dot-solid.png'
+                                            '/assets/icon/location-dot-solid.png'
                                         }
                                     />{' '}
                                     {userList.alamat}

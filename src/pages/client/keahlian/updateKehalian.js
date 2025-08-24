@@ -78,10 +78,12 @@ function UpdateKeahlian() {
                 );
             }
         } catch (error) {
-            Swal.fire({
+            await Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!',
+                text: 'Terjadi kesalahan. Coba lagi',
+            }).then(() => {
+                Swal.close()
             });
         }
     };

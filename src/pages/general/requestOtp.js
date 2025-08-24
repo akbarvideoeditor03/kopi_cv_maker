@@ -46,7 +46,9 @@ function RequestOtp() {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: `Terjadi kesalahan ${error}. Coba lagi`,
+                text: 'Terjadi kesalahan. Coba lagi',
+            }).then(() => {
+                Swal.close()
             });
         }
     };

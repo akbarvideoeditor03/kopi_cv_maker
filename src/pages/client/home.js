@@ -80,8 +80,6 @@ function HomeUser() {
                     dispatch(deletePelatihan(id, role, userList.id, idData));
                 }
             }
-        }).then(() => {
-            window.location.reload();
         });
     };
 
@@ -99,9 +97,7 @@ function HomeUser() {
                     dispatch(deletePrestasi(id, role, idReqPengalaman, idData));
                 }
             }
-        }).then(() => {
-            window.location.reload();
-        });;
+        });
     };
 
     const handleSubmitWithEmail = (e) => {
@@ -134,7 +130,13 @@ function HomeUser() {
             };
             dispatch(otpRequestCode(otpReq));
         } catch (error) {
-            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Terjadi kesalahan. Coba lagi',
+            }).then(() => {
+                Swal.close()
+            });
         }
     };
 

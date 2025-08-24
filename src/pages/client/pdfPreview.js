@@ -238,7 +238,7 @@ const MyPdf = ({
                             >
                                 <Image
                                     src={
-                                        'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/envelope-solid.png'
+                                        '/assets/icon/envelope-solid.png'
                                     }
                                 />{' '}
                                 <Link
@@ -257,7 +257,7 @@ const MyPdf = ({
                             >
                                 <Image
                                     src={
-                                        'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/phone-solid.png'
+                                        '/assets/icon/phone-solid.png'
                                     }
                                 />{' '}
                                 {userList.no_telp}
@@ -269,7 +269,7 @@ const MyPdf = ({
                             >
                                 <Image
                                     src={
-                                        'https://raw.githubusercontent.com/akbarvideoeditor03/FE/refs/heads/master/public/assets/icon/location-dot-solid.png'
+                                        '/assets/icon/location-dot-solid.png'
                                     }
                                 />{' '}
                                 {userList.alamat}

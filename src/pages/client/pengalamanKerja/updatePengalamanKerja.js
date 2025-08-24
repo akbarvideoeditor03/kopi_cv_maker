@@ -100,7 +100,9 @@ const UpdatePengalamanKerja = () => {
             await Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: `Ada yang salah nih, ${error}`,
+                text: 'Terjadi kesalahan. Coba lagi',
+            }).then(() => {
+                Swal.close()
             });
         }
     };

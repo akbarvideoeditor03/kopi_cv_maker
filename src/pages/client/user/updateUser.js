@@ -160,7 +160,9 @@ const UpdateUserSelf = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: error.message || 'Gagal memperbarui data pengguna',
+                text: 'Terjadi kesalahan. Coba lagi',
+            }).then(() => {
+                Swal.close()
             });
         }
     };

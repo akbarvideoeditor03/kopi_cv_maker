@@ -64,11 +64,12 @@ function CreatePrestasi() {
             };
             dispatch(createPrestasi(id, role, param.id_pengalaman_kerja, prestasiUser));
         } catch (error) {
-            console.error('Error saat menambahkan prestasi:', error);
             await Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!',
+                text: 'Terjadi kesalahan. Coba lagi',
+            }).then(() => {
+                Swal.close()
             });
         }
     };

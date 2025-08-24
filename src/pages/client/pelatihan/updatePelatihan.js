@@ -64,11 +64,12 @@ const UpdatePelatihan = () => {
                 dispatch(updatePelatihan(id, role, param.id, param.id_pelatihan, updatedPelatihan));
             }
         } catch (error) {
-            console.error('Error saat menambahkan pengalaman kerja:', error);
             await Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!',
+                text: 'Terjadi kesalahan. Coba lagi',
+            }).then(() => {
+                Swal.close()
             });
         }
     };
