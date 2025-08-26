@@ -32,8 +32,11 @@
     background-color: #313131;
     color: white;
 }
-.dark-mode .dropdown-menu {
+.dark-mode .drawer-menu {
     background-color: #5a5a5a;
+}
+.dark-mode .dropdown-content {
+    background-color: #262626;
 }
 .dark-mode button {
     color: white;
