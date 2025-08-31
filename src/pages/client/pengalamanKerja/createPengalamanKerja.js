@@ -76,7 +76,6 @@ function CreatePengalamanKerja() {
 
         try {
             const pengalamanKerjaUser = {
-                id_user: `${userList.id}`,
                 lokasi: pengalamanKerja.lokasi,
                 jabatan: pengalamanKerja.jabatan,
                 detail: pengalamanKerja.detail,

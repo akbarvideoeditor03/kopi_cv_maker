@@ -37,28 +37,15 @@ function HomeUser() {
     } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
-        if(token) {
+        if(token && role && id) {
             dispatch(getUserId(id, role));
+            dispatch(readPendidikanTerakhir(id, role));
+            dispatch(readPengalamanKerja(id, role));
+            dispatch(readKeahlian(id, role));
+            dispatch(readPelatihan(id, role));
+            dispatch(readPrestasi(id, role));
         }
     }, [dispatch, id, role]);
-
-    useEffect(() => {
-        if (userList?.id) {
-            [
-                readPendidikanTerakhir,
-                readPengalamanKerja,
-                readKeahlian,
-                readPelatihan
-            ].forEach(action => dispatch(action(id, role, userList.id)));
-        }
-    }, [dispatch, id, role, userList.id]);
-
-    useEffect(() => {
-        if (pengalamanKerja?.length > 0) {
-            const [idReqPengalaman] = pengalamanKerja.map(item => item.id);
-            dispatch(readPrestasi(id, role, idReqPengalaman));
-        }
-    }, [dispatch, pengalamanKerja, id, role]);
 
     const deleteData = (idData, type) => {
         Swal.fire({
@@ -71,13 +58,13 @@ function HomeUser() {
         }).then((result) => {
             if (result.isConfirmed) {
                 if (type === 'pendidikan') {
-                    dispatch(deletePendidikanTerakhir(id, role, userList.id, idData));
+                    dispatch(deletePendidikanTerakhir(id, role, idData));
                 } else if (type === 'pengalamanKerja') {
-                    dispatch(deletePengalamanKerja(id, role, userList.id, idData));
+                    dispatch(deletePengalamanKerja(id, role, idData));
                 } else if (type === 'keahlian') {
-                    dispatch(deleteKeahlian(id, role, userList.id, idData));
+                    dispatch(deleteKeahlian(id, role, idData));
                 } else if (type === 'pelatihan') {
-                    dispatch(deletePelatihan(id, role, userList.id, idData));
+                    dispatch(deletePelatihan(id, role, idData));
                 }
             }
         });
@@ -264,7 +251,7 @@ function HomeUser() {
                                                 <div className="container col-f">
                                                     <div className="container row-f">
                                                         <a className="btn btn-primary"
-                                                            href={`/pendidikanterakhir/${id}/${role}/${userList.id}/${item.id}`}>
+                                                            href={`/pendidikanterakhir/${id}/${role}/${item.id}`}>
                                                             <i className="bi-pencil-square"></i>
                                                         </a>
                                                         <button className="btn btn-danger" onClick={() =>
@@ -284,7 +271,7 @@ function HomeUser() {
                                 <div className="container col-f f-1">
                                     <h1><i style={{ fontSize:'75%' }} className="fa-solid fa-user-tie"></i> Pengalaman Kerja</h1>
                                     {pengalamanKerja.map((item) => {
-                                        const prestasiId = item.id;
+                                        const pengalamanKerjaId = item.id;
                                         const paragraf = item.detail
                                         const words = paragraf.split('\n').map((paragrafs, index) => (
                                             <p key={index}>{paragrafs} <br /></p>
@@ -327,11 +314,11 @@ function HomeUser() {
                                                 {prestasiKerja.some(
                                                     (item) =>
                                                         item.id_pengalaman_kerja ===
-                                                        prestasiId
+                                                        pengalamanKerjaId
                                                 ) && <h1><i style={{ fontSize:'75%' }} className="fa-solid fa-trophy"></i> Prestasi Kerja</h1>}
                                                 {prestasiKerja.map((item) =>
                                                     item.id_pengalaman_kerja ===
-                                                        prestasiId ? (
+                                                        pengalamanKerjaId ? (
                                                         <div key={item.id} className="card-mini container col-f">
                                                             <div className="container col-row">
                                                                 <div className="container col-f f-1">
@@ -373,7 +360,7 @@ function HomeUser() {
                                                 <hr />
                                                 <div className="container row-f">
                                                     <a className="btn btn-primary"
-                                                        href={`/pengalamankerja/${id}/${role}/${userList.id}/${item.id}`}>
+                                                        href={`/pengalamankerja/${id}/${role}/${item.id}`}>
                                                         <i className="bi-pencil-square"></i>
                                                     </a>
                                                     <button className="btn btn-danger" onClick={() =>
@@ -385,7 +372,7 @@ function HomeUser() {
                                                     >
                                                         <i className="bi-trash"></i>
                                                     </button>
-                                                    <a className="btn btn-primary" href={`/prestasi/${id}/${role}/${userList.id}/${item.id}`}>
+                                                    <a className="btn btn-primary" href={`/prestasi/${id}/${role}/${item.id}`}>
                                                         <i className="bi-plus"></i>
                                                         Tambah Prestasi Kerja
                                                     </a>
@@ -414,7 +401,7 @@ function HomeUser() {
                                                         <div className="container col-f">
                                                             <div className="container row-f">
                                                                 <a className="btn btn-primary"
-                                                                    href={`/keahlian/${id}/${role}/${userList.id}/${item.id}`}>
+                                                                    href={`/keahlian/${id}/${role}/${item.id}`}>
                                                                     <i className="bi-pencil-square"></i>
                                                                 </a>
                                                                 <button className="btn btn-danger" onClick={() =>
@@ -465,7 +452,7 @@ function HomeUser() {
                                                     <div className="container col-f">
                                                         <div className="container row-f">
                                                             <a className="btn btn-primary"
-                                                                href={`/pelatihan/${id}/${role}/${userList.id}/${item.id}`}>
+                                                                href={`/pelatihan/${id}/${role}/${item.id}`}>
                                                                 <i className="bi-pencil-square"></i>
                                                             </a>
                                                             <button className="btn btn-danger" onClick={() =>

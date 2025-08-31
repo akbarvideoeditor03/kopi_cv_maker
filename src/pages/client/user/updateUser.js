@@ -90,7 +90,6 @@ const UpdateUserSelf = () => {
                 });
 
                 if (result.isConfirmed) {
-                    const userId = userList.id
                     const updatedUser = {
                         nama: userData.nama,
                         no_telp: userData.no_telp,
@@ -98,7 +97,7 @@ const UpdateUserSelf = () => {
                         tentang: userData.tentang,
                         email: userData.email,
                     };
-                    dispatch(updateUser(id, role, userId, updatedUser));
+                    dispatch(updateUser(id, role, updatedUser));
                 }
             } else {
                 const result = await Swal.fire({

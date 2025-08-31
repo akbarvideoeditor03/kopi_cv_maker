@@ -64,6 +64,8 @@ export async function apiFetch(url, options = {}) {
             case 403: {
                 if (kopiCode === "C001") {
                     Swal.fire({ icon: 'error', title: 'Akses ditolak', text: 'Silakan hubungi Admin', timer: 3000, showConfirmButton: false, allowEscapeKey: false, allowOutsideClick: false, timerProgressBar: true });
+                } else if (kopiCode === "C002") {
+                                        Swal.fire({ icon: 'error', title: 'Akses ditolak', text: 'Anda sudah mencapai batas maksimal login, silakan coba lagi dalam 1 jam ke depan', timer: 3000, showConfirmButton: false, allowEscapeKey: false, allowOutsideClick: false, timerProgressBar: true });
                 }
                 localStorage.removeItem('/v%');
                 localStorage.removeItem('$f*');

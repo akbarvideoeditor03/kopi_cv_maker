@@ -30,9 +30,9 @@ function UpdatePendidikanTerakhir() {
 
     useEffect(() => {
         if (id) {
-            dispatch(readPendidikanTerakhirId(id, role, param.id, param.id_pendidikan_terakhir));
+            dispatch(readPendidikanTerakhirId(id, role, param.id_pendidikan_terakhir));
         }
-    }, [dispatch, id, role, param.id, param.id_pendidikan_terakhir]);
+    }, [dispatch, id, role, param.id_pendidikan_terakhir]);
 
     useEffect(() => {
         if (pendidikanTerakhir) {
@@ -82,7 +82,7 @@ function UpdatePendidikanTerakhir() {
                     tahun_selesai: data.tahun_selesai || 'Hingga saat ini',
                 };
                 dispatch(
-                    updatePendidikanTerakhir(id, role, param.id, param.id_pendidikan_terakhir, updatedPendidikanTerakhir)
+                    updatePendidikanTerakhir(id, role, param.id_pendidikan_terakhir, updatedPendidikanTerakhir)
                 );
             }
         } catch (error) {

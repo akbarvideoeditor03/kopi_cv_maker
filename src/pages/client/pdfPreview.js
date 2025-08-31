@@ -109,26 +109,15 @@ function PDFPreview() {
     } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
+        if (token && role && id) {
             dispatch(getUserId(id, role));
-        }, [dispatch, id, role]);
-    
-        useEffect(() => {
-            if (userList?.id) {
-                [
-                    readPendidikanTerakhir,
-                    readPengalamanKerja,
-                    readKeahlian,
-                    readPelatihan
-                ].forEach(action => dispatch(action(id, role, userList.id)));
-            }
-        }, [dispatch, id, role, userList.id]);
-    
-        useEffect(() => {
-            if (pengalamanKerja?.length > 0) {
-                const [idReqPengalaman] = pengalamanKerja.map(item => item.id);
-                dispatch(readPrestasi(id, role, idReqPengalaman));
-            }
-        }, [dispatch, pengalamanKerja, id, role]);
+            dispatch(readPendidikanTerakhir(id, role));
+            dispatch(readPengalamanKerja(id, role));
+            dispatch(readKeahlian(id, role));
+            dispatch(readPelatihan(id, role));
+            dispatch(readPrestasi(id, role));
+        }
+    }, [dispatch, id, role]);
 
     if (!token && !role && !id) {
         window.location.href = '/user/login'
@@ -146,7 +135,7 @@ function PDFPreview() {
                                 <p>Template CV</p>
                             </div>
                         </a>
-                        <NotifDownload/>
+                        <NotifDownload />
                     </div>
                     {isLoading ? (
                         <div className="container col-f f-center-c list-container">
@@ -185,12 +174,12 @@ function PDFPreview() {
 }
 
 const MyPdf = ({
-    userList,
-    pengalamanKerja,
-    pendidikanTerakhir,
-    keahlian,
-    pelatihan,
-    prestasiKerja,
+        userList,
+        pengalamanKerja,
+        pendidikanTerakhir,
+        keahlian,
+        pelatihan,
+        prestasiKerja,
 }) => {
     const userID = userList?.id;
     return (
@@ -392,7 +381,7 @@ const MyPdf = ({
                     })}
                 </View>
                 {
-                    pengalamanKerja.some((item) => item.id_user === userID) && (
+                    pengalamanKerja.map((item) => item.id_user === userID) && (
                         <View
                             style={[
                                 styles.container,
@@ -421,22 +410,40 @@ const MyPdf = ({
                                         <View
                                             style={[
                                                 {
-                                                    paddingBottom: '10px',
+                                                    paddingBottom: '20px',
                                                 },
                                                 styles.container,
                                                 styles.colContainer,
                                                 styles.f1,
                                             ]}
                                         >
-                                            <Text
+                                            <View style={[
+                                                {
+                                                    paddingBottom: '0px',
+                                                },
+                                                styles.container,
+                                                styles.rowContainer,
+                                                [{alignItems:'center'}]
+                                            ]}>
+                                                <Text
                                                 style={{
-                                                    fontSize: '13px',
+                                                    fontSize: '12px',
                                                     textAlign: 'justify',
                                                     fontWeight: 'bold',
                                                 }}
                                             >
                                                 {item.lokasi}
                                             </Text>
+                                            <Text
+                                                style={{
+                                                    fontSize: '11px',
+                                                    textAlign: 'justify',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                ({item.jabatan})
+                                            </Text>
+                                            </View>
                                             <Text
                                                 style={{
                                                     fontSize: '11px',
@@ -458,7 +465,7 @@ const MyPdf = ({
                                                 {item.detail}
                                             </Text>
                                             {prestasiKerja.some((item) => item.id_pengalaman_kerja === prestasiId) && (
-                                                <Text style={{ fontSize: '12px', fontWeight: 'bold', }}>
+                                                <Text style={{ fontSize: '12px', fontWeight: 'bold' }}>
                                                     Prestasi Kerja
                                                 </Text>
                                             )}
@@ -562,7 +569,7 @@ const MyPdf = ({
                     })}
                 </View>
                 {
-                    pelatihan.some((item) => item.id_user === userID) && (
+                    pelatihan.map((item) => item.id_user === userID) && (
                         <View
                             style={[
                                 styles.container,

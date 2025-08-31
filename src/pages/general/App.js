@@ -52,14 +52,14 @@ function App() {
                 <Route path="/home" element={<HomeUser />}></Route>
                 <Route path="/edit/:id_user/:role" element={<UpdateUserSelf />}></Route>
                 <Route path="/createpengalamankerja" element={<CreatePengalamanKerja />}></Route>
-                <Route path="/pengalamankerja/:id_user/:role/:id/:id_pengalaman_kerja" element={<UpdatePengalamanKerja />}></Route>
+                <Route path="/pengalamankerja/:id_user/:role/:id_pengalaman_kerja" element={<UpdatePengalamanKerja />}></Route>
                 <Route path="/pendidikanterakhir" element={<CreatePendidikanTerakhir />}></Route>
-                <Route path="/pendidikanterakhir/:id_user/:role/:id/:id_pendidikan_terakhir" element={<UpdatePendidikanTerakhir />}></Route>
+                <Route path="/pendidikanterakhir/:id_user/:role/:id_pendidikan_terakhir" element={<UpdatePendidikanTerakhir />}></Route>
                 <Route path="/keahlian" element={<CreateKeahlian />}></Route>
-                <Route path="/keahlian/:id_user/:role/:id/:id_keahlian" element={<UpdateKeahlian />}></Route>
+                <Route path="/keahlian/:id_user/:role/:id_keahlian" element={<UpdateKeahlian />}></Route>
                 <Route path="/pelatihan" element={<CreatePelatihan />}></Route>
-                <Route path="/pelatihan/:id_user/:role/:id/:id_pelatihan" element={<UpdatePelatihan />}></Route>
-                <Route path="/prestasi/:id_user/:role/:id/:id_pengalaman_kerja" element={<CreatePrestasi />}></Route>
+                <Route path="/pelatihan/:id_user/:role/:id_pelatihan" element={<UpdatePelatihan />}></Route>
+                <Route path="/prestasi/:id_user/:role/:id_pengalaman_kerja" element={<CreatePrestasi />}></Route>
                 <Route path="/prestasi/edit/:id_user/:role/:id_pengalaman_kerja/:id_prestasi_kerja" element={<UpdatePrestasi />}></Route>
                 <Route path="/doc/preview" element={<CVDocument />}></Route>
                 <Route path="/user/login" element={<Login />}></Route>

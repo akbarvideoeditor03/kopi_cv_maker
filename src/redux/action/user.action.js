@@ -486,11 +486,11 @@ export const getUserId = (id, role) => {
     };
 };
 
-export const updateUser = (id, role, userId, updatedUser) => async (dispatch) => {
+export const updateUser = (id, role, updatedUser) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_USER_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
-        const response = await apiFetch(`${baseUrl}/kopi/user/${id}/${role}/${userId}`, {
+        const response = await apiFetch(`${baseUrl}/kopi/user/${id}/${role}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -541,13 +541,13 @@ export const createPengalamanKerja = (id, role, pengalaman_kerja) => async (disp
     }
 };
 
-export const readPengalamanKerja = (id_user, role, id) => {
+export const readPengalamanKerja = (id_user, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
             const response = await apiFetch(
-                `${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}`,
+                `${baseUrl}/kopi/pengalamankerja/${id_user}/${role}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -570,13 +570,13 @@ export const readPengalamanKerja = (id_user, role, id) => {
     };
 };
 
-export const readPengalamanKerjaId = (id_user, role, id, id_pengalaman_kerja) => {
+export const readPengalamanKerjaId = (id_user, role, id_pengalaman_kerja) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENGALAMAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
             const response = await apiFetch(
-                `${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}/${id_pengalaman_kerja}`,
+                `${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id_pengalaman_kerja}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -598,12 +598,12 @@ export const readPengalamanKerjaId = (id_user, role, id, id_pengalaman_kerja) =>
 };
 
 export const updatePengalamanKerja =
-    (id_user, role, id, id_pengalaman_kerja, updatedPengalamanKerja) => async (dispatch) => {
+    (id_user, role, id_pengalaman_kerja, updatedPengalamanKerja) => async (dispatch) => {
         dispatch({ type: userTypes.UPDATE_PENGALAMAN_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
             const response = await apiFetch(
-                `${baseUrl}/kopi/pengalamankerja/edit/${id_user}/${role}/${id}/${id_pengalaman_kerja}`,
+                `${baseUrl}/kopi/pengalamankerja/edit/${id_user}/${role}/${id_pengalaman_kerja}`,
                 {
                     method: 'PUT',
                     headers: {
@@ -626,11 +626,11 @@ export const updatePengalamanKerja =
         }
     };
 
-export const deletePengalamanKerja = (id_user, role, id, idData) => async (dispatch) => {
+export const deletePengalamanKerja = (id_user, role, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PENGALAMAN_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
-        await apiFetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${id}/${idData}`, {
+        await apiFetch(`${baseUrl}/kopi/pengalamankerja/${id_user}/${role}/${idData}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -677,13 +677,13 @@ export const createPendidikanTerakhir =
         }
     };
 
-export const readPendidikanTerakhir = (id_user, role, id) => {
+export const readPendidikanTerakhir = (id_user, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
             const response = await apiFetch(
-                `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}`,
+                `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -706,13 +706,13 @@ export const readPendidikanTerakhir = (id_user, role, id) => {
     };
 };
 
-export const readPendidikanTerakhirId = (id_user, role, id, idPendidikanTerakhir) => {
+export const readPendidikanTerakhirId = (id_user, role, idPendidikanTerakhir) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
             const response = await apiFetch(
-                `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}/${idPendidikanTerakhir}`,
+                `${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${idPendidikanTerakhir}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -736,12 +736,12 @@ export const readPendidikanTerakhirId = (id_user, role, id, idPendidikanTerakhir
 };
 
 export const updatePendidikanTerakhir =
-    (id_user, role, id, idPendidikanTerakhir, updatedPendidikanTerakhir) => async (dispatch) => {
+    (id_user, role, idPendidikanTerakhir, updatedPendidikanTerakhir) => async (dispatch) => {
         dispatch({ type: userTypes.UPDATE_PENDIDIKAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
             const response = await apiFetch(
-                `${baseUrl}/kopi/pendidikanterakhir/edit/${id_user}/${role}/${id}/${idPendidikanTerakhir}`,
+                `${baseUrl}/kopi/pendidikanterakhir/edit/${id_user}/${role}/${idPendidikanTerakhir}`,
                 {
                     method: 'PUT',
                     headers: {
@@ -766,11 +766,11 @@ export const updatePendidikanTerakhir =
         }
     };
 
-export const deletePendidikanTerakhir = (id_user, role, id, idData) => async (dispatch) => {
+export const deletePendidikanTerakhir = (id_user, role, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PENDIDIKAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
-        await apiFetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${id}/${idData}`, {
+        await apiFetch(`${baseUrl}/kopi/pendidikanterakhir/${id_user}/${role}/${idData}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -816,12 +816,12 @@ export const createKeahlian = (id, role, keahlian) => async (dispatch) => {
     }
 };
 
-export const readKeahlian = (id_user, role, id) => {
+export const readKeahlian = (id_user, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_KEAHLIAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${id}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -843,12 +843,12 @@ export const readKeahlian = (id_user, role, id) => {
     };
 };
 
-export const readKeahlianId = (id_user, role, id, idKeahlian) => {
+export const readKeahlianId = (id_user, role, idKeahlian) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_KEAHLIAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${id}/${idKeahlian}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${idKeahlian}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -869,12 +869,12 @@ export const readKeahlianId = (id_user, role, id, idKeahlian) => {
     };
 };
 
-export const updateKeahlian = (id_user, role, id, idKeahlian, keahlianUserUpdate) => async (dispatch) => {
+export const updateKeahlian = (id_user, role, idKeahlian, keahlianUserUpdate) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_KEAHLIAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
         const response = await apiFetch(
-            `${baseUrl}/kopi/keahlian/edit/${id_user}/${role}/${id}/${idKeahlian}`,
+            `${baseUrl}/kopi/keahlian/edit/${id_user}/${role}/${idKeahlian}`,
             {
                 method: 'PUT',
                 headers: {
@@ -899,11 +899,11 @@ export const updateKeahlian = (id_user, role, id, idKeahlian, keahlianUserUpdate
     }
 };
 
-export const deleteKeahlian = (id_user, role, id, idData) => async (dispatch) => {
+export const deleteKeahlian = (id_user, role, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_KEAHLIAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
-        await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${id}/${idData}`,
+        await apiFetch(`${baseUrl}/kopi/keahlian/${id_user}/${role}/${idData}`,
             {
                 method: 'DELETE',
                 headers: {
@@ -950,12 +950,12 @@ export const createPrestasi = (id_user, role, id_pengalaman_kerja, prestasi) => 
     }
 };
 
-export const readPrestasi = (id_user, role, id_pengalaman_kerja) => {
+export const readPrestasi = (id_user, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PRESTASI_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/prestasikerja/${id_user}/${role}/${id_pengalaman_kerja}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/prestasikerja/${id_user}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1088,12 +1088,12 @@ export const createPelatihan = (id, role, pelatihan) => async (dispatch) => {
     }
 };
 
-export const readPelatihan = (id_user, role, id) => {
+export const readPelatihan = (id_user, role) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PELATIHAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/pelatihan/${id_user}/${role}/${id}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/pelatihan/${id_user}/${role}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1114,12 +1114,12 @@ export const readPelatihan = (id_user, role, id) => {
     };
 };
 
-export const readPelatihanId = (id_user, role, id, idPelatihan) => {
+export const readPelatihanId = (id_user, role, idPelatihan) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PELATIHAN_ID_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/pelatihan/${id_user}/${role}/${id}/${idPelatihan}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/pelatihan/${id_user}/${role}/${idPelatihan}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1140,12 +1140,12 @@ export const readPelatihanId = (id_user, role, id, idPelatihan) => {
     };
 };
 
-export const updatePelatihan = (id_user, role, id, idPelatihan, updatedPelatihan) => async (dispatch) => {
+export const updatePelatihan = (id_user, role, idPelatihan, updatedPelatihan) => async (dispatch) => {
     dispatch({ type: userTypes.UPDATE_PELATIHAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
         const response = await apiFetch(
-            `${baseUrl}/kopi/pelatihan/edit/${id_user}/${role}/${id}/${idPelatihan}`,
+            `${baseUrl}/kopi/pelatihan/edit/${id_user}/${role}/${idPelatihan}`,
             {
                 method: 'PUT',
                 headers: {
@@ -1170,12 +1170,12 @@ export const updatePelatihan = (id_user, role, id, idPelatihan, updatedPelatihan
     }
 };
 
-export const deletePelatihan = (id_user, role, id, idData) => async (dispatch) => {
+export const deletePelatihan = (id_user, role, idData) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PELATIHAN_ID_REQUEST });
     try {
         const token = localStorage.getItem('&l2');
         const response = await apiFetch(
-            `${baseUrl}/kopi/pelatihan/${id_user}/${role}/${id}/${idData}`,
+            `${baseUrl}/kopi/pelatihan/${id_user}/${role}/${idData}`,
             {
                 method: 'DELETE',
                 headers: {

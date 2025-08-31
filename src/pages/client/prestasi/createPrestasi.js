@@ -17,8 +17,8 @@ function CreatePrestasi() {
     });
 
     useEffect(() => {
-        dispatch(readPengalamanKerjaId(id, role, param.id, param.id_pengalaman_kerja));
-    }, [dispatch, id, role, param.id, param.id_pengalaman_kerja]);
+        dispatch(readPengalamanKerjaId(id, role, param.id_pengalaman_kerja));
+    }, [dispatch, id, role, param.id_pengalaman_kerja]);
 
     const cancelSubmit = async (e) => {
         e.preventDefault();

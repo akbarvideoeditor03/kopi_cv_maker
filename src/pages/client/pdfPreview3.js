@@ -112,26 +112,15 @@ function PDFPreviewATS() {
     } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
+        if (token && role && id) {
             dispatch(getUserId(id, role));
-        }, [dispatch, id, role]);
-    
-        useEffect(() => {
-            if (userList?.id) {
-                [
-                    readPendidikanTerakhir,
-                    readPengalamanKerja,
-                    readKeahlian,
-                    readPelatihan
-                ].forEach(action => dispatch(action(id, role, userList.id)));
-            }
-        }, [dispatch, id, role, userList.id]);
-    
-        useEffect(() => {
-            if (pengalamanKerja?.length > 0) {
-                const [idReqPengalaman] = pengalamanKerja.map(item => item.id);
-                dispatch(readPrestasi(id, role, idReqPengalaman));
-            }
-        }, [dispatch, pengalamanKerja, id, role]);
+            dispatch(readPendidikanTerakhir(id, role));
+            dispatch(readPengalamanKerja(id, role));
+            dispatch(readKeahlian(id, role));
+            dispatch(readPelatihan(id, role));
+            dispatch(readPrestasi(id, role));
+        }
+    }, [dispatch, id, role]);
 
     if (!token && !role) {
         window.location.href = '/user/login'
@@ -149,7 +138,7 @@ function PDFPreviewATS() {
                                 <p>Template CV</p>
                             </div>
                         </a>
-                        <NotifDownload/>
+                        <NotifDownload />
                     </div>
                     {isLoading ? (
                         <div className="container col-f f-center-c list-container">
@@ -212,7 +201,7 @@ const MyPdf = ({
                         </Text>
                     </View>
                     {
-                        pengalamanKerja.some((item) => item.id_user === userID) && (
+                        pengalamanKerja.map((item) => item.id_user === userID) && (
                             <View style={[styles.container, styles.colContainer, styles.hLineBlack, { textAlign: 'justify' }]}>
                                 <Text style={styles.sectionTittle}>Pengalaman Kerja</Text>
                                 {pengalamanKerja.map((item) => {
@@ -332,7 +321,7 @@ const MyPdf = ({
                         })}
                     </View>
                     {
-                        pelatihan.some((item) => item.id_user === userID) && (
+                        pelatihan.map((item) => item.id_user === userID) && (
                             <View style={[styles.container, styles.colContainer, styles.hLineBlack, { textAlign: 'justify' }]}>
                                 <Text style={styles.sectionTittle}>Pelatihan</Text>
                                 {pelatihan.map((item) => {

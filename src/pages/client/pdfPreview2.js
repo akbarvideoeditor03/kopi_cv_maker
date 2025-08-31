@@ -138,26 +138,15 @@ function PDFPreview2() {
     } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
+        if (token && role && id) {
             dispatch(getUserId(id, role));
-        }, [dispatch, id, role]);
-    
-        useEffect(() => {
-            if (userList?.id) {
-                [
-                    readPendidikanTerakhir,
-                    readPengalamanKerja,
-                    readKeahlian,
-                    readPelatihan
-                ].forEach(action => dispatch(action(id, role, userList.id)));
-            }
-        }, [dispatch, id, role, userList.id]);
-    
-        useEffect(() => {
-            if (pengalamanKerja?.length > 0) {
-                const [idReqPengalaman] = pengalamanKerja.map(item => item.id);
-                dispatch(readPrestasi(id, role, idReqPengalaman));
-            }
-        }, [dispatch, pengalamanKerja, id, role]);
+            dispatch(readPendidikanTerakhir(id, role));
+            dispatch(readPengalamanKerja(id, role));
+            dispatch(readKeahlian(id, role));
+            dispatch(readPelatihan(id, role));
+            dispatch(readPrestasi(id, role));
+        }
+    }, [dispatch, id, role]);
 
     if (!token && !role) {
         window.location.href = '/user/login'
@@ -296,7 +285,7 @@ const MyPdf2 = ({
                     <View style={[styles.container, styles.colContainer0, styles.f1, { paddingLeft: "20px" }]}>
                         <View style={[styles.container, styles.rowContainer, styles.hLineBlack]}>
                             <View style={[styles.container, styles.colContainer0, styles.f1, { maxWidth: "7rem" }]}>
-                                <Text style={[styles.h3, {fontWeight: '700'}]}>{userList?.nama}</Text>
+                                <Text style={[styles.h3, { fontWeight: '700' }]}>{userList?.nama}</Text>
                                 <Text style={[styles.subheader, { fontSize: "12px" }]}>
                                     {pendidikanTerakhir.find((item) => item.jurusan)?.jurusan}
                                 </Text>
@@ -348,7 +337,7 @@ const MyPdf2 = ({
                             </View>
                         </View>
                         {
-                            pengalamanKerja.some((item) => item.id_user === userID) && (
+                            pengalamanKerja.map((item) => item.id_user === userID) && (
                                 <View style={[styles.container, styles.colContainer, styles.hLineBlack, { marginTop: 12 }]}>
                                     <Text
                                         style={{
@@ -531,7 +520,7 @@ const MyPdf2 = ({
                             })}
                         </View>
                         {
-                            pelatihan.some((item) => item.id_user === userID) && (
+                            pelatihan.map((item) => item.id_user === userID) && (
                                 <View style={[styles.container, styles.colContainer, styles.hLineBlack, { marginTop: "12px" }]}>
                                     <Text
                                         style={{

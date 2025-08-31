@@ -31,14 +31,13 @@ const UpdatePengalamanKerja = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(readPengalamanKerjaId(id, role, param.id, param.id_pengalaman_kerja));
+            dispatch(readPengalamanKerjaId(id, role, param.id_pengalaman_kerja));
         }
-    }, [dispatch, id, role, param.id, param.id_pengalaman_kerja]);
+    }, [dispatch, id, role, param.id_pengalaman_kerja]);
 
     useEffect(() => {
         if (pengalamanKerja) {
             setData({
-                id_user: '',
                 lokasi: pengalamanKerja.lokasi || '',
                 jabatan: pengalamanKerja.jabatan || '',
                 detail: pengalamanKerja.detail || '',
@@ -94,7 +93,7 @@ const UpdatePengalamanKerja = () => {
                     tahun_mulai: data.tahun_mulai,
                     tahun_selesai: data.tahun_selesai || 'Hingga saat ini',
                 };
-                dispatch(updatePengalamanKerja(id, role, param.id, param.id_pengalaman_kerja, updatedPengalamanKerja));
+                dispatch(updatePengalamanKerja(id, role, param.id_pengalaman_kerja, updatedPengalamanKerja));
             }
         } catch (error) {
             await Swal.fire({

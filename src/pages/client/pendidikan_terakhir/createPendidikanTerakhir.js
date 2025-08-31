@@ -8,7 +8,7 @@ function CreatePendidikanTerakhir() {
     const token = localStorage.getItem('&l2');
     const role = localStorage.getItem('$f*');
     const id = localStorage.getItem('/v%');
-    const { isWebsite, isViews, userList } = useSelector((state) => state.userReducer);
+    const { isWebsite, isViews } = useSelector((state) => state.userReducer);
     const [pendidikanTerakhir, setPendidikanTerakhir] = useState({
         id_user: '',
         institusi: '',
@@ -53,7 +53,6 @@ function CreatePendidikanTerakhir() {
 
         try {
             const pendidikanTerakhirUser = {
-                id_user: `${userList.id}`,
                 institusi: pendidikanTerakhir.institusi,
                 jurusan: pendidikanTerakhir.jurusan,
                 tahun_mulai: pendidikanTerakhir.tahun_mulai,

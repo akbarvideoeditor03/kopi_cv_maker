@@ -27,9 +27,9 @@ function UpdateKeahlian() {
 
     useEffect(() => {
         if (id) {
-            dispatch(readKeahlianId(id, role, param.id, param.id_keahlian));
+            dispatch(readKeahlianId(id, role, param.id_keahlian));
         }
-    }, [dispatch, id, role, param.id, param.id_keahlian]);
+    }, [dispatch, id, role, param.id_keahlian]);
 
     useEffect(() => {
         if (keahlian) {
@@ -74,7 +74,7 @@ function UpdateKeahlian() {
                     tingkat: data.tingkat,
                 }
                 dispatch(
-                    updateKeahlian(id, role, param.id, param.id_keahlian, keahlianUserUpdate)
+                    updateKeahlian(id, role, param.id_keahlian, keahlianUserUpdate)
                 );
             }
         } catch (error) {
