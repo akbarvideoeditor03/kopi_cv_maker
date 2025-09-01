@@ -37,13 +37,12 @@ function HomeUser() {
     } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
-        if(token && role && id) {
+        if (token && role && id) {
             dispatch(getUserId(id, role));
             dispatch(readPendidikanTerakhir(id, role));
             dispatch(readPengalamanKerja(id, role));
             dispatch(readKeahlian(id, role));
             dispatch(readPelatihan(id, role));
-            dispatch(readPrestasi(id, role));
         }
     }, [dispatch, id, role]);
 
@@ -65,6 +64,8 @@ function HomeUser() {
                     dispatch(deleteKeahlian(id, role, idData));
                 } else if (type === 'pelatihan') {
                     dispatch(deletePelatihan(id, role, idData));
+                } else if (type === 'prestasi') {
+                    dispatch(deletePelatihan(id, role, idData));
                 }
             }
         });
@@ -84,7 +85,10 @@ function HomeUser() {
                     dispatch(deletePrestasi(id, role, idReqPengalaman, idData));
                 }
             }
+        }).then(() => {
+            window.location.reload();
         });
+        ;
     };
 
     const handleSubmitWithEmail = (e) => {
@@ -175,7 +179,7 @@ function HomeUser() {
                         <div className="card container col-f f-1">
                             <div className="card-mini container row-f f-wrap">
                                 <div style={{ paddingBottom: '1rem', flexBasis: '360px', }} className="container col-f f-1">
-                                    <h3><i style={{ fontSize:'85%' }} className="fa-solid fa-circle-user"></i> Data Diri</h3>
+                                    <h3><i style={{ fontSize: '85%' }} className="fa-solid fa-circle-user"></i> Data Diri</h3>
                                     <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap grid-text">
                                         <div className="box-1 container col-f-0 f-1">
                                             <h1 className="name-text">
@@ -220,7 +224,7 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap m-b1">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize:'85%' }} className="fa-solid fa-school"></i> Pendidikan</h1>
+                                    <h1><i style={{ fontSize: '85%' }} className="fa-solid fa-school"></i> Pendidikan</h1>
                                     {pendidikanTerakhir.map((item) => {
                                         return (
                                             <div key={item.id} className="container row-f f-wrap">
@@ -269,110 +273,92 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize:'75%' }} className="fa-solid fa-user-tie"></i> Pengalaman Kerja</h1>
-                                    {pengalamanKerja.map((item) => {
-                                        const pengalamanKerjaId = item.id;
-                                        const paragraf = item.detail
-                                        const words = paragraf.split('\n').map((paragrafs, index) => (
-                                            <p key={index}>{paragrafs} <br /></p>
-                                        ))
+                                    <h1><i style={{ fontSize: '75%' }} className="fa-solid fa-user-tie"></i> Pengalaman Kerja</h1>
+                                    {pengalamanKerja.map((exp) => {
+                                        const expId = exp.id;
+                                        const detailText = exp.detail;
+                                        const detailParagraphs = detailText.split('\n').map((line, idx) => (
+                                            <p key={idx}>{line} <br /></p>
+                                        ));
+
                                         return (
-                                            <div key={item.id} className="container col-f">
+                                            <div key={exp.id} className="container col-f">
                                                 <div className="container row-f f-wrap">
-                                                    <div style={{ maxWidth: '17.5rem', flexBasis: '360px', }}
-                                                        className="container col-f full-width">
+                                                    <div
+                                                        style={{ maxWidth: '17.5rem', flexBasis: '360px' }}
+                                                        className="container col-f full-width"
+                                                    >
                                                         <div className="container col-f">
-                                                            <p style={{ fontSize: '1.15rem', }} >
-                                                                {item.lokasi}
+                                                            <p style={{ fontSize: '1.15rem' }}>
+                                                                {exp.lokasi}
                                                             </p>
-                                                            <p >
-                                                                {dayjs(
-                                                                    item.tahun_mulai
-                                                                )
-                                                                    .locale(
-                                                                        'id'
-                                                                    )
-                                                                    .format(
-                                                                        'MMMM YYYY'
-                                                                    )}{' '}
-                                                                -{' '}
-                                                                <span>
-                                                                    {
-                                                                        item.tahun_selesai
-                                                                    }
-                                                                </span>
+                                                            <p>
+                                                                {dayjs(exp.tahun_mulai)
+                                                                    .locale('id')
+                                                                    .format('MMMM YYYY')}
+                                                                {' - '}
+                                                                <span>{exp.tahun_selesai}</span>
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div style={{ flexBasis: '360px', }} className="container col-f f-1">
-                                                        <p >
-                                                            {item.jabatan}
-                                                        </p>
-                                                        <div style={{ lineHeight: '1.5rem' }}>{words}</div>
+
+                                                    <div style={{ flexBasis: '360px' }} className="container col-f f-1">
+                                                        <p>{exp.jabatan}</p>
+                                                        <div style={{ lineHeight: '1.5rem' }}>
+                                                            {detailParagraphs}
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                                 {prestasiKerja.some(
-                                                    (item) =>
-                                                        item.id_pengalaman_kerja ===
-                                                        pengalamanKerjaId
-                                                ) && <h1><i style={{ fontSize:'75%' }} className="fa-solid fa-trophy"></i> Prestasi Kerja</h1>}
-                                                {prestasiKerja.map((item) =>
-                                                    item.id_pengalaman_kerja ===
-                                                        pengalamanKerjaId ? (
-                                                        <div key={item.id} className="card-mini container col-f">
-                                                            <div className="container col-row">
-                                                                <div className="container col-f f-1">
-                                                                    <h4>
-                                                                        {
-                                                                            item.prestasi
-                                                                        }
-                                                                    </h4>
-                                                                    <p>
-                                                                        Tahun{' '}
-                                                                        {item.tahun.slice(
-                                                                            0,
-                                                                            4
-                                                                        )}
-                                                                    </p>
-                                                                </div>
-                                                                <div className="container row-f f-center-c">
-                                                                    <a className="btn btn-primary"
-                                                                        href={`/prestasi/edit/${id}/${role}/${item.id_pengalaman_kerja}/${item.id}`}>
-                                                                        <i className="bi-pencil-square"></i>
-                                                                    </a>
-                                                                    <button className="btn btn-danger" onClick={() =>
-                                                                        subDeleteData(
-                                                                            prestasiId,
-                                                                            item.id,
-                                                                            'prestasi'
-                                                                        )
-                                                                    }
-                                                                    >
-                                                                        <i className="bi-trash"></i>
-                                                                    </button>
-                                                                </div>
+                                                    (ach) => ach.id_pengalaman_kerja === expId
+                                                ) && (
+                                                        <h1>
+                                                            <i style={{ fontSize: '75%' }} className="fa-solid fa-trophy"></i>{' '}
+                                                            Prestasi Kerja
+                                                        </h1>
+                                                    )}
+
+                                                {exp.prestasiKerjas?.map((achievement) => (
+                                                    <div key={achievement.id} className="card-mini container col-f">
+                                                        <div className="container col-row">
+                                                            <div className="container col-f f-1">
+                                                                <h4>{achievement.prestasi}</h4>
+                                                                <p>Tahun {achievement.tahun.slice(0, 4)}</p>
+                                                            </div>
+                                                            <div className="container row-f f-center-c">
+                                                                <a
+                                                                    className="btn btn-primary"
+                                                                    href={`/prestasi/edit/${id}/${role}/${exp.id}/${achievement.id}`}
+                                                                >
+                                                                    <i className="bi-pencil-square"></i>
+                                                                </a>
+                                                                <button className="btn btn-danger" onClick={() =>
+                                                                    subDeleteData(expId, achievement.id, 'prestasi')
+                                                                }
+                                                                >
+                                                                    <i className="bi-trash"></i>
+                                                                </button>
                                                             </div>
                                                         </div>
-                                                    ) : (
-                                                        ''
-                                                    )
-                                                )}
+                                                    </div>
+                                                ))}
+
                                                 <hr />
                                                 <div className="container row-f">
-                                                    <a className="btn btn-primary"
-                                                        href={`/pengalamankerja/${id}/${role}/${item.id}`}>
+                                                    <a
+                                                        className="btn btn-primary"
+                                                        href={`/pengalamankerja/${id}/${role}/${exp.id}`}
+                                                    >
                                                         <i className="bi-pencil-square"></i>
                                                     </a>
-                                                    <button className="btn btn-danger" onClick={() =>
-                                                        deleteData(
-                                                            item.id,
-                                                            'pengalamanKerja'
-                                                        )
-                                                    }
+                                                    <button
+                                                        className="btn btn-danger"
+                                                        onClick={() => deleteData(exp.id, 'pengalamanKerja')}
                                                     >
                                                         <i className="bi-trash"></i>
                                                     </button>
-                                                    <a className="btn btn-primary" href={`/prestasi/${id}/${role}/${item.id}`}>
+                                                    <a className="btn btn-primary" href={`/prestasi/${id}/${role}/${exp.id}`}>
                                                         <i className="bi-plus"></i>
                                                         Tambah Prestasi Kerja
                                                     </a>
@@ -384,7 +370,7 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap m-b1">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize:'75%' }} className="fa-solid fa-gear"></i> Keahlian / Skill</h1>
+                                    <h1><i style={{ fontSize: '75%' }} className="fa-solid fa-gear"></i> Keahlian / Skill</h1>
                                     <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap">
                                         {keahlian.map((item) => {
                                             return (
@@ -424,7 +410,7 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize:'75%' }} className="fa-solid fa-book-open-reader"></i> Pelatihan / Kursus</h1>
+                                    <h1><i style={{ fontSize: '75%' }} className="fa-solid fa-book-open-reader"></i> Pelatihan / Kursus</h1>
                                     <div className="container col-f f-1">
                                         {pelatihan.map((item) => {
                                             return (

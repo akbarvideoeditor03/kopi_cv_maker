@@ -950,12 +950,12 @@ export const createPrestasi = (id_user, role, id_pengalaman_kerja, prestasi) => 
     }
 };
 
-export const readPrestasi = (id_user, role) => {
+export const readPrestasi = (id_user, role, idPengalamanKerja) => {
     return async (dispatch) => {
         dispatch({ type: userTypes.GET_PRESTASI_REQUEST });
         try {
             const token = localStorage.getItem('&l2');
-            const response = await apiFetch(`${baseUrl}/kopi/prestasikerja/${id_user}/${role}`, {
+            const response = await apiFetch(`${baseUrl}/kopi/prestasikerja/${id_user}/${role}/${idPengalamanKerja}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -1037,6 +1037,10 @@ export const updatePrestasi =
 
 export const deletePrestasi = (id_user, role, id_pengalaman_kerja, id_prestasi_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PRESTASI_ID_REQUEST });
+    console.log("User ID:", id_user);
+    console.log("Role:", role);
+    console.log("Pengalaman Kerja ID:", id_pengalaman_kerja);
+    console.log("Prestasi Kerja ID:", id_prestasi_kerja);
     try {
         const token = localStorage.getItem('&l2');
         const response = await apiFetch(
