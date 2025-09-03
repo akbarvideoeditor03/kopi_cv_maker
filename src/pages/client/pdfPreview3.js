@@ -200,70 +200,68 @@ const MyPdf = ({
                             {userList?.tentang}
                         </Text>
                     </View>
-                    {
-                        pengalamanKerja.map((item) => item.id_user === userID) && (
-                            <View style={[styles.container, styles.colContainer, styles.hLineBlack, { textAlign: 'justify' }]}>
-                                <Text style={styles.sectionTittle}>Pengalaman Kerja</Text>
-                                {pengalamanKerja.map((item) => {
-                                    const prestasiId = item.id;
-                                    return (
-                                        <View key={item.id} style={[styles.container, styles.rowContainer]}>
-                                            <View style={[styles.container, styles.colContainer, styles.f1]}>
-                                                <Text style={[styles.sectionTittle2]}>{item.lokasi}</Text>
-                                                <Text style={[styles.sectionContent]}>
-                                                    {dayjs(item.tahun_mulai)
-                                                        .locale('id')
-                                                        .format('MMMM YYYY')}{' '}
-                                                    - {item.tahun_selesai}
-                                                </Text>
-                                                <Text
-                                                    style={[styles.sectionContent]}
-                                                >
-                                                    {item.detail}
-                                                </Text>
-                                                {prestasiKerja.some(
-                                                    (item) =>
-                                                        item.id_pengalaman_kerja ===
-                                                        prestasiId
-                                                ) && (
-                                                        <Text
-                                                            style={[styles.sectionTittle2]}
-                                                        >
-                                                            Prestasi Kerja
-                                                        </Text>
-                                                    )}
-                                                {prestasiKerja.map((item) =>
+                    {pengalamanKerja && pengalamanKerja.length > 0 && (
+                        <View style={[styles.container, styles.colContainer, styles.hLineBlack, { textAlign: 'justify' }]}>
+                            <Text style={styles.sectionTittle}>Pengalaman Kerja</Text>
+                            {pengalamanKerja.map((item) => {
+                                const prestasiId = item.id;
+                                return (
+                                    <View key={item.id} style={[styles.container, styles.rowContainer]}>
+                                        <View style={[styles.container, styles.colContainer, styles.f1]}>
+                                            <Text style={[styles.sectionTittle2]}>{item.lokasi}</Text>
+                                            <Text style={[styles.sectionContent]}>
+                                                {dayjs(item.tahun_mulai)
+                                                    .locale('id')
+                                                    .format('MMMM YYYY')}{' '}
+                                                - {item.tahun_selesai}
+                                            </Text>
+                                            <Text
+                                                style={[styles.sectionContent]}
+                                            >
+                                                {item.detail}
+                                            </Text>
+                                            {prestasiKerja.some(
+                                                (item) =>
                                                     item.id_pengalaman_kerja ===
-                                                        prestasiId ? (
-                                                        <View key={item.id}
-                                                            style={[
-                                                                styles.container,
-                                                                styles.rowContainer,
-                                                            ]}
-                                                        >
-                                                            <View style={[styles.sectionContent, styles.f1]}>
-                                                                <Text>
-                                                                    {item.prestasi}
-                                                                </Text>
-                                                            </View>
-                                                            <View style={[styles.sectionContent, styles.rightSection]}>
-                                                                <Text>
-                                                                    Tahun{' '}
-                                                                    {item.tahun.slice(0, 4)}
-                                                                </Text>
-                                                            </View>
-                                                        </View>
-                                                    ) : (
-                                                        ''
-                                                    )
+                                                    prestasiId
+                                            ) && (
+                                                    <Text
+                                                        style={[styles.sectionTittle2]}
+                                                    >
+                                                        Prestasi Kerja
+                                                    </Text>
                                                 )}
-                                            </View>
+                                            {prestasiKerja.map((item) =>
+                                                item.id_pengalaman_kerja ===
+                                                    prestasiId ? (
+                                                    <View key={item.id}
+                                                        style={[
+                                                            styles.container,
+                                                            styles.rowContainer,
+                                                        ]}
+                                                    >
+                                                        <View style={[styles.sectionContent, styles.f1]}>
+                                                            <Text>
+                                                                {item.prestasi}
+                                                            </Text>
+                                                        </View>
+                                                        <View style={[styles.sectionContent, styles.rightSection]}>
+                                                            <Text>
+                                                                Tahun{' '}
+                                                                {item.tahun.slice(0, 4)}
+                                                            </Text>
+                                                        </View>
+                                                    </View>
+                                                ) : (
+                                                    ''
+                                                )
+                                            )}
                                         </View>
-                                    );
-                                })}
-                            </View>
-                        )
-                    }
+                                    </View>
+                                );
+                            })}
+                        </View>
+                    )}
                     <View style={[styles.container, styles.colContainer, styles.hLineBlack, { textAlign: 'justify' }]}>
                         <Text style={styles.sectionTittle}>Pendidikan</Text>
                         {pendidikanTerakhir.map((item) => {
@@ -320,11 +318,47 @@ const MyPdf = ({
                             );
                         })}
                     </View>
+                    {pelatihan && pelatihan.length > 0 && (
+                        <View style={[styles.container, styles.colContainer, styles.hLineBlack, { textAlign: 'justify' }]}>
+                            <Text style={styles.sectionTittle}>Pelatihan</Text>
+                            {pelatihan.map((item) => {
+                                return (
+                                    <View
+                                        key={item.id}
+                                        style={[styles.container, styles.rowContainer]}
+                                    >
+                                        <View
+                                            style={[
+                                                styles.container,
+                                                styles.rowContainer,
+                                                styles.f1
+                                            ]}
+                                        >
+                                            <View style={[styles.f1, styles.sectionContent]}>
+                                                <Text>
+                                                    {item.pelatihan}
+                                                </Text>
+                                            </View>
+                                            <View style={[styles.rightSection, styles.sectionContent, { textAlign: 'right' }]}>
+                                                <Text>
+                                                    {dayjs(item.tahun_mulai)
+                                                        .locale('id')
+                                                        .format('MMMM YYYY')}{' '}
+                                                    - {item.tahun_selesai}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                );
+                            })}
+                        </View>
+                    )}
+
                     {
-                        pelatihan.map((item) => item.id_user === userID) && (
+                        keahlian && keahlian.length > 0 && (
                             <View style={[styles.container, styles.colContainer, styles.hLineBlack, { textAlign: 'justify' }]}>
-                                <Text style={styles.sectionTittle}>Pelatihan</Text>
-                                {pelatihan.map((item) => {
+                                <Text style={styles.sectionTittle}>Keahlian</Text>
+                                {keahlian.map((item) => {
                                     return (
                                         <View
                                             key={item.id}
@@ -339,15 +373,12 @@ const MyPdf = ({
                                             >
                                                 <View style={[styles.f1, styles.sectionContent]}>
                                                     <Text>
-                                                        {item.pelatihan}
+                                                        {item.keahlian}
                                                     </Text>
                                                 </View>
-                                                <View style={[styles.rightSection, styles.sectionContent, { textAlign: 'right' }]}>
+                                                <View style={[styles.sectionContent]}>
                                                     <Text>
-                                                        {dayjs(item.tahun_mulai)
-                                                            .locale('id')
-                                                            .format('MMMM YYYY')}{' '}
-                                                        - {item.tahun_selesai}
+                                                        {item.tingkat}
                                                     </Text>
                                                 </View>
                                             </View>
@@ -357,37 +388,6 @@ const MyPdf = ({
                             </View>
                         )
                     }
-
-                    <View style={[styles.container, styles.colContainer, styles.hLineBlack, { textAlign: 'justify' }]}>
-                        <Text style={styles.sectionTittle}>Keahlian</Text>
-                        {keahlian.map((item) => {
-                            return (
-                                <View
-                                    key={item.id}
-                                    style={[styles.container, styles.rowContainer]}
-                                >
-                                    <View
-                                        style={[
-                                            styles.container,
-                                            styles.rowContainer,
-                                            styles.f1
-                                        ]}
-                                    >
-                                        <View style={[styles.f1, styles.sectionContent]}>
-                                            <Text>
-                                                {item.keahlian}
-                                            </Text>
-                                        </View>
-                                        <View style={[styles.sectionContent]}>
-                                            <Text>
-                                                {item.tingkat}
-                                            </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            );
-                        })}
-                    </View>
                 </View>
             </Page>
         </Document>

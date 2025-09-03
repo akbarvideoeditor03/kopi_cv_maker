@@ -7,6 +7,7 @@ const addTemplat = () => {
     const { isWebsite } = useSelector((state) => state.userReducer);
     const token = localStorage.getItem('&l2');
     const role = localStorage.getItem('$f*');
+    const id = localStorage.getItem('/v%');
     const dispatch = useDispatch();
     const [dataTemplat, setDataTemplat] = useState({
         link_gambar: '',
@@ -98,8 +99,8 @@ const addTemplat = () => {
                     caption: dataTemplat.caption,
                     link_page: dataTemplat.link_page,
                 };
-
-                dispatch(createTemplat(newTemplat));
+                console.log(newTemplat);
+                dispatch(createTemplat(id, role,  newTemplat));
             }
         } catch (error) {
             Swal.fire({

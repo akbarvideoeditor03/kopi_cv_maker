@@ -28,9 +28,9 @@ const UpdatePelatihan = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(readPelatihanId(id, role, param.id, param.id_pelatihan));
+            dispatch(readPelatihanId(id, role, param.id_pelatihan));
         }
-    }, [dispatch, id, role, param.id, param.id_pelatihan]);
+    }, [dispatch, id, role, param.id_pelatihan]);
 
     useEffect(() => {
         if (pelatihan) {
@@ -61,7 +61,7 @@ const UpdatePelatihan = () => {
                     tahun_mulai: data.tahun_mulai,
                     tahun_selesai: data.tahun_selesai || 'Hingga saat ini',
                 };
-                dispatch(updatePelatihan(id, role, param.id, param.id_pelatihan, updatedPelatihan));
+                dispatch(updatePelatihan(id, role, param.id_pelatihan, updatedPelatihan));
             }
         } catch (error) {
             await Swal.fire({
