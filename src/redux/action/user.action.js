@@ -88,7 +88,6 @@ export const postUserLogin = (user) => async (dispatch) => {
         });
 
         const data = await response.json().catch(() => null);
-
         if (data) {
             localStorage.setItem('/v%', data.id);
             localStorage.setItem('$f*', data.role);

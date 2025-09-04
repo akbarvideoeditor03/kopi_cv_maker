@@ -17,8 +17,8 @@ export async function apiFetch(url, options = {}) {
     try {
         const response = await fetch(url, { ...options, signal: controller.signal });
         clearTimeout(timeoutId);
-
         const kopiCode = response.headers.get("X-KOPI-CODE");
+        const kopiTryLogin = response.headers.get("X-KOPI-TRYLOGIN");
 
         switch (response.status) {
             case 400: {
@@ -49,7 +49,7 @@ export async function apiFetch(url, options = {}) {
                         Swal.fire({ icon: 'error', title: 'Ups...', text: 'Pengguna belum terdaftar', timer: 3000, showConfirmButton: false, allowEscapeKey: false, allowOutsideClick: false, timerProgressBar: true });
                         break;
                     case "B002":
-                        Swal.fire({ icon: 'error', title: 'Ups...', text: 'Password salah', timer: 2000, showConfirmButton: false, allowEscapeKey: false, allowOutsideClick: false, timerProgressBar: true });
+                        Swal.fire({ icon: 'error', title: 'Ups...', text: 'Password salah. Percobaan login tersisa ' + kopiTryLogin + 'x lagi', showConfirmButton: true, allowEscapeKey: false, allowOutsideClick: false, timerProgressBar: true });
                         break;
                     case "B003":
                         Swal.fire({ icon: 'error', title: 'Ups...', text: 'Kode OTP salah', timer: 2000, showConfirmButton: false, allowEscapeKey: false, allowOutsideClick: false, timerProgressBar: true });
@@ -65,7 +65,7 @@ export async function apiFetch(url, options = {}) {
                 if (kopiCode === "C001") {
                     Swal.fire({ icon: 'error', title: 'Akses ditolak', text: 'Silakan hubungi Admin', timer: 3000, showConfirmButton: false, allowEscapeKey: false, allowOutsideClick: false, timerProgressBar: true });
                 } else if (kopiCode === "C002") {
-                                        Swal.fire({ icon: 'error', title: 'Akses ditolak', text: 'Anda sudah mencapai batas maksimal login, silakan coba lagi dalam 1 jam ke depan', timer: 3000, showConfirmButton: false, allowEscapeKey: false, allowOutsideClick: false, timerProgressBar: true });
+                    Swal.fire({ icon: 'error', title: 'Akses ditolak', text: 'Anda sudah mencapai batas maksimal login, silakan coba lagi dalam 1 jam ke depan', showConfirmButton: true, allowEscapeKey: false, allowOutsideClick: false, timerProgressBar: true });
                 }
                 localStorage.removeItem('/v%');
                 localStorage.removeItem('$f*');
