@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { getUserId, updateUser } from '../../../redux/action/user.action';
 import { uploadToSupabase } from '../../../redux/action/user.action';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 
 const UpdateUserSelf = () => {
     const dispatch = useDispatch();
@@ -309,19 +307,6 @@ const UpdateUserSelf = () => {
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                        <div className="container col-f f-center-c t-center m-t2">
-                            <p>Ada kendala? Yuk beri tahu kami</p>
-                            <RouterLink
-                                style={{
-                                    maxWidth: '15rem',
-                                }}
-                                to="https://wa.link/s4zfm0"
-                                target="_blank"
-                                className="fwb btn btn-info full-width"
-                            >
-                                <i className="bi-whatsapp"></i> Admin
-                            </RouterLink>
                         </div>
                     </div>
                     <div className="container col-f f-center-c login-right">

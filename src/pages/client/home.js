@@ -16,7 +16,9 @@ import {
 } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
+import { Link as RouterLink } from 'react-router-dom';
 import 'dayjs/locale/id';
+import { Router } from 'react-router-dom';
 dayjs.locale('id');
 
 function HomeUser() {
@@ -139,21 +141,6 @@ function HomeUser() {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
-                    <h1>Menu</h1>
-                    <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap m-bt2">
-                        <a href="/pendidikanterakhir" className="btn btn-primary">
-                            Tambah Pendidikan Terakhir
-                        </a>
-                        <a href="/createpengalamankerja" className="btn btn-primary">
-                            Tambah Pengalaman Kerja
-                        </a>
-                        <a href="/keahlian" className="btn btn-primary">
-                            Tambah Keahlian / Skill
-                        </a>
-                        <a href="/pelatihan" className="btn btn-primary">
-                            Tambah Pelatihan
-                        </a>
-                    </div>
                     <div className="container row-f f-between f-wrap f-center">
                         <h1>Yuk lengkapi CV kamu</h1>
                         <div className="container row-f">
@@ -224,7 +211,12 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap m-b1">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize: '85%' }} className="fa-solid fa-school"></i> Pendidikan</h1>
+                                    <div className='container row-f f-wrap f-center'>
+                                        <h1><i style={{ fontSize: '85%' }} className="fa-solid fa-school"></i> Pendidikan</h1>
+                                        <a href="/pendidikanterakhir" className="btn btn-primary">
+                                            <i style={{ fontSize: '85%' }} className="fa-solid fa-plus"></i>
+                                        </a>
+                                    </div>
                                     {pendidikanTerakhir.map((item) => {
                                         return (
                                             <div key={item.id} className="container row-f f-wrap">
@@ -273,7 +265,12 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize: '75%' }} className="fa-solid fa-user-tie"></i> Pengalaman Kerja</h1>
+                                    <div className='container row-f f-wrap f-center'>
+                                        <h1><i style={{ fontSize: '75%' }} className="fa-solid fa-user-tie"></i> Pengalaman Kerja</h1>
+                                        <a href="/createpengalamankerja" className="btn btn-primary">
+                                            <i style={{ fontSize: '85%' }} className="fa-solid fa-plus"></i>
+                                        </a>
+                                    </div>
                                     {pengalamanKerja.map((exp) => {
                                         const expId = exp.id;
                                         const detailText = exp.detail;
@@ -370,7 +367,12 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap m-b1">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize: '75%' }} className="fa-solid fa-gear"></i> Keahlian / Skill</h1>
+                                    <div className='container row-f f-wrap f-center'>
+                                        <h1><i style={{ fontSize: '75%' }} className="fa-solid fa-gear"></i> Keahlian / Skill</h1>
+                                        <a href="/keahlian" className="btn btn-primary">
+                                            <i style={{ fontSize: '85%' }} className="fa-solid fa-plus"></i>
+                                        </a>
+                                    </div>
                                     <div className="grid gc-1 gc-2 gc-3 gc-4 grid-gap">
                                         {keahlian.map((item) => {
                                             return (
@@ -410,7 +412,12 @@ function HomeUser() {
                             </div>
                             <div className="card-mini container row-f f-wrap">
                                 <div className="container col-f f-1">
-                                    <h1><i style={{ fontSize: '75%' }} className="fa-solid fa-book-open-reader"></i> Pelatihan / Kursus</h1>
+                                    <div className='container row-f f-wrap f-center'>
+                                        <h1><i style={{ fontSize: '75%' }} className="fa-solid fa-book-open-reader"></i> Pelatihan / Kursus</h1>
+                                        <a href="/pelatihan" className="btn btn-primary">
+                                            <i style={{ fontSize: '85%' }} className="fa-solid fa-plus"></i>
+                                        </a>
+                                    </div>
                                     <div className="container col-f f-1">
                                         {pelatihan.map((item) => {
                                             return (
@@ -457,6 +464,19 @@ function HomeUser() {
                                         })}
                                     </div>
                                 </div>
+                            </div>
+                            <div className="container col-f f-center-c t-center m-t2">
+                                <p>Ada kendala? Yuk beri tahu kami</p>
+                                <RouterLink
+                                    style={{
+                                        maxWidth: '15rem',
+                                    }}
+                                    to="https://wa.link/s4zfm0"
+                                    target="_blank"
+                                    className="fwb btn btn-info full-width"
+                                >
+                                    <i className="bi-whatsapp"></i> Admin
+                                </RouterLink>
                             </div>
                         </div>
                     )}

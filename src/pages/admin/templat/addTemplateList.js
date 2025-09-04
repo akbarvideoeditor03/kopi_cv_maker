@@ -99,7 +99,6 @@ const addTemplat = () => {
                     caption: dataTemplat.caption,
                     link_page: dataTemplat.link_page,
                 };
-                console.log(newTemplat);
                 dispatch(createTemplat(id, role,  newTemplat));
             }
         } catch (error) {

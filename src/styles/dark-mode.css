@@ -96,4 +96,29 @@
     background-color: transparent !important;
     color: rgb(182, 182, 182) !important;
 }
-
+.dark-mode .btn-primary {
+    outline-width: 1px;
+    outline-color: rgb(32, 76, 137);
+    outline-style: solid;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+}
+.dark-mode .btn-primary:hover {
+    background-color: rgb(32, 76, 137, 0.35);
+}
+.dark-mode .btn-primary:active {
+    background-color: rgb(32, 76, 137, 0.5);
+}
+.dark-mode .btn-danger {
+    outline-width: 1px;
+    outline-color: red;
+    outline-style: solid;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+}
+.dark-mode .btn-danger:hover {
+    background-color: rgba(255, 0, 0, 0.35);
+}
+.dark-mode .btn-danger:active {
+    background-color: rgba(255, 0, 0, 0.5);
+}

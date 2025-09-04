@@ -1037,10 +1037,6 @@ export const updatePrestasi =
 
 export const deletePrestasi = (id_user, role, id_pengalaman_kerja, id_prestasi_kerja) => async (dispatch) => {
     dispatch({ type: userTypes.DELETE_PRESTASI_ID_REQUEST });
-    console.log("User ID:", id_user);
-    console.log("Role:", role);
-    console.log("Pengalaman Kerja ID:", id_pengalaman_kerja);
-    console.log("Prestasi Kerja ID:", id_prestasi_kerja);
     try {
         const token = localStorage.getItem('&l2');
         const response = await apiFetch(
