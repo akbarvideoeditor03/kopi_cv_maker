@@ -120,11 +120,11 @@ export async function apiFetch(url, options = {}) {
                 switch (kopiCode) {
                     case "G001": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Pengguna berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/dashboard'; }); break;
                     case "G002": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Galeri berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location = '/dashboard'; }); break;
-                    case "G003": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Keahlian berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/home'; }); break;
-                    case "G004": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Pelatihan berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/home'; }); break;
-                    case "G005": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Pendidikan terakhir berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/home'; }); break;
-                    case "G006": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Pengalaman kerja berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/home'; }); break;
-                    case "G007": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Prestasi kerja berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/home'; }); break;
+                    // case "G003": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Keahlian berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/home'; }); break;
+                    // case "G004": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Pelatihan berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/home'; }); break;
+                    // case "G005": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Pendidikan terakhir berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/home'; }); break;
+                    // case "G006": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Pengalaman kerja berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/home'; }); break;
+                    // case "G007": Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Prestasi kerja berhasil ditambahkan', timer: 2000, showConfirmButton: false }).then(() => { window.location.href = '/home'; }); break;
                     default: break;
                 }
                 break;

@@ -175,13 +175,7 @@ function UpdateKeahlian() {
                                         marginTop: '5px',
                                     }}
                                 >
-                                    Saat memilih tingkat keahlian, pastikan
-                                    untuk menyesuaikan dengan kemampuan yang
-                                    kamu miliki saat ini. Perlu diingat,
-                                    keahlian adalah sesuatu yang bersifat
-                                    dinamis dan tidak selalu dapat diukur secara
-                                    absolut. Fokuslah pada pengembangan diri dan
-                                    peningkatan kemampuan dari waktu ke waktu.{' '}
+                                    Saat memilih tingkat keahlian, pastikan sesuai dengan kemampuan kamu saat ini. Keahlian itu dinamis dan bisa berkembang terus.{' '}
                                     <i className="bi-emoji-smile"></i>
                                 </p>
                             </div>

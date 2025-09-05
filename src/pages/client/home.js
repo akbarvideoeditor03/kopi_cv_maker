@@ -10,7 +10,6 @@ import {
     deleteKeahlian,
     readPelatihan,
     deletePelatihan,
-    readPrestasi,
     deletePrestasi,
     otpRequestCode,
 } from '../../redux/action/user.action';
@@ -18,7 +17,6 @@ import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
 import { Link as RouterLink } from 'react-router-dom';
 import 'dayjs/locale/id';
-import { Router } from 'react-router-dom';
 dayjs.locale('id');
 
 function HomeUser() {
@@ -340,7 +338,6 @@ function HomeUser() {
                                                         </div>
                                                     </div>
                                                 ))}
-
                                                 <hr />
                                                 <div className="container row-f">
                                                     <a

@@ -8,17 +8,84 @@ function CreatePelatihan() {
     const token = localStorage.getItem('&l2');
     const role = localStorage.getItem('$f*');
     const id = localStorage.getItem('/v%');
-    const { isWebsite, isViews, userList } = useSelector((state) => state.userReducer)
-    const [pelatihan, setPelatihan] = useState({
-        id_user: '',
+    const { isWebsite, isViews } = useSelector((state) => state.userReducer)
+
+    const makeRow = (overrides = {}) => ({
+        _key: `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`,
         pelatihan: '',
         tahun_mulai: '',
         tahun_selesai: '',
+        ...overrides,
     });
+
+    const [rows, setRows] = useState([makeRow()]);
 
     useEffect(() => {
         dispatch(getUserId(id, role));
     }, [dispatch, id, role]);
+
+    const handleChange = (rowKey, e) => {
+        const { name, value } = e.target;
+        setRows(prev => prev.map(r => r._key === rowKey ? { ...r, [name]: value } : r));
+    };
+
+    const addEmptyRow = () => setRows(prev => [...prev, makeRow()]);
+    const removeRow = (rowKey) => setRows(prev => {
+        const next = prev.filter(r => r._key !== rowKey);
+        return next.length ? next : [makeRow()];
+    });
+
+    const isRowFilledAtAll = r => r.pelatihan || r.tahun_mulai || r.tahun_selesai;
+    const isRowComplete = r => r.pelatihan && r.tahun_mulai;
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const partiallyFilled = rows.filter(isRowFilledAtAll);
+        const completeRows = partiallyFilled.filter(isRowComplete);
+
+        if (completeRows.length === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Belum ada data lengkap',
+                text: 'Isi minimal 1 form (Pelatihan + Tahun Mulai).',
+            });
+            return;
+        }
+
+        try {
+            await Promise.all(
+                completeRows.map(item => dispatch(createPelatihan(id, role, {
+                    pelatihan: item.pelatihan,
+                    tahun_mulai: item.tahun_mulai,
+                    tahun_selesai: item.tahun_selesai || 'Hingga saat ini'
+                })))
+            );
+
+            const skipped = partiallyFilled.length - completeRows.length;
+            await Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: skipped > 0
+                    ? `Terkirim ${completeRows.length} pelatihan. ${skipped} form parsial di-skip.`
+                    : `Terkirim ${completeRows.length} pelatihan.`,
+                timer: 3000,
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timerProgressBar: true
+            }).then(() => {
+                window.location.href = '/home'
+            });
+
+            setRows([makeRow()]);
+        } catch (error) {
+            await Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Terjadi kesalahan. Coba lagi',
+            });
+        }
+    };
 
     const cancelSubmit = async (e) => {
         e.preventDefault();
@@ -36,145 +103,67 @@ function CreatePelatihan() {
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!pelatihan.pelatihan) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Nama pelatihan tidak boleh kosong',
-            });
-            return;
-        }
-
-        if (!pelatihan.tahun_mulai) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Tahun mulai kerja tidak boleh kosong',
-            });
-            return;
-        }
-
-        try {
-            const pelatihanUser = {
-                id_user: `${userList.id}`,
-                pelatihan: pelatihan.pelatihan,
-                tahun_mulai: pelatihan.tahun_mulai,
-                tahun_selesai: pelatihan.tahun_selesai || 'Hingga saat ini',
-            };
-            dispatch(createPelatihan(id, role, pelatihanUser));
-        } catch (error) {
-            await Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Terjadi kesalahan. Coba lagi',
-            }).then(() => {
-                Swal.close()
-            });
-        }
-    };
-
     if (token && (role === isViews || isWebsite)) {
         return (
             <main className="container col-f f-center">
                 <section className="container col-f full-width section-max">
                     <h1>Pelatihan</h1>
                     <div className="container col-f f-center-c">
-                        <form
-                            onSubmit={handleSubmit}
-                            className="container col-f full-width"
-                        >
-                            <div className="container col-f-0">
-                                <label>Nama Pelatihan</label>
-                                <input
-                                    name="pelatihan"
-                                    value={pelatihan.pelatihan}
-                                    onChange={(e) =>
-                                        setPelatihan({
-                                            ...pelatihan,
-                                            [e.target.name]: e.target.value,
-                                        })
-                                    }
-                                    type="text"
-                                    placeholder="Masukkan nama pelatihan"
-                                />
-                                <p
-                                    style={{
-                                        fontSize: '0.75rem',
-                                        paddingTop: '0.5rem',
-                                    }}
-                                >
-                                    Contohnya : Pelatihan Video Editing of
-                                    Content Creation Academy
-                                </p>
-                            </div>
-                            <div className="container col-f-0">
-                                <label>Tahun Mulai</label>
-                                <input
-                                    name="tahun_mulai"
-                                    value={pelatihan.tahun_mulai}
-                                    onChange={(e) =>
-                                        setPelatihan({
-                                            ...pelatihan,
-                                            [e.target.name]: e.target.value,
-                                        })
-                                    }
-                                    type="date"
-                                />
-                                <p
-                                    style={{
-                                        fontSize: '0.75rem',
-                                        paddingTop: '0.5rem',
-                                    }}
-                                >
-                                    *Form ini hanya akan menampilkan bulan dan
-                                    tahun saja
-                                </p>
-                            </div>
-                            <div className="container col-f-0">
-                                <label>*Tahun Selesai (Opsional)</label>
-                                <input
-                                    name="tahun_selesai"
-                                    value={pelatihan.tahun_selesai}
-                                    onChange={(e) =>
-                                        setPelatihan({
-                                            ...pelatihan,
-                                            [e.target.name]: e.target.value,
-                                        })
-                                    }
-                                    type="text"
-                                    placeholder="Contohnya : September 2023"
-                                />
-                                <p
-                                    style={{
-                                        fontSize: '0.75rem',
-                                        paddingTop: '0.5rem',
-                                    }}
-                                >
-                                    *Jika pengalaman kerja masih berlangsung,
-                                    maka kosongkan saja
-                                </p>
-                            </div>
-                            <div className="container row-f f-wrap f-1 m-t1">
-                                <button
-                                    onClick={cancelSubmit}
-                                    style={{
-                                        fontSize: '1rem',
-                                    }}
-                                    className="btn btn-danger f-1"
-                                >
-                                    Batal
-                                </button>
-                                <button
-                                    style={{
-                                        fontSize: '1rem',
-                                    }}
-                                    type="submit"
-                                    className="btn btn-primary f-1"
-                                >
-                                    Selesai
-                                </button>
+                        <form onSubmit={handleSubmit} className="container col-f full-width">
+                            {rows.map((item, idx) => (
+                                <div key={item._key} className="container col-f border">
+                                    <div className="container row-f f-between f-center">
+                                        <h3 style={{ margin: 0 }}>Form {idx + 1}</h3>
+                                        <button type="button" className="btn btn-warning" onClick={() => removeRow(item._key)}>Hapus</button>
+                                    </div>
+                                    <div className="container col-f-0">
+                                        <label>Nama Pelatihan</label>
+                                        <input
+                                            name="pelatihan"
+                                            value={item.pelatihan}
+                                            onChange={(e) => handleChange(item._key, e)}
+                                            type="text"
+                                            placeholder="Masukkan nama pelatihan"
+                                        />
+                                        <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>
+                                            Contohnya : Pelatihan Video Editing of Content Creation Academy
+                                        </p>
+                                    </div>
+
+                                    <div className="container col-f-0">
+                                        <label>Tahun Mulai</label>
+                                        <input
+                                            name="tahun_mulai"
+                                            value={item.tahun_mulai}
+                                            onChange={(e) => handleChange(item._key, e)}
+                                            type="date"
+                                        />
+                                        <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>
+                                            *Form ini hanya akan menampilkan bulan dan tahun saja
+                                        </p>
+                                    </div>
+
+                                    <div className="container col-f-0">
+                                        <label>*Tahun Selesai (Opsional)</label>
+                                        <input
+                                            name="tahun_selesai"
+                                            value={item.tahun_selesai}
+                                            onChange={(e) => handleChange(item._key, e)}
+                                            type="text"
+                                            placeholder="Contohnya : September 2023"
+                                        />
+                                        <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem' }}>
+                                            *Jika pelatihan masih berlangsung, maka kosongkan saja
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+
+                            <button type="button" onClick={addEmptyRow} className="btn btn-primary m-t1">+ Tambah Form Kosong</button>
+
+                            <div className="container row-f f-wrap f-1">
+                                <button onClick={cancelSubmit} className="btn btn-danger f-1">Batal</button>
+                                <button type="submit" className="btn btn-primary f-1">Selesai</button>
                             </div>
                         </form>
                     </div>

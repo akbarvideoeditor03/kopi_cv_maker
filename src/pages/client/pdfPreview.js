@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     Document,
@@ -10,6 +10,8 @@ import {
     Font,
     Image,
     Link,
+    Circle,
+    Svg
 } from '@react-pdf/renderer';
 import {
     getUserId,
@@ -118,7 +120,6 @@ function PDFPreview() {
             dispatch(readPrestasi(id, role));
         }
     }, [dispatch, id, role]);
-
     if (!token && !role && !id) {
         window.location.href = '/user/login'
     } else {
@@ -142,29 +143,13 @@ function PDFPreview() {
                             <div className="custom-loader"></div>
                         </div>
                     ) : (
-                        <PDFViewer
-                            className="section-max"
-                            width={200}
-                            height={200}
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                borderWidth: '0px',
-                                borderRadius: '25px',
-                                height: '100vh',
-                                maxHeight: '1920px',
-                                width: '100vw',
-                            }}
-                        >
-                            <MyPdf
-                                userList={userList}
-                                pengalamanKerja={pengalamanKerja}
-                                pendidikanTerakhir={pendidikanTerakhir}
-                                keahlian={keahlian}
-                                pelatihan={pelatihan}
-                                prestasiKerja={prestasiKerja}
-                            />
+                        <PDFViewer className="section-max" width={200} height={200} style={{
+                            display: 'flex', justifyContent: 'center'
+                            , alignItems: 'center', borderWidth: '0px', borderRadius: '25px', height: '100vh', maxHeight: '1920px',
+                            width: '100vw',
+                        }}>
+                            <MyPdf userList={userList} pengalamanKerja={pengalamanKerja} pendidikanTerakhir={pendidikanTerakhir}
+                                keahlian={keahlian} pelatihan={pelatihan} prestasiKerja={prestasiKerja} />
                         </PDFViewer>
                     )}
                 </section>
@@ -179,200 +164,79 @@ const MyPdf = ({
     pendidikanTerakhir,
     keahlian,
     pelatihan,
-    prestasiKerja,
 }) => {
     const userID = userList?.id;
     return (
         <Document>
             <Page style={[styles.page, styles.container, styles.colContainer]}>
-                <View
-                    style={[
-                        styles.container,
-                        styles.rowContainer,
-                        {
-                            paddingBottom: '16px',
-                            marginBottom: '4px',
-                            borderBottom: '0.5px',
-                        },
-                    ]}
-                >
-                    <View
-                        style={[
-                            styles.container,
-                            styles.colContainer0,
-                            styles.f1,
-                        ]}
-                    >
+                <View style={[styles.container, styles.rowContainer, {
+                    paddingBottom: '16px', marginBottom: '4px',
+                    borderBottom: '0.5px',
+                },]}>
+                    <View style={[styles.container, styles.colContainer0, styles.f1,]}>
                         <View style={[styles.container, styles.colContainer0]}>
                             <Text style={styles.h1}>{userList?.nama}</Text>
                             <Text style={styles.subheader}>
                                 {pendidikanTerakhir.find((item) => item.jurusan)?.jurusan}
                             </Text>
                         </View>
-                        <View
-                            style={[
-                                {
-                                    marginBottom: '16px',
-                                    marginTop: '8px',
-                                },
-                                styles.container,
-                                styles.rowContainer,
-                                styles.fWrap,
-                            ]}
-                        >
-                            <Text
-                                style={{
-                                    fontSize: '11px',
-                                }}
-                            >
-                                <Image
-                                    src={
-                                        '/assets/icon/envelope-solid.png'
-                                    }
-                                />{' '}
-                                <Link
-                                    style={{
-                                        textDecoration: 'none',
-                                    }}
-                                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${userList.email}&su=Judul_pesan&body=Isi_pesan`}
-                                >
+                        <View style={[{ marginBottom: '16px', marginTop: '8px', }, styles.container, styles.rowContainer,
+                        styles.fWrap,]}>
+                            <Text style={{ fontSize: '11px', }}>
+                                <Image src={'/assets/icon/envelope-solid.png'} />{' '}
+                                <Link style={{ textDecoration: 'none', }}
+                                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${userList.email}&su=Judul_pesan&body=Isi_pesan`}>
                                     {userList.email}
                                 </Link>{' '}
                             </Text>
-                            <Text
-                                style={{
-                                    fontSize: '11px',
-                                }}
-                            >
-                                <Image
-                                    src={
-                                        '/assets/icon/phone-solid.png'
-                                    }
-                                />{' '}
+                            <Text style={{ fontSize: '11px', }}>
+                                <Image src={'/assets/icon/phone-solid.png'} />{' '}
                                 {userList.no_telp}
                             </Text>
-                            <Text
-                                style={{
-                                    fontSize: '11px',
-                                }}
-                            >
-                                <Image
-                                    src={
-                                        '/assets/icon/location-dot-solid.png'
-                                    }
-                                />{' '}
+                            <Text style={{ fontSize: '11px', }}>
+                                <Image src={'/assets/icon/location-dot-solid.png'} />{' '}
                                 {userList.alamat}
                             </Text>
                         </View>
-                        <View
-                            style={[
-                                styles.container,
-                                styles.colContainer,
-                                {
-                                    paddingRight: '16px',
-                                },
-                            ]}
-                        >
-                            <Text
-                                style={{
-                                    fontSize: '15px',
-                                    fontWeight: 'bold',
-                                }}
-                            >
+                        <View style={[styles.container, styles.colContainer, { paddingRight: '16px', },]}>
+                            <Text style={{ fontSize: '15px', fontWeight: 'bold', }}>
                                 Tentang Saya
                             </Text>
-                            <Text
-                                style={{
-                                    fontSize: '11px',
-                                    textAlign: 'justify',
-                                    lineHeight: '16px'
-                                }}
-                            >
+                            <Text style={{ fontSize: '11px', textAlign: 'justify', lineHeight: '16px' }}>
                                 {userList?.tentang}
                             </Text>
                         </View>
                     </View>
                     <View style={[styles.container, styles.colContainer0]}>
-                        <Image
-                            style={styles.cvImg}
-                            src={userList?.foto_profil}
-                        />
+                        <Image style={styles.cvImg} src={userList?.foto_profil} />
                     </View>
                 </View>
-                <View
-                    style={[
-                        styles.container,
-                        styles.colContainer,
-                        {
-                            paddingBottom: '16px',
-                            marginBottom: '4px',
-                            borderBottom: '0.5px',
-                        },
-                    ]}
-                >
-                    <Text
-                        style={{
-                            fontSize: '15px',
-                            fontWeight: 'bold',
-                        }}
-                    >
+                <View style={[styles.container, styles.colContainer, {
+                    paddingBottom: '16px', marginBottom: '4px',
+                    borderBottom: '0.5px',
+                },]}>
+                    <Text style={{ fontSize: '15px', fontWeight: 'bold', }}>
                         Pendidikan Terakhir
                     </Text>
                     {pendidikanTerakhir.map((item) => {
                         return (
-                            <View
-                                key={item.id}
-                                style={[styles.container, styles.rowContainer]}
-                            >
-                                <View
-                                    style={[
-                                        styles.container,
-                                        styles.colContainer,
-                                        styles.f1,
-                                    ]}
-                                >
-                                    <Text
-                                        style={{
-                                            fontSize: '13px',
-                                            textAlign: 'justify',
-                                            fontWeight: 'bold',
-                                        }}
-                                    >
+                            <View key={item.id} style={[styles.container, styles.rowContainer]}>
+                                <View style={[styles.container, styles.colContainer, styles.f1,]}>
+                                    <Text style={{ fontSize: '13px', textAlign: 'justify', fontWeight: 'bold', }}>
                                         {item.institusi}
                                     </Text>
-                                    <Text
-                                        style={{
-                                            fontSize: '11px',
-                                            textAlign: 'justify',
-                                        }}
-                                    >
+                                    <Text style={{ fontSize: '11px', textAlign: 'justify', }}>
                                         {dayjs(item.tahun_mulai)
                                             .locale('id')
                                             .format('MMMM YYYY')}{' '}
                                         - {item.tahun_selesai}
                                     </Text>
                                 </View>
-                                <View
-                                    style={[
-                                        styles.container,
-                                        styles.colContainer,
-                                        styles.f1,
-                                    ]}
-                                >
-                                    <Text
-                                        style={{
-                                            fontSize: '11px',
-                                            textAlign: 'justify',
-                                        }}
-                                    >
+                                <View style={[styles.container, styles.colContainer, styles.f1,]}>
+                                    <Text style={{ fontSize: '11px', textAlign: 'right' }}>
                                         Jurusan
                                     </Text>
-                                    <Text
-                                        style={{
-                                            fontSize: '11px',
-                                            textAlign: 'justify',
-                                        }}
-                                    >
+                                    <Text style={{ fontSize: '11px', textAlign: 'right' }}>
                                         {item.jurusan}
                                     </Text>
                                 </View>
@@ -380,128 +244,76 @@ const MyPdf = ({
                         );
                     })}
                 </View>
+
                 {pengalamanKerja && pengalamanKerja.length > 0 && (
-                    <View
-                        style={[
-                            styles.container,
-                            styles.colContainer,
-                            {
-                                paddingBottom: '16px',
-                                borderBottom: '0.5px',
-                            },
-                        ]}
-                    >
-                        <Text style={{ fontSize: '15px', fontWeight: 'bold' }}>
-                            Pengalaman Kerja
-                        </Text>
-
+                    <View style={[styles.container, styles.colContainer, { paddingBottom: '8px', borderBottom: '0.5px' }]}>
+                        <Text style={{ fontSize: '15px', fontWeight: 'bold' }}>Pengalaman Kerja</Text>
                         {pengalamanKerja.map((item) => (
-                            <View key={item.id} style={[styles.container, styles.rowContainer]}>
-                                <View
-                                    style={[
-                                        { paddingBottom: '20px' },
-                                        styles.container,
-                                        styles.colContainer,
-                                        styles.f1,
-                                    ]}
-                                >
-                                    <View
-                                        style={[
-                                            { paddingBottom: '0px' },
-                                            styles.container,
-                                            styles.rowContainer,
-                                            { alignItems: 'center' },
-                                        ]}
-                                    >
-                                        <Text
-                                            style={{
-                                                fontSize: '12px',
-                                                textAlign: 'justify',
-                                                fontWeight: 'bold',
-                                            }}
-                                        >
-                                            {item.lokasi}
-                                        </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                                fontWeight: 'bold',
-                                            }}
-                                        >
-                                            ({item.jabatan})
-                                        </Text>
+                            <View key={item.id} style={[styles.container, styles.rowContainer0, { gap: '4px'}]}>
+                                <View style={[styles.container, styles.colContainer0, { justifyContent: 'center', alignItems: 'center', width: '10px', paddingTop:'2px', paddingBottom:'7px' }]}>
+                                    <Svg width="10" height="10">
+                                        <Circle cx="5" cy="5" r="4" fill="black" />
+                                    </Svg>
+                                    <View style={{ width: '1px', flex: 1, backgroundColor: 'black' }}></View>
+                                </View>
+                                <View style={[styles.container, styles.colContainer, { paddingBottom: '0px', flex:1 }]}>
+                                    <View style={[styles.container, styles.rowContainer,]}>
+                                        <View style={[styles.container, styles.colContainer, styles.f1]}>
+                                            <View style={[styles.container, styles.rowContainer, { justifyContent: 'space-between', alignItems: 'center', padding: '0px', margin: '0px' }]}>
+                                                <View style={[styles.container, styles.colContainer0]}>
+                                                    <View style={[styles.container, styles.rowContainer0, {gap:'3px', alignItems:'center'}]}>
+                                                        <Text style={{ fontSize: '12px', textAlign: 'justify', fontWeight: 'bold', }}>
+                                                            {item.lokasi}
+                                                        </Text>
+                                                        <Text style={{ fontSize: '11px', textAlign: 'justify', fontWeight: 'bold', }}>
+                                                            ({item.jabatan})
+                                                        </Text>
+                                                    </View>
+                                                </View>
+                                                <Text style={{ fontSize: '11px', textAlign: 'justify' }}>
+                                                    {dayjs(item.tahun_mulai).locale('id').format('MMMM YYYY')}{' '}
+                                                    - {item.tahun_selesai}
+                                                </Text>
+                                            </View>
+                                            <Text style={{ fontSize: '11px', textAlign: 'justify', lineHeight: '18px', paddingLeft: '14px' }}>
+                                                {item.detail}
+                                            </Text>
+                                        </View>
                                     </View>
-
-                                    <Text style={{ fontSize: '11px', textAlign: 'justify' }}>
-                                        {dayjs(item.tahun_mulai).locale('id').format('MMMM YYYY')}{' '}
-                                        - {item.tahun_selesai}
-                                    </Text>
-
-                                    <Text
-                                        style={{
-                                            fontSize: '11px',
-                                            textAlign: 'justify',
-                                            lineHeight: '16px',
-                                        }}
-                                    >
-                                        {item.detail}
-                                    </Text>
+                                    {item.prestasiKerjas?.length > 0 && (
+                                        <View style={[styles.container, styles.colContainer, { paddingLeft: '14px' }]}>
+                                            <Text style={{ fontSize: 12, fontWeight: 'bold', padding: 0, margin: 0 }}>Prestasi Kerja di {item.lokasi}</Text>
+                                            {item.prestasiKerjas.map((dataPrestasiKerja) => (
+                                                <View key={dataPrestasiKerja.id} style={[styles.container, styles.rowContainer, styles.f1, { justifyContent: 'space-between', paddingBottom: 10 }]}>
+                                                    <Text style={{ fontSize: 11 }}>{dataPrestasiKerja.prestasi}</Text>
+                                                    <Text style={{ fontSize: 11 }}>{dataPrestasiKerja.tahun.slice(0, 4)}</Text>
+                                                </View>
+                                            ))}
+                                            <View style={{ marginVertical: '6px' }}></View>
+                                        </View>
+                                    )}
                                 </View>
                             </View>
                         ))}
                     </View>
                 )}
+
                 {keahlian && keahlian.length > 0 && (
-                    <View
-                        style={[
-                            styles.container,
-                            styles.colContainer,
-                            {
-                                paddingBottom: '16px',
-                                marginBottom: '4px',
-                                borderBottom: '0.5px',
-                            },
-                        ]}
-                    >
-                        <Text
-                            style={{
-                                fontSize: '15px',
-                                fontWeight: 'bold',
-                            }}
-                        >
+                    <View style={[styles.container, styles.colContainer, {
+                        paddingBottom: '16px', marginBottom: '4px',
+                        borderBottom: '0.5px',
+                    },]}>
+                        <Text style={{ fontSize: '15px', fontWeight: 'bold', }}>
                             Keahlian
                         </Text>
                         {keahlian.map((item) => {
                             return (
-                                <View
-                                    key={item.id}
-                                    style={[styles.container, styles.rowContainer]}
-                                >
-                                    <View
-                                        style={[
-                                            styles.container,
-                                            styles.rowContainer,
-                                            styles.f1,
-                                        ]}
-                                    >
-                                        <Text
-                                            style={[
-                                                {
-                                                    fontSize: '11px',
-                                                    textAlign: 'justify',
-                                                },
-                                                styles.f1,
-                                            ]}
-                                        >
+                                <View key={item.id} style={[styles.container, styles.rowContainer]}>
+                                    <View style={[styles.container, styles.rowContainer, styles.f1,]}>
+                                        <Text style={[{ fontSize: '11px', textAlign: 'justify', }, styles.f1,]}>
                                             {item.keahlian}
                                         </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                            }}
-                                        >
+                                        <Text style={{ fontSize: '11px', textAlign: 'justify', }}>
                                             {item.tingkat}
                                         </Text>
                                     </View>
@@ -511,55 +323,21 @@ const MyPdf = ({
                     </View>
                 )}
                 {pelatihan && pelatihan.length > 0 && (
-                    <View
-                        style={[
-                            styles.container,
-                            styles.colContainer,
-                            {
-                                paddingBottom: '16px',
-                                marginBottom: '4px',
-                                borderBottom: '0.5px',
-                            },
-                        ]}
-                    >
-                        <Text
-                            style={{
-                                fontSize: '15px',
-                                fontWeight: 'bold',
-                            }}
-                        >
+                    <View style={[styles.container, styles.colContainer, {
+                        paddingBottom: '16px', marginBottom: '4px',
+                        borderBottom: '0.5px',
+                    },]}>
+                        <Text style={{ fontSize: '15px', fontWeight: 'bold', }}>
                             Pelatihan
                         </Text>
                         {pelatihan.map((item) => {
                             return (
-                                <View
-                                    key={item.id}
-                                    style={[styles.container, styles.rowContainer]}
-                                >
-                                    <View
-                                        style={[
-                                            styles.container,
-                                            styles.rowContainer,
-                                            styles.f1,
-                                        ]}
-                                    >
-                                        <Text
-                                            style={[
-                                                {
-                                                    fontSize: '11px',
-                                                    textAlign: 'justify',
-                                                },
-                                                styles.f1,
-                                            ]}
-                                        >
+                                <View key={item.id} style={[styles.container, styles.rowContainer]}>
+                                    <View style={[styles.container, styles.rowContainer, styles.f1,]}>
+                                        <Text style={[{ fontSize: '11px', textAlign: 'justify', }, styles.f1,]}>
                                             {item.pelatihan}
                                         </Text>
-                                        <Text
-                                            style={{
-                                                fontSize: '11px',
-                                                textAlign: 'justify',
-                                            }}
-                                        >
+                                        <Text style={{ fontSize: '11px', textAlign: 'justify', }}>
                                             {dayjs(item.tahun_mulai)
                                                 .locale('id')
                                                 .format('MMMM YYYY')}{' '}
