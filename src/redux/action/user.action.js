@@ -1193,3 +1193,138 @@ export const deletePelatihan = (id_user, role, idData) => async (dispatch) => {
         });
     }
 };
+
+//Pelatihan
+export const readPortofolio = (id_user, role) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_PORTOFOLIO_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('&l2');
+            const response = await apiFetch(`${baseUrl}/kopi/portofolio/${id_user}/${role}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json().catch(() => null);
+            if (data) {
+                dispatch({
+                    type: userTypes.GET_PORTOFOLIO_ID_SUCCESS,
+                    payload: data.data,
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: userTypes.GET_PORTOFOLIO_ID_FAILURE,
+                payload: error,
+            });
+        }
+    };
+};
+
+export const readPortofolioId = (id_user, role, idPortofolio) => {
+    return async (dispatch) => {
+        dispatch({ type: userTypes.GET_PORTOFOLIO_ID_REQUEST });
+        try {
+            const token = localStorage.getItem('&l2');
+            const response = await apiFetch(`${baseUrl}/kopi/portofolio/${id_user}/${role}/${idPortofolio}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json().catch(() => null);
+            if (data) {
+                dispatch({
+                    type: userTypes.GET_PORTOFOLIO_ID_SUCCESS,
+                    payload: data.data,
+                });
+            }
+        } catch (error) {
+            dispatch({
+                type: userTypes.GET_PORTOFOLIO_ID_FAILURE,
+                payload: error,
+            });
+        }
+    };
+};
+
+export const createPortofolio = (id, role, portofolio) => async (dispatch) => {
+    dispatch({ type: userTypes.CREATE_PORTOFOLIO_REQUEST });
+    try {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(`${baseUrl}/kopi/portofolio/${id}/${role}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(portofolio),
+        });
+        const data = await response.json().catch(() => null);
+        if (data) {
+            dispatch({
+                type: userTypes.CREATE_PORTOFOLIO_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.CREATE_PORTOFOLIO_FAILURE,
+            payload: error,
+        });
+    }
+};
+
+export const updatePortofolio = (id_user, role, idPortofolio, updatedPortofolio) => async (dispatch) => {
+    dispatch({ type: userTypes.UPDATE_PORTOFOLIO_ID_REQUEST });
+    try {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(
+            `${baseUrl}/kopi/portofolio/edit/${id_user}/${role}/${idPortofolio}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(updatedPortofolio),
+            }
+        );
+        const data = await response.json().catch(() => null);
+        if (data) {
+            dispatch({
+                type: userTypes.UPDATE_PORTOFOLIO_ID_SUCCESS,
+                payload: data.data,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: userTypes.UPDATE_PORTOFOLIO_ID_FAILURE,
+            payload: error,
+        });
+    }
+};
+
+export const deletePortofolio = (id_user, role, idData) => async (dispatch) => {
+    dispatch({ type: userTypes.DELETE_PORTOFOLIO_ID_REQUEST });
+    try {
+        const token = localStorage.getItem('&l2');
+        const response = await apiFetch(
+            `${baseUrl}/kopi/portofolio/${id_user}/${role}/${idData}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        dispatch({
+            type: userTypes.DELETE_PORTOFOLIO_ID_SUCCESS,
+            payload: id,
+        });
+    } catch (error) {
+        dispatch({
+            type: userTypes.DELETE_PORTOFOLIO_ID_FAILURE,
+            payload: error,
+        });
+    }
+};

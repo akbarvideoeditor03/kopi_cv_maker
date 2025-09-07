@@ -67,10 +67,10 @@ export async function apiFetch(url, options = {}) {
                 } else if (kopiCode === "C002") {
                     Swal.fire({ icon: 'error', title: 'Akses ditolak', text: 'Anda sudah mencapai batas maksimal login, silakan coba lagi dalam 1 jam ke depan', showConfirmButton: true, allowEscapeKey: false, allowOutsideClick: false, timerProgressBar: true });
                 }
-                localStorage.removeItem('/v%');
-                localStorage.removeItem('$f*');
-                localStorage.removeItem('&l2');
-                sessionStorage.clear();
+                // localStorage.removeItem('/v%');
+                // localStorage.removeItem('$f*');
+                // localStorage.removeItem('&l2');
+                // sessionStorage.clear();
                 throw new Error('403 Forbidden');
             }
             case 404: {

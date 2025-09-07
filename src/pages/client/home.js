@@ -11,6 +11,8 @@ import {
     readPelatihan,
     deletePelatihan,
     deletePrestasi,
+    readPortofolio,
+    deletePortofolio,
     otpRequestCode,
 } from '../../redux/action/user.action';
 import Swal from 'sweetalert2';
@@ -30,11 +32,14 @@ function HomeUser() {
         pendidikanTerakhir,
         keahlian,
         pelatihan,
+        portofolio,
         prestasiKerja,
         isLoading,
         isWebsite,
         isViews
     } = useSelector((state) => state.userReducer);
+
+    console.log(portofolio);
 
     useEffect(() => {
         if (token && role && id) {
@@ -43,6 +48,7 @@ function HomeUser() {
             dispatch(readPengalamanKerja(id, role));
             dispatch(readKeahlian(id, role));
             dispatch(readPelatihan(id, role));
+            dispatch(readPortofolio(id, role));
         }
     }, [dispatch, id, role]);
 
@@ -207,6 +213,7 @@ function HomeUser() {
                                     </a>
                                 </div>
                             </div>
+
                             <div className="card-mini container row-f f-wrap m-b1">
                                 <div className="container col-f f-1">
                                     <div className='container row-f f-wrap f-center'>
@@ -261,6 +268,7 @@ function HomeUser() {
                                     })}
                                 </div>
                             </div>
+
                             <div className="card-mini container row-f f-wrap">
                                 <div className="container col-f f-1">
                                     <div className='container row-f f-wrap f-center'>
@@ -362,6 +370,7 @@ function HomeUser() {
                                     })}
                                 </div>
                             </div>
+
                             <div className="card-mini container row-f f-wrap m-b1">
                                 <div className="container col-f f-1">
                                     <div className='container row-f f-wrap f-center'>
@@ -407,6 +416,7 @@ function HomeUser() {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="card-mini container row-f f-wrap">
                                 <div className="container col-f f-1">
                                     <div className='container row-f f-wrap f-center'>
@@ -462,6 +472,35 @@ function HomeUser() {
                                     </div>
                                 </div>
                             </div>
+
+                            <div className="card-mini container row-f f-wrap">
+                                <div className="container col-f f-1">
+                                    <div className='container row-f f-wrap f-center'>
+                                        <h1><i style={{ fontSize: '75%' }} className="fa-solid fa-book-open-reader"></i> Portofolio</h1>
+                                        <a href="/portofolio" className="btn btn-primary">
+                                            <i style={{ fontSize: '85%' }} className="fa-solid fa-plus"></i>
+                                        </a>
+                                    </div>
+                                    {portofolio.map((item) => {
+                                        return (
+                                            <div key={item.id} className='card-mini container col-f f-1'>
+                                                <div className='container row-f f-between f-wrap f-center'>
+                                                    <div className='container row-f f-wrap'>
+                                                        <p>{item.judul}</p>
+                                                        <i>({item.kategori})</i>
+                                                    </div>
+                                                    <p>{item.tanggal_selesai}</p>
+                                                </div>
+                                                <div className='container col-f'>
+                                                    <p>{item.deskripsi}</p>
+                                                    <a href={item.link_hasil} target='_blank'>Hasil Portofolio</a>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
                             <div className="container col-f f-center-c t-center m-t2">
                                 <p>Ada kendala? Yuk beri tahu kami</p>
                                 <RouterLink

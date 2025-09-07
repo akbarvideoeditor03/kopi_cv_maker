@@ -10,6 +10,7 @@ const initState = {
     prestasiKerja: [],
     keahlian: [],
     pelatihan: [],
+    portofolio: [],
     otpRequest: [],
     resetPassword: [],
     templatList: [],
@@ -772,6 +773,89 @@ const users = (state = initState, action) => {
                 ),
             };
         case userTypes.DELETE_PELATIHAN_ID_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+            
+        // Portofolio (CRUD)
+        case userTypes.CREATE_PORTOFOLIO_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                error: null,
+            };
+        case userTypes.CREATE_PORTOFOLIO_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                portofolio: [...state.portofolio, action.payload],
+            };
+        case userTypes.CREATE_PORTOFOLIO_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        case userTypes.GET_PORTOFOLIO_ID_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                error: null,
+            };
+        case userTypes.GET_PORTOFOLIO_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                portofolio: action.payload,
+            };
+        case userTypes.GET_PORTOFOLIO_ID_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        case userTypes.UPDATE_PORTOFOLIO_ID_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                error: null,
+            };
+        case userTypes.UPDATE_PORTOFOLIO_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                portofolio: state.portofolio.map((portofolio) =>
+                    portofolio.id === action.payload.id
+                        ? action.payload
+                        : portofolio
+                ),
+            };
+        case userTypes.UPDATE_PORTOFOLIO_ID_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+
+        case userTypes.DELETE_PORTOFOLIO_ID_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                error: null,
+            };
+        case userTypes.DELETE_PORTOFOLIO_ID_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                portofolio: state.portofolio.filter(
+                    (portofolio) => portofolio.id !== action.payload
+                ),
+            };
+        case userTypes.DELETE_PORTOFOLIO_ID_FAILURE:
             return {
                 ...state,
                 isLoading: false,

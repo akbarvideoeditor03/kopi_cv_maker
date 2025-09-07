@@ -24,6 +24,7 @@ import CreatePelatihan from '../client/pelatihan/createPelatihan';
 import UpdatePelatihan from '../client/pelatihan/updatePelatihan';
 import CreatePrestasi from '../client/prestasi/createPrestasi';
 import UpdatePrestasi from '../client/prestasi/updatePrestasi';
+import CreatePortofolio from '../client/portofolio/createPortofolio';
 
 //General Pages
 import About from './about';
@@ -61,6 +62,9 @@ function App() {
                 <Route path="/pelatihan/:id_user/:role/:id_pelatihan" element={<UpdatePelatihan />}></Route>
                 <Route path="/prestasi/:id_user/:role/:id_pengalaman_kerja" element={<CreatePrestasi />}></Route>
                 <Route path="/prestasi/edit/:id_user/:role/:id_pengalaman_kerja/:id_prestasi_kerja" element={<UpdatePrestasi />}></Route>
+                <Route path="/portofolio" element={<CreatePortofolio />}></Route>
+                {/* <Route path="/portofolio/:id_user/:role/:id_portofolio" element={<UpdatePelatihan />}></Route> */}
+
                 <Route path="/doc/preview" element={<CVDocument />}></Route>
                 <Route path="/user/login" element={<Login />}></Route>
                 <Route path="/user/register" element={<Register />}></Route>

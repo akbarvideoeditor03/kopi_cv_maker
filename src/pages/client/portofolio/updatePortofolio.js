@@ -68,7 +68,7 @@ function UpdateKeahlian() {
                 allowOutsideClick: false,
                 showCancelButton: true,
             });
-            if (keahlianUser.isConfirmed) {
+            if(keahlianUser.isConfirmed) {
                 const keahlianUserUpdate = {
                     keahlian: data.keahlian,
                     tingkat: data.tingkat,
@@ -94,30 +94,45 @@ function UpdateKeahlian() {
                 <section className="container col-f full-width section-max">
                     <h1>Tambah Keahlian / Skill</h1>
                     <div className="container col-f f-center-c">
-                        <form onSubmit={handleSubmit} className="container col-f full-width">
+                        <form
+                            onSubmit={handleSubmit}
+                            className="container col-f full-width"
+                        >
                             <div className="container col-f-0">
                                 <label>Keahlian</label>
-                                <input name="keahlian" value={data.keahlian} onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        [e.target.name]: e.target.value,
-                                    })
-                                }
+                                <input
+                                    name="keahlian"
+                                    value={data.keahlian}
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
                                     type="text"
                                     placeholder="Masukkan jenis keahlian"
                                 />
-                                <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem', }}>
+                                <p
+                                    style={{
+                                        fontSize: '0.75rem',
+                                        paddingTop: '0.5rem',
+                                    }}
+                                >
                                     Contohnya : Video Editing
                                 </p>
                             </div>
                             <div className="container col-f-0">
                                 <label>Pilih Tingkatan</label>
-                                <select id="tingkat" name="tingkat" value={data.tingkat} onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        [e.target.name]: e.target.value,
-                                    })
-                                }
+                                <select
+                                    id="tingkat"
+                                    name="tingkat"
+                                    value={data.tingkat}
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
                                 >
                                     <option value="" key="">
                                         Pilih tingkatan
@@ -125,7 +140,10 @@ function UpdateKeahlian() {
                                     <option value="Pemula" key="pemula">
                                         Pemula
                                     </option>
-                                    <option value="Pemula Tingkat Lanjut" key="pemula tingkat lanjut">
+                                    <option
+                                        value="Pemula Tingkat Lanjut"
+                                        key="pemula tingkat lanjut"
+                                    >
                                         Pemula Tingkat Lanjut
                                     </option>
                                     <option value="Kompeten" key="kompeten">
@@ -138,7 +156,12 @@ function UpdateKeahlian() {
                                         Ahli
                                     </option>
                                 </select>
-                                <p style={{ fontSize: '0.75rem', paddingTop: '0.5rem', }}>
+                                <p
+                                    style={{
+                                        fontSize: '0.75rem',
+                                        paddingTop: '0.5rem',
+                                    }}
+                                >
                                     Contohnya : Kompeten
                                 </p>
                             </div>
@@ -147,17 +170,32 @@ function UpdateKeahlian() {
                                     Harap Perhatikan{' '}
                                     <i className="bi-exclamation-triangle-fill"></i>
                                 </h4>
-                                <p style={{ marginTop: '5px', }}>
-                                    Saat memilih tingkat keahlian, pastikan sesuai dengan kemampuan kamu saat ini. Keahlian itu
-                                    dinamis dan bisa berkembang terus.{' '}
+                                <p
+                                    style={{
+                                        marginTop: '5px',
+                                    }}
+                                >
+                                    Saat memilih tingkat keahlian, pastikan sesuai dengan kemampuan kamu saat ini. Keahlian itu dinamis dan bisa berkembang terus.{' '}
                                     <i className="bi-emoji-smile"></i>
                                 </p>
                             </div>
                             <div className="container row-f f-wrap f-1 m-t1">
-                                <button onClick={cancelSubmit} style={{ fontSize: '1rem', }} className="btn btn-danger f-1">
+                                <button
+                                    onClick={cancelSubmit}
+                                    style={{
+                                        fontSize: '1rem',
+                                    }}
+                                    className="btn btn-danger f-1"
+                                >
                                     Batal
                                 </button>
-                                <button style={{ fontSize: '1rem', }} type="submit" className="btn btn-primary f-1">
+                                <button
+                                    style={{
+                                        fontSize: '1rem',
+                                    }}
+                                    type="submit"
+                                    className="btn btn-primary f-1"
+                                >
                                     Selesai
                                 </button>
                             </div>
